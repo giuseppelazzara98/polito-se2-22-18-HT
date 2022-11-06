@@ -19,7 +19,7 @@ function FilterModal(props) {
     <div className={styles.modalBackground}>
       <div className={styles.modal}>
         <div className={styles.header}>
-          <h5 className={styles.modalTitle}>Filtra</h5>
+          <h5 className={styles.modalTitle}>Filters</h5>
           <button className={styles.closeButton} onClick={() => setModalOpen(false)}>
             <FontAwesomeIcon icon={faXmark}/>
           </button>
@@ -253,12 +253,12 @@ export default function FiltersContainer(props) {
       <div className={styles.wrap}>
         {isMobile && (
           <button className={styles.button} onClick={() => setModalOpen(true)}>
-            Filtra <FontAwesomeIcon icon={faFilter}/>
+            Filters <FontAwesomeIcon icon={faFilter}/>
           </button>
         )}
         {!isMobile && (
           <>
-            <h5 className={styles.filtersTitle}>Filtri</h5>
+            <h5 className={styles.filtersTitle}>Filters</h5>
             {geograficFilters()}
             {difficultyFilter()}
             {expectedTimeFilter()}
