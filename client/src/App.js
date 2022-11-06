@@ -1,10 +1,12 @@
 import React from 'react';
 import './styles/base.scss';
+import NavbarHead from './components/Navbar/navbar';
 import {
 	BrowserRouter as Router,
 	Routes,
 	Route,
 } from 'react-router-dom';
+
 
 function App() {
 	return (
@@ -18,6 +20,7 @@ function App2() {
 	
 	return (
 		<div className="App">
+			<NavbarHead/>
 			<main className="main-wrap">
 					<Routes>
             {/* to insert route */}
