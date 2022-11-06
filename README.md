@@ -1,4 +1,4 @@
-# polito-se2-22-18_OQM
+# polito-se2-22-18_HT
 
 Sofware engineering 2 a.a. 2022 / 2023
 
