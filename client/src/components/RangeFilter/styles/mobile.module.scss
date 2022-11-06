@@ -1,0 +1,93 @@
+@import "../../../styles/configs";
+
+.container {
+  margin-top: 22px;
+  .blockSubTitle {
+    @include font(300, 16px, 23px, 0.15px);
+    text-align: center;
+    color: #898a8d;
+  }
+  .pit {
+    width: 5%;
+    background-color: #e8f3f3;
+    bottom: 0;
+  }
+  .selectRange {
+    margin: 0 25px;
+    display: block;
+    position: relative;
+    padding-top: 16px;
+  }
+  .progressBar {
+    background-color: $primary-green;
+    height: 5px;
+    position: absolute;
+    bottom: -4px;
+    z-index: 1;
+  }
+  .handleContainer {
+    top: -7px;
+    z-index: 10;
+  }
+  .handleButton {
+    margin-left: -12px;
+    top: -7px;
+    width: 21px;
+    height: 21px;
+    cursor: pointer;
+    border-width: 1px;
+    border-style: solid;
+    border-color: $primary-green;
+    background-color: $primary-green;
+    border-radius: 100%;
+    outline: none;
+    z-index: 10;
+    box-shadow: 0 2px 2px #dbdbdb;
+  }
+  .tooltip {
+    border-radius: 2.5px;
+    background: white;
+    width: 65px;
+    height: 27px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    bottom: 14px;
+    z-index: 10;
+    @include font(500, 10.24px, 15px, normal);
+    &:after {
+      top: 100%;
+      left: 50%;
+      border: solid transparent;
+      content: "";
+      height: 0;
+      width: 0;
+      position: absolute;
+      pointer-events: none;
+      border-top-color: white;
+      border-width: 4px;
+      margin-left: -4px;
+    }
+  }
+  .height1 {
+    height: 20px;
+  }
+  .height2 {
+    height: 40px;
+  }
+  .height3 {
+    height: 60px;
+  }
+  .height4 {
+    height: 80px;
+  }
+}
+
+.filterTitle {
+  @include font(700, 18px, 20px, 0);
+  color: $primary-green;
+  text-align: left;
+  margin-top: 15px;
+}

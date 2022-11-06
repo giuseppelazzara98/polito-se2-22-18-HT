@@ -6,6 +6,7 @@ import {
 	Routes,
 	Route,
 } from 'react-router-dom';
+import HomePage from './pages/HomePage';
 
 
 function App() {
@@ -22,9 +23,10 @@ function App2() {
 		<div className="App">
 			<NavbarHead/>
 			<main className="main-wrap">
-					<Routes>
-            {/* to insert route */}
-					</Routes>
+        <Routes>
+          <Route path="/" element={<HomePage/>} />
+        </Routes>
+        <div id='modal-root'/>
 			</main>
 		</div>
 	);
