@@ -1,6 +1,35 @@
 @import "configs";
 @import "~bootstrap/scss/bootstrap";
 
+.handleContainer {
+  position: relative;
+  margin-top: 60px;
+  margin-bottom: 40px;
+  height: 2px;
+}
+
+.main-wrap {
+  margin-top: 20px;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+  @media (min-width: $tablet-landscape) {
+    width: 10px;
+  }
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
 .App {
   text-align: center;
 }
