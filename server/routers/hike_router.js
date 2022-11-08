@@ -1,6 +1,8 @@
+'use strict';
+
 const express = require('express');
 const router = express.Router();
-const hikeDao = require('../modules/hike-dao');
+const hikeDao = require('../modules/DbManager').hike_dao;
 
 /*** Hikes APIs ***/
 
