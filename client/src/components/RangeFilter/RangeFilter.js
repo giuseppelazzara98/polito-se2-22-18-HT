@@ -26,7 +26,7 @@ const Test = ({ style, children }) => {
           count++;
         }
       }
-      if (count == 0) {
+      if (count === 0) {
         setHeight(0);
       } else if (count < arrayRange?.length / 10) {
         setHeight(1);
@@ -41,13 +41,13 @@ const Test = ({ style, children }) => {
   }, [arrayRange]);
 
   const customHeight =
-    height == 0
+    height === 0
       ? styles.height0
-      : height == 1
+      : height === 1
       ? styles.height1
-      : height == 2
+      : height === 2
       ? styles.height2
-      : height == 3
+      : height === 3
       ? styles.height3
       : styles.height4;
 
@@ -80,14 +80,14 @@ export default function RangeFilter(props) {
   const pitNumber = 20;
 
   useEffect(() => {
-    if (true) {
+    if (arrayRange?.length) {
       let pitArray = [];
       for (let index = 0; index < pitNumber; index++) {
         pitArray.push(minRange + index * (range / pitNumber));
       }
       setPitArray(pitArray);
     }
-  }, []);
+  }, [arrayRange]);
 
   const updatePrice = (sliderStates) => {
     setCurrentMinMax([sliderStates?.values[0], sliderStates?.values[1]]);
@@ -123,6 +123,7 @@ export default function RangeFilter(props) {
                 onSliderDragEnd={applyFilter}
                 min={minRange}
                 max={maxRange}
+                background={() => {}}
                 values={[minValue || minRange, maxValue || maxRange]}
                 progressBar={({ ...progressBarProps }) => (
                   <div
@@ -130,7 +131,7 @@ export default function RangeFilter(props) {
                     className={styles.progressBar}
                   ></div>
                 )}
-                handle={({ className: _, ...handleProps }) => (
+                handle={({ className: _, handleRef, ...handleProps }) => (
                   <div
                     {...handleProps}
                     className={`${_} ${styles.handleContainer}`}
