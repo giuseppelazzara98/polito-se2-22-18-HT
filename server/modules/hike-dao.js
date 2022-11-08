@@ -2,8 +2,9 @@ class HikeDAO {
 
     sqlite = require('sqlite3');
 
-    constructor(db) {
+    constructor(db, knex) {
         this.db = db;
+        this.knex = knex;
     }
 
     // close the connection to database
@@ -55,7 +56,7 @@ class HikeDAO {
                     console.log(err);
                     reject(err);
                 } else {
-                    const services = rows.map((el) => {
+                    const hikes = rows.map((el) => {
                         return {
                             name: el.description,
                             key: el.id_hike,
@@ -67,7 +68,7 @@ class HikeDAO {
                             difficulty: el.difficulty
                         }
                     });
-                    resolve(services);
+                    resolve(hikes);
                 }
             });
         });
