@@ -10,8 +10,7 @@ function NavbarHead(props) {
   return (
     <Navbar bg="light" variant="light">
     <Container fluid>
-        
-    <Navbar.Brand > <CiMountain1 size={30} > </CiMountain1>HTracker</Navbar.Brand>
+    <Navbar.Brand > <CiMountain1 size={30} />  HTracker</Navbar.Brand>
     <Button variant="secondary" onClick={()=> navigate("/login")}> Login</Button>
     </Container>
   </Navbar>
