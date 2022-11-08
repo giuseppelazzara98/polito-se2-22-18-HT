@@ -9,23 +9,6 @@ import {
 import HomePage from './pages/HomePage';
 import API from './API/api';
 
-/*let fakehikes = [{startPlace : "Verona",
-			  endPlace : "Catania",
-			  pathLength: 25,
-			  expTime : 32,
-			  ascent : 32,
-			  difficulty: "hard",
-			  description: "Nice" 
-},{
-	startPlace : "Verona",
-	endPlace : "Napoli",
-	pathLength: 25,
-	expTime: 32,
-	ascent: 21,
-	difficulty: 34,
-	description: "Nice"
-}]*/
-
 function App() {
 	return (
 		<Router>

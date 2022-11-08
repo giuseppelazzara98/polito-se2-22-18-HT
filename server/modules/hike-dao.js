@@ -18,6 +18,7 @@ class HikeDAO {
     // create the service table
     newHikeTable = () => {
         return new Promise((resolve, reject) => {
+            
             const sql = "CREATE TABLE IF NOT EXISTS HIKE(id_hike INTEGER NOT NULL, id_start_place INTEGER NOT NULL, id_end_place INTEGER NOT NULL, description TEXT, length REAL, expected_time REAL, ascent INTEGER, difficulty TEXT, FOREIGN KEY(id_end_place) REFERENCES PLACE(id_place), FOREIGN KEY(id_start_place) REFERENCES PLACE(id_place), PRIMARY KEY(id_hike AUTOINCREMENT));";
             this.db.run(sql, (err) => {
                 if (err) {
@@ -49,13 +50,14 @@ class HikeDAO {
     // get all hikes
     getAllHikes = () => {
         return new Promise((resolve, reject) => {
-            const sql = "SELECT H.description, H.id_hike, P1.description AS START_PLACE, P2.description AS END_PLACE, H.length, H.expected_time, H.ascent, H.difficulty FROM HIKE H, PLACE P1, PLACE P2 WHERE H.id_start_place = P1.id_place AND H.id_end_place = P2.id_place;";
-            this.db.all(sql, [], (err, rows) => {
+            const sql = this.knex.select('HIKE.description','HIKE.id_hike','P1.description as START_PLACE','P2.description as END_PLACE', 'HIKE.length','HIKE.expected_time','HIKE.ascent','HIKE.difficulty').from('HIKE').join('PLACE as P1',{'P1.id_place':'HIKE.id_start_place'}).join('PLACE as P2',{'P2.id_place':'HIKE.id_end_place'});
+            this.db.all(sql.toString(), [], (err, rows) => {
                 if (err) {
                     console.log('Error running sql: ' + sql);
                     console.log(err);
                     reject(err);
                 } else {
+                    
                     const hikes = rows.map((el) => {
                         return {
                             name: el.description,
