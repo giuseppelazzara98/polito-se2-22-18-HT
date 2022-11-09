@@ -20,7 +20,8 @@ async function getAllHikes(data) {
         ascent: r.ascent,
         difficulty: r.difficulty,
         key: r.key,
-        description: r.name,
+        name: r.name,
+        description: r.description
       }));
     } else {
       if (response.status === 500) {
