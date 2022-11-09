@@ -33,8 +33,8 @@ function FilterModal(props) {
 }
 
 export default function FiltersContainer(props) {
+  const {filters, setFilters} = props;
   const [modalOpen, setModalOpen] = useState(false);
-  const [filters, setFilters] = useState([]);
   const [currentMinMaxExpectedTime, setCurrentMinMaxExpectedTime] = useState([null, null])
   const [currentMinMaxLength, setCurrentMinMaxLength] = useState([null, null])
   const [currentMinMaxAscent, setCurrentMinMaxAscent] = useState([null, null])
@@ -65,82 +65,72 @@ export default function FiltersContainer(props) {
 
   const difficultyFacets = [
     {
-      id: "easy",
-      value: "easy",
-      label: "easy",
+      id: 1,
+      value: "turist",
+      label: "turist",
     },
     {
-      id: "medium",
-      value: "medium",
-      label: "medium",
+      id: 2,
+      value: "hiker",
+      label: "hiker",
     },
     {
-      id: "hard",
-      value: "hard",
-      label: "hard",
+      id: 3,
+      value: "professional-hiker",
+      label: "professional hiker",
     },
   ];
 
   const expectedTimeFacets = [
-    3037,
-    3231,
-    3314,
-    3406,
-    3474,
-    3589,
-    3611,
-    3642,
-    3777,
-    3792,
-    3825,
-    3915,
-    3999,
-    4019,
-    4159,
-    4205,
-    4735,
-    4743,
-    4883,
-    5003,
-    5012,
-    5469
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24
   ]
 
   const lengthFacets = [
-    3037,
-    3231,
-    3314,
-    3406,
-    3474,
-    3589,
-    3611,
-    3642,
-    3777,
-    3792,
-    3825,
-    3915,
-    3999,
-    4019,
-    4159,
-    4205,
-    4735,
-    4743,
-    4883,
-    5003,
-    5012,
-    5469
+    4,
+    5,
+    6,
+    10,
+    12,
+    15,
+    20,
+    30,
+    50,
+    70,
   ]
 
   const ascentFacets = [
-    10,
-    20,
-    30,
-    35,
-    40,
-    5,
-    7,
-    6,
-    9
+    1000,
+    2000,
+    3000,
+    3500,
+    4000,
+    500,
+    700,
+    600,
+    900
   ]
 
   const addFilter = (key, id) => {

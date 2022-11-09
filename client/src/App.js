@@ -19,25 +19,45 @@ function App() {
 
 function App2() {
 	const [hikes, setHikes] = useState([]);
+	const [filters, setFilters] = useState([]);
 
-	const getHikes = async () => {
+	const getHikes = async (dataOnRequest) => {
 		try {
-		  const hikes = await API.getAllHikes();
+		  const hikes = await API.getAllHikes(dataOnRequest);
 		  setHikes(hikes);
 		} catch (err) {
 		  console.log(err);
 		}
-	  };
-	  useEffect(() => {
-		getHikes();
-	  }, []);
+	};
+
+	const getDataOnRequest = () => {
+		const geoFilters = filters.filter(filterEle => filterEle.key === "geografic-area")?.map(ele => ele.id) || [];
+		const difficultyFilter = filters.filter(filterEle => filterEle.key === "difficulty")?.map(ele => ele.id) || [];
+		const expTimeFilter = filters.filter(filterEle => filterEle.key === "expected-time")?.[0]?.values || [];
+		const lengthFilter = filters.filter(filterEle => filterEle.key === "length")?.[0]?.values || [];
+		const ascentFilter = filters.filter(filterEle => filterEle.key === "ascent")?.[0]?.values || [];
+
+		const newObj = {
+			geo_area: geoFilters,
+			difficulty: difficultyFilter,
+			exp_time: expTimeFilter?.length === 2 ? {min: expTimeFilter[0], max: expTimeFilter[1]} : null,
+			length: lengthFilter?.length === 2 ? {min: lengthFilter[0], max: lengthFilter[1]} : null,
+			ascent: ascentFilter?.length === 2 ? {min: ascentFilter[0], max: ascentFilter[1]} : null,
+		}
+
+		return newObj;
+	}
+
+	useEffect(() => {
+		getHikes(getDataOnRequest());
+	}, [filters]);
 
 	return (
 		<div className="App">
 			<NavbarHead/>
 			<main className="main-wrap">
         <Routes>
-          <Route path="/" element={<HomePage hikes={hikes}/>} />
+          <Route path="/" element={<HomePage hikes={hikes} filters={filters} setFilters={setFilters}/>} />
         </Routes>
         <div id='modal-root'/>
 			</main>

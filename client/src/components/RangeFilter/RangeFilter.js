@@ -98,9 +98,9 @@ export default function RangeFilter(props) {
   };
 
   const formatDuration = (duration) => {
-    let days = parseInt(dayjs.duration(duration, "minutes").asDays()) ?? "";
-    let hours = dayjs.duration(duration, "minutes").format("HH");
-    let minutes = dayjs.duration(duration, "minutes").format("mm");
+    let days = parseInt(dayjs.duration(duration, "hours").asDays()) ?? "";
+    let hours = dayjs.duration(duration, "hours").format("HH");
+    let minutes = dayjs.duration(duration, "hours").format("mm");
     
     return `${days > 0 ? `${days} d ` : ""}${hours} h ${minutes} m`;
   }
@@ -140,7 +140,9 @@ export default function RangeFilter(props) {
                       {isTime ?
                           formatDuration(handleProps["aria-valuenow"])
                         :
-                          `${handleProps["aria-valuenow"]} ${isLength ? "km" : isPercentage ? "%" : ""}`
+                          isLength ? 
+                            `${handleProps["aria-valuenow"]} km`
+                          : `${handleProps["aria-valuenow"]/100} %`
                       }
                     </div>
                     <div className={`${styles.handleButton}`}></div>

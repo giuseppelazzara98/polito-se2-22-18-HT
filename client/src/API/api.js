@@ -1,9 +1,15 @@
 const APIURL = new URL("http://localhost:3001/api/");
 
-async function getAllHikes() {
+async function getAllHikes(data) {
     // call: GET /api/hikes
     let err = new Error();
-    const response = await fetch(new URL("hikes", APIURL));
+    const response = await fetch(new URL("hikes", APIURL), {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data) 
+    });
     if (response.ok) {
       const hikesJson = await response.json();
       return hikesJson.map((r) => ({
