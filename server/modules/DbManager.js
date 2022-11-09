@@ -5,7 +5,7 @@ const sqlite = require("sqlite3");
 const knex = require('knex')({
     client: 'sqlite3',
     connection: {
-        filename: '../HikeTracker.db'
+        filename: 'HikeTracker.db'
     },
     useNullAsDefault: true,
 });
