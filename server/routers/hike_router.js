@@ -11,8 +11,16 @@ const hikeDao = require('../modules/DbManager').hike_dao;
 //TODO: delete this api when the post /api/hikes is ready
 router.get('/hikes', async (req, res) => {
 
+    const fake_body = {
+        "geo_area": [],
+        "difficulty": [],
+        "exp_time": null,
+        "length": null,
+        "ascent": null
+    }
+
     try {
-        const result = await hikeDao.getAllFilteredHikes(0);
+        const result = await hikeDao.getAllFilteredHikes(fake_body);
         return res.status(200).json(result);
     }
     catch (err) {
@@ -77,7 +85,7 @@ router.post('/hikes',
             return res.status(200).json(result);
         }
         catch (err) {
-            return res.status(503).json({ error: "Service Unavailable" });
+            return res.status(500).json({ error: "Internal Server Error" });
         }
     });
 
