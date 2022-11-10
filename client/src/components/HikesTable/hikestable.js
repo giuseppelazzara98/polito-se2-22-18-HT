@@ -67,7 +67,7 @@ import {
                
                 <Table>
                 <tr>
-                  <th>Start Place</th>
+                  <th className={styles.tableColumnTitle}>Start Place</th>
                   <th>End Place</th>
                   <th>Path Length</th>
                   <th>Expected Time</th>
@@ -105,6 +105,8 @@ import {
         return "hiker"
       case 3:
         return "professional hiker"
+      default:
+        return ""
     }
   }
   
