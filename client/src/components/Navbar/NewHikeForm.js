@@ -164,7 +164,7 @@ export default function NewHikeForm(props) {
 			</Row>
 			<Row className="my-5">
 				<Col className="col-md-3">
-					<Button type="submit">Login</Button>
+					<Button type="submit">Submit</Button>
 				</Col>
 			</Row>
 		</Form>
