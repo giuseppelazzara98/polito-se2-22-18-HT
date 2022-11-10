@@ -1,12 +1,9 @@
 import React from 'react';
 import './styles/base.scss';
 import NavbarHead from './components/Navbar/navbar';
-import {
-	BrowserRouter as Router,
-	Routes,
-	Route,
-} from 'react-router-dom';
-
+import NewHike from './pages/NewHike';
+import WrongPath from './pages/WrongPath';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 function App() {
 	return (
@@ -17,14 +14,15 @@ function App() {
 }
 
 function App2() {
-	
 	return (
 		<div className="App">
-			<NavbarHead/>
+			<NavbarHead />
 			<main className="main-wrap">
-					<Routes>
-            {/* to insert route */}
-					</Routes>
+				<Routes>
+					{/* to insert route */}
+					<Route path="/newHike" element={<NewHike />} />
+					<Route path="*" element={<WrongPath />} />
+				</Routes>
 			</main>
 		</div>
 	);
