@@ -2,12 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import styles from "./index.module.scss";
 import "rheostat/initialize";
 import Rheostat from "rheostat";
-import dayjs from "dayjs";
 
-var duration = require('dayjs/plugin/duration');
-dayjs.extend(duration);
-var toObject = require('dayjs/plugin/toObject')
-dayjs.extend(toObject)
+import { formatDuration } from "../../helpers/utility";
 
 const RangeFilterContext = React.createContext({});
 
@@ -97,13 +93,6 @@ export default function RangeFilter(props) {
     handleChange(keyFilter, currentMinMax[0], currentMinMax[1]);
   };
 
-  const formatDuration = (duration) => {
-    let days = parseInt(dayjs.duration(duration, "hours").asDays()) ?? "";
-    let hours = dayjs.duration(duration, "hours").format("HH");
-    let minutes = dayjs.duration(duration, "hours").format("mm");
-    
-    return `${days > 0 ? `${days} d ` : ""}${hours} h ${minutes} m`;
-  }
 
   return (
     <RangeFilterContext.Provider
