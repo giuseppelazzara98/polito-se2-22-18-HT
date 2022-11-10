@@ -44,7 +44,7 @@ import {
           <td>{props.hike.name}</td>
           
           
-          <td>{props.hike.difficulty}</td>
+          <td>{getDifficulty(props.hike.difficulty)}</td>
           
           <td>
             {" "}
@@ -96,6 +96,16 @@ import {
       </>
     );
  
+  }
+  function getDifficulty(diff){
+    switch (diff){
+      case 1:
+        return "turist"
+      case 2:
+        return "hiker"
+      case 3:
+        return "professional hiker"
+    }
   }
   
   
