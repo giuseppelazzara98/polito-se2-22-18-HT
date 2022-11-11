@@ -17,12 +17,12 @@ export default function NewHikeForm(props) {
 	const [length, setLength] = useState(0);
 	const [expectedTime, setExpectedTime] = useState(0);
 	const [ascent, setAscent] = useState(0);
-	const [difficulty, setDifficulty] = useState('none');
+	const [difficulty, setDifficulty] = useState('');
 	const [startPoint, setStartPoint] = useState('');
 	const [endPoint, setEndPoint] = useState('');
 	const [referencePoints, setReferencePoints] = useState([]);
 	const [gpxFile, setGpxFile] = useState('');
-	const [description, setDescription] = useState('none');
+	const [description, setDescription] = useState('');
 	const [refPoint, setRefPoint] = useState('');
 
 	const handleSubmit = (event) => {
@@ -46,15 +46,12 @@ export default function NewHikeForm(props) {
 	};
 
 	const addRefPoint = () => {
-		console.log('addCalled');
 		const list = [...referencePoints, refPoint];
-		console.log(list);
 		setReferencePoints(list);
-		console.log('passed');
 	};
 
 	const delRefPoint = (point) => {
-		const list = referencePoints.filer((element) => element !== point);
+		const list = referencePoints.filter((element) => element !== point);
 		setReferencePoints(list);
 	};
 

@@ -1,8 +1,28 @@
 import { Row, Col, Form, Button, Collapse, Container } from 'react-bootstrap';
 import { useState } from 'react';
+import PointsTable from './PointsTable';
 
 export default function ReferencePoints(props) {
 	const [open, setOpen] = useState(false);
+	const generateOptions = () => {
+		/* An API should be called here to get the points and the function return them */
+		return (
+			<>
+				<option key={1} value="Point 1">
+					Point 1
+				</option>
+				<option key={2} value="Point 2">
+					Point 2
+				</option>
+				<option key={3} value="Point 3">
+					Point 3
+				</option>
+				<option key={4} value="Point 4">
+					Point 4
+				</option>
+			</>
+		);
+	};
 	return (
 		<>
 			{/*Reference points field*/}
@@ -35,16 +55,10 @@ export default function ReferencePoints(props) {
 								value={props.refPoint}
 								onChange={(event) => {
 									props.setRefPoint(event.target.value);
-									console.log(props.refPoint);
 								}}
 							>
-								<option></option>
-								<option key={0} value="RefPoint 2">
-									RefPoint 2
-								</option>
-								<option key={1} value="RefPoint 3">
-									RefPoint 3
-								</option>
+								<option key={0}>Select point</option>
+								{generateOptions()}
 							</Form.Select>
 						</Form.Group>
 					</Row>
@@ -53,7 +67,12 @@ export default function ReferencePoints(props) {
 							<Button onClick={props.addRefPoint}>Add</Button>
 						</Col>
 					</Row>
-					<Row className="mb-3"></Row>
+					<Row className="mb-3">
+						<PointsTable
+							referencePoints={props.referencePoints}
+							delRefPoint={props.delRefPoint}
+						/>
+					</Row>
 				</Container>
 			</Collapse>
 		</>

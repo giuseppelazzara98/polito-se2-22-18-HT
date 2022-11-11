@@ -8,6 +8,7 @@ export default function Title(props) {
 				placeholder="Hike name"
 				value={props.title}
 				onChange={(event) => props.setTitle(event.target.value)}
+				required
 			/>
 		</Form.Group>
 	);

@@ -1,6 +1,19 @@
 import { Form, Col } from 'react-bootstrap';
 
 export default function StartPoint(props) {
+	const generateOptions = () => {
+		/* An api call should be made here to get all reference points points*/
+		return (
+			<>
+				<option key={1} value="Point 1">
+					Point 1
+				</option>
+				<option key={2} value="Point 2">
+					Point 2
+				</option>
+			</>
+		);
+	};
 	return (
 		<Form.Group as={Col} md="6">
 			<Form.Label>Start point</Form.Label>
@@ -8,13 +21,8 @@ export default function StartPoint(props) {
 				value={props.startPoint}
 				onChange={(event) => props.setStartPoint(event.target.value)}
 			>
-				{/* Instead of manual options here, API call to db to get list of points */}
-				<option key={0} value="StartPoint 1">
-					StartPoint 1
-				</option>
-				<option key={1} value="StartPoint 2">
-					StartPoint 2
-				</option>
+				<option key={0}>Select point</option>
+				{generateOptions()}
 			</Form.Select>
 		</Form.Group>
 	);
