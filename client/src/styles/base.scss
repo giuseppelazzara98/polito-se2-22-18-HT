@@ -68,3 +68,15 @@
     transform: rotate(360deg);
   }
 }
+
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-y: scroll;
+  height:100%;
+}
+
+html{
+  height: 100%;
+}

@@ -1,5 +1,5 @@
 import { Container } from 'react-bootstrap';
-import NewHikeForm from '../components/Navbar/NewHikeForm';
+import NewHikeForm from '../components/NewHikeForm/NewHikeForm';
 
 export default function NewHike(props) {
 	return (
