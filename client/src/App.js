@@ -20,11 +20,17 @@ function App() {
 function App2() {
 	const [hikes, setHikes] = useState([]);
 	const [filters, setFilters] = useState([]);
+	const [facets, setFacets] = useState({});
 
 	const getHikes = async (dataOnRequest) => {
 		try {
-		  const hikes = await API.getAllHikes(dataOnRequest);
+		  const {hikes, ...others} = await API.getAllHikes(dataOnRequest);
 		  setHikes(hikes);
+			if (Object.keys(facets).length === 0) {
+				setFacets({
+					...others
+				});
+			}
 		} catch (err) {
 		  console.log(err);
 		}
@@ -57,7 +63,7 @@ function App2() {
 			<NavbarHead/>
 			<main className="main-wrap">
         <Routes>
-          <Route path="/" element={<HomePage hikes={hikes} filters={filters} setFilters={setFilters}/>} />
+          <Route path="/" element={<HomePage hikes={hikes} filters={filters} setFilters={setFilters} facets={facets}/>} />
         </Routes>
         <div id='modal-root'/>
 			</main>

@@ -33,7 +33,7 @@ function FilterModal(props) {
 }
 
 export default function FiltersContainer(props) {
-  const {filters, setFilters} = props;
+  const {filters, setFilters, facets} = props;
   const [modalOpen, setModalOpen] = useState(false);
   const [currentMinMaxExpectedTime, setCurrentMinMaxExpectedTime] = useState([null, null])
   const [currentMinMaxLength, setCurrentMinMaxLength] = useState([null, null])
@@ -81,57 +81,12 @@ export default function FiltersContainer(props) {
     },
   ];
 
-  const expectedTimeFacets = [
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7,
-    8,
-    9,
-    10,
-    11,
-    12,
-    13,
-    14,
-    15,
-    16,
-    17,
-    18,
-    19,
-    20,
-    21,
-    22,
-    23,
-    24
-  ]
+  const expectedTimeFacets = facets?.distinctTimes;
 
-  const lengthFacets = [
-    4,
-    5,
-    6,
-    10,
-    12,
-    15,
-    20,
-    30,
-    50,
-    70,
-  ]
+  const lengthFacets = facets?.distinctLengths;
 
-  const ascentFacets = [
-    1000,
-    2000,
-    3000,
-    3500,
-    4000,
-    500,
-    700,
-    600,
-    900
-  ]
+  const ascentFacets = facets?.distinctAscents;
+
 
   const addFilter = (key, id) => {
     setFilters(prevFilters => [...prevFilters, {key: key, id:id}])

@@ -12,7 +12,7 @@ async function getAllHikes(data) {
     });
     if (response.ok) {
       const hikesJson = await response.json();
-      return hikesJson.map((r) => ({
+      const hikes = hikesJson?.hikes?.map((r) => ({
         startPlace: r.start_place,
         endPlace: r.end_place,
         pathLength: r.length,
@@ -23,6 +23,12 @@ async function getAllHikes(data) {
         name: r.name,
         description: r.description
       }));
+      return {
+        hikes: hikes,
+        distinctTimes: hikesJson?.distinct_times || [],
+        distinctLengths: hikesJson?.distinct_lengths || [],
+        distinctAscents: hikesJson?.distinct_ascents || [],
+      }
     } else {
       if (response.status === 500) {
         err.message = "500 INTERNAL SERVER ERROR";
