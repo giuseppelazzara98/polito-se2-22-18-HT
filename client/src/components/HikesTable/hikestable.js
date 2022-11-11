@@ -7,6 +7,7 @@ import {
   } from "react-bootstrap";
   import { useState } from "react";
   import styles from "./index.module.scss";
+import { formatDuration } from "../../helpers/utility";
   
   function HikesTable(props) {
     return (
@@ -77,7 +78,7 @@ import {
                   <td>{props.hike.startPlace}</td>
                   <td>{props.hike.endPlace}</td>
                   <td>{props.hike.pathLength}</td>
-                  <td>{props.hike.expTime}</td>
+                  <td>{formatDuration(props.hike.expTime)}</td>
                   <td>{props.hike.ascent}</td>
                 </tr>
                 </Table>
