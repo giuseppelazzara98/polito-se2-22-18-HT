@@ -50,7 +50,7 @@ class HikeDAO {
     /* 
         Difficulties -> Integer:
 
-        0 -> tourist
+        0 -> turist
         1 -> hiker
         2 -> professional hiker
 
@@ -59,13 +59,14 @@ class HikeDAO {
     // get all filtered hikes
     getAllFilteredHikes = (filters) => {
 
-        let sql = this.knex.select('HIKE.name', 'HIKE.id_hike', 'HIKE.description', 'P1.description as START_PLACE', 'P2.description as END_PLACE', 'HIKE.length', 'HIKE.expected_time', 'HIKE.ascent', 'HIKE.difficulty', 'HIKE.geographical_area')
+        let sql = this.knex.select('HIKE.name', 'HIKE.id_hike', 'HIKE.description', 'P1.description as START_PLACE', 'P2.description as END_PLACE', 'PR.name as PROVINCE', 'HIKE.length', 'HIKE.expected_time', 'HIKE.ascent', 'HIKE.difficulty')
             .from('HIKE')
             .join('PLACE as P1', { 'P1.id_place': 'HIKE.id_start_place' })
-            .join('PLACE as P2', { 'P2.id_place': 'HIKE.id_end_place' });
+            .join('PLACE as P2', { 'P2.id_place': 'HIKE.id_end_place' })
+            .join('PROVINCE as PR', { 'PR.id_province': 'HIKE.id_province' });
 
-        if (filters.geo_area.length !== 0) {
-            sql = sql.whereIn('HIKE.geographical_area', filters.geo_area);
+        if (filters.province !== null) {
+            sql = sql.where('HIKE.id_province', filters.province);
         }
         if (filters.difficulty.length !== 0) {
             sql = sql.whereIn('HIKE.difficulty', filters.difficulty);
@@ -120,6 +121,7 @@ class HikeDAO {
                             description: el.description,
                             start_place: el.START_PLACE,
                             end_place: el.END_PLACE,
+                            province: el.PROVINCE,
                             length: el.length,
                             expected_time: el.expected_time,
                             ascent: el.ascent,

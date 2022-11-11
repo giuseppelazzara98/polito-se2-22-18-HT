@@ -10,14 +10,14 @@ const hikeDao = require('../modules/DbManager').hike_dao;
 // Examples of body:
 /*
     {
-        "geo_area": [],
+        "province": null,
         "difficulty": ["tourist"],
         "exp_time": { "min": 5.2, "max": 7.0 },
         "length": { "min": 0.0, "max": 15.7 },
         "ascent": { "min": 500, "max": 2000 }
     }
     {
-        "geo_area": ["nord est","nord ovest"],
+        "province": 1,
         "difficulty": ["professional hiker"],
         "exp_time": { "min": 5.6, "max": 9.0 },
         "length": { "min": 0.0, "max": 15.7 },
