@@ -1,7 +1,7 @@
 @import "../../../styles/configs";
 
 .container {
-  margin-top: 22px;
+  // margin-top: 22px;
   .blockSubTitle {
     @include font(300, 16px, 23px, 0.15px);
     text-align: center;
@@ -9,7 +9,7 @@
   }
   .pit {
     width: 5%;
-    background-color: #e8f3f3;
+    background-color: rgba($color: $primary-green, $alpha: 0.5);
     bottom: 0;
   }
   .selectRange {
