@@ -1,5 +1,4 @@
 const testPlaceDao = require('../modules/DbManager').place_dao;
-const testProvinceDao = require('../modules/DbManager').province_dao;
 
 describe('TestPlaceDao', () => {
 
