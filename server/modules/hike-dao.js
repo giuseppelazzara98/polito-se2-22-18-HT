@@ -134,6 +134,63 @@ class HikeDAO {
             });
         });
     };
+
+    
+    insertHike = (hike) => {
+        return new Promise((resolve, reject) => {
+            
+            const sql = "INSERT INTO HIKE (name, id_start_place, id_end_place, id_province, description, length, expected_time, ascent, difficulty) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+            /*
+            title: title,
+            province: province,
+            length: length,
+            expectedTime: expectedTime,
+            ascent: ascent,
+            difficulty: difficulty,
+            startPoint: startPoint,
+            endPoint: endPoint,
+            referencePoints: referencePoints,
+            gpxFile: gpxFile,
+            description: description,
+            refPoint: refPoint
+            */
+           
+            db.run(sql, [hike.title, hike.startPoint, hike.endPoint, hike.province, hike.description, hike.length, hike.expectedTime, hike.ascent, hike.difficulty], (err, row) => {
+                if (err){
+                    console.log('Error running sql: ' + sql);
+                    console.log(err);
+                    reject(err);
+                } else {
+                    resolve(this.lastID);   //faccio tornare il l'id inserito 
+                }
+            });
+        });
+        
+    };
+    
+    insertHikePlace = (id_hike, id_reference_point, order) => {
+        return new Promise((resolve, reject) => {
+            
+            const sql = "INSERT INTO HIKE_PLACE (id_hike, id_place, order) VALUES (?, ?, ?)";
+
+            db.run(sql, [id_hike, id_reference_point, order], (err, row) => {
+                if (err){
+                    console.log('Error running sql: ' + sql);
+                    console.log(err);
+                    reject(err);
+                } else {
+                    resolve(true);  
+                }
+            });
+        });
+        
+    };
+
+
 }
+
+
+
 
 module.exports = HikeDAO;

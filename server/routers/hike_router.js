@@ -1,6 +1,7 @@
 'use strict';
 
 const express = require('express');
+const PlaceDAO = require('../modules/place-dao');
 //const { check, body, validationResult } = require('express-validator');
 const router = express.Router();
 const hikeDao = require('../modules/DbManager').hike_dao;
@@ -64,5 +65,34 @@ router.post('/hikes',
             return res.status(500).json({ error: "Internal Server Error" });
         }
     });
+
+    
+//POST /api/newHike
+router.post('/newHike',
+async (req, res) => {
+
+    if (Object.keys(req.body).length === 0) {
+        console.log("Empty body!");
+        return res.status(422).json({ error: "Empty body request" });
+    }
+
+    try {
+
+        const result = await hikeDao.insertHike(req.body.hike);
+
+        // insert in hike-place table, cycling on reference points
+           
+        for(let i=0; i<req.body.hike.referencePoints.length; i++){
+            //insertHikePlace(id_hike, id_reference_point, order)
+            let result2 = await hikeDao.insertHikePlace(result, req.body.hike.referencePoints[i], i+1);
+        }
+        
+
+        return res.status(200).json(result);
+    }
+    catch (err) {
+        return res.status(500).json({ error: "Internal Server Error" });
+    }
+});
 
 module.exports = router;
