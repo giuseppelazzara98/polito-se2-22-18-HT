@@ -64,11 +64,28 @@ So that users can look at it
 
 #### Procedure
 
-In the right corner of the screen, push the login button
-
 1. In the right corner of the screen, push the login button
 2. It appear a new page with a login form
 
 #### Expected result
 
 Point 2 is true
+
+### Test 2 - add a new hike
+
+#### Procedure
+
+1. write a name for the hike in the title
+2. Select a province for the hike in the drop down menu
+3. Insert a length , an expected time and the ascent of the hike using integers
+4. Select a difficulty by click the round button near the level of difficulty,it will change colour
+5. Select a starting point in the drop down menu
+6. Select an ending point in the dropdown menu
+7. Add reference points selecting them from a database
+8. Insert a description for the hike in the description form
+9. Press submit to insert the hike in the database
+10. The hike is showed in the hike tables(depending on the activated filters)
+
+#### Expected result
+
+Point 10 is true
