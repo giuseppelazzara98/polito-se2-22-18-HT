@@ -9,6 +9,8 @@ export default function Title(props) {
 				value={props.title}
 				onChange={(event) => props.setTitle(event.target.value)}
 				required
+				minLength={4}
+				maxLength={30}
 			/>
 		</Form.Group>
 	);

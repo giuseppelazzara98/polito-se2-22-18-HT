@@ -13,10 +13,12 @@ function NavbarHead(props) {
 					{' '}
 					<CiMountain1 size={30}> </CiMountain1>HTracker
 				</Navbar.Brand>
-				<Button variant="secondary" onClick={() => navigate('/login')}>
-					{' '}
-					Login
-				</Button>
+				{!props.loggedIn && (
+					<Button variant="secondary" onClick={() => navigate('/login')}>
+						{' '}
+						Login
+					</Button>
+				)}
 			</Container>
 		</Navbar>
 	);

@@ -1,28 +1,31 @@
 import { Row, Col, Form, Button, Collapse, Container } from 'react-bootstrap';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import PointsTable from './PointsTable';
+import Select from 'react-select';
+import API from '../../API/api';
 
 export default function ReferencePoints(props) {
 	const [open, setOpen] = useState(false);
-	const generateOptions = () => {
-		/* An API should be called here to get the points and the function return them */
-		return (
-			<>
-				<option key={1} value="Point 1">
-					Point 1
-				</option>
-				<option key={2} value="Point 2">
-					Point 2
-				</option>
-				<option key={3} value="Point 3">
-					Point 3
-				</option>
-				<option key={4} value="Point 4">
-					Point 4
-				</option>
-			</>
-		);
-	};
+	const [points, setPoints] = useState([]);
+
+	useEffect(() => {
+		const loadPoints = () => {
+			API.getPointsByProvinceId(props.province)
+				.then((list) => {
+					return list.map((item) => {
+						return {
+							label: item.description,
+							value: item.id_place
+						};
+					});
+				})
+				.then((newList) => {
+					setPoints(newList);
+				});
+		};
+		loadPoints();
+	}, [props.province]);
+
 	return (
 		<>
 			{/*Reference points field*/}
@@ -51,15 +54,17 @@ export default function ReferencePoints(props) {
 					<Row className="mb-3">
 						<Form.Group>
 							<Form.Label>Select a reference point</Form.Label>
-							<Form.Select
-								value={props.refPoint}
+							<Select
+								className="basic-single"
+								classNamePrefix="select"
+								defaultValue={props.refPoint}
+								name="refPoint"
+								isSearchable={true}
+								options={points}
 								onChange={(event) => {
-									props.setRefPoint(event.target.value);
+									props.setRefPoint(event.value);
 								}}
-							>
-								<option key={0}>Select point</option>
-								{generateOptions()}
-							</Form.Select>
+							/>
 						</Form.Group>
 					</Row>
 					<Row className="mb-3">

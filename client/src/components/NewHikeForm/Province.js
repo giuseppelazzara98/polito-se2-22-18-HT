@@ -1,30 +1,43 @@
 import { Form, Col } from 'react-bootstrap';
+import { useEffect, useState } from 'react';
+import Select from 'react-select';
+import API from '../../API/api';
 
 export default function Province(props) {
-	const generateOptions = () => {
-		/* An api should be called here to retuen provinces as options*/
-		return (
-			<>
-				<option key={1} value="Province 1">
-					Province 1
-				</option>
-				<option key={2} value="Province 2">
-					Province 2
-				</option>
-			</>
-		);
-	};
+	const [provincesList, setProvincesList] = useState([]);
+
+	useEffect(() => {
+		const loadProvinces = () => {
+			API.getProvinces()
+				.then((list) => {
+					return list.map((item) => {
+						return {
+							label: item.name,
+							value: item.id_province
+						};
+					});
+				})
+				.then((newList) => {
+					setProvincesList(newList);
+				});
+		};
+		loadProvinces();
+	}, []);
+
 	return (
 		<Form.Group as={Col} md="6">
 			<Form.Label>Province</Form.Label>
-			<Form.Select
-				value={props.province}
-				onChange={(event) => props.setProvince(event.target.value)}
-			>
-				{/* Instead of manual options here, API call to db to get list of provinces */}
-				<option key={0}>Select Province</option>
-				{generateOptions()}
-			</Form.Select>
+			<Select
+				className="basic-single"
+				classNamePrefix="select"
+				defaultValue="1"
+				name="province"
+				isSearchable={true}
+				options={provincesList}
+				onChange={(event) => {
+					props.setProvince(event.value);
+				}}
+			/>
 		</Form.Group>
 	);
 }

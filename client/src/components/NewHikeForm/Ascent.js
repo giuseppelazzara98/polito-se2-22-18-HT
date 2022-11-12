@@ -8,6 +8,10 @@ export default function Ascent(props) {
 				type="number"
 				value={props.ascent}
 				onChange={(event) => props.setAscent(event.target.value)}
+				placeholder="0"
+				required={true}
+				min={0}
+				max={8849}
 			/>
 			<Form.Text>Ascent in Meters.</Form.Text>
 		</Form.Group>

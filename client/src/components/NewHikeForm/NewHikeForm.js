@@ -13,10 +13,10 @@ import Description from './Description';
 
 export default function NewHikeForm(props) {
 	const [title, setTitle] = useState('');
-	const [province, setProvince] = useState('');
-	const [length, setLength] = useState(0);
-	const [expectedTime, setExpectedTime] = useState(0);
-	const [ascent, setAscent] = useState(0);
+	const [province, setProvince] = useState(1);
+	const [length, setLength] = useState('');
+	const [expectedTime, setExpectedTime] = useState('');
+	const [ascent, setAscent] = useState('');
 	const [difficulty, setDifficulty] = useState('');
 	const [startPoint, setStartPoint] = useState('');
 	const [endPoint, setEndPoint] = useState('');
@@ -46,8 +46,10 @@ export default function NewHikeForm(props) {
 	};
 
 	const addRefPoint = () => {
-		const list = [...referencePoints, refPoint];
-		setReferencePoints(list);
+		if (referencePoints.find((point) => point === refPoint) === undefined) {
+			const list = [...referencePoints, refPoint];
+			setReferencePoints(list);
+		}
 	};
 
 	const delRefPoint = (point) => {
@@ -84,9 +86,17 @@ export default function NewHikeForm(props) {
 			{/*Fourth row contains the start and end points*/}
 			<Row className="mb-3">
 				{/*Start point field*/}
-				<StartPoint startPoint={startPoint} setStartPoint={setStartPoint} />
+				<StartPoint
+					startPoint={startPoint}
+					setStartPoint={setStartPoint}
+					province={province}
+				/>
 				{/*End point field*/}
-				<EndPoint endPoint={endPoint} setEndPoint={setEndPoint} />
+				<EndPoint
+					endPoint={endPoint}
+					setEndPoint={setEndPoint}
+					province={province}
+				/>
 			</Row>
 
 			{/*Fifth row contains Reference points*/}
@@ -100,6 +110,7 @@ export default function NewHikeForm(props) {
 					setRefPoint={setRefPoint}
 					addRefPoint={addRefPoint}
 					delRefPoint={delRefPoint}
+					province={province}
 				/>
 			</Row>
 
