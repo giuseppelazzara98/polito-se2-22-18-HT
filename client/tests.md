@@ -40,7 +40,6 @@ Point 3 is true
 
 Point 5 is true
 
-
 ### Test 3 - open the description of an hike
 
 #### Procedure
@@ -48,6 +47,27 @@ Point 5 is true
 1. On the hike line , press the ↓ button
 2. It will apper a table with the data about the hike
 3. To close the table, press ↑ button
+
+#### Expected result
+
+Point 2 is true
+
+## Story 2 - Describe Hikes
+
+```
+As a local guide \
+I want to add a hike description \
+So that users can look at it
+```
+
+### Test 1 - go to login page
+
+#### Procedure
+
+In the right corner of the screen, push the login button
+
+1. In the right corner of the screen, push the login button
+2. It appear a new page with a login form
 
 #### Expected result
 
