@@ -12,3 +12,6 @@ export const formatDuration = (duration) => {
   
   return `${days > 0 ? `${days} d ` : ""}${hours} h ${minutes} m`;
 }
+export const formatAscent = (ascent) => {
+  return `${ascent/100} %`;
+}

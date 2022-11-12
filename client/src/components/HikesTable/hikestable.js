@@ -7,7 +7,7 @@ import {
   } from "react-bootstrap";
   import { useState } from "react";
   import styles from "./index.module.scss";
-import { formatDuration } from "../../helpers/utility";
+import { formatDuration ,formatAscent} from "../../helpers/utility";
   
   function HikesTable(props) {
     return (
@@ -30,7 +30,6 @@ import { formatDuration } from "../../helpers/utility";
                 ))}
               </tbody>
             </Table>
-       
       </Container>
     );
   }
@@ -41,16 +40,13 @@ import { formatDuration } from "../../helpers/utility";
     return (
       <>
         <tr className={styles.wrap}>
-          
           <td>{props.hike.name}</td>
-          
-          
           <td>{getDifficulty(props.hike.difficulty)}</td>
           
           <td>
             {" "}
             <Button 
-              variant="secondary"
+             className={styles.button} 
               onClick={() => {
                 setTab((value) => !value);
               }}
@@ -68,7 +64,7 @@ import { formatDuration } from "../../helpers/utility";
                
                 <Table>
                 <tr>
-                  <th className={styles.tableColumnTitle}>Start Place</th>
+                  <th>Start Place</th>
                   <th>End Place</th>
                   <th>Path Length</th>
                   <th>Expected Time</th>
@@ -77,9 +73,9 @@ import { formatDuration } from "../../helpers/utility";
                 <tr>
                   <td>{props.hike.startPlace}</td>
                   <td>{props.hike.endPlace}</td>
-                  <td>{props.hike.pathLength}</td>
+                  <td>{props.hike.pathLength} km</td>
                   <td>{formatDuration(props.hike.expTime)}</td>
-                  <td>{props.hike.ascent}</td>
+                  <td>{formatAscent(props.hike.ascent)}</td>
                 </tr>
                 </Table>
                 <Card.Header>Description</Card.Header>{" "}
