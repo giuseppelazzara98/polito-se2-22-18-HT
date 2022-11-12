@@ -14,6 +14,8 @@ class ProvinceDAO {
         });
     }
 
+    /*
+
     // create the province table
     newProvinceTable = () => {
         return new Promise((resolve, reject) => {
@@ -45,6 +47,7 @@ class ProvinceDAO {
 
         });
     }
+    */
 
     // get all provinces
     getAllProvinces = () => {

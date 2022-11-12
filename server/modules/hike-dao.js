@@ -15,6 +15,8 @@ class HikeDAO {
         });
     }
 
+    /*
+
     // create the hike table
     newHikeTable = () => {
         return new Promise((resolve, reject) => {
@@ -46,6 +48,8 @@ class HikeDAO {
 
         });
     }
+
+    */
 
     /* 
         Difficulties -> Integer:
