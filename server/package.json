@@ -17,6 +17,7 @@
     "express-router": "^0.0.1",
     "express-session": "^1.17.2",
     "express-validator": "^6.11.1",
+    "knex": "^2.3.0",
     "morgan": "^1.10.0",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",

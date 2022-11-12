@@ -4,6 +4,10 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 
+const hikeRouter = require('./routers/hike_router');
+const provinceRouter = require('./routers/province_router');
+const placeRouter = require('./routers/place_router');
+
 // init express
 const app = new express();
 const port = 3001;
@@ -21,7 +25,9 @@ app.use(express.json());
 
 /******API******/
 
-
+app.use('/api', hikeRouter);
+app.use('/api', provinceRouter);
+app.use('/api', placeRouter);
 
 // activate the server
 app.listen(port, () => {
