@@ -16,8 +16,9 @@ So that I can get information on them
 
 1. On the filter section select one or more filters
 2. The filter change state:
-   1. if it it a checkbox it show if it is selected or not
+   1. if it is a checkbox it show if it is selected or not
    2. if it is a range filter, its extremities show the range choosen by the user
+   3. if it is a select it show the selected value
 3. The list of the hikes is updated according to filters selected
 
 #### Expected result
@@ -31,8 +32,9 @@ Point 3 is true
 1. Open filters modal by clicking on the `filter button`
 2. Select one or more filters
 3. The filter change state:
-   1. if it it a checkbox it show if it is selected or not
+   1. if it is a checkbox it show if it is selected or not
    2. if it is a range filter, its extremities show the range choosen by the user
+   3. if it is a select it show the selected value
 4. Close the modal clicking on the `close button`
 5. The list of the hikes is updated according to filters selected
 
