@@ -13,6 +13,7 @@ describe('Test places apis', () => {
 
     //Testing GET /api/places/:provinceId
     getAllPlacesByProvinceId(200);
+    getPlaceByWrongProvinceId(422, 0);
 
 });
 
@@ -22,8 +23,8 @@ function getAllPlacesByProvinceId(expectedHTTPStatus) {
 
         try {
             const currentProvinces = await province_dao.getAllProvinces();
-            
-            for(let i = 0; i < currentProvinces.length; i++) {
+
+            for (let i = 0; i < currentProvinces.length; i++) {
 
                 const id_province = currentProvinces[i].id_province;
 
@@ -39,6 +40,24 @@ function getAllPlacesByProvinceId(expectedHTTPStatus) {
         } catch (err) {
             if (r.status === 500) {
                 console.log("---- Error on getAllPlacesByProvinceId ----");
+            }
+        }
+
+    });
+}
+
+function getPlaceByWrongProvinceId(expectedHTTPStatus, id_province) {
+    it('Getting place by wrong province_id', async () => {
+
+        try {
+            agent.get('/api/places/' + id_province)
+                .then(function (r) {
+                    r.should.have.status(expectedHTTPStatus);
+                });
+
+        } catch (err) {
+            if (r.status === 500) {
+                console.log("---- Error on getPlaceByWrongProvinceId ----");
             }
         }
 

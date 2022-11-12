@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "apiTest": "./node_modules/.bin/mocha test --runInBand--timeout 10000 --exit",
-    "test": "node_modules/.bin/jest --silent > ./unitTestResult.txt",
+    "test": "node_modules/.bin/jest --silent --coverage > ./unitTestResult.txt",
     "start": "node server.js"
   },
   "author": "",

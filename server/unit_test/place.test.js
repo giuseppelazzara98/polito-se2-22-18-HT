@@ -3,76 +3,34 @@ const testProvinceDao = require('../modules/DbManager').province_dao;
 
 describe('TestPlaceDao', () => {
 
-    testGetAllPlaces(3);
-    /*testGetPlacesByProvinceId();
+    testGetPlacesByProvinceId(0, false);
+    testGetPlacesByProvinceId(1, true);
+    testGetPlacesByProvinceId(2, true);
+    testGetPlacesByProvinceId(3, true);
+    testGetPlacesByProvinceId(6, true);
+    testGetPlacesByProvinceId(7, true);
+    testGetPlacesByProvinceId(237, false);
 
     // CLOSE CONNECTION TO PLACE TABLE
 
     testClosePlaceTable();
-    testGetAllPlaces();
-    testGetPlacesByProvinceId();*/
+    testGetPlacesByProvinceId(1, true);
 
 });
 
-async function getCurrentProvinces() {
-    try {
-        var res = await testProvinceDao.getAllProvinces();
-        return res;
-    } catch (err) {
-        console.log("---- Cannot get all provinces ----");
-    }
-}
-
-async function getCurrentPlaces() {
-    try {
-        let res = await testPlaceDao.getAllPlaces();
-        return res.length;
-    } catch (err) {
-        console.log("---- Cannot get all places ----");
-    }
-}
-
-async function getCurrentPlacesByProvinceIds(province_numbers) {
-
-    let currentNumberOfPlacesByProvinceId = [];
-
-    try {
-
-        for(let i=0; i<province_ids; i++) {
-            const res = await testPlaceDao.getAllPlacesByProvinceId(province_ids[i]);
-            currentNumberOfPlacesByProvinceId.push(res.length);
-        }
-
-        return currentNumberOfPlacesByProvinceId;
-    } catch (err) {
-        console.log("---- Cannot get places by province ids ----");
-    }
-}
-
-function testGetAllPlaces(result) {
-    test('Test get places', async () => {
-        try {
-            let res = await testProvinceDao.getAllPlaces();
-            console.log(result);
-            console.log(res.length);
-            expect(res.length).toStrictEqual(result);
-        }
-        catch (err) {
-            console.log("---- Error on testGetAllPlaces ----");
-            return;
-        }
-    });
-}
-
-function testGetPlacesByProvinceId(province_numbers, result) {
+function testGetPlacesByProvinceId(id_province, expextedResult) {
     test('Test get places by province id', async () => {
         try {
 
-            console.log(province_numbers);
-            console.log(result);
-            for(let i=0; i<province_numbers.length; i++) {
-                var res = await testPlaceDao.getAllPlacesByProvinceId(province_numbers[i]);
-                expect(res.length).toStrictEqual(result[i]);
+            const places = await testPlaceDao.getAllPlacesByProvinceId(id_province);
+
+            expect(places).not.toBeNull();
+
+            if(expextedResult === true) {
+                expect(places.length).toBeGreaterThan(0);
+            }
+            else {
+                expect(places.length).toBe(0);
             }
         }
         catch (err) {

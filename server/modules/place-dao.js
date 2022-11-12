@@ -50,32 +50,6 @@ class PlaceDAO {
 
     */
 
-    // get all places
-    getAllPlaces = () => {
-
-        const sql = "SELECT * FROM PLACE;";
-
-        return new Promise((resolve, reject) => {
-            this.db.all(sql, [], (err, rows) => {
-                if (err) {
-                    console.log('Error running sql: ' + sql);
-                    console.log(err);
-                    reject(err);
-                }
-                const places = rows.map((el) => {
-                    return {
-                        id_place: el.id_place,
-                        description: el.description,
-                        latitude: el.latitude,
-                        longitude: el.longitude,
-                        type: el.type
-                    }
-                });
-                resolve(places);
-            });
-        });
-    }
-
     // get all places by province id
     getAllPlacesByProvinceId = (province_id) => {
 
