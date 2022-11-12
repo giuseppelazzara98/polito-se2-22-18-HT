@@ -15,11 +15,11 @@ class HikeDAO {
         });
     }
 
-    // create the service table
+    // create the hike table
     newHikeTable = () => {
         return new Promise((resolve, reject) => {
 
-            const sql = "CREATE TABLE IF NOT EXISTS HIKE(id_hike INTEGER NOT NULL, name TEXT, id_start_place INTEGER NOT NULL, id_end_place INTEGER NOT NULL, description TEXT, length REAL, expected_time REAL, ascent INTEGER, difficulty INTEGER, geographical_area TEXT, FOREIGN KEY(id_end_place) REFERENCES PLACE(id_place), FOREIGN KEY(id_start_place) REFERENCES PLACE(id_place), PRIMARY KEY(id_hike AUTOINCREMENT));";
+            const sql = "CREATE TABLE IF NOT EXISTS HIKE(id_hike INTEGER NOT NULL, name TEXT, id_start_place INTEGER NOT NULL, id_end_place INTEGER NOT NULL, id_province INTEGER, description TEXT, length REAL, expected_time REAL, ascent INTEGER, difficulty INTEGER, FOREIGN KEY(id_end_place) REFERENCES PLACE(id_place), FOREIGN KEY(id_start_place) REFERENCES PLACE(id_place), FOREIGN KEY(id_province) REFERENCES PROVINCE(id_province), PRIMARY KEY(id_hike AUTOINCREMENT));";
             this.db.run(sql, (err) => {
                 if (err) {
                     console.log('Error running sql: ' + sql);
@@ -31,7 +31,7 @@ class HikeDAO {
         });
     }
 
-    // drop the service table
+    // drop the hike table
     dropHikeTable = () => {
         return new Promise((resolve, reject) => {
             const sql = "DROP TABLE IF EXISTS HIKE;";
