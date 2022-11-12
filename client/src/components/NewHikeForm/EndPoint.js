@@ -12,7 +12,7 @@ export default function EndPoint(props) {
 				.then((list) => {
 					return list.map((item) => {
 						return {
-							label: item.description,
+							label: item.name,
 							value: item.id_place
 						};
 					});
@@ -21,7 +21,9 @@ export default function EndPoint(props) {
 					setPoints(newList);
 				});
 		};
-		loadPoints();
+		if (props.province !== '') {
+			loadPoints();
+		}
 	}, [props.province]);
 	return (
 		<Form.Group as={Col} md="6">

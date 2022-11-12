@@ -13,7 +13,7 @@ import Description from './Description';
 
 export default function NewHikeForm(props) {
 	const [title, setTitle] = useState('');
-	const [province, setProvince] = useState(1);
+	const [province, setProvince] = useState('');
 	const [length, setLength] = useState('');
 	const [expectedTime, setExpectedTime] = useState('');
 	const [ascent, setAscent] = useState('');

@@ -14,7 +14,7 @@ export default function ReferencePoints(props) {
 				.then((list) => {
 					return list.map((item) => {
 						return {
-							label: item.description,
+							label: item.name,
 							value: item.id_place
 						};
 					});
@@ -23,7 +23,9 @@ export default function ReferencePoints(props) {
 					setPoints(newList);
 				});
 		};
-		loadPoints();
+		if (props.province !== '') {
+			loadPoints();
+		}
 	}, [props.province]);
 
 	return (
