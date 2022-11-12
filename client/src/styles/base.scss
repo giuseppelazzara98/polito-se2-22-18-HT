@@ -32,7 +32,8 @@
 
 .App {
   text-align: center;
-  background-color: rgba(210, 172, 77, 0.05) ;
+  background-color: $secondary-brown ;
+  min-height: 100vh;
 }
 
 .App-logo {

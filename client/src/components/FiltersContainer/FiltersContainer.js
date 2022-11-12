@@ -8,6 +8,7 @@ import { faFilter, faXmark } from '@fortawesome/free-solid-svg-icons';
 import noScroll from "no-scroll";
 import CheckboxFilter from "../CheckboxFilter/CheckboxFilter";
 import RangeFilter from "../RangeFilter/RangeFilter";
+import SelectFilter from "../SelectFilter/SelectFilter";
 
 function FilterModal(props) {
   const {
@@ -33,35 +34,14 @@ function FilterModal(props) {
 }
 
 export default function FiltersContainer(props) {
-  const {filters, setFilters, facets} = props;
+  const {filters, setFilters, facets, provincesFacets} = props;
   const [modalOpen, setModalOpen] = useState(false);
   const [currentMinMaxExpectedTime, setCurrentMinMaxExpectedTime] = useState([null, null])
   const [currentMinMaxLength, setCurrentMinMaxLength] = useState([null, null])
   const [currentMinMaxAscent, setCurrentMinMaxAscent] = useState([null, null])
   const isMobile = useMediaQuery({ maxWidth: maxBreakpoints.tabletLandscape });
 
-  const geograficAreaFacets = [
-    {
-      id: "nord-est",
-      value: "nord-est",
-      label: "nord est",
-    },
-    {
-      id: "nord-ovest",
-      value: "nord-ovest",
-      label: "nord ovest",
-    },
-    {
-      id: "center",
-      value: "center",
-      label: "center",
-    },
-    {
-      id: "south",
-      value: "south",
-      label: "south",
-    },
-  ];
+  const geograficAreaFacets = provincesFacets;
 
   const difficultyFacets = [
     {
@@ -105,15 +85,22 @@ export default function FiltersContainer(props) {
     setFilters(newFilter);
   }
 
+  const removeAndAddFilterSelect = (key, id) => {
+    let newFilter = filters.filter(prevFilter => prevFilter.key !== key);
+    if (geograficAreaFacets?.find(geoOption => geoOption.id === id)) {
+      newFilter.push({key: key, id: id});
+    }
+    setFilters(newFilter);
+  }
+
   const geograficFilters = () => {
     return (
-      <CheckboxFilter
+      <SelectFilter
         title="Geografic area"
-        name="geografic-area"
+        name="provinces"
         facets={geograficAreaFacets}
         filters={filters}
-        addFilter={addFilter}
-        removeFilter={removeFilter}
+        removeAndAddFilter={removeAndAddFilterSelect}
       />
     )
   }

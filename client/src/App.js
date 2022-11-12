@@ -21,6 +21,7 @@ function App2() {
 	const [hikes, setHikes] = useState([]);
 	const [filters, setFilters] = useState([]);
 	const [facets, setFacets] = useState({});
+	const [provincesFacets, setProvincesFacets] = useState([])
 
 	const getHikes = async (dataOnRequest) => {
 		try {
@@ -37,14 +38,14 @@ function App2() {
 	};
 
 	const getDataOnRequest = () => {
-		const geoFilters = filters.filter(filterEle => filterEle.key === "geografic-area")?.map(ele => ele.id) || [];
+		const provinceFilter = filters.filter(filterEle => filterEle.key === "provinces")?.map(ele => ele.id)?.[0] || null;
 		const difficultyFilter = filters.filter(filterEle => filterEle.key === "difficulty")?.map(ele => ele.id) || [];
 		const expTimeFilter = filters.filter(filterEle => filterEle.key === "expected-time")?.[0]?.values || [];
 		const lengthFilter = filters.filter(filterEle => filterEle.key === "length")?.[0]?.values || [];
 		const ascentFilter = filters.filter(filterEle => filterEle.key === "ascent")?.[0]?.values || [];
 
 		const newObj = {
-			geo_area: geoFilters,
+			province: provinceFilter,
 			difficulty: difficultyFilter,
 			exp_time: expTimeFilter?.length === 2 ? {min: expTimeFilter[0], max: expTimeFilter[1]} : null,
 			length: lengthFilter?.length === 2 ? {min: lengthFilter[0], max: lengthFilter[1]} : null,
@@ -58,12 +59,16 @@ function App2() {
 		getHikes(getDataOnRequest());
 	}, [filters]);
 
+	useEffect(() => {
+		API.getProvinces().then(response => setProvincesFacets(response));
+	}, []);
+
 	return (
 		<div className="App">
 			<NavbarHead/>
 			<main className="main-wrap">
         <Routes>
-          <Route path="/" element={<HomePage hikes={hikes} filters={filters} setFilters={setFilters} facets={facets}/>} />
+          <Route path="/" element={<HomePage hikes={hikes} filters={filters} setFilters={setFilters} facets={facets} provincesFacets={provincesFacets}/>} />
         </Routes>
         <div id='modal-root'/>
 			</main>

@@ -23,11 +23,11 @@
     height: 5px;
     position: absolute;
     bottom: -4px;
-    z-index: 1;
+    // z-index: 1;
   }
   .handleContainer {
     top: -7px;
-    z-index: 10;
+    // z-index: 10;
   }
   .handleButton {
     margin-left: -12px;
@@ -41,7 +41,7 @@
     background-color: $primary-green;
     border-radius: 100%;
     outline: none;
-    z-index: 10;
+    // z-index: 10;
     box-shadow: 0 2px 2px #dbdbdb;
   }
   .tooltip {
@@ -55,7 +55,7 @@
     position: absolute;
     transform: translate(-50%, -50%);
     bottom: 14px;
-    z-index: 10;
+    z-index: 1;
     @include font(500, 10.24px, 15px, normal);
     &:after {
       top: 100%;

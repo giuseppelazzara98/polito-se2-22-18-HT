@@ -1,7 +1,7 @@
 const APIURL = new URL("http://localhost:3001/api/");
 
 async function getAllHikes(data) {
-    // call: GET /api/hikes
+    // call: POST /api/hikes
     let err = new Error();
     const response = await fetch(new URL("hikes", APIURL), {
       method: 'POST',
@@ -35,8 +35,30 @@ async function getAllHikes(data) {
         throw err;
       }
     }
-}  
+}
+
+const getProvinces = async () => {
+  let err = new Error();
+  const response = await fetch(new URL("provinces", APIURL));
+  if (response.ok) {
+    const provincesJson = await response.json();
+    const provinces = provincesJson?.map(province => ({
+      id: province.id_province,
+      value: province.name,
+      label: province.name,
+      abbreviation: province.abbreviation
+    }))
+    return provinces;
+  } else {
+    if (response.status === 500) {
+      err.message = "500 INTERNAL SERVER ERROR";
+      throw err;
+    }
+  }
+}
+
 const API = {
     getAllHikes,
+    getProvinces,
 }
 export default  API ;
