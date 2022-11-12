@@ -15,7 +15,11 @@ const db = new sqlite.Database('HikeTracker.db', (err) => {
 });
 
 const hikeDAO = require('./hike-dao');
+const provinceDAO = require('./province-dao');
+const placeDAO = require('./place-dao');
 
 const hike_dao = new hikeDAO(db,knex);
+const province_dao = new provinceDAO(db);
+const place_dao = new placeDAO(db);
 
-module.exports = { hike_dao };
+module.exports = { hike_dao, province_dao, place_dao };
