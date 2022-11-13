@@ -13,11 +13,11 @@ export default function LoginForm(props) {
 	// login function, passed as props to loginForm
 	const login = async (credentials) => {
 		try {
-			await API.logIn(credentials);
+			const user = await API.logIn(credentials);
 			props.setLoggedIn(true);
+			props.setUser(user);
 			return true;
 		} catch (err) {
-			console.log(err);
 			return false;
 		}
 	};

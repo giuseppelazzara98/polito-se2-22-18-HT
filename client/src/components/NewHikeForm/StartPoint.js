@@ -31,7 +31,7 @@ export default function StartPoint(props) {
 			<Select
 				className="basic-single"
 				classNamePrefix="select"
-				defaultValue="Select Point"
+				defaultValue={props.startPoint}
 				name="startPoint"
 				isSearchable={true}
 				options={points}

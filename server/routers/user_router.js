@@ -24,21 +24,14 @@ passport.use(
 );
 
 // serialize and de-serialize the user (user object <-> session)
-// we serialize the user id and we store it in the session: the session is very small in this way
+// we serialize the user and we store it in the session
 passport.serializeUser((user, done) => {
-	done(null, user.id);
+	done(null, user);
 });
 
 // starting from the data in the session, we extract the current (logged-in) user
-passport.deserializeUser((id, done) => {
-	userDao
-		.getUserById(id)
-		.then((user) => {
-			done(null, user); // this will be available in req.user
-		})
-		.catch((err) => {
-			done(err, null);
-		});
+passport.deserializeUser((user, done) => {
+	return done(null, user);
 });
 
 // custom middleware: check if a given request is coming from an authenticated user
@@ -97,7 +90,7 @@ router.delete('/sessions/current', (req, res) => {
 router.get('/sessions/current', (req, res) => {
 	if (req.isAuthenticated()) {
 		res.status(200).json(req.user);
-	} else res.status(401).json({ error: 'Unauthenticated user!' });
+	}
 });
 
 module.exports = router;

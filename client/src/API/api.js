@@ -26,6 +26,18 @@ const logOut = async () => {
 	if (response.ok) return null;
 };
 
+const getUserInfo = async () => {
+	const response = await fetch(new URL('sessions/current', APIURL), {
+		credentials: 'include'
+	});
+	if (response.ok) {
+		const user = await response.json();
+		return user;
+	} else {
+		return null;
+	}
+};
+
 const getProvinces = async () => {
 	const response = await fetch(new URL('provinces', APIURL), {
 		method: 'GET',
@@ -86,12 +98,12 @@ const createNewHike = async (hike) => {
 async function getAllHikes(data) {
 	// call: POST /api/hikes
 	let err = new Error();
-	const response = await fetch(new URL("hikes", APIURL), {
+	const response = await fetch(new URL('hikes', APIURL), {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'
 		},
-		body: JSON.stringify(data) 
+		body: JSON.stringify(data)
 	});
 	if (response.ok) {
 		const hikesJson = await response.json();
@@ -111,35 +123,35 @@ async function getAllHikes(data) {
 			hikes: hikes,
 			distinctTimes: hikesJson?.distinct_times || [],
 			distinctLengths: hikesJson?.distinct_lengths || [],
-			distinctAscents: hikesJson?.distinct_ascents || [],
-		}
+			distinctAscents: hikesJson?.distinct_ascents || []
+		};
 	} else {
 		if (response.status === 500) {
-			err.message = "500 INTERNAL SERVER ERROR";
+			err.message = '500 INTERNAL SERVER ERROR';
 			throw err;
 		}
 	}
 }
 
 const getProvincesFacets = async () => {
-let err = new Error();
-const response = await fetch(new URL("provinces", APIURL));
-if (response.ok) {
-	const provincesJson = await response.json();
-	const provinces = provincesJson?.map(province => ({
-		id: province.id_province,
-		value: province.name,
-		label: province.name,
-		abbreviation: province.abbreviation
-	}))
-	return provinces;
-} else {
-	if (response.status === 500) {
-		err.message = "500 INTERNAL SERVER ERROR";
-		throw err;
+	let err = new Error();
+	const response = await fetch(new URL('provinces', APIURL));
+	if (response.ok) {
+		const provincesJson = await response.json();
+		const provinces = provincesJson?.map((province) => ({
+			id: province.id_province,
+			value: province.name,
+			label: province.name,
+			abbreviation: province.abbreviation
+		}));
+		return provinces;
+	} else {
+		if (response.status === 500) {
+			err.message = '500 INTERNAL SERVER ERROR';
+			throw err;
+		}
 	}
-}
-}
+};
 
 const API = {
 	logIn,
@@ -150,6 +162,7 @@ const API = {
 	createNewHike,
 	getAllHikes,
 	getProvincesFacets,
+	getUserInfo
 };
 
 export default API;
