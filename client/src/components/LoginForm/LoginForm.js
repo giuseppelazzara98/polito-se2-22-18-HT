@@ -40,7 +40,7 @@ export default function LoginForm(props) {
 	return (
 		<>
 			<Row>
-				<Col xs={{ span: 4, offset: 4 }}>
+				<Col xs={{span: 12}} md={{ span: 4, offset: 4 }}>
 					<Form onSubmit={handleSubmit}>
 						<FloatingLabel label="Email" controlId="Email" className="my-5">
 							<Form.Control
