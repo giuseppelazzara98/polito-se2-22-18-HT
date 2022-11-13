@@ -12,6 +12,7 @@ import Ascent from './Ascent';
 import StartPoint from './StartPoint';
 import Description from './Description';
 import API from '../../API/api';
+import styles from './index.module.scss';
 
 export default function NewHikeForm(props) {
 	const [title, setTitle] = useState('');
@@ -36,7 +37,7 @@ export default function NewHikeForm(props) {
 			length: length,
 			expectedTimeString: expectedTime,
 			expectedTime: 0,
-			ascent: ascent,
+			ascent: ascent ,
 			difficulty: difficulty,
 			startPoint: startPoint,
 			endPoint: endPoint,
@@ -72,6 +73,7 @@ export default function NewHikeForm(props) {
 		});
 		hike.difficulty = parseInt(difficulty, 10);
 		hike.ascent = parseInt(ascent, 10);
+		hike.ascent = ascent * 100;
 		hike.length = parseInt(length, 10);
 		const addNewHike = async () => {
 			await API.createNewHike(hike);
@@ -168,7 +170,7 @@ export default function NewHikeForm(props) {
 			{/*Submit button*/}
 			<Row className="my-5">
 				<Col className="col-md-3">
-					<Button type="submit">Submit</Button>
+					<Button className={styles.button} type="submit">Submit</Button>
 				</Col>
 			</Row>
 		</Form>

@@ -1,0 +1,23 @@
+@import "../../../styles/configs";
+
+
+  .button{
+    background-color: $primary-green;
+    border-color: transparent;
+    &:hover{
+      background-color: $tertiary-green;
+      border-color: transparent;
+    }
+  }
+  .dataTitle {
+    @include font(700, 18px, 20px, 0);
+    color: $primary-green-light;
+  }
+  .dataName {
+    color: $primary-green;
+  }
+
+    
+  
+
+

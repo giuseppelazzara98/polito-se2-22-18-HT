@@ -11,9 +11,9 @@ export default function Ascent(props) {
 				placeholder="0"
 				required={true}
 				min={0}
-				max={8849}
+				max={100}
 			/>
-			<Form.Text>Ascent in Meters.</Form.Text>
+			<Form.Text>Ascent in percentage.</Form.Text>
 		</Form.Group>
 	);
 }
