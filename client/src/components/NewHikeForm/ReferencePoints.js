@@ -5,6 +5,7 @@ import Select from 'react-select';
 import API from '../../API/api';
 import styles from './index.module.scss';
 
+
 export default function ReferencePoints(props) {
 	const [open, setOpen] = useState(false);
 	const [points, setPoints] = useState([]);
@@ -36,10 +37,12 @@ export default function ReferencePoints(props) {
 				{!open && (
 					<Button
 
-						className={styles.button}
+						
+
 						onClick={() => setOpen(!open)}
 						aria-controls="reference-points"
 						aria-expanded={open}
+						className={styles.button}
 					>
 						Add Reference points
 					</Button >
@@ -49,8 +52,9 @@ export default function ReferencePoints(props) {
 				<Container id="reference-points">
 					<Row className="mb-3">
 						<Form.Group>
-							<Form.Label>Upload a gpx file</Form.Label>
+							<Form.Label className={styles.title}>Upload a gpx file</Form.Label>
 							<Form.Control
+							
 								type="file"
 								value={props.gpxFile}
 								onChange={(event) => props.setGpxFile(event.target.value)}
@@ -59,7 +63,7 @@ export default function ReferencePoints(props) {
 					</Row>
 					<Row className="mb-3">
 						<Form.Group>
-							<Form.Label>Select a reference point</Form.Label>
+							<Form.Label className={styles.title}>Select a reference point</Form.Label>
 							<Select
 								className="basic-single"
 								classNamePrefix="select"
