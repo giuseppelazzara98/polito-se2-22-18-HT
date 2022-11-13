@@ -50,7 +50,7 @@ router.get('/sessions/current', (req, res) => {
 	if (req.isAuthenticated()) {
 		res.status(200).json(req.user);
 	} else {
-		res.status(401);
+		res.status(401).end();
 	}
 });
 
