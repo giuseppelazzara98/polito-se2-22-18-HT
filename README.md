@@ -8,5 +8,4 @@ Authors: Gerardo Braia, Elisa Calì, Carpegna Francesco, Ahmed Khater, Giuseppe 
 
 TECHNOLOGY
 Front End : React, SASS
-Backend: nodejs, SQLite
-
+Backend: nodejs, SQLite, Knex
