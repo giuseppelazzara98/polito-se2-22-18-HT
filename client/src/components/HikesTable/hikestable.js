@@ -5,34 +5,29 @@ import {
     ListGroup,
     Container,
   } from "react-bootstrap";
-  import { useState } from "react";
-  import styles from "./index.module.scss";
+import { useState } from "react";
+import styles from "./index.module.scss";
 import { formatDuration ,formatAscent} from "../../helpers/utility";
   
   function HikesTable(props) {
     return (
-      <Container fluid className="mt-4 mt-md-0">
-  
-          
-            <Table hover size="sm" className={styles.wrap}>
-              <thead className={styles.dataName}>
-                <tr>
-                  <th>Name</th>
-                  <th>Province</th>
-                  <th>Difficulty</th>
-
-                </tr>
-              </thead>
-              <tbody>
-                {props.hikes.map((hike) => (
-                  <HikeRow
-                    hike={hike}
-                    key={hike.key}
-                  />
-                ))}
-              </tbody>
-            </Table>
-      </Container>
+      <div className={` ${styles.containerWrap}`}>
+        <div className={`table table-sm table-hover ${styles.wrap}`}>
+          <div className={styles.dataName}>
+            <span>Name</span>
+            <span>Province</span>
+            <span>Difficulty</span>
+          </div>
+          <div className={styles.bodyWrap}>
+            {props.hikes.map((hike) => (
+              <HikeRow
+                hike={hike}
+                key={hike.key}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
     );
   }
   
@@ -40,60 +35,53 @@ import { formatDuration ,formatAscent} from "../../helpers/utility";
     const [tab, setTab] = useState(false);
     
     return (
-      <>
-        <tr className={styles.wrap}>
-          <td>{props.hike.name}</td>
-          <td>{props.hike.province}</td>
-          <td>{getDifficulty(props.hike.difficulty)}</td>
-          
-          <td>
-            {" "}
+      <div className={styles.hikeRow}>
+        <div className={styles.hikeFirstRow}>
+          <span>{props.hike.name}</span>
+          <span>{props.hike.province}</span>
+          <span>{getDifficulty(props.hike.difficulty)}</span>
+          <div>
             <Button 
-             className={styles.button} 
+              className={styles.button} 
               onClick={() => {
                 setTab((value) => !value);
               }}
             >
               {tab ? "↑" : "↓"}
             </Button>
-          </td>
- 
-        </tr>
+          </div>
+        </div>
         {tab ? (
-          <tr>
-            <td colSpan={8} className=" border border-bottom-0  rounded-pill">
-              {" "}
-              <Card className="customized-color">
-               
-                <Table>
-                <tr>
-                  <th>Start Place</th>
-                  <th>End Place</th>
-                  <th>Path Length</th>
-                  <th>Expected Time</th>
-                  <th>Ascent</th>
-                </tr>
-                <tr>
-                  <td>{props.hike.startPlace}</td>
-                  <td>{props.hike.endPlace}</td>
-                  <td>{props.hike.pathLength} km</td>
-                  <td>{formatDuration(props.hike.expTime)}</td>
-                  <td>{formatAscent(props.hike.ascent)}</td>
-                </tr>
-                </Table>
-                <Card.Header>Description</Card.Header>{" "}
-                <ListGroup variant="flush">
-                  {" "}
-                    <ListGroup.Item>{props.hike.description}</ListGroup.Item>
-                    
-                </ListGroup>
-              </Card>
-            </td>
-          </tr>
+          <div className=" border border-0">
+            <Card className="customized-color">
+              <div className={styles.innerTable}>
+                <div className={styles.headerHinner}>
+                  <span>Start Place</span>
+                  <span>End Place</span>
+                  <span>Path Length</span>
+                  <span>Expected Time</span>
+                  <span>Ascent</span>
+                </div>
+                <div className={styles.bodyHinner}>
+                  <span>{props.hike.startPlace}</span>
+                  <span>{props.hike.endPlace}</span>
+                  <span>{props.hike.pathLength} km</span>
+                  <span>{formatDuration(props.hike.expTime)}</span>
+                  <span>{formatAscent(props.hike.ascent)}</span>
+                </div>
+              </div>
+              <Card.Header>Description</Card.Header>{" "}
+              <ListGroup variant="flush">
+                {" "}
+                  <ListGroup.Item>{props.hike.description}</ListGroup.Item>
+                  
+              </ListGroup>
+            </Card>
+          </div>
         ) : (
           ""
         )}
-      </>
+      </div>
     );
  
   }
