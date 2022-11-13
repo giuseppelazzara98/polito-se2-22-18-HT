@@ -16,6 +16,7 @@ import styles from './index.module.scss';
 
 
 export default function NewHikeForm(props) {
+	const {setUpdateHikes} = props;
 	const [title, setTitle] = useState('');
 	const [province, setProvince] = useState('');
 	const [length, setLength] = useState('');
@@ -80,7 +81,8 @@ export default function NewHikeForm(props) {
 			await API.createNewHike(hike);
 		};
 		addNewHike();
-		//navigate('/');
+		setUpdateHikes(prevstate => prevstate + 1);
+		navigate('/');
 	};
 
 	const addRefPoint = () => {

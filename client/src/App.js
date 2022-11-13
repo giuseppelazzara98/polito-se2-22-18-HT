@@ -29,6 +29,7 @@ function App2() {
 	const [facets, setFacets] = useState({});
 	const [provincesFacets, setProvincesFacets] = useState([]);
 	const [user, setUser] = useState({});
+	const [updateHikes, setUpdateHikes] = useState(0);
 
 	const getHikes = async (dataOnRequest) => {
 		try {
@@ -96,7 +97,7 @@ function App2() {
 
 	useEffect(() => {
 		getHikes(getDataOnRequest());
-	}, [filters]);
+	}, [filters, updateHikes]);
 
 	useEffect(() => {
 		API.getProvincesFacets().then((response) => setProvincesFacets(response));
@@ -129,7 +130,7 @@ function App2() {
 						path="/newHike"
 						element={
 							loggedIn && user.role === 'guide' ? (
-								<NewHike />
+								<NewHike setUpdateHikes={setUpdateHikes}/>
 							) : (
 								<Navigate to="/login" replace />
 							)
