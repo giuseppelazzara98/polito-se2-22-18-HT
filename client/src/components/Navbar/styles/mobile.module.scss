@@ -12,4 +12,33 @@
     border-color: transparent;
     
   }
+  &:global(.btn){
+    &:active{
+      background-color: $tertiary-green;
+      border-color: transparent;
+      
+    }
+  }
+  & + .button,
+  & + .buttonNavLink {
+    margin-left: 10px;
+  }
+}
+
+.buttonNavLink {
+  &:global(.btn) {
+    background-color: $primary-green;
+    border-color: transparent;
+    color: $primary-white;
+    &:hover,
+    &:active {
+      background-color: $tertiary-green;
+      color: $primary-white;
+      border-color: transparent;
+    }
+  }
+  & + .button,
+  & + .buttonNavLink {
+    margin-left: 10px;
+  }
 }

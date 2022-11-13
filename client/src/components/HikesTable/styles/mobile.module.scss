@@ -1,7 +1,19 @@
 @import "../../../styles/configs";
 
+.containerWrap {
+  margin-top: 40px;
+  overflow: auto;
+}
 .wrap {
-  
+  min-width: 450px;
+  font-size: 12px;
+  &:global(.table-sm) {
+    & > :global(:not(caption)) {
+      &  > * > * {
+        padding: 0;
+      }
+    }
+  }
   .button{
     background-color: $primary-green;
     border-color: transparent;
@@ -16,11 +28,36 @@
   }
   .dataName {
     color: $primary-green;
+    display: grid;
+    grid-template-columns: 3fr 1fr 1fr 0.5fr;
+    @include font(700, 14px, 16px, 0);
+    padding: 10px;
   }
-  @media (max-width: 768px) {
-    font-size: 12px;
-  }
-    
-  }
+  .bodyWrap {
+    .hikeRow {
+      display: flex;
+      flex-direction: column;
+      .hikeFirstRow {
+        display: grid;
+        grid-template-columns: 3fr 1fr 1fr 0.5fr;
+        padding: 5px;
+        border-bottom: 1px solid $secondary-blue;
+      }
+      .innerTable {
+        display: flex;
+        flex-direction: column;
+        .headerHinner,
+        .bodyHinner {
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+          padding: 5px;
+        }
+        .headerHinner {
+          @include font(700, 14px, 16px, 0);
+        }
+      }
+    }
+  } 
+}
 
 

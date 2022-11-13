@@ -1,9 +1,12 @@
-import { Form, Row } from 'react-bootstrap';
+import { Form, Col } from 'react-bootstrap';
+import styles from "./index.module.scss";
+
 export default function Description(props) {
 	return (
-		<Form.Group as={Row} md="3">
-			<Form.Label>Description</Form.Label>
+		<Form.Group as={Col}>
+			<Form.Label className={styles.title}>Description</Form.Label>
 			<Form.Control
+				className={styles.customInsert}
 				as="textarea"
 				rows={5}
 				value={props.description}

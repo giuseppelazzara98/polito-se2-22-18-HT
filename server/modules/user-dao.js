@@ -79,6 +79,22 @@ class UserDAO {
 			});
 		});
 	};
+
+	insertNewUser = (email, password, role) => {
+		return new Promise((resolve, reject) => {
+			const sql ='INSERT INTO USER (email, password, role) VALUES (?, ?, ?)';
+			this.db.run(sql, [email, password, role], function (err) {
+				if (err) {
+					console.log('Error running sql: ' + sql);
+					console.log(err);
+					reject(err);
+				} else {
+					resolve(this.lastID); //faccio tornare il l'id inserito
+				}
+			});
+		});
+	};
+
 }
 
 module.exports = UserDAO;

@@ -26,6 +26,18 @@ const logOut = async () => {
 	if (response.ok) return null;
 };
 
+const getUserInfo = async () => {
+	const response = await fetch(new URL('sessions/current', APIURL), {
+		credentials: 'include'
+	});
+	if (response.ok) {
+		const user = await response.json();
+		return user;
+	} else {
+		return null;
+	}
+};
+
 const getProvinces = async () => {
 	const response = await fetch(new URL('provinces', APIURL), {
 		method: 'GET',
@@ -104,7 +116,8 @@ async function getAllHikes(data) {
 			difficulty: r.difficulty,
 			key: r.key,
 			name: r.name,
-			description: r.description
+			description: r.description,
+			province : r.province
 		}));
 		return {
 			hikes: hikes,
@@ -121,24 +134,24 @@ async function getAllHikes(data) {
 }
 
 const getProvincesFacets = async () => {
-let err = new Error();
-const response = await fetch(new URL("provinces", APIURL));
-if (response.ok) {
-	const provincesJson = await response.json();
-	const provinces = provincesJson?.map(province => ({
-		id: province.id_province,
-		value: province.name,
-		label: province.name,
-		abbreviation: province.abbreviation
-	}))
-	return provinces;
-} else {
-	if (response.status === 500) {
-		err.message = "500 INTERNAL SERVER ERROR";
-		throw err;
+	let err = new Error();
+	const response = await fetch(new URL('provinces', APIURL));
+	if (response.ok) {
+		const provincesJson = await response.json();
+		const provinces = provincesJson?.map((province) => ({
+			id: province.id_province,
+			value: province.name,
+			label: province.name,
+			abbreviation: province.abbreviation
+		}));
+		return provinces;
+	} else {
+		if (response.status === 500) {
+			err.message = '500 INTERNAL SERVER ERROR';
+			throw err;
+		}
 	}
-}
-}
+};
 
 const API = {
 	logIn,
@@ -149,6 +162,7 @@ const API = {
 	createNewHike,
 	getAllHikes,
 	getProvincesFacets,
+	getUserInfo
 };
 
 export default API;

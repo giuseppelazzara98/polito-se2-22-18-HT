@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import PointsTable from './PointsTable';
 import Select from 'react-select';
 import API from '../../API/api';
+import styles from './index.module.scss';
+
 
 export default function ReferencePoints(props) {
 	const [open, setOpen] = useState(false);
@@ -34,21 +36,25 @@ export default function ReferencePoints(props) {
 			<Col md={3}>
 				{!open && (
 					<Button
-						className="my-3"
+
+						
+
 						onClick={() => setOpen(!open)}
 						aria-controls="reference-points"
 						aria-expanded={open}
+						className={styles.button}
 					>
 						Add Reference points
-					</Button>
+					</Button >
 				)}
 			</Col>
 			<Collapse in={open}>
 				<Container id="reference-points">
 					<Row className="mb-3">
 						<Form.Group>
-							<Form.Label>Upload a gpx file</Form.Label>
+							<Form.Label className={styles.title}>Upload a gpx file</Form.Label>
 							<Form.Control
+							
 								type="file"
 								value={props.gpxFile}
 								onChange={(event) => props.setGpxFile(event.target.value)}
@@ -57,7 +63,7 @@ export default function ReferencePoints(props) {
 					</Row>
 					<Row className="mb-3">
 						<Form.Group>
-							<Form.Label>Select a reference point</Form.Label>
+							<Form.Label className={styles.title}>Select a reference point</Form.Label>
 							<Select
 								className="basic-single"
 								classNamePrefix="select"
@@ -73,7 +79,7 @@ export default function ReferencePoints(props) {
 					</Row>
 					<Row className="mb-3">
 						<Col md={3}>
-							<Button onClick={props.addRefPoint}>Add reference point</Button>
+							<Button className={styles.button} onClick={props.addRefPoint}>Add reference point</Button>
 						</Col>
 					</Row>
 					<Row className="mb-3">

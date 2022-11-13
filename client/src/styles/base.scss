@@ -15,8 +15,10 @@
 /* width */
 ::-webkit-scrollbar {
   width: 5px;
+  height: 5px;
   @media (min-width: $tablet-landscape) {
     width: 10px;
+    height: 10px;
   }
 }
 
@@ -81,4 +83,13 @@ body {
 
 html{
   height: 100%;
+}
+
+.title {
+  @include font(700, 18px, 20px, 0);
+  color: $primary-green;
+  @media (min-width: $tablet-landscape) {
+    font-size: 30px ;
+    line-height: 32px;
+  }
 }

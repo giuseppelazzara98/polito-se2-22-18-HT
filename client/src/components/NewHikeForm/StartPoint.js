@@ -2,6 +2,7 @@ import { Form, Col } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import Select from 'react-select';
 import API from '../../API/api';
+import styles from "./index.module.scss";
 
 export default function StartPoint(props) {
 	const [points, setPoints] = useState([]);
@@ -27,11 +28,11 @@ export default function StartPoint(props) {
 	}, [props.province]);
 	return (
 		<Form.Group as={Col} md="6">
-			<Form.Label>Start point</Form.Label>
+			<Form.Label className={styles.title}>Start point</Form.Label>
 			<Select
-				className="basic-single"
+				className={styles.customSelect}
 				classNamePrefix="select"
-				defaultValue="Select Point"
+				defaultValue={props.startPoint}
 				name="startPoint"
 				isSearchable={true}
 				options={points}

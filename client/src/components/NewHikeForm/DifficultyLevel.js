@@ -1,14 +1,17 @@
 import { Col, Row, Form } from 'react-bootstrap';
+import styles from "./index.module.scss";
+
 
 export default function DifficultyLevel(props) {
 	return (
 		<Form.Group>
 			<Row>
 				<Col>
-					<Form.Label>Difficulty</Form.Label>
+					<Form.Label className={styles.title}>Difficulty</Form.Label>
 				</Col>
 				<Col>
 					<Form.Check
+						className={styles.check}
 						inline
 						type="radio"
 						label="Turist"
@@ -21,6 +24,7 @@ export default function DifficultyLevel(props) {
 				</Col>
 				<Col>
 					<Form.Check
+						className={styles.check}
 						inline
 						type="radio"
 						label="Hiker"
@@ -33,6 +37,7 @@ export default function DifficultyLevel(props) {
 				</Col>
 				<Col>
 					<Form.Check
+						className={styles.check}
 						inline
 						type="radio"
 						label="Professional Hiker"

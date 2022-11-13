@@ -1,20 +1,19 @@
 class PlaceDAO {
+	sqlite = require('sqlite3');
 
-    sqlite = require('sqlite3');
+	constructor(db) {
+		this.db = db;
+	}
 
-    constructor(db) {
-        this.db = db;
-    }
+	// close the connection to database
+	closePlaceTable = () => {
+		return new Promise((resolve, reject) => {
+			this.db.close();
+			resolve(true);
+		});
+	};
 
-    // close the connection to database
-    closePlaceTable = () => {
-        return new Promise((resolve, reject) => {
-            this.db.close();
-            resolve(true);
-        });
-    }
-
-    /*
+	/*
 
     // create the place table
     newPlaceTable = () => {
@@ -50,33 +49,32 @@ class PlaceDAO {
 
     */
 
-    // get all places by province id
-    getAllPlacesByProvinceId = (province_id) => {
+	// get all places by province id
+	getAllPlacesByProvinceId = (province_id) => {
+		const sql = 'SELECT * FROM PLACE WHERE id_province = ?;';
 
-        const sql = "SELECT * FROM PLACE WHERE id_province = ?;";
-
-        return new Promise((resolve, reject) => {
-            this.db.all(sql, [province_id], (err, rows) => {
-                if (err) {
-                    console.log('Error running sql: ' + sql);
-                    console.log(err);
-                    reject(err);
-                } else {
-
-                    const places = rows.map((el) => {
-                        return {
-                            id_place: el.id_place,
-                            description: el.description,
-                            latitude: el.latitude,
-                            longitude: el.longitude,
-                            type: el.type
-                        }
-                    });
-                    resolve(places);
-                }
-            });
-        });
-    };
+		return new Promise((resolve, reject) => {
+			this.db.all(sql, [province_id], (err, rows) => {
+				if (err) {
+					console.log('Error running sql: ' + sql);
+					console.log(err);
+					reject(err);
+				} else {
+					const places = rows.map((el) => {
+						return {
+							id_place: el.id_place,
+							name: el.name,
+							description: el.description,
+							latitude: el.latitude,
+							longitude: el.longitude,
+							type: el.type
+						};
+					});
+					resolve(places);
+				}
+			});
+		});
+	};
 
 	getPlaceById = (place_id) => {
 		const sql = 'SELECT * FROM PLACE WHERE id_place = ?;';

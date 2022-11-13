@@ -3,6 +3,7 @@ import { Form, Button, Row, Col } from 'react-bootstrap';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import { useNavigate } from 'react-router-dom';
 import API from '../../API/api';
+import styles from './index.module.scss';
 
 export default function LoginForm(props) {
 	const [username, setUsername] = useState('');
@@ -13,11 +14,11 @@ export default function LoginForm(props) {
 	// login function, passed as props to loginForm
 	const login = async (credentials) => {
 		try {
-			await API.logIn(credentials);
+			const user = await API.logIn(credentials);
 			props.setLoggedIn(true);
+			props.setUser(user);
 			return true;
 		} catch (err) {
-			console.log(err);
 			return false;
 		}
 	};
@@ -40,10 +41,11 @@ export default function LoginForm(props) {
 	return (
 		<>
 			<Row>
-				<Col xs={{ span: 4, offset: 4 }}>
+				<Col xs={{span: 12}} md={{ span: 4, offset: 4 }}>
 					<Form onSubmit={handleSubmit}>
 						<FloatingLabel label="Email" controlId="Email" className="my-5">
 							<Form.Control
+							    className={styles.customInsert}
 								type="email"
 								placeholder="email@example.com"
 								value={username}
@@ -57,6 +59,7 @@ export default function LoginForm(props) {
 							className="my-5"
 						>
 							<Form.Control
+								className={styles.customInsert}
 								type="password"
 								value={password}
 								onChange={(event) => {
@@ -70,7 +73,7 @@ export default function LoginForm(props) {
 						{err ? (
 							<p className="text-danger">Wrong Email or/and password</p>
 						) : null}
-						<Button className="mt-3" size="lg" type="submit">
+						<Button className={styles.button} size="lg" type="submit">
 							Login
 						</Button>
 					</Form>

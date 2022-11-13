@@ -10,7 +10,7 @@ const hike_dao = require('../modules/DbManager').hike_dao;
 
 describe('Test hikes apis', () => {
 
-    const body1 = {
+    const bodyHike1 = {
         "province": null,
         "difficulty": [],
         "exp_time": null,
@@ -18,7 +18,7 @@ describe('Test hikes apis', () => {
         "ascent": null
     };
 
-    const body2 = {
+    const bodyHike2 = {
         "province": null,
         "difficulty": ["turist"],
         "exp_time": { "min": 5.2, "max": 7.0 },
@@ -26,7 +26,7 @@ describe('Test hikes apis', () => {
         "ascent": { "min": 500, "max": 2000 }
     };
 
-    const body3 = {
+    const bodyHike3 = {
         "province": 1,
         "difficulty": ["turist","professional hiker"],
         "exp_time": null,
@@ -34,7 +34,7 @@ describe('Test hikes apis', () => {
         "ascent": null
     };
 
-    const body4 = {
+    const bodyHike4 = {
         "province": 3,
         "difficulty": [],
         "exp_time": { "min": 5.2, "max": 7.0 },
@@ -42,7 +42,7 @@ describe('Test hikes apis', () => {
         "ascent": { "min": 500, "max": 2000 }
     };
 
-    const body5 = {
+    const bodyHike5 = {
         "province": null,
         "difficulty": ["hiker"],
         "exp_time": null,
@@ -51,11 +51,38 @@ describe('Test hikes apis', () => {
     };
 
     //Testing POST /api/hikes
-    getFilteredHikes(200, body1);
-    getFilteredHikes(200, body2);
-    getFilteredHikes(200, body3);
-    getFilteredHikes(200, body4);
-    getFilteredHikes(200, body5);
+    getFilteredHikes(200, bodyHike1);
+    getFilteredHikes(200, bodyHike2);
+    getFilteredHikes(200, bodyHike3);
+    getFilteredHikes(200, bodyHike4);
+    getFilteredHikes(200, bodyHike5);
+
+    const bodyNewHike1 = {
+        "title":"Hike 1",
+        "province":1,
+        "length":345,
+        "expectedTimeString":"12h",
+        "expectedTime":12,
+        "ascent":123,
+        "difficulty":2,
+        "startPoint":9,
+        "endPoint":5,
+        "referencePoints":[],
+        "gpxFile":"",
+        "description":"Hike 1 description",
+    };
+
+    const bodyNewHike2 = {
+        "title":"Hike 2",
+        "province":1
+    };
+
+    const bodyNewHike3 = {};
+
+    //Testing POST /api/newHike
+    newHike(200, bodyNewHike1);
+    newHike(422, bodyNewHike2);
+    newHike(422, bodyNewHike3);
 
 });
 
@@ -76,6 +103,26 @@ function getFilteredHikes(expectedHTTPStatus, body) {
         } catch (err) {
             if (r.status === 500) {
                 console.log("---- Error on getFilteredHikes ----");
+            }
+        }
+
+    });
+}
+
+function newHike(expectedHTTPStatus, bodyNew) {
+    it('Inserting a new Hike', async () => {
+
+        try {
+            
+            agent.post('/api/newHike')
+                .send(bodyNew)
+                .then(function (r) {
+                    r.should.have.status(expectedHTTPStatus);
+                });
+
+        } catch (err) {
+            if (r.status === 503) {
+                console.log("---- Error on newHike ----");
             }
         }
 

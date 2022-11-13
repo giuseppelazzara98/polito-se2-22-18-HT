@@ -1,10 +1,13 @@
 import { Form, Col } from 'react-bootstrap';
+import styles from "./index.module.scss";
+
 
 export default function Length(props) {
 	return (
 		<Form.Group as={Col} md="4">
-			<Form.Label>Length</Form.Label>
+			<Form.Label className={styles.title}>Length</Form.Label>
 			<Form.Control
+			    className={styles.customInsert}
 				type="number"
 				value={props.length}
 				onChange={(event) => props.setLength(event.target.value)}

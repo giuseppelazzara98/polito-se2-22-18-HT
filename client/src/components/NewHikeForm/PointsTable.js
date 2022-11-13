@@ -24,7 +24,7 @@ export default function PointsTable(props) {
 	};
 
 	return (
-		<Table striped>
+		<Table striped responsive>
 			<thead>
 				<tr>
 					<th>Name</th>

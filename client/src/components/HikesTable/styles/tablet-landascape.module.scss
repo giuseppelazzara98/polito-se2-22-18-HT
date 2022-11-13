@@ -1,8 +1,26 @@
 @import "../../../styles/configs";
 
 @media (min-width: $tablet-landscape) {
+  .containerWrap {
+    margin-top: 0;
+  }
   .wrap {
     padding: 10px;
     background-color: $primary-green-light;
+    font-size: 16px;
+    .dataName {
+      font-size: 16px;
+      line-height: 18px;
+    }
+    .bodyWrap {
+      .hikeRow {
+        .innerTable {
+          .headerHinner {
+            font-size: 16px;
+            line-height: 18px;
+          }
+        }
+      }
+    }
   }
 }
