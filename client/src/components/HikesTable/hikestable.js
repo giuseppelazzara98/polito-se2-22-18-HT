@@ -18,6 +18,7 @@ import { formatDuration ,formatAscent} from "../../helpers/utility";
               <thead className={styles.dataName}>
                 <tr>
                   <th>Name</th>
+                  <th>Province</th>
                   <th>Difficulty</th>
                 </tr>
               </thead>
@@ -41,6 +42,7 @@ import { formatDuration ,formatAscent} from "../../helpers/utility";
       <>
         <tr className={styles.wrap}>
           <td>{props.hike.name}</td>
+          <td>{props.hike.province}</td>
           <td>{getDifficulty(props.hike.difficulty)}</td>
           
           <td>
