@@ -1,7 +1,7 @@
 @import "../../../styles/configs";
 
 .wrap {
-  
+  font-size: 12px;
   .button{
     background-color: $primary-green;
     border-color: transparent;
@@ -16,11 +16,7 @@
   }
   .dataName {
     color: $primary-green;
-  }
-  @media (max-width: 768px) {
-    font-size: 12px;
-  }
-    
-  }
+  }  
+}
 
 
