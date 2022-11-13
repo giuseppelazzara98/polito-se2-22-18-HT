@@ -2,6 +2,8 @@ import { Form, Col } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import Select from 'react-select';
 import API from '../../API/api';
+import styles from "./index.module.scss";
+
 
 export default function EndPoint(props) {
 	const [points, setPoints] = useState([]);
@@ -27,7 +29,7 @@ export default function EndPoint(props) {
 	}, [props.province]);
 	return (
 		<Form.Group as={Col} md="6">
-			<Form.Label>End point</Form.Label>
+			<Form.Label className={styles.title}>End point</Form.Label>
 			<Select
 				className="basic-single"
 				classNamePrefix="select"
