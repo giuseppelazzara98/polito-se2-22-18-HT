@@ -1,0 +1,15 @@
+@import "../../../styles/configs";
+
+
+.navbarContainer{
+  background-color: $primary-brown;
+}
+.button{
+  background-color: $primary-green;
+  border-color: transparent;
+  &:hover{
+    background-color: $tertiary-green;
+    border-color: transparent;
+    
+  }
+}

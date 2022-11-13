@@ -1,0 +1,16 @@
+version: '3.3'
+services:
+  backend:
+    image: giulazzara/polito-se2-22-18-ht:server
+    build: ./server
+    container_name: serverContainer
+    ports:
+      - "3001:3001"
+  frontend:
+    image: giulazzara/polito-se2-22-18-ht:client
+    build: ./client
+    container_name: clientContainer
+    ports:
+      - "3000:3000"
+    stdin_open: true
+    tty: true

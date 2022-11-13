@@ -1,51 +1,57 @@
 class HikeDAO {
-	sqlite = require('sqlite3');
 
-	constructor(db, knex) {
-		this.db = db;
-		this.knex = knex;
-	}
+    sqlite = require('sqlite3');
 
-	// close the connection to database
-	closeHikeTable = () => {
-		return new Promise((resolve, reject) => {
-			this.db.close();
-			resolve(true);
-		});
-	};
+    constructor(db, knex) {
+        this.db = db;
+        this.knex = knex;
+    }
 
-	// create the hike table
-	newHikeTable = () => {
-		return new Promise((resolve, reject) => {
-			const sql =
-				'CREATE TABLE IF NOT EXISTS HIKE(id_hike INTEGER NOT NULL, name TEXT, id_start_place INTEGER NOT NULL, id_end_place INTEGER NOT NULL, id_province INTEGER, description TEXT, length REAL, expected_time REAL, ascent INTEGER, difficulty INTEGER, FOREIGN KEY(id_end_place) REFERENCES PLACE(id_place), FOREIGN KEY(id_start_place) REFERENCES PLACE(id_place), FOREIGN KEY(id_province) REFERENCES PROVINCE(id_province), PRIMARY KEY(id_hike AUTOINCREMENT));';
-			this.db.run(sql, (err) => {
-				if (err) {
-					console.log('Error running sql: ' + sql);
-					console.log(err);
-					reject(err);
-				}
-				resolve(this.lastID);
-			});
-		});
-	};
+    // close the connection to database
+    closeHikeTable = () => {
+        return new Promise((resolve, reject) => {
+            this.db.close();
+            resolve(true);
+        });
+    }
 
-	// drop the hike table
-	dropHikeTable = () => {
-		return new Promise((resolve, reject) => {
-			const sql = 'DROP TABLE IF EXISTS HIKE;';
-			this.db.run(sql, function (err) {
-				if (err) {
-					console.log('Error running sql: ' + sql);
-					console.log(err);
-					reject(err);
-				}
-				resolve(this.lastID);
-			});
-		});
-	};
+    /*
 
-	/* 
+    // create the hike table
+    newHikeTable = () => {
+        return new Promise((resolve, reject) => {
+
+            const sql = "CREATE TABLE IF NOT EXISTS HIKE(id_hike INTEGER NOT NULL, name TEXT, id_start_place INTEGER NOT NULL, id_end_place INTEGER NOT NULL, id_province INTEGER, description TEXT, length REAL, expected_time REAL, ascent INTEGER, difficulty INTEGER, FOREIGN KEY(id_end_place) REFERENCES PLACE(id_place), FOREIGN KEY(id_start_place) REFERENCES PLACE(id_place), FOREIGN KEY(id_province) REFERENCES PROVINCE(id_province), PRIMARY KEY(id_hike AUTOINCREMENT));";
+            this.db.run(sql, (err) => {
+                if (err) {
+                    console.log('Error running sql: ' + sql);
+                    console.log(err);
+                    reject(err);
+                }
+                resolve(this.lastID);
+            });
+        });
+    }
+
+    // drop the hike table
+    dropHikeTable = () => {
+        return new Promise((resolve, reject) => {
+            const sql = "DROP TABLE IF EXISTS HIKE;";
+            this.db.run(sql, function (err) {
+                if (err) {
+                    console.log('Error running sql: ' + sql);
+                    console.log(err);
+                    reject(err);
+                }
+                resolve(this.lastID);
+            })
+
+        });
+    }
+
+    */
+
+    /* 
         Difficulties -> Integer:
 
         0 -> turist
