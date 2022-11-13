@@ -32,29 +32,27 @@ function NavbarHead(props) {
 					<span className="text-white">HTracker </span>
 				</Navbar.Brand>
 				<div className={styles.buttonsContainer}>
+					{location.pathname !== "/" && <NavLink className={`btn ${styles.buttonNavLink}`} to="/">
+						{!isMobile && "Home"}
+						{isMobile && <FontAwesomeIcon icon={faHouse}/>}
+					</NavLink>}
 					{props.loggedIn && props.user.role === 'guide' && location.pathname !== "/newHike" && (
 						<NavLink className={`btn ${styles.buttonNavLink}`} to="/newHike">
 							{!isMobile && "New Hike"}
 							{isMobile && <FontAwesomeIcon icon={faPlus}/>}
 						</NavLink>
 					)}
-					{!props.loggedIn && (
+					{!props.loggedIn && location.pathname !== "/login" && (
 						<Button className={styles.button} onClick={() => navigate('/login')}>
 							{!isMobile && "Login"}
 							{isMobile && <FontAwesomeIcon icon={faRightToBracket}/>}
 						</Button>
 					)}
 					{props.loggedIn && (
-						<>
-							{location.pathname !== "/" && <NavLink className={`btn ${styles.buttonNavLink}`} to="/">
-								{!isMobile && "Home"}
-								{isMobile && <FontAwesomeIcon icon={faHouse}/>}
-							</NavLink>}
-							<Button className={styles.button} onClick={handleLogOut}>
-								{!isMobile && "Logout"}
-								{isMobile && <FontAwesomeIcon icon={faRightFromBracket}/>}
-							</Button>
-						</>
+						<Button className={styles.button} onClick={handleLogOut}>
+							{!isMobile && "Logout"}
+							{isMobile && <FontAwesomeIcon icon={faRightFromBracket}/>}
+						</Button>
 					)}
 				</div>
 			</Container>
