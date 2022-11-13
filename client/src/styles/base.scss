@@ -82,3 +82,12 @@ body {
 html{
   height: 100%;
 }
+
+.title {
+  @include font(700, 18px, 20px, 0);
+  color: $primary-green;
+  @media (min-width: $tablet-landscape) {
+    font-size: 30px ;
+    line-height: 32px;
+  }
+}

@@ -122,10 +122,11 @@
 }
 
 .check{
-  &:global(.form-check-input){
-    &:active{
+  :global(.form-check-input){
+    &:checked{
     background-color:$primary-green;
     border-color:$tertiary-green;
+    box-shadow:0 0 0 1px $primary-green;
     }
   }
 }
