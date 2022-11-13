@@ -204,12 +204,12 @@ class HikeDAO {
 		});
 	};
 
-	insertHikePlace = (id_hike, id_reference_point, order) => {
+	insertHikePlace = (id_hike, id_reference_point, sort) => {
 		return new Promise((resolve, reject) => {
 			const sql =
-				'INSERT INTO HIKE_PLACE (id_hike, id_place, order) VALUES (?, ?, ?)';
+				'INSERT INTO HIKE_PLACE (id_hike, id_place, sort) VALUES (?, ?, ?)';
 
-			this.db.run(sql, [id_hike, id_reference_point, order], function (err) {
+			this.db.run(sql, [id_hike, id_reference_point, sort], function (err) {
 				if (err) {
 					console.log('Error running sql: ' + sql);
 					console.log(err);

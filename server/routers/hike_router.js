@@ -73,8 +73,14 @@ router.post('/newHike', async (req, res) => {
 		console.log('req.body.hike:' + req.body.hike);
 		console.log(req.body);
 		const result = await hikeDao.insertHike(req.body);
-
+		console.log('result: ');
+		console.log(result);
 		// insert in hike-place table, cycling on reference points
+		console.log('ref points: ');
+		console.log(req.body.referencePoints);
+		console.log('length: ');
+		console.log(req.body.referencePoints.length);
+		
 
 		for (let i = 0; i < req.body.referencePoints.length; i++) {
 			//insertHikePlace(id_hike, id_reference_point, order)
