@@ -73,7 +73,20 @@ So that users can look at it
 
 Point 2 is true
 
-### Test 2 - add a new hike
+
+### Test 2 - login
+
+#### Procedure
+
+1. Insert email and password
+2. Press the Login button
+3. It will redirect to the hikews table page,logged in with the role of the user
+
+#### Expected result
+
+Point 3 is true
+
+### Test 3 - add a new hike
 
 #### Procedure
 
@@ -91,3 +104,16 @@ Point 2 is true
 #### Expected result
 
 Point 10 is true
+
+
+
+### Test 4 - logout
+
+#### Procedure
+
+1. In the navbar, press the logout button in the right corner
+2. It will redirect to the hikews table page, and teh user will be coiered as a visitor
+
+#### Expected result
+
+Point 2 is true
