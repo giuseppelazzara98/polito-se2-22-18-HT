@@ -73,7 +73,7 @@ router.post('/hikes', async (req, res) => {
 
 //POST /api/newHike
 router.post('/newHike',
-	isLoggedIn,
+	//isLoggedIn,
 	async (req, res) => {
 
 		if (Object.keys(req.body).length === 0) {
