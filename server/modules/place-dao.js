@@ -70,6 +70,31 @@ class PlaceDAO {
 			});
 		});
 	};
+
+	getPlaceById = (place_id) => {
+		const sql = 'SELECT * FROM PLACE WHERE id_place = ?;';
+		console.log(place_id);
+		return new Promise((resolve, reject) => {
+			this.db.get(sql, [place_id], (err, row) => {
+				if (err) {
+					console.log('Error running sql: ' + sql);
+					console.log(err);
+					reject(err);
+				} else {
+					const place = {
+						id_place: row.id_place,
+						name: row.name,
+						description: row.description,
+						latitude: row.latitude,
+						longitude: row.longitude,
+						type: row.type
+					};
+
+					resolve(place);
+				}
+			});
+		});
+	};
 }
 
 module.exports = PlaceDAO;

@@ -1,4 +1,5 @@
 import { Form, Row, Col, Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import ReferencePoints from './ReferencePoints';
 import DifficultyLevel from './DifficultyLevel';
@@ -10,6 +11,7 @@ import ExpectedTime from './ExpectedTime';
 import Ascent from './Ascent';
 import StartPoint from './StartPoint';
 import Description from './Description';
+import API from '../../API/api';
 
 export default function NewHikeForm(props) {
 	const [title, setTitle] = useState('');
@@ -18,12 +20,13 @@ export default function NewHikeForm(props) {
 	const [expectedTime, setExpectedTime] = useState('');
 	const [ascent, setAscent] = useState('');
 	const [difficulty, setDifficulty] = useState('');
-	const [startPoint, setStartPoint] = useState('');
-	const [endPoint, setEndPoint] = useState('');
+	const [startPoint, setStartPoint] = useState(0);
+	const [endPoint, setEndPoint] = useState(0);
 	const [referencePoints, setReferencePoints] = useState([]);
 	const [gpxFile, setGpxFile] = useState('');
 	const [description, setDescription] = useState('');
 	const [refPoint, setRefPoint] = useState('');
+	const navigate = useNavigate();
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
@@ -31,24 +34,60 @@ export default function NewHikeForm(props) {
 			title: title,
 			province: province,
 			length: length,
-			expectedTime: expectedTime,
+			expectedTimeString: expectedTime,
+			expectedTime: 0,
 			ascent: ascent,
 			difficulty: difficulty,
 			startPoint: startPoint,
 			endPoint: endPoint,
-			referencePoints: referencePoints,
+			referencePoints: [],
 			gpxFile: gpxFile,
-			description: description,
-			refPoint: refPoint //remove later when done testing
+			description: description
 		};
 
-		console.log(hike);
+		const time = hike.expectedTimeString.split(' ');
+		let hours = 0;
+		time.forEach((part) => {
+			if (part[part.length - 1] === 'm') {
+				const p = part.slice(0, part.length - 1);
+				const m = parseInt(p, 10);
+				hours += m * 730.5;
+			} else if (part[part.length - 1] === 'w') {
+				const p = part.slice(0, part.length - 1);
+				const w = parseInt(p, 10);
+				hours += w * 168;
+			} else if (part[part.length - 1] === 'd') {
+				const p = part.slice(0, part.length - 1);
+				const d = parseInt(p, 10);
+				hours += d * 24;
+			} else if (part[part.length - 1] === 'h') {
+				const p = part.slice(0, part.length - 1);
+				const h = parseInt(p, 10);
+				hours += h;
+			}
+		});
+		hike.expectedTime = hours;
+		hike.referencePoints = referencePoints.map((point) => {
+			return point.id_place;
+		});
+		const addNewHike = async () => {
+			await API.createNewHike(hike);
+		};
+		addNewHike();
+		//navigate('/');
 	};
 
 	const addRefPoint = () => {
-		if (referencePoints.find((point) => point === refPoint) === undefined) {
-			const list = [...referencePoints, refPoint];
-			setReferencePoints(list);
+		if (
+			referencePoints.find((point) => point.id_place === refPoint) === undefined
+		) {
+			API.getPlaceById(refPoint)
+				.then((place) => {
+					const list = [...referencePoints, place];
+					//console.log(place);
+					return list;
+				})
+				.then((list) => setReferencePoints(list));
 		}
 	};
 

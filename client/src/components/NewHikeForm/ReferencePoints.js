@@ -32,14 +32,16 @@ export default function ReferencePoints(props) {
 		<>
 			{/*Reference points field*/}
 			<Col md={3}>
-				<Button
-					className="my-3"
-					onClick={() => setOpen(!open)}
-					aria-controls="reference-points"
-					aria-expanded={open}
-				>
-					Add Reference points
-				</Button>
+				{!open && (
+					<Button
+						className="my-3"
+						onClick={() => setOpen(!open)}
+						aria-controls="reference-points"
+						aria-expanded={open}
+					>
+						Add Reference points
+					</Button>
+				)}
 			</Col>
 			<Collapse in={open}>
 				<Container id="reference-points">
@@ -71,7 +73,7 @@ export default function ReferencePoints(props) {
 					</Row>
 					<Row className="mb-3">
 						<Col md={3}>
-							<Button onClick={props.addRefPoint}>Add</Button>
+							<Button onClick={props.addRefPoint}>Add reference point</Button>
 						</Col>
 					</Row>
 					<Row className="mb-3">

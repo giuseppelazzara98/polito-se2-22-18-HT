@@ -27,72 +27,69 @@ const hikeDao = require('../modules/DbManager').hike_dao;
 */
 
 //POST /api/hikes
-router.post('/hikes',
-    async (req, res) => {
+router.post('/hikes', async (req, res) => {
+	if (Object.keys(req.body).length === 0) {
+		console.log('Empty body!');
+		return res.status(422).json({ error: 'Empty body request' });
+	}
 
-        if (Object.keys(req.body).length === 0) {
-            console.log("Empty body!");
-            return res.status(422).json({ error: "Empty body request" });
-        }
+	if (Object.keys(req.body).length !== 5) {
+		console.log('Data not formatted properly!');
+		return res.status(422).json({ error: 'Data not formatted properly' });
+	}
 
-        if (Object.keys(req.body).length !== 5) {
-            console.log("Data not formatted properly!");
-            return res.status(422).json({ error: "Data not formatted properly" });
-        }
+	try {
+		const hikes = await hikeDao.getAllFilteredHikes(req.body);
 
-        try {
+		const unique = (value, index, self) => {
+			return self.indexOf(value) === index;
+		};
 
-            const hikes = await hikeDao.getAllFilteredHikes(req.body);
-            
-            const unique = (value, index, self) => {
-                return self.indexOf(value) === index
-            }
-            
-            const distinct_times = hikes.map(el => el.expected_time).filter(unique);
-            const distinct_lengths = hikes.map(el => el.length).filter(unique);
-            const distinct_ascents = hikes.map(el => el.ascent).filter(unique); 
+		const distinct_times = hikes.map((el) => el.expected_time).filter(unique);
+		const distinct_lengths = hikes.map((el) => el.length).filter(unique);
+		const distinct_ascents = hikes.map((el) => el.ascent).filter(unique);
 
-            const result = {
-                hikes: hikes,
-                distinct_times: distinct_times,
-                distinct_lengths: distinct_lengths,
-                distinct_ascents: distinct_ascents
-            }
-        
-            return res.status(200).json(result);
-        }
-        catch (err) {
-            return res.status(500).json({ error: "Internal Server Error" });
-        }
-    });
+		const result = {
+			hikes: hikes,
+			distinct_times: distinct_times,
+			distinct_lengths: distinct_lengths,
+			distinct_ascents: distinct_ascents
+		};
 
-    
+		return res.status(200).json(result);
+	} catch (err) {
+		return res.status(500).json({ error: 'Internal Server Error' });
+	}
+});
+
 //POST /api/newHike
-router.post('/newHike',
-async (req, res) => {
+router.post('/newHike', async (req, res) => {
+	if (Object.keys(req.body).length === 0) {
+		console.log('Empty body!');
+		return res.status(422).json({ error: 'Empty body request' });
+	}
 
-    if (Object.keys(req.body).length === 0) {
-        console.log("Empty body!");
-        return res.status(422).json({ error: "Empty body request" });
-    }
+	try {
+		console.log('req.body.hike:' + req.body.hike);
+		console.log(req.body);
+		const result = await hikeDao.insertHike(req.body);
 
-    try {
+		// insert in hike-place table, cycling on reference points
 
-        const result = await hikeDao.insertHike(req.body.hike);
+		for (let i = 0; i < req.body.referencePoints.length; i++) {
+			//insertHikePlace(id_hike, id_reference_point, order)
+			let result2 = await hikeDao.insertHikePlace(
+				result,
+				req.body.referencePoints[i],
+				i + 1
+			);
+		}
 
-        // insert in hike-place table, cycling on reference points
-           
-        for(let i=0; i<req.body.hike.referencePoints.length; i++){
-            //insertHikePlace(id_hike, id_reference_point, order)
-            let result2 = await hikeDao.insertHikePlace(result, req.body.hike.referencePoints[i], i+1);
-        }
-        
-
-        return res.status(200).json(result);
-    }
-    catch (err) {
-        return res.status(500).json({ error: "Internal Server Error" });
-    }
+		return res.status(200).json(result);
+	} catch (err) {
+		console.log(err);
+		return res.status(500).json({ error: 'Internal Server Error' });
+	}
 });
 
 module.exports = router;

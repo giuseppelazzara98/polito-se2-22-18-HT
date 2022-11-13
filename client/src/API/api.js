@@ -54,11 +54,42 @@ const getPointsByProvinceId = async (provinceId) => {
 	}
 };
 
+const getPlaceById = async (placeId) => {
+	const response = await fetch(new URL(`places/place/${placeId}`, APIURL), {
+		method: 'GET',
+		credentials: 'include'
+	});
+	if (response.ok) {
+		const place = await response.json();
+		return place;
+	} else {
+		const errDetails = await response.text();
+		throw errDetails;
+	}
+};
+
+const createNewHike = async (hike) => {
+	const response = await fetch(new URL('newHike', APIURL), {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		credentials: 'include',
+		body: JSON.stringify(hike)
+	});
+	if (!response.ok) {
+		const errDetails = await response.text();
+		throw errDetails;
+	}
+};
+
 const API = {
 	logIn,
 	logOut,
 	getProvinces,
-	getPointsByProvinceId
+	getPointsByProvinceId,
+	getPlaceById,
+	createNewHike
 };
 
 export default API;

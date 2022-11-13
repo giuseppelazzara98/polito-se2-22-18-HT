@@ -4,13 +4,16 @@ import { Trash } from 'react-bootstrap-icons';
 export default function PointsTable(props) {
 	const generateRows = () => {
 		const rows = props.referencePoints.map((point) => (
-			<tr key={point}>
-				<td className="text-center">{point}</td>
-				<td className="text-end">
+			<tr key={point.id_place}>
+				<td>{point.name}</td>
+				<td>{point.description}</td>
+				<td>{point.latitude}</td>
+				<td>{point.longitude}</td>
+				<td>
 					<Button
 						variant="danger"
 						size="sm"
-						onClick={() => props.delRefPoint(point)}
+						onClick={() => props.delRefPoint(point.id_place)}
 					>
 						<Trash />
 					</Button>
@@ -22,6 +25,14 @@ export default function PointsTable(props) {
 
 	return (
 		<Table striped>
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Description</th>
+					<th>Latitude</th>
+					<th>Longitude</th>
+				</tr>
+			</thead>
 			<tbody>{generateRows()}</tbody>
 		</Table>
 	);
