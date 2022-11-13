@@ -4,6 +4,9 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 
+const passport = require('./passport'); // auth middleware
+const session = require('express-session'); // enable sessions
+
 const hikeRouter = require('./routers/hike_router');
 const provinceRouter = require('./routers/province_router');
 const placeRouter = require('./routers/place_router');
@@ -23,6 +26,21 @@ app.use(cors(corsOptions));
 
 app.use(morgan('dev'));
 app.use(express.json());
+
+// set up the session
+app.use(
+	session({
+		// by default, Passport uses a MemoryStore to keep track of the sessions
+		secret:
+			'a secret sentence not to share with anybody and anywhere, used to sign the session ID cookie',
+		resave: false,
+		saveUninitialized: false
+	})
+);
+
+// then, init passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 /******API******/
 

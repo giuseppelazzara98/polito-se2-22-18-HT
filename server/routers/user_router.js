@@ -1,38 +1,11 @@
+'use strict';
+
 const express = require('express');
 const router = express.Router();
 
-const passport = require('passport'); // auth middleware
-const LocalStrategy = require('passport-local').Strategy; // username and password for login
-const session = require('express-session'); // enable sessions
+const passport = require('../passport'); // auth middleware
 
 const userDao = require('../modules/DbManager').user_dao; // module for accessing the users in the DB
-
-/*** Set up Passport ***/
-// set up the "username and password" login strategy
-// by setting a function to verify username and password
-passport.use(
-	new LocalStrategy(function (username, password, done) {
-		userDao.getUser(username, password).then((user) => {
-			if (!user) {
-				return done(null, false, {
-					message: 'Incorrect username and / or password.'
-				});
-			}
-			return done(null, user);
-		});
-	})
-);
-
-// serialize and de-serialize the user (user object <-> session)
-// we serialize the user and we store it in the session
-passport.serializeUser((user, done) => {
-	done(null, user);
-});
-
-// starting from the data in the session, we extract the current (logged-in) user
-passport.deserializeUser((user, done) => {
-	done(null, user);
-});
 
 // custom middleware: check if a given request is coming from an authenticated user
 const isLoggedIn = (req, res, next) => {
@@ -40,21 +13,6 @@ const isLoggedIn = (req, res, next) => {
 
 	return res.status(401).json({ error: 'User not authenticated' });
 };
-
-// set up the session
-router.use(
-	session({
-		// by default, Passport uses a MemoryStore to keep track of the sessions
-		secret:
-			'a secret sentence not to share with anybody and anywhere, used to sign the session ID cookie',
-		resave: false,
-		saveUninitialized: false
-	})
-);
-
-// then, init passport
-router.use(passport.initialize());
-router.use(passport.session());
 
 /*** Users APIs ***/
 
