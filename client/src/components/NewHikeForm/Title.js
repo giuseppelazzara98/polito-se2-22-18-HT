@@ -6,6 +6,7 @@ export default function Title(props) {
 		<Form.Group as={Col} md={6} >
 			<Form.Label className={styles.title}>Title</Form.Label>
 			<Form.Control
+				className={styles.customInsert}
 				type="text"
 				placeholder="Hike name"
 				value={props.title}

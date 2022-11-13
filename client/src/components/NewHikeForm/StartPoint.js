@@ -30,7 +30,7 @@ export default function StartPoint(props) {
 		<Form.Group as={Col} md="6">
 			<Form.Label className={styles.title}>Start point</Form.Label>
 			<Select
-				className="basic-single"
+				className={styles.customSelect}
 				classNamePrefix="select"
 				defaultValue={props.startPoint}
 				name="startPoint"

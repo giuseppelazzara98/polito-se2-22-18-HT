@@ -29,7 +29,7 @@ export default function Province(props) {
 		<Form.Group as={Col} md="6" >
 			<Form.Label className={styles.title}>Province</Form.Label>
 			<Select
-				className="basic-single"
+			    className={styles.customSelect}
 				classNamePrefix="select"
 				defaultValue="1"
 				name="province"

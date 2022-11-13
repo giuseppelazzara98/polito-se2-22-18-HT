@@ -1,0 +1,29 @@
+@import "../../../styles/configs";
+
+
+
+.button{
+  background-color: $primary-green;
+  border-color: transparent;
+  &:hover{
+    background-color: $tertiary-green;
+    border-color: transparent;
+    
+  }
+  &:global(.btn){
+    &:active{
+      background-color: $tertiary-green;
+      border-color: transparent;
+      
+    }
+  }
+ 
+}
+
+.customInsert{
+
+  &:global(.form-control){
+      box-shadow: 0 0 0 1px $primary-green;
+      border-color: $tertiary-green;
+  }
+}

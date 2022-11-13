@@ -7,6 +7,7 @@ export default function Length(props) {
 		<Form.Group as={Col} md="4">
 			<Form.Label className={styles.title}>Length</Form.Label>
 			<Form.Control
+			    className={styles.customInsert}
 				type="number"
 				value={props.length}
 				onChange={(event) => props.setLength(event.target.value)}

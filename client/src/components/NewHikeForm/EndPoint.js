@@ -31,7 +31,7 @@ export default function EndPoint(props) {
 		<Form.Group as={Col} md="6">
 			<Form.Label className={styles.title}>End point</Form.Label>
 			<Select
-				className="basic-single"
+				className={styles.customSelect}
 				classNamePrefix="select"
 				defaultValue={props.endPoint}
 				name="endPoint"

@@ -11,6 +11,7 @@ export default function DifficultyLevel(props) {
 				</Col>
 				<Col>
 					<Form.Check
+						className={styles.check}
 						inline
 						type="radio"
 						label="Turist"
@@ -23,6 +24,7 @@ export default function DifficultyLevel(props) {
 				</Col>
 				<Col>
 					<Form.Check
+						className={styles.check}
 						inline
 						type="radio"
 						label="Hiker"
@@ -35,6 +37,7 @@ export default function DifficultyLevel(props) {
 				</Col>
 				<Col>
 					<Form.Check
+						className={styles.check}
 						inline
 						type="radio"
 						label="Professional Hiker"

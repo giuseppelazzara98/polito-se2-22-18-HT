@@ -6,6 +6,7 @@ export default function ExpectedTime(props) {
 		<Form.Group as={Col} md="4">
 			<Form.Label className={styles.title}>Expected time</Form.Label>
 			<Form.Control
+				className={styles.customInsert}
 				type="text"
 				value={props.expectedTime}
 				onChange={(event) => props.setExpectedTime(event.target.value)}

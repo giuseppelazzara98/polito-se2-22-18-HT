@@ -7,6 +7,7 @@ export default function Ascent(props) {
 		<Form.Group as={Col} md="4">
 			<Form.Label className={styles.title}>Ascent</Form.Label>
 			<Form.Control
+				className={styles.customInsert}
 				type="number"
 				value={props.ascent}
 				onChange={(event) => props.setAscent(event.target.value)}
