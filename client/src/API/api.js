@@ -21,7 +21,8 @@ async function getAllHikes(data) {
         difficulty: r.difficulty,
         key: r.key,
         name: r.name,
-        description: r.description
+        description: r.description,
+        province : r.province
       }));
       return {
         hikes: hikes,
