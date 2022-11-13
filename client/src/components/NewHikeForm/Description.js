@@ -1,8 +1,10 @@
 import { Form, Row } from 'react-bootstrap';
+import styles from "./index.module.scss";
+
 export default function Description(props) {
 	return (
 		<Form.Group as={Row} md="3">
-			<Form.Label>Description</Form.Label>
+			<Form.Label className={styles.title}>Description</Form.Label>
 			<Form.Control
 				as="textarea"
 				rows={5}

@@ -2,6 +2,7 @@ import { Form, Col } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import Select from 'react-select';
 import API from '../../API/api';
+import styles from "./index.module.scss";
 
 export default function Province(props) {
 	const [provincesList, setProvincesList] = useState([]);
@@ -25,8 +26,8 @@ export default function Province(props) {
 	}, []);
 
 	return (
-		<Form.Group as={Col} md="6">
-			<Form.Label>Province</Form.Label>
+		<Form.Group as={Col} md="6" >
+			<Form.Label className={styles.title}>Province</Form.Label>
 			<Select
 				className="basic-single"
 				classNamePrefix="select"

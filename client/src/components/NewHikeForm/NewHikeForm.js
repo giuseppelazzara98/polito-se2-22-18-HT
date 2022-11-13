@@ -12,6 +12,7 @@ import Ascent from './Ascent';
 import StartPoint from './StartPoint';
 import Description from './Description';
 import API from '../../API/api';
+import styles from "./index.module.scss";
 
 export default function NewHikeForm(props) {
 	const [title, setTitle] = useState('');

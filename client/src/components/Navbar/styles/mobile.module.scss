@@ -12,4 +12,14 @@
     border-color: transparent;
     
   }
+
+  
+    &:global(.btn){
+      &:active{
+        background-color: $tertiary-green;
+        border-color: transparent;
+        
+      }
+    }
+    
 }

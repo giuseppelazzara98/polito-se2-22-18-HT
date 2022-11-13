@@ -1,11 +1,13 @@
 import { Col, Row, Form } from 'react-bootstrap';
+import styles from "./index.module.scss";
+
 
 export default function DifficultyLevel(props) {
 	return (
 		<Form.Group>
 			<Row>
 				<Col>
-					<Form.Label>Difficulty</Form.Label>
+					<Form.Label className={styles.title}>Difficulty</Form.Label>
 				</Col>
 				<Col>
 					<Form.Check

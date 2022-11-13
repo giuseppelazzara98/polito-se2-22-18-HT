@@ -1,9 +1,10 @@
 import { Form, Col } from 'react-bootstrap';
+import styles from "./index.module.scss";
 
 export default function ExpectedTime(props) {
 	return (
 		<Form.Group as={Col} md="4">
-			<Form.Label>Expected time</Form.Label>
+			<Form.Label className={styles.title}>Expected time</Form.Label>
 			<Form.Control
 				type="text"
 				value={props.expectedTime}

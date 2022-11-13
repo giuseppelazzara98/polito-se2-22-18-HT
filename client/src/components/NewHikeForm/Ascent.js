@@ -1,9 +1,11 @@
 import { Form, Col } from 'react-bootstrap';
+import styles from "./index.module.scss";
+
 
 export default function Ascent(props) {
 	return (
 		<Form.Group as={Col} md="4">
-			<Form.Label>Ascent</Form.Label>
+			<Form.Label className={styles.title}>Ascent</Form.Label>
 			<Form.Control
 				type="number"
 				value={props.ascent}
