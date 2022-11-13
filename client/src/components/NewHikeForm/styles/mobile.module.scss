@@ -1,7 +1,6 @@
 @import "../../../styles/configs";
 
 
-<<<<<<< HEAD
   .button{
     background-color: $primary-green;
     border-color: transparent;
@@ -17,12 +16,7 @@
   .dataName {
     color: $primary-green;
   }
-
-    
   
-
-
-=======
   .title {
     @include font(700, 18px, 20px, 0);
     color: $primary-green;
@@ -73,4 +67,3 @@
     }
   }
 }
->>>>>>> b734beb757c6ab8c2a7ce5850018112ec10b0fbc
