@@ -70,6 +70,9 @@ export default function NewHikeForm(props) {
 		hike.referencePoints = referencePoints.map((point) => {
 			return point.id_place;
 		});
+		hike.difficulty = parseInt(difficulty, 10);
+		hike.ascent = parseInt(ascent, 10);
+		hike.length = parseInt(length, 10);
 		const addNewHike = async () => {
 			await API.createNewHike(hike);
 		};

@@ -14,7 +14,7 @@ export default function DifficultyLevel(props) {
 						label="Turist"
 						name="Difficuilty"
 						id="Turist"
-						value="Turist"
+						value={1}
 						onChange={(event) => props.setDifficulty(event.target.value)}
 						required={true}
 					/>
@@ -26,7 +26,7 @@ export default function DifficultyLevel(props) {
 						label="Hiker"
 						name="Difficuilty"
 						id="Hiker"
-						value="Hiker"
+						value={2}
 						onChange={(event) => props.setDifficulty(event.target.value)}
 						required={true}
 					/>
@@ -38,7 +38,7 @@ export default function DifficultyLevel(props) {
 						label="Professional Hiker"
 						name="Difficuilty"
 						id="Professional Hiker"
-						value="Professional Hiker"
+						value={3}
 						onChange={(event) => props.setDifficulty(event.target.value)}
 						required={true}
 					/>
