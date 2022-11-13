@@ -15,7 +15,7 @@ passport.use(
 		userDao.getUser(username, password).then((user) => {
 			if (!user) {
 				return done(null, false, {
-					message: 'Incorrect username and/or password.'
+					message: 'Incorrect username and / or password.'
 				});
 			}
 			return done(null, user);
@@ -31,7 +31,7 @@ passport.serializeUser((user, done) => {
 
 // starting from the data in the session, we extract the current (logged-in) user
 passport.deserializeUser((user, done) => {
-	return done(null, user);
+	done(null, user);
 });
 
 // custom middleware: check if a given request is coming from an authenticated user
@@ -81,8 +81,7 @@ router.post('/sessions', function (req, res, next) {
 // DELETE /sessions/current
 // logout
 router.delete('/sessions/current', (req, res) => {
-	req.logout();
-	res.end();
+	req.logout(() => { res.end(); });
 });
 
 // GET /sessions/current
@@ -90,6 +89,9 @@ router.delete('/sessions/current', (req, res) => {
 router.get('/sessions/current', (req, res) => {
 	if (req.isAuthenticated()) {
 		res.status(200).json(req.user);
+	}
+	else {
+		res.status(401).json({ error: 'User not authenticated' });
 	}
 });
 
@@ -117,11 +119,11 @@ router.post('/newUser', async (req, res) => {
 		})
 
 		const result = await userDao.insertNewUser(req.body.user.email, password, req.body.user.role);
-		return res.status(200).json(result);
+		return res.status(201).json(result);
 
 	} catch (err) {
 		console.log(err);
-		return res.status(500).json({ error: 'Internal Server Error' });
+		return res.status(503).json({ error: 'Service Unavailable' });
 	}
 });
 
