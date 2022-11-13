@@ -11,7 +11,7 @@ import { formatDuration ,formatAscent} from "../../helpers/utility";
   
   function HikesTable(props) {
     return (
-      <Container fluid>
+      <Container fluid className="mt-4 mt-md-0">
   
           
             <Table hover size="sm" className={styles.wrap}>
@@ -20,6 +20,7 @@ import { formatDuration ,formatAscent} from "../../helpers/utility";
                   <th>Name</th>
                   <th>Province</th>
                   <th>Difficulty</th>
+
                 </tr>
               </thead>
               <tbody>
