@@ -131,7 +131,7 @@ export default function RangeFilter(props) {
                         :
                           isLength ? 
                             `${handleProps["aria-valuenow"]} km`
-                          : `${handleProps["aria-valuenow"]/100} %`
+                          : `${handleProps["aria-valuenow"]} m`
                       }
                     </div>
                     <div className={`${styles.handleButton}`}></div>
