@@ -53,6 +53,16 @@ router.get('/sessions/current', (req, res) => {
 	}
 });
 
+/* Example of body:
+
+{
+    "email": "hiker1@gmail.com", 
+    "password": "password",
+    "role": "hiker"
+}
+
+*/
+
 //POST /api/newUser
 router.post('/newUser', async (req, res) => {
 
@@ -61,12 +71,17 @@ router.post('/newUser', async (req, res) => {
 		return res.status(422).json({ error: 'Empty body request' });
 	}
 
+	if (Object.keys(req.body).length !== 3) {
+		console.log('Data not formatted properly!');
+		return res.status(422).json({ error: 'Data not formatted properly' });
+	}
+
 	try {
 
 		const result = await userDao.insertNewUser(
-			req.body.user.email,
+			req.body.email,
 			req.body.password,
-			req.body.user.role
+			req.body.role
 		);
 
 		return res.status(201).json(result);
