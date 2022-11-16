@@ -80,17 +80,29 @@ class UserDAO {
 		});
 	};
 
-	insertNewUser = (email, password, role) => {
+	insertNewUser = (email, plainPassword, role) => {
 		return new Promise((resolve, reject) => {
-			const sql ='INSERT INTO USER (email, password, role) VALUES (?, ?, ?)';
-			this.db.run(sql, [email, password, role], function (err) {
-				if (err) {
-					console.log('Error running sql: ' + sql);
-					console.log(err);
-					reject(err);
-				} else {
-					resolve(this.lastID); //faccio tornare il l'id inserito
-				}
+
+			const sql = 'INSERT INTO USER (email, password, role) VALUES (?, ?, ?)';
+
+			this.bcrypt.genSalt(10, (err, salt) => {
+				// The bcrypt is used for encrypting password.
+				this.bcrypt.hash(plainPassword, salt, (err, hash) => {
+					if (err) {
+						return console.log("Error in hashing password");
+					}
+					else {
+						this.db.run(sql, [email, hash, role], function (err) {
+							if (err) {
+								console.log('Error running sql: ' + sql);
+								console.log(err);
+								reject(err);
+							} else {
+								resolve(this.lastID); //faccio tornare il l'id inserito
+							}
+						});
+					}
+				});
 			});
 		});
 	};

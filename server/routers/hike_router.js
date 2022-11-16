@@ -7,7 +7,6 @@ const hikeDao = require('../modules/DbManager').hike_dao;
 
 // custom middleware: check if a given request is coming from an authenticated user
 const isLoggedIn = (req, res, next) => {
-	console.log(req.isAuthenticated());
 	if (req.isAuthenticated()){ 
 		return next();
 	}
@@ -73,7 +72,7 @@ router.post('/hikes', async (req, res) => {
 
 //POST /api/newHike
 router.post('/newHike',
-	//isLoggedIn,
+	isLoggedIn,
 	async (req, res) => {
 
 		if (Object.keys(req.body).length === 0) {

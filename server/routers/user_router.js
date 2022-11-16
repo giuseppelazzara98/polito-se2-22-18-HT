@@ -2,7 +2,6 @@
 
 const express = require('express');
 const router = express.Router();
-
 const passport = require('../passport'); // auth middleware
 
 const userDao = require('../modules/DbManager').user_dao; // module for accessing the users in the DB
@@ -56,32 +55,22 @@ router.get('/sessions/current', (req, res) => {
 
 //POST /api/newUser
 router.post('/newUser', async (req, res) => {
+
 	if (Object.keys(req.body).length === 0) {
 		console.log('Empty body!');
 		return res.status(422).json({ error: 'Empty body request' });
 	}
 
 	try {
-		console.log('req.body.user:' + req.body.user);
-		//Qui cripto la password
-		let password;
-
-		bcrypt.genSalt(10, function (err, Salt) {
-			// The bcrypt is used for encrypting password.
-			bcrypt.hash(password, Salt, function (err, hash) {
-				if (err) {
-					return console.log('Cannot encrypt the password');
-				}
-				password = hash;
-			});
-		});
 
 		const result = await userDao.insertNewUser(
 			req.body.user.email,
-			password,
+			req.body.password,
 			req.body.user.role
 		);
+
 		return res.status(201).json(result);
+
 	} catch (err) {
 		console.log(err);
 		return res.status(503).json({ error: 'Service Unavailable' });
