@@ -14,9 +14,9 @@ sections:
 
 - Number of stories committed vs. done: __3 vs 2__
 - Total points committed vs. done: __29 vs 21__
-- Nr of hours planned vs. spent (as a team): __72h / 73h 05m__
+- Nr of hours planned vs. spent (as a team): __72h / 74h 50m__
 
-  We needed 1h 05m more than the planned hours to help who needed help and to fix some code bugs.
+  We needed 2h 50m more than the planned hours to help who needed help and to fix some code bugs.
 
 **Remember** a story is done ONLY if it fits the Definition of Done:
 
@@ -69,6 +69,9 @@ The total task estimation error ratio is negative because the number of hours sp
   - Total hours spent: 7h
   - Nr of automated unit test cases: 34
   - Coverage (if available): 99%
+
+The actual coverage reported in unitTestResult.txt is less than 99% because there were some functions related to the story 3 (not delivered) that were not tested, but actually, all the functions related to the stories 1 and 2 have been tested with a 99% of coverage.
+
 - E2E testing:
   - Total hours estimated: 4h 30m
   - Total hours spent: 4h 15m
@@ -81,24 +84,28 @@ The total task estimation error ratio is negative because the number of hours sp
 
 - **What caused your errors in estimation (if any)?**
 
-  We didn't realize we have some problems regarding knowledge of some technology we used and there were some aspects we didn't think we need, so we had to add more tasks during the sprint.
+  - We underestimated the time needed to implement the hike table and the time needed to implement the form to add a new hike. We thought also that some code bugs would be easier to fix than they actually were.
+
+  - We would have used less time without inserting into the list of tasks the time needed to do the sprint planning (that took 2h 30h for each member) and the retrospective.
 
 - **What lessons did you learn (both positive and negative) in this sprint?**
 
-  We learn that the more the number of people working on the same project, the more difficult is to organize work.
+   - We learned that we should have estimated better the time needed to implement each story. Trying to deliver as many stories as possible is useless because we have to fix some bugs and help other team members. For this reason, next time, we will try to commit less stories allocating more time to each one.
 
-  However it is nice to have someone that can help you whenever you need.
+   - We are a team of 6 people and we worked together and with cohesion to deliver the best possible result. 
+
 - **Which improvement goals set in the previous retrospective were you able to achieve?**
 
-  This is our first retrospective, so we didn't have any goals.
+  - We were able to achieve almost all of the planned objectives set in the previous retrospective. We were able to improve the coordination between the team members but we still have to improve the task estimation in terms of time.
+
 - **Which ones you were not able to achieve? Why?**
 
-  For the same reason of the previous answer we didn't have anything to achieve.
+  - /
+
 - **Improvement goals for the next sprint and how to achieve them (technical tasks, team coordination, etc.)**
 
-  - **More coordination**: in addition to the daily scrum use a tool(like Notion) where each team member for each shared task is able to write comments and communications.
-  - **Better task assignation and estimation**
+  - **Better estimation**: we will try to estimate better the time needed to implement each story, committing less stories for the next sprints.
 
 - **One thing you are proud of as a Team!!**
 
-  We are proud of the fact that togheter we have been able to help each other and have also been able to be more cohesive and organized among difficulties.
+  - We are proud of the fact that togheter we have been able to help each other and have also been able to be more cohesive and organized among difficulties.
