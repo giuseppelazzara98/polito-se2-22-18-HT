@@ -102,7 +102,7 @@ describe('TestHikeDao', () => {
 
     // CLOSE CONNECTION TO HIKE TABLE
 
-    testCloseHikeTable();
+    testCloseTables();
     testGetFilteredHikes(bodyFilter1, true);
     testInsertHikePlace(4, 3, 3);
     testInsertNewHike(bodyNewHike1);
@@ -163,10 +163,10 @@ function testInsertHikePlace(id_hike, id_reference_point, sort) {
     });
 }
 
-function testCloseHikeTable() {
-    test('close hike table', async () => {
+function testCloseTables() {
+    test('close tables', async () => {
         try{
-            await testHikeDao.closeHikeTable();
+            await testHikeDao.closeTables();
         }
         catch(err) {
             console.log("---- Error on TestCloseHikeTable ----");

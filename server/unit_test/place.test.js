@@ -15,6 +15,8 @@ describe('TestPlaceDao', () => {
     testGetPlacesById(3, true);
     testGetPlacesById(6, true);
     testGetPlacesById(10, true);
+    testGetPlacesById(5000, false);
+    testGetPlacesById(3299, false);
 
     // CLOSE CONNECTION TO PLACE TABLE
 
@@ -30,12 +32,14 @@ function testGetPlacesByProvinceId(id_province, expextedResult) {
 
             const places = await testPlaceDao.getAllPlacesByProvinceId(id_province);
 
-            expect(places).not.toBeNull();
+            
 
             if(expextedResult === true) {
+                expect(places).not.toBeNull();
                 expect(places.length).toBeGreaterThan(0);
             }
             else {
+                expect(places).toBeNull();
                 expect(places.length).toBe(0);
             }
         }

@@ -3,6 +3,7 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('../passport'); // auth middleware
+const { check, body, validationResult } = require('express-validator');
 
 const userDao = require('../modules/DbManager').user_dao; // module for accessing the users in the DB
 
@@ -56,40 +57,57 @@ router.get('/sessions/current', (req, res) => {
 /* Example of body:
 
 {
-    "email": "hiker1@gmail.com", 
-    "password": "password",
-    "role": "hiker"
+	"email": "hiker3@gmail.com",
+	"name": "Paolo",
+	"surname": "Bari", 
+	"password": "password",
+	"id_role": "1"
 }
 
 */
 
 //POST /api/newUser
-router.post('/newUser', async (req, res) => {
+router.post('/newUser',
+	body('email').isEmail(),
+	body('name').isString().isLength({ max: 50 }),
+	body('surname').isString().isLength({ max: 50 }),
+	body('password').isString().isLength({ max: 255 }),
+	body('id_role').isInt({ min: 1, max: 4 }),
+	async (req, res) => {
 
-	if (Object.keys(req.body).length === 0) {
-		console.log('Empty body!');
-		return res.status(422).json({ error: 'Empty body request' });
-	}
+		if (Object.keys(req.body).length === 0) {
+			console.log('Empty body!');
+			return res.status(422).json({ error: 'Empty body request' });
+		}
 
-	if (Object.keys(req.body).length !== 3) {
-		console.log('Data not formatted properly!');
-		return res.status(422).json({ error: 'Data not formatted properly' });
-	}
+		if (Object.keys(req.body).length !== 5 || !(req.body.email && req.body.name && req.body.surname && req.body.password)) {
+			console.log('Data not formatted properly!');
+			return res.status(422).json({ error: 'Data not formatted properly' });
+		}
 
-	try {
+		const errors = validationResult(req);
 
-		const result = await userDao.insertNewUser(
-			req.body.email,
-			req.body.password,
-			req.body.role
-		);
+		if (!errors.isEmpty()) {
+			console.log("Error in body!");
+			return res.status(422).json({ errors: errors.array() });
+		}
 
-		return res.status(201).json(result);
+		try {
 
-	} catch (err) {
-		console.log(err);
-		return res.status(503).json({ error: 'Service Unavailable' });
-	}
-});
+			const result = await userDao.insertNewUser(
+				req.body.email,
+				req.body.name,
+				req.body.surname,
+				req.body.password,
+				req.body.id_role
+			);
+
+			return res.status(201).json(result);
+
+		} catch (err) {
+			console.log(err);
+			return res.status(503).json({ error: 'Service Unavailable' });
+		}
+	});
 
 module.exports = router;

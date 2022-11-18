@@ -1,13 +1,14 @@
 'use strict';
 
 const express = require('express');
-//const { check, body, validationResult } = require('express-validator');
+const { check, body, validationResult } = require('express-validator');
 const router = express.Router();
 const hikeDao = require('../modules/DbManager').hike_dao;
+const placeDao = require('../modules/DbManager').place_dao;
 
 // custom middleware: check if a given request is coming from an authenticated user
 const isLoggedIn = (req, res, next) => {
-	if (req.isAuthenticated()){ 
+	if (req.isAuthenticated()) {
 		return next();
 	}
 
@@ -70,34 +71,78 @@ router.post('/hikes', async (req, res) => {
 	}
 });
 
+/*
+	{
+		"title":"Test1",
+		"province":1,
+		"length":345,
+		"expectedTimeString":"12h",
+		"expectedTime":12,
+		"ascent":123,
+		"difficulty":2,
+		"startPoint":9,
+		"endPoint":5,
+		"referencePoints":[],
+		"gpxFile":"",
+		"description":"Test1"
+}
+*/
+
 //POST /api/newHike
 router.post('/newHike',
 	isLoggedIn,
+	body('title').isString().isLength({ max: 300 }),
+	body('province').notEmpty().isInt({ min: 1 }),
+	body('length').isFloat({ min: 0.0 }),
+	body('expectedTimeString').isString().isLength({ max: 20 }),
+	body('expectedTime').isFloat({ min: 0.0 }),
+	body('ascent').isInt({ min: 0 }),
+	body('difficulty').isInt({ min: 0, max: 2 }),
+	body('startPoint').notEmpty().isInt({ min: 1 }),
+	body('endPoint').notEmpty().isInt({ min: 1 }),
+	body('referencePoints').isArray(),
+	body('description').isString().isLength({ max: 1000 }),
 	async (req, res) => {
+
+		//TODO: to insert controls for the gpxFile
 
 		if (Object.keys(req.body).length === 0) {
 			console.log('Empty body!');
 			return res.status(422).json({ error: 'Empty body request' });
 		}
 
-		if (Object.keys(req.body).length !== 12) {
+		if (Object.keys(req.body).length !== 12 || !(req.body.title && req.body.expectedTimeString && req.body.referencePoints && req.body.description)) {
 			console.log('Data not formatted properly!');
 			return res.status(422).json({ error: 'Data not formatted properly' });
 		}
 
+		const errors = validationResult(req);
+
+		if (!errors.isEmpty()) {
+			console.log("Error in body!");
+			return res.status(422).json({ errors: errors.array() });
+		}
+
 		try {
 
-			const result = await hikeDao.insertHike(req.body);
+			
 			// insert in hike-place table, cycling on reference points
-
 			for (let i = 0; i < req.body.referencePoints.length; i++) {
-				//insertHikePlace(id_hike, id_reference_point, order)
-				let result2 = await hikeDao.insertHikePlace(
-					result,
-					req.body.referencePoints[i],
-					i + 1
-				);
+
+				let referencePoint = req.body.referencePoints[i];
+
+				let place_ok = await placeDao.getPlaceById(referencePoint);
+
+				if (place_ok !== null) {
+					await hikeDao.insertHikePlace(result, referencePoint, i + 1);
+				}
+				else {
+					console.log("Place not found!");
+					return res.status(404).json({ error: 'Not Found' });
+				}
 			}
+
+			const result = await hikeDao.insertHike(req.body);
 
 			return res.status(201).json(result);
 		} catch (err) {

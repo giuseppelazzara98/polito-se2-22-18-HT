@@ -14,11 +14,13 @@ class UserDAO {
 		});
 	};
 
+	/*
+
 	// create the user table
 	newUserTable = () => {
 		return new Promise((resolve, reject) => {
 			const sql =
-				'CREATE TABLE IF NOT EXISTS USER(id_user INTEGER NOT NULL, email TEXT NOT NULL, password TEXT NOT NULL, role TEXT NOT NULL, PRIMARY KEY(id_user));';
+				'CREATE TABLE IF NOT EXISTS USER(id_user INTEGER NOT NULL, id_role INTEGER NOT NULL, email TEXT NOT NULL UNIQUE, password TEXT NOT NULL, name TEXT NOT NULL, surname TEXT NOT NULL, PRIMARY KEY(id_user AUTOINCREMENT));';
 			this.db.run(sql, (err) => {
 				if (err) {
 					console.log('Error running sql: ' + sql);
@@ -45,13 +47,15 @@ class UserDAO {
 		});
 	};
 
+	*/
+
 	// get User by ID
 	getUserById = (id) => {
 		return new Promise((resolve, reject) => {
 			const sql = 'SELECT * FROM USER WHERE id_user = ?';
 			this.db.get(sql, [id], (err, row) => {
 				if (err) reject(err);
-				else if (row === undefined) resolve({ error: 'User not found.' });
+				else if (row === undefined) resolve(null);
 				else {
 					const user = { id: row.id_user, username: row.email, role: row.role };
 					resolve(user);
@@ -63,14 +67,22 @@ class UserDAO {
 	// get user, used for login purposes
 	getUser = (email, password) => {
 		return new Promise((resolve, reject) => {
-			const sql = 'SELECT * FROM user WHERE email = ?';
+			const sql = 'SELECT U.id_user, U.email, U.password, U.name, U.surname, R.description AS ROLE FROM USER U, ROLE R WHERE U.id_role = R.id_role AND U.email = ?';
 			this.db.get(sql, [email], (err, row) => {
 				if (err) {
 					reject(err);
 				} else if (row === undefined) {
 					resolve(false);
 				} else {
-					const user = { id: row.id_user, username: row.email, role: row.role };
+
+					const user = {
+						id: row.id_user,
+						username: row.email,
+						name: row.name,
+						surname: row.surname,
+						role: row.ROLE
+					};
+
 					this.bcrypt.compare(password, row.password).then((result) => {
 						if (result) resolve(user);
 						else resolve(false);
@@ -80,10 +92,10 @@ class UserDAO {
 		});
 	};
 
-	insertNewUser = (email, plainPassword, role) => {
+	insertNewUser = (email, name, surname, plainPassword, role) => {
 		return new Promise((resolve, reject) => {
 
-			const sql = 'INSERT INTO USER (email, password, role) VALUES (?, ?, ?)';
+			const sql = 'INSERT INTO USER (id_role, email, password, name, surname) VALUES (?,?,?,?,?)';
 
 			this.bcrypt.genSalt(10, (err, salt) => {
 				// The bcrypt is used for encrypting password.
@@ -92,7 +104,7 @@ class UserDAO {
 						return console.log("Error in hashing password");
 					}
 					else {
-						this.db.run(sql, [email, hash, role], function (err) {
+						this.db.run(sql, [role, email, hash, name, surname], function (err) {
 							if (err) {
 								console.log('Error running sql: ' + sql);
 								console.log(err);
