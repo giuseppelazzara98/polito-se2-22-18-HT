@@ -14,9 +14,8 @@ import Description from './Description';
 import API from '../../API/api';
 import styles from './index.module.scss';
 
-
 export default function NewHikeForm(props) {
-	const {setUpdateHikes} = props;
+	const { setUpdateHikes } = props;
 	const [title, setTitle] = useState('');
 	const [province, setProvince] = useState('');
 	const [length, setLength] = useState('');
@@ -30,16 +29,17 @@ export default function NewHikeForm(props) {
 	const [description, setDescription] = useState('');
 	const [refPoint, setRefPoint] = useState('');
 	const navigate = useNavigate();
+	const [validated, setValidated] = useState(false);
 
 	const handleSubmit = (event) => {
-		event.preventDefault();
+		const form = event.currentTarget;
 		const hike = {
 			title: title,
 			province: province,
 			length: length,
 			expectedTimeString: expectedTime,
 			expectedTime: 0,
-			ascent: ascent ,
+			ascent: ascent,
 			difficulty: difficulty,
 			startPoint: startPoint,
 			endPoint: endPoint,
@@ -51,22 +51,14 @@ export default function NewHikeForm(props) {
 		const time = hike.expectedTimeString.split(' ');
 		let hours = 0;
 		time.forEach((part) => {
-			if (part[part.length - 1] === 'm') {
-				const p = part.slice(0, part.length - 1);
-				const m = parseInt(p, 10);
-				hours += m * 730.5;
-			} else if (part[part.length - 1] === 'w') {
-				const p = part.slice(0, part.length - 1);
-				const w = parseInt(p, 10);
-				hours += w * 168;
-			} else if (part[part.length - 1] === 'd') {
-				const p = part.slice(0, part.length - 1);
-				const d = parseInt(p, 10);
-				hours += d * 24;
-			} else if (part[part.length - 1] === 'h') {
+			if (part[part.length - 1] === 'h') {
 				const p = part.slice(0, part.length - 1);
 				const h = parseInt(p, 10);
 				hours += h;
+			} else if (part[part.length - 1] === 'm') {
+				const p = part.slice(0, part.length - 1);
+				const m = parseInt(p, 10);
+				hours += m / 60;
 			}
 		});
 		hike.expectedTime = hours;
@@ -75,14 +67,20 @@ export default function NewHikeForm(props) {
 		});
 		hike.difficulty = parseInt(difficulty, 10);
 		hike.ascent = parseInt(ascent, 10);
-		hike.ascent = ascent * 100;
 		hike.length = parseInt(length, 10);
 		const addNewHike = async () => {
 			await API.createNewHike(hike);
 		};
-		addNewHike();
-		setUpdateHikes(prevstate => prevstate + 1);
-		navigate('/');
+
+		if (form.checkValidity() === false) {
+			event.preventDefault();
+			event.stopPropagation();
+		} else {
+			addNewHike();
+			setUpdateHikes((prevstate) => prevstate + 1);
+			navigate('/');
+		}
+		setValidated(true);
 	};
 
 	const addRefPoint = () => {
@@ -105,7 +103,12 @@ export default function NewHikeForm(props) {
 	};
 
 	return (
-		<Form className="text-start" onSubmit={handleSubmit}>
+		<Form
+			className="text-start"
+			noValidate
+			validated={validated}
+			onSubmit={handleSubmit}
+		>
 			<Row className="mb-3">
 				{/*Title field*/}
 				<Title title={title} setTitle={setTitle} />
@@ -173,7 +176,9 @@ export default function NewHikeForm(props) {
 			{/*Submit button*/}
 			<Row className="my-5">
 				<Col className="col-md-3 mb-4">
-					<Button className={styles.button} type="submit">Submit</Button>
+					<Button className={styles.button} type="submit">
+						Submit
+					</Button>
 				</Col>
 			</Row>
 		</Form>

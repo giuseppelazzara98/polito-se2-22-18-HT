@@ -1,5 +1,5 @@
 import { Form, Col } from 'react-bootstrap';
-import styles from "./index.module.scss";
+import styles from './index.module.scss';
 
 export default function ExpectedTime(props) {
 	return (
@@ -12,9 +12,12 @@ export default function ExpectedTime(props) {
 				onChange={(event) => props.setExpectedTime(event.target.value)}
 				placeholder="Expected time"
 				required={true}
-				pattern="((([1-9])|(1[0-2]))m ?)?([1-3]w ?)?([1-6]d ?)?((([1-9])|(1[0-9])|(2[0-3]))h)?"
+				pattern="((([1-9])|(1[0-9])|(2[0-3]))h ?)?(([1-9]|([1-4][0-9])|(5[0-9]))m)?"
 			/>
-			<Form.Text>Maximum values: 12m 3w 6d 23h</Form.Text>
+			<Form.Text>Maximum values:23h 59m</Form.Text>
+			<Form.Control.Feedback type="invalid">
+				Expected time can't be empty
+			</Form.Control.Feedback>
 		</Form.Group>
 	);
 }

@@ -129,8 +129,8 @@ function App2() {
 					<Route
 						path="/newHike"
 						element={
-							loggedIn && user.role === 'guide' ? (
-								<NewHike setUpdateHikes={setUpdateHikes}/>
+							loggedIn && user.role === 'Local guide' ? (
+								<NewHike setUpdateHikes={setUpdateHikes} />
 							) : (
 								<Navigate to="/login" replace />
 							)
