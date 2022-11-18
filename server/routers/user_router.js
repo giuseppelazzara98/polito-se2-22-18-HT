@@ -2,8 +2,8 @@
 
 const express = require('express');
 const router = express.Router();
-
 const passport = require('../passport'); // auth middleware
+const { check, body, validationResult } = require('express-validator');
 
 const userDao = require('../modules/DbManager').user_dao; // module for accessing the users in the DB
 
@@ -54,38 +54,60 @@ router.get('/sessions/current', (req, res) => {
 	}
 });
 
+/* Example of body:
+
+{
+	"email": "hiker3@gmail.com",
+	"name": "Paolo",
+	"surname": "Bari", 
+	"password": "password",
+	"id_role": "1"
+}
+
+*/
+
 //POST /api/newUser
-router.post('/newUser', async (req, res) => {
-	if (Object.keys(req.body).length === 0) {
-		console.log('Empty body!');
-		return res.status(422).json({ error: 'Empty body request' });
-	}
+router.post('/newUser',
+	body('email').isEmail(),
+	body('name').isString().isLength({ max: 50 }),
+	body('surname').isString().isLength({ max: 50 }),
+	body('password').isString().isLength({ max: 255 }),
+	body('id_role').isInt({ min: 1, max: 4 }),
+	async (req, res) => {
 
-	try {
-		console.log('req.body.user:' + req.body.user);
-		//Qui cripto la password
-		let password;
+		if (Object.keys(req.body).length === 0) {
+			console.log('Empty body!');
+			return res.status(422).json({ error: 'Empty body request' });
+		}
 
-		bcrypt.genSalt(10, function (err, Salt) {
-			// The bcrypt is used for encrypting password.
-			bcrypt.hash(password, Salt, function (err, hash) {
-				if (err) {
-					return console.log('Cannot encrypt the password');
-				}
-				password = hash;
-			});
-		});
+		if (Object.keys(req.body).length !== 5 || !(req.body.email && req.body.name && req.body.surname && req.body.password)) {
+			console.log('Data not formatted properly!');
+			return res.status(422).json({ error: 'Data not formatted properly' });
+		}
 
-		const result = await userDao.insertNewUser(
-			req.body.user.email,
-			password,
-			req.body.user.role
-		);
-		return res.status(201).json(result);
-	} catch (err) {
-		console.log(err);
-		return res.status(503).json({ error: 'Service Unavailable' });
-	}
-});
+		const errors = validationResult(req);
+
+		if (!errors.isEmpty()) {
+			console.log("Error in body!");
+			return res.status(422).json({ errors: errors.array() });
+		}
+
+		try {
+
+			const result = await userDao.insertNewUser(
+				req.body.email,
+				req.body.name,
+				req.body.surname,
+				req.body.password,
+				req.body.id_role
+			);
+
+			return res.status(201).json(result);
+
+		} catch (err) {
+			console.log(err);
+			return res.status(503).json({ error: 'Service Unavailable' });
+		}
+	});
 
 module.exports = router;
