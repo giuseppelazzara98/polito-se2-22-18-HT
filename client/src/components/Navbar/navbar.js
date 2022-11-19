@@ -10,6 +10,7 @@ import { useMediaQuery }  from "react-responsive";
 import { maxBreakpoints } from "../../helpers/configs";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faRightToBracket, faRightFromBracket, faHouse } from '@fortawesome/free-solid-svg-icons';
+import UserMenu from './UserMenu';
 
 function NavbarHead(props) {
 	const navigate = useNavigate();
@@ -49,10 +50,7 @@ function NavbarHead(props) {
 						</Button>
 					)}
 					{props.loggedIn && (
-						<Button className={styles.button} onClick={handleLogOut}>
-							{!isMobile && "Logout"}
-							{isMobile && <FontAwesomeIcon icon={faRightFromBracket}/>}
-						</Button>
+						<UserMenu user={props.user} handleLogOut={handleLogOut}/>
 					)}
 				</div>
 			</Container>
