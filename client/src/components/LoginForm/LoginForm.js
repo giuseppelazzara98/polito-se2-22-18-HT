@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Form, Button, Row, Col } from 'react-bootstrap';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import API from '../../API/api';
 import styles from './index.module.scss';
 
@@ -77,6 +77,10 @@ export default function LoginForm(props) {
 							Login
 						</Button>
 					</Form>
+					<div className={styles.goToRegistrationContainer}>
+						<span>Don't you have a account yet? </span>
+						<Link to="/signup" className={styles.link}>Register now</Link>
+					</div>
 				</Col>
 			</Row>
 		</>

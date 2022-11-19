@@ -13,7 +13,8 @@ import {
 	faPlus,
 	faRightToBracket,
 	faRightFromBracket,
-	faHouse
+	faHouse,
+	faUserPlus
 } from '@fortawesome/free-solid-svg-icons';
 
 function NavbarHead(props) {
@@ -51,6 +52,15 @@ function NavbarHead(props) {
 								{isMobile && <FontAwesomeIcon icon={faPlus} />}
 							</NavLink>
 						)}
+					{!props.loggedIn && location.pathname !== '/signup' && (
+						<Button
+							className={styles.button}
+							onClick={() => navigate('/signup')}
+						>
+							{!isMobile && 'Signup'}
+							{isMobile && <FontAwesomeIcon icon={faUserPlus} />}
+						</Button>
+					)}
 					{!props.loggedIn && location.pathname !== '/login' && (
 						<Button
 							className={styles.button}
