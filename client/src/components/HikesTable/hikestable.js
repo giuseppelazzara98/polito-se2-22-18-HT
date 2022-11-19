@@ -67,7 +67,7 @@ import { formatDuration ,formatAscent} from "../../helpers/utility";
                   <span>{props.hike.endPlace}</span>
                   <span>{props.hike.pathLength} km</span>
                   <span>{formatDuration(props.hike.expTime)}</span>
-                  <span>{formatAscent(props.hike.ascent)}</span>
+                  <span>{(props.hike.ascent)} m </span>
                 </div>
               </div>
               <Card.Header>Description</Card.Header>{" "}

@@ -68,7 +68,7 @@ export default function ReferencePoints(props) {
 								Select a reference point
 							</Form.Label>
 							<Select
-								className="basic-single"
+								className={styles.customSelect}
 								classNamePrefix="select"
 								defaultValue={props.refPoint}
 								name="refPoint"
