@@ -119,6 +119,7 @@ function App2() {
 						element={
 							<HomePage
 								hikes={hikes}
+								setHikes={setHikes}
 								filters={filters}
 								setFilters={setFilters}
 								facets={facets}
