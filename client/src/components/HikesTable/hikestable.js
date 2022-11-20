@@ -4,15 +4,34 @@ import {
     Card,
     ListGroup,
     Container,
+    Row,
+    Col,
   } from "react-bootstrap";
 import { useState } from "react";
 import styles from "./index.module.scss";
 import { formatDuration ,formatAscent} from "../../helpers/utility";
+import { CDropdown, CDropdownToggle, CDropdownItem, CDropdownMenu } from '@coreui/react'
   
   function HikesTable(props) {
+    const [order,setOrder] = useState("Province");
     return (
       <div className={` ${styles.containerWrap}`}>
         <div className={`table table-sm table-hover ${styles.wrap}`}>
+          <Container>
+            <Row>
+              <Col></Col>
+              <Col></Col>
+              <Col>
+        <CDropdown>
+          <CDropdownToggle className={styles.button}> Order by: {order}</CDropdownToggle>
+          <CDropdownMenu>
+          <CDropdownItem className={styles.orderBy} onClick={()=>{props.setHikes(orderByDifficulty(props.hikes));setOrder("Difficulty")}}>Difficulty</CDropdownItem>
+          <CDropdownItem className={styles.orderBy} onClick={()=>{props.setHikes(orderByProvince(props.hikes));setOrder("Province")}}>Province</CDropdownItem>
+          </CDropdownMenu>
+          </CDropdown>
+          </Col>
+          </Row>
+          </Container>
           <div className={styles.dataName}>
             <span>Name</span>
             <span>Province</span>
@@ -96,6 +115,17 @@ import { formatDuration ,formatAscent} from "../../helpers/utility";
       default:
         return ""
     }
+  }
+
+
+  function orderByProvince(hikes){
+    let newHikes =  [...hikes].sort((a,b)=>a.province.localeCompare(b.province));
+    return newHikes;
+  }
+
+  function orderByDifficulty(hikes){
+    let newHikes =  [...hikes].sort((a,b)=>a.difficulty-b.difficulty);
+    return newHikes;
   }
   
   
