@@ -3,7 +3,7 @@ import styles from './index.module.scss';
 
 export default function Length(props) {
 	return (
-		<Form.Group as={Col} md="4">
+		<Form.Group>
 			<Form.Label className={styles.title}>Length</Form.Label>
 			<Form.Control
 				className={styles.customInsert}

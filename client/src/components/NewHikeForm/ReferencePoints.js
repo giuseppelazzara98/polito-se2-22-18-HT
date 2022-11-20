@@ -31,70 +31,58 @@ export default function ReferencePoints(props) {
 
 	return (
 		<>
-			{/*Reference points field*/}
-			<Col md={3}>
-				{!open && (
-					<Button
-						onClick={() => setOpen(!open)}
-						aria-controls="reference-points"
-						aria-expanded={open}
-						className={styles.button}
-					>
-						Add Reference points
-					</Button>
-				)}
-			</Col>
-			<Collapse in={open}>
-				<Container id="reference-points">
-					<Row className="mb-3">
-						<Form.Group>
-							<Form.Label className={styles.title}>
-								Upload a gpx file
-							</Form.Label>
-							<Form.Control
-								type="file"
-								value={props.gpxFile}
-								onChange={(event) => props.setGpxFile(event.target.value)}
-								required={true}
+			<Row className="mb-3">
+				{/*Reference points field*/}
+				<Col md={3}>
+					{!open && (
+						<Button
+							onClick={() => setOpen(!open)}
+							aria-controls="reference-points"
+							aria-expanded={open}
+							className={styles.button}
+						>
+							Add Reference points
+						</Button>
+					)}
+				</Col>
+			</Row>
+			<Row className="mb-3">
+				<Collapse in={open}>
+					<Container id="reference-points">
+						<Row className="mb-3">
+							<Form.Group>
+								<Form.Label className={styles.title}>
+									Select a reference point
+								</Form.Label>
+								<Select
+									className="basic-single"
+									classNamePrefix="select"
+									defaultValue={props.refPoint}
+									name="refPoint"
+									isSearchable={true}
+									options={points}
+									onChange={(event) => {
+										props.setRefPoint(event.value);
+									}}
+								/>
+							</Form.Group>
+						</Row>
+						<Row className="mb-3">
+							<Col md={3}>
+								<Button className={styles.button} onClick={props.addRefPoint}>
+									Add reference point
+								</Button>
+							</Col>
+						</Row>
+						<Row className="mb-3">
+							<PointsTable
+								referencePoints={props.referencePoints}
+								delRefPoint={props.delRefPoint}
 							/>
-							<Form.Control.Feedback type="invalid">
-								Please select a gpx file for the track
-							</Form.Control.Feedback>
-						</Form.Group>
-					</Row>
-					<Row className="mb-3">
-						<Form.Group>
-							<Form.Label className={styles.title}>
-								Select a reference point
-							</Form.Label>
-							<Select
-								className={styles.customSelect}
-								classNamePrefix="select"
-								defaultValue={props.refPoint}
-								name="refPoint"
-								isSearchable={true}
-								options={points}
-								onChange={(event) => {
-									props.setRefPoint(event.value);
-								}}
-							/>
-						</Form.Group>
-					</Row>
-					<Row className="mb-3">
-						<Col md={3}>
-							<Button className={styles.button} onClick={props.addRefPoint}>
-								Add reference point
-							</Button>
-						</Col>
-					</Row>
-					<Row className="mb-3">
-						<PointsTable
-							referencePoints={props.referencePoints}
-							delRefPoint={props.delRefPoint}
-						/>
-					</Row>
-				</Container>
-			</Collapse>
+						</Row>
+					</Container>
+				</Collapse>
+			</Row>
 		</>
 	);
 }

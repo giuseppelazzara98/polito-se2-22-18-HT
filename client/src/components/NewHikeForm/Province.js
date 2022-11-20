@@ -26,7 +26,7 @@ export default function Province(props) {
 	}, []);
 
 	return (
-		<Form.Group as={Col} md="6">
+		<Form.Group>
 			<Form.Label className={styles.title}>Province</Form.Label>
 			<Select
 				className={styles.customSelect}

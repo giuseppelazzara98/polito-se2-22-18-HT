@@ -13,6 +13,8 @@ import StartPoint from './StartPoint';
 import Description from './Description';
 import API from '../../API/api';
 import styles from './index.module.scss';
+import GPXFile from './GPXFile';
+import Map from './Map';
 
 export default function NewHikeForm(props) {
 	const { setUpdateHikes } = props;
@@ -22,16 +24,19 @@ export default function NewHikeForm(props) {
 	const [expectedTime, setExpectedTime] = useState('');
 	const [ascent, setAscent] = useState('');
 	const [difficulty, setDifficulty] = useState('');
-	const [startPoint, setStartPoint] = useState(0);
-	const [endPoint, setEndPoint] = useState(0);
+	const [startPoint, setStartPoint] = useState({});
+	const [endPoint, setEndPoint] = useState({});
 	const [referencePoints, setReferencePoints] = useState([]);
 	const [gpxFile, setGpxFile] = useState('');
 	const [description, setDescription] = useState('');
 	const [refPoint, setRefPoint] = useState('');
 	const navigate = useNavigate();
+	const [gpxData, setGpxData] = useState({});
+	const [redraw, setRedraw] = useState(false);
 	const [validated, setValidated] = useState(false);
 
 	const handleSubmit = (event) => {
+		event.preventDefault();
 		const form = event.currentTarget;
 		const hike = {
 			title: title,
@@ -45,6 +50,7 @@ export default function NewHikeForm(props) {
 			endPoint: endPoint,
 			referencePoints: [],
 			gpxFile: gpxFile,
+			gpxData: gpxData,
 			description: description
 		};
 
@@ -73,12 +79,16 @@ export default function NewHikeForm(props) {
 		};
 
 		if (form.checkValidity() === false) {
-			event.preventDefault();
 			event.stopPropagation();
 		} else {
-			addNewHike();
-			setUpdateHikes((prevstate) => prevstate + 1);
-			navigate('/');
+			console.log(
+				'🚀 ~ file: NewHikeForm.js ~ line 80 ~ handleSubmit ~ hike',
+				hike
+			);
+
+			//addNewHike();
+			//setUpdateHikes((prevstate) => prevstate + 1);
+			//navigate('/');
 		}
 		setValidated(true);
 	};
@@ -110,67 +120,100 @@ export default function NewHikeForm(props) {
 			onSubmit={handleSubmit}
 		>
 			<Row className="mb-3">
-				{/*Title field*/}
-				<Title title={title} setTitle={setTitle} />
-				{/*Province field*/}
-				<Province province={province} setProvince={setProvince} />
+				<Col>
+					{/*Title field*/}
+					<Title title={title} setTitle={setTitle} />
+				</Col>
+				<Col>
+					{/*Province field*/}
+					<Province province={province} setProvince={setProvince} />
+				</Col>
 			</Row>
 
 			<Row className="mb-3">
-				{/*Length field*/}
-				<Length length={length} setLength={setLength} />
-				{/*Expected time field*/}
-				<ExpectedTime
-					expectedTime={expectedTime}
-					setExpectedTime={setExpectedTime}
-				/>
-				{/*Ascent field*/}
-				<Ascent ascent={ascent} setAscent={setAscent} />
+				<Col>
+					{/*Length field*/}
+					<Length length={length} setLength={setLength} />
+				</Col>
+				<Col>
+					{/*Expected time field*/}
+					<ExpectedTime
+						expectedTime={expectedTime}
+						setExpectedTime={setExpectedTime}
+					/>
+				</Col>
+				<Col>
+					{/*Ascent field*/}
+					<Ascent ascent={ascent} setAscent={setAscent} />
+				</Col>
 			</Row>
 
 			{/*Third row contains difficulty level*/}
 			<Row className="mb-3">
-				<DifficultyLevel setDifficulty={setDifficulty} />
+				<Col>
+					<DifficultyLevel setDifficulty={setDifficulty} />
+				</Col>
 			</Row>
 
 			{/*Fourth row contains the start and end points*/}
 			<Row className="mb-3">
-				{/*Start point field*/}
-				<StartPoint
-					startPoint={startPoint}
-					setStartPoint={setStartPoint}
-					province={province}
-				/>
-				{/*End point field*/}
-				<EndPoint
-					endPoint={endPoint}
-					setEndPoint={setEndPoint}
-					province={province}
-				/>
+				<Col>
+					{/*Start point field*/}
+					<StartPoint
+						startPoint={startPoint}
+						setStartPoint={setStartPoint}
+						province={province}
+					/>
+				</Col>
+				<Col>
+					{/*End point field*/}
+					<EndPoint
+						endPoint={endPoint}
+						setEndPoint={setEndPoint}
+						province={province}
+					/>
+				</Col>
+			</Row>
+
+			<Row className="mb-3">
+				<Col>
+					<GPXFile
+						gpxFile={gpxFile}
+						setGpxFile={setGpxFile}
+						setGpxData={setGpxData}
+						setRedraw={setRedraw}
+						redraw={redraw}
+					/>
+					{gpxData.tracks !== undefined && (
+						<Map gpxData={gpxData} redraw={redraw} />
+					)}
+				</Col>
 			</Row>
 
 			{/*Fifth row contains Reference points*/}
 			<Row className="mb-3">
-				<ReferencePoints
-					gpxFile={gpxFile}
-					setGpxFile={setGpxFile}
-					referencePoints={referencePoints}
-					setReferencePoints={setReferencePoints}
-					refPoint={refPoint}
-					setRefPoint={setRefPoint}
-					addRefPoint={addRefPoint}
-					delRefPoint={delRefPoint}
-					province={province}
-				/>
+				<Col>
+					<ReferencePoints
+						referencePoints={referencePoints}
+						setReferencePoints={setReferencePoints}
+						refPoint={refPoint}
+						setRefPoint={setRefPoint}
+						addRefPoint={addRefPoint}
+						delRefPoint={delRefPoint}
+						province={province}
+					/>
+				</Col>
 			</Row>
 
 			{/*Final row with the description field*/}
 			<Row className="mb-3">
 				{/*Description field*/}
-				<Description
-					description={description}
-					setDescription={setDescription}
-				/>
+				<Col>
+					<Description
+						description={description}
+						setDescription={setDescription}
+					/>
+				</Col>
 			</Row>
 
 			{/*Submit button*/}

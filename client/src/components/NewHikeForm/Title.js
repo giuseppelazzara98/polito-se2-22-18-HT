@@ -3,7 +3,7 @@ import styles from './index.module.scss';
 
 export default function Title(props) {
 	return (
-		<Form.Group as={Col} md={6}>
+		<Form.Group>
 			<Form.Label className={styles.title}>Title</Form.Label>
 			<Form.Control
 				className={styles.customInsert}
