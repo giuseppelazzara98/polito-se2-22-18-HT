@@ -34,7 +34,7 @@ function App2() {
 	const getHikes = async (dataOnRequest) => {
 		try {
 			const { hikes, ...others } = await API.getAllHikes(dataOnRequest);
-			setHikes(hikes);
+			setHikes(orderByProvince(hikes));
 			if (Object.keys(facets).length === 0) {
 				setFacets({
 					...others
@@ -155,5 +155,10 @@ function App2() {
 		</div>
 	);
 }
+
+function orderByProvince(hikes){
+    let newHikes =  [...hikes].sort((a,b)=>a.province.localeCompare(b.province));
+    return newHikes;
+  }
 
 export default App;
