@@ -16,7 +16,11 @@ import styles from './index.module.scss';
 
 
 export default function NewHikeForm(props) {
-	const {setUpdateHikes} = props;
+	const {
+		setUpdateHikes,
+		setShowAddNewHikeSuccess,
+		setShowAddNewHikeError,
+	} = props;
 	const [title, setTitle] = useState('');
 	const [province, setProvince] = useState('');
 	const [length, setLength] = useState('');
@@ -78,7 +82,13 @@ export default function NewHikeForm(props) {
 		hike.ascent = ascent * 100;
 		hike.length = parseInt(length, 10);
 		const addNewHike = async () => {
-			await API.createNewHike(hike);
+			await API.createNewHike(hike)
+			.then(() => setShowAddNewHikeSuccess(true))
+			.catch(() => setShowAddNewHikeError(true))
+			.finally(() => setTimeout(() => {
+				setShowAddNewHikeError(false);
+				setShowAddNewHikeSuccess(false);
+			}, 2500));
 		};
 		addNewHike();
 		setUpdateHikes(prevstate => prevstate + 1);

@@ -13,6 +13,9 @@ import { faPlus, faRightToBracket, faRightFromBracket, faHouse } from '@fortawes
 import UserMenu from './UserMenu';
 
 function NavbarHead(props) {
+	const {
+		setShowLogoutModal,
+	} = props;
 	const navigate = useNavigate();
 	const location = useLocation();
 	const isMobile = useMediaQuery({ maxWidth: maxBreakpoints.tabletLandscape });
@@ -22,6 +25,8 @@ function NavbarHead(props) {
 		props.setLoggedIn(false);
 		props.setUser({});
 		navigate('/');
+		setShowLogoutModal(true);
+		setTimeout(() => setShowLogoutModal(false), 2500);
 	};
 
 	return (
@@ -37,7 +42,7 @@ function NavbarHead(props) {
 						{!isMobile && "Home"}
 						{isMobile && <FontAwesomeIcon icon={faHouse}/>}
 					</NavLink>}
-					{props.loggedIn && props.user.role === 'guide' && location.pathname !== "/newHike" && (
+					{props.loggedIn && props.user.role === 'Local guide' && location.pathname !== "/newHike" && (
 						<NavLink className={`btn ${styles.buttonNavLink}`} to="/newHike">
 							{!isMobile && "New Hike"}
 							{isMobile && <FontAwesomeIcon icon={faPlus}/>}
