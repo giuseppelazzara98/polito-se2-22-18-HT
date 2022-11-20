@@ -5,8 +5,31 @@ import API from '../../API/api';
 import styles from './index.module.scss';
 
 export default function StartPoint(props) {
+	const {
+		validated,
+		startPoint
+	} = props;
 	const [points, setPoints] = useState([]);
 	const [isDisabled, setIsDisabled] = useState(false);
+
+	const optionStartPoint = [
+		{
+			value: "",
+			label: "-- Select point type --",
+		},
+		{
+			value: "Hut/Parking lot",
+			label: "Hut/Parking lot",
+		},
+		{
+			value: "Address/Name of location",
+			label: "Address/Name of location",
+		},
+		{
+			value: "GPS coordinates",
+			label: "GPS coordinates",
+		},
+	]
 
 	useEffect(() => {
 		const loadPoints = () => {
@@ -40,35 +63,35 @@ export default function StartPoint(props) {
 						<Row>
 							<Col>
 								<Form.Label className={styles.title}>Start point</Form.Label>
-								<Form.Select
-									className={styles.customSelect}
-									aria-label="Start point type"
-									value={
-										props.startPoint.type === ''
-											? undefined
-											: props.startPoint.type
-									}
+								<Select
+									className={`${styles.customSelect} ${
+										validated && (startPoint?.type === "" || Object.keys(startPoint).length === 0) && styles.invalid
+									} ${
+										validated && Object.keys(startPoint).length > 0 && startPoint.type !== "" && styles.valid
+									}`}
+									classNamePrefix="select"
+									defaultValue={props?.startPoint?.value}
+									placeholder="-- Select point type --"
 									onChange={(event) => {
 										props.setStartPoint({
-											type: event.target.value,
+											type: event.value,
 											lat: '',
 											lng: '',
 											name: ''
 										});
 									}}
-									disabled={isDisabled}
+									isDisabled={isDisabled}
+									options={optionStartPoint}
 									required
 								>
-									<option value="">-- Select point type --</option>
-									<option value="Hut/Parking lot">Hut/Parking lot</option>
-									<option value="Address/Name of location">
-										Address/Name of location
-									</option>
-									<option value="GPS coordinates">GPS coordinates</option>
-								</Form.Select>
-								<Form.Control.Feedback type="invalid">
-									Please select a valid type
-								</Form.Control.Feedback>
+								</Select>
+								{validated && (startPoint?.type === "" || Object.keys(startPoint).length === 0) && (
+									<div className={styles.feedbackContainer}>
+										<span className={styles.feedback}>
+											Please select a valid type
+										</span>
+									</div>
+								)}
 							</Col>
 						</Row>
 					</Form.Group>
@@ -80,7 +103,17 @@ export default function StartPoint(props) {
 						<Form.Group>
 							<Form.Label className={styles.title}>Select a point</Form.Label>
 							<Select
-								className={styles.customSelect}
+								className={`${styles.customSelect} ${
+									validated && (
+										startPoint?.type === ""
+										|| Object.keys(startPoint).length === 0
+										|| (startPoint.type === "Hut/Parking lot" && (startPoint.lat === "" || startPoint.lng === ""))
+									) && styles.invalid
+								} ${
+									validated && Object.keys(startPoint).length > 0 
+									&& startPoint.type === "Hut/Parking lot" && (startPoint.lat !== "" || startPoint.lng !== "") && styles.valid
+								}`}
+								placeholder="Select a point"
 								classNamePrefix="select"
 								defaultValue={props.startPoint.id}
 								name="startPoint"
@@ -97,6 +130,17 @@ export default function StartPoint(props) {
 									});
 								}}
 							/>
+							{validated && (
+								startPoint?.type === ""
+								|| Object.keys(startPoint).length === 0
+								|| (startPoint.type === "Hut/Parking lot" && (startPoint.lat === "" || startPoint.lng === ""))
+							) && (
+								<div className={styles.feedbackContainer}>
+									<span className={styles.feedback}>
+										Please select a valid point
+									</span>
+								</div>
+							)}
 						</Form.Group>
 					</Col>
 				)}

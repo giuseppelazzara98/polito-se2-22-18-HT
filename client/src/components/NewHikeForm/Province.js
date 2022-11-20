@@ -1,10 +1,14 @@
-import { Form, Col } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import Select from 'react-select';
 import API from '../../API/api';
 import styles from './index.module.scss';
 
 export default function Province(props) {
+	const {
+		validated,
+		province
+	} = props;
 	const [provincesList, setProvincesList] = useState([]);
 
 	useEffect(() => {
@@ -29,7 +33,8 @@ export default function Province(props) {
 		<Form.Group>
 			<Form.Label className={styles.title}>Province</Form.Label>
 			<Select
-				className={styles.customSelect}
+				placeholder="Select a province"
+				className={`${styles.customSelect} ${validated && province === "" && styles.invalid} ${validated && province !== "" && styles.valid}`}
 				classNamePrefix="select"
 				defaultValue={props.province}
 				name="province"
@@ -39,6 +44,13 @@ export default function Province(props) {
 					props.setProvince(event.value);
 				}}
 			/>
+			{validated && province === "" && (
+				<div className={styles.feedbackContainer}>
+					<span className={styles.feedback}>
+						Please select a valid province
+					</span>
+				</div>
+			)}
 		</Form.Group>
 	);
 }

@@ -37,6 +37,7 @@ export default function NewHikeForm(props) {
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
+		let valid = true;
 		const form = event.currentTarget;
 		const hike = {
 			title: title,
@@ -78,7 +79,16 @@ export default function NewHikeForm(props) {
 			await API.createNewHike(hike);
 		};
 
-		if (form.checkValidity() === false) {
+		if (province === ""
+			|| startPoint.type === ""
+			|| (startPoint.type === "Hut/Parking lot" && (startPoint.lat === "" || startPoint.lng === ""))
+			|| endPoint.type === ""
+			|| (endPoint.type === "Hut/Parking lot" && (endPoint.lat === "" || endPoint.lng === ""))
+		) {
+			valid = false
+		}
+
+		if (form.checkValidity() === false || !valid) {
 			event.stopPropagation();
 		} else {
 			console.log(
@@ -126,7 +136,7 @@ export default function NewHikeForm(props) {
 				</Col>
 				<Col>
 					{/*Province field*/}
-					<Province province={province} setProvince={setProvince} />
+					<Province province={province} setProvince={setProvince} validated={validated}/>
 				</Col>
 			</Row>
 
@@ -163,6 +173,7 @@ export default function NewHikeForm(props) {
 						startPoint={startPoint}
 						setStartPoint={setStartPoint}
 						province={province}
+						validated={validated}
 					/>
 				</Col>
 				<Col>
@@ -171,6 +182,7 @@ export default function NewHikeForm(props) {
 						endPoint={endPoint}
 						setEndPoint={setEndPoint}
 						province={province}
+						validated={validated}
 					/>
 				</Col>
 			</Row>
