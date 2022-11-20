@@ -29,7 +29,7 @@ export default function NewHikeForm(props) {
 	const [referencePoints, setReferencePoints] = useState([]);
 	const [gpxFile, setGpxFile] = useState('');
 	const [description, setDescription] = useState('');
-	const [refPoint, setRefPoint] = useState('');
+	const [refPoint, setRefPoint] = useState({});
 	const navigate = useNavigate();
 	const [gpxData, setGpxData] = useState({});
 	const [redraw, setRedraw] = useState(false);
