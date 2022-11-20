@@ -88,18 +88,17 @@ class PlaceDAO {
 				} else {
 					if (row !== undefined) {
 						const place = {
-							id_place: row.id_place,
+							id: row.id_place,
 							name: row.name,
 							description: row.description,
-							latitude: row.latitude,
-							longitude: row.longitude,
+							lat: row.latitude,
+							lon: row.longitude,
 							type: row.type
 						};
 						resolve(place);
-					}
-					else {
+					} else {
 						resolve(null);
-					}	
+					}
 				}
 			});
 		});
