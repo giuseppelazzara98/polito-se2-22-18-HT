@@ -6,6 +6,9 @@ import API from '../../API/api';
 import styles from './index.module.scss';
 
 export default function LoginForm(props) {
+	const {
+		setShowWelcomeModal,
+	} = props;
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 	const [err, setErr] = useState(false);
@@ -18,6 +21,10 @@ export default function LoginForm(props) {
 			const user = await API.logIn(credentials);
 			props.setLoggedIn(true);
 			props.setUser(user);
+			setShowWelcomeModal(true);
+			setTimeout(() => {
+				setShowWelcomeModal(false)
+			}, 2500);
 			return true;
 		} catch (err) {
 			return false;

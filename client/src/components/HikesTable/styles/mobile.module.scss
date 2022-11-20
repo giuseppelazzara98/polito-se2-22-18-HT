@@ -60,4 +60,16 @@
   } 
 }
 
+.orderBy{
+  cursor: pointer;
+  &:active{
+    background-color: $secondary-green;
+    color: $primary-black;
+  }
+  &:hover{
+    background-color: $secondary-brown;
+  }
+  
+}
+
 

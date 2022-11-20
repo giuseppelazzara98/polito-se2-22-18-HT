@@ -13,6 +13,8 @@ import WrongPath from './pages/WrongPath';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import API from './API/api';
+import InfoModalComponent from './components/InfoModalComponent/InfoModalComponent';
+import { faCheckCircle, faXmarkCircle } from '@fortawesome/free-solid-svg-icons';
 
 function App() {
 	return (
@@ -30,11 +32,15 @@ function App2() {
 	const [provincesFacets, setProvincesFacets] = useState([]);
 	const [user, setUser] = useState({});
 	const [updateHikes, setUpdateHikes] = useState(0);
+	const	[showWelcomeModal, setShowWelcomeModal] = useState(false);
+	const [showLogoutModal, setShowLogoutModal] = useState(false);
+	const [showAddNewHikeSuccess, setShowAddNewHikeSuccess] = useState(false);
+	const [showAddNewHikeError, setShowAddNewHikeError] = useState(false);
 
 	const getHikes = async (dataOnRequest) => {
 		try {
 			const { hikes, ...others } = await API.getAllHikes(dataOnRequest);
-			setHikes(hikes);
+			setHikes(orderByProvince(hikes));
 			if (Object.keys(facets).length === 0) {
 				setFacets({
 					...others
@@ -110,6 +116,7 @@ function App2() {
 				setLoggedIn={setLoggedIn}
 				user={user}
 				setUser={setUser}
+				setShowLogoutModal={setShowLogoutModal}
 			/>
 			<main className="main-wrap">
 				<Routes>
@@ -131,7 +138,7 @@ function App2() {
 						path="/newHike"
 						element={
 							loggedIn && user.role === 'Local guide' ? (
-								<NewHike setUpdateHikes={setUpdateHikes} />
+								<NewHike setUpdateHikes={setUpdateHikes} setShowAddNewHikeSuccess={setShowAddNewHikeSuccess} setShowAddNewHikeError={setShowAddNewHikeError}/>
 							) : (
 								<Navigate to="/login" replace />
 							)
@@ -143,17 +150,46 @@ function App2() {
 							loggedIn ? (
 								<Navigate to="/" replace />
 							) : (
-								<Login setLoggedIn={setLoggedIn} setUser={setUser} />
+								<Login setLoggedIn={setLoggedIn} setUser={setUser} setShowWelcomeModal={setShowWelcomeModal}/>
 							)
 						}
 					/>
 					<Route path="/signup" element={<Signup />} />
 					<Route path="*" element={<WrongPath />} />
 				</Routes>
+				<InfoModalComponent
+					show={showWelcomeModal}
+					title="Logged in successfully"
+					subtitle={`Welcome ${user.name}, you are logged in successfully`}
+					icon={faCheckCircle}
+				/>
+				<InfoModalComponent
+					show={showLogoutModal}
+					subtitle={`Logged out successfully`}
+					icon={faCheckCircle}
+				/>
+				<InfoModalComponent
+					show={showAddNewHikeSuccess}
+					title="Success!"
+					subtitle={`New hike added successfully`}
+					icon={faCheckCircle}
+				/>
+				<InfoModalComponent
+					show={showAddNewHikeError}
+					title="Error"
+					subtitle={`Oh no... there was a problem, try later`}
+					icon={faXmarkCircle}
+					success={false}
+				/>
 				<div id="modal-root" />
 			</main>
 		</div>
 	);
 }
+
+function orderByProvince(hikes){
+    let newHikes =  [...hikes].sort((a,b)=>a.province.localeCompare(b.province));
+    return newHikes;
+  }
 
 export default App;

@@ -13,7 +13,7 @@ import { formatDuration ,formatAscent} from "../../helpers/utility";
 import { CDropdown, CDropdownToggle, CDropdownItem, CDropdownMenu } from '@coreui/react'
   
   function HikesTable(props) {
-    const [order,setOrder] = useState("Default");
+    const [order,setOrder] = useState("Province");
     return (
       <div className={` ${styles.containerWrap}`}>
         <div className={`table table-sm table-hover ${styles.wrap}`}>
@@ -25,8 +25,8 @@ import { CDropdown, CDropdownToggle, CDropdownItem, CDropdownMenu } from '@coreu
         <CDropdown>
           <CDropdownToggle className={styles.button}> Order by: {order}</CDropdownToggle>
           <CDropdownMenu>
-          <CDropdownItem onClick={()=>{props.setHikes(orderByDifficulty(props.hikes));setOrder("Difficulty")}}>Difficulty</CDropdownItem>
-          <CDropdownItem  onClick={()=>{props.setHikes(orderByProvince(props.hikes));setOrder("Province")}}>Province</CDropdownItem>
+          <CDropdownItem className={styles.orderBy} onClick={()=>{props.setHikes(orderByDifficulty(props.hikes));setOrder("Difficulty")}}>Difficulty</CDropdownItem>
+          <CDropdownItem className={styles.orderBy} onClick={()=>{props.setHikes(orderByProvince(props.hikes));setOrder("Province")}}>Province</CDropdownItem>
           </CDropdownMenu>
           </CDropdown>
           </Col>

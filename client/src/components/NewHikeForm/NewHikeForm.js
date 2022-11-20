@@ -17,7 +17,11 @@ import GPXFile from './GPXFile';
 import Map from './Map';
 
 export default function NewHikeForm(props) {
-	const { setUpdateHikes } = props;
+	const {
+		setUpdateHikes,
+		setShowAddNewHikeSuccess,
+		setShowAddNewHikeError,
+	} = props;
 	const [title, setTitle] = useState('');
 	const [province, setProvince] = useState('');
 	const [length, setLength] = useState('');
@@ -76,7 +80,13 @@ export default function NewHikeForm(props) {
 		hike.ascent = parseInt(ascent, 10);
 		hike.length = parseInt(length, 10);
 		const addNewHike = async () => {
-			await API.createNewHike(hike);
+			await API.createNewHike(hike)
+			.then(() => setShowAddNewHikeSuccess(true))
+			.catch(() => setShowAddNewHikeError(true))
+			.finally(() => setTimeout(() => {
+				setShowAddNewHikeError(false);
+				setShowAddNewHikeSuccess(false);
+			}, 2500));
 		};
 
 		if (province === ""

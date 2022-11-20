@@ -13,6 +13,9 @@ import { faPlus, faRightToBracket, faUserPlus, faHouse } from '@fortawesome/free
 import UserMenu from './UserMenu';
 
 function NavbarHead(props) {
+	const {
+		setShowLogoutModal,
+	} = props;
 	const navigate = useNavigate();
 	const location = useLocation();
 	const isMobile = useMediaQuery({ maxWidth: maxBreakpoints.tabletLandscape });
@@ -22,6 +25,8 @@ function NavbarHead(props) {
 		props.setLoggedIn(false);
 		props.setUser({});
 		navigate('/');
+		setShowLogoutModal(true);
+		setTimeout(() => setShowLogoutModal(false), 2500);
 	};
 
 	return (

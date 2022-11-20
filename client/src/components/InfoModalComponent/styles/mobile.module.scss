@@ -1,0 +1,41 @@
+@import "../../../styles/configs";
+
+.modal {
+  border-color: $primary-brown;
+  &.error {
+    .title {
+      color: $primary-error;
+    }
+    .body {
+      .icon {
+        color: $primary-error;
+      }
+    }
+  }
+  .title,
+  .body {
+    background-color: $secondary-brown;
+  }
+  .title {
+    justify-content: center;
+    border-color: $primary-brown;
+    color: $primary-green;
+    @include font(700, 16px, 18px, 0);
+    &:last-child {
+      border-bottom: unset;
+    }
+  }
+  .body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    .icon {
+      font-size: 40px;
+      color: $primary-green;
+      &:not(&:last-child) {
+        margin-bottom: 10px;
+      }
+    }
+  }
+}
