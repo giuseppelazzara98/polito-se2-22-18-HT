@@ -12,3 +12,23 @@
     }
   }
 }
+
+.formGroup {
+  height: 40px;
+}
+
+  .button{
+    background-color: $primary-green;
+    border-color: transparent;
+    &:hover{
+      background-color: $tertiary-green;
+      border-color: transparent;
+      
+    }
+    &:global(.btn){
+      &:active{
+        background-color: $tertiary-green;
+        border-color: transparent;
+        
+      }
+    }}
