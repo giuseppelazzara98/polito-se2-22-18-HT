@@ -94,21 +94,26 @@ export default function NewHikeForm(props) {
 	};
 
 	const addRefPoint = () => {
-		if (
-			referencePoints.find((point) => point.id_place === refPoint) === undefined
-		) {
-			API.getPlaceById(refPoint)
-				.then((place) => {
-					const list = [...referencePoints, place];
-					//console.log(place);
-					return list;
-				})
-				.then((list) => setReferencePoints(list));
+		if (refPoint.type === 'Hut/Parking lot') {
+			if (
+				referencePoints.find((point) => point.id === refPoint.id) === undefined
+			) {
+				API.getPlaceById(refPoint.id)
+					.then((place) => {
+						const list = [...referencePoints, place];
+						return list;
+					})
+					.then((list) => setReferencePoints(list));
+			}
+		} else if (refPoint.type === 'Address/Name of location') {
+			//! need map search first
+		} else if (refPoint.type === 'GPS coordinates') {
+			//? just user the corrdinates we get from the user and set a random key and name ?
 		}
 	};
 
-	const delRefPoint = (point) => {
-		const list = referencePoints.filter((element) => element !== point);
+	const delRefPoint = (pointId) => {
+		const list = referencePoints.filter((element) => element.id !== pointId);
 		setReferencePoints(list);
 	};
 
