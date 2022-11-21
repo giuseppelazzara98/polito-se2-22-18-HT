@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import Select from 'react-select';
 import API from '../../API/api';
 import styles from './index.module.scss';
+import MapSearch from './MapSearch';
 
 export default function StartPoint(props) {
 	const [points, setPoints] = useState([]);
@@ -17,7 +18,7 @@ export default function StartPoint(props) {
 							label: item.name,
 							value: item.id_place,
 							lat: item.latitude,
-							lng: item.longitude
+							lon: item.longitude
 						};
 					});
 				})
@@ -32,6 +33,7 @@ export default function StartPoint(props) {
 			setIsDisabled(true);
 		}
 	}, [props.province]);
+
 	return (
 		<>
 			<Row className="mb-3">
@@ -52,7 +54,7 @@ export default function StartPoint(props) {
 										props.setStartPoint({
 											type: event.target.value,
 											lat: '',
-											lng: '',
+											lon: '',
 											name: ''
 										});
 									}}
@@ -92,7 +94,7 @@ export default function StartPoint(props) {
 										type: props.startPoint.type,
 										id: event.value,
 										name: event.label,
-										lng: event.lng,
+										lon: event.lon,
 										lat: event.lat
 									});
 								}}
@@ -103,32 +105,13 @@ export default function StartPoint(props) {
 				{props.startPoint.type === 'Address/Name of location' && (
 					<Col>
 						<Form.Group>
-							<FloatingLabel
-								className={styles.title}
-								controlId="address-placeName"
-								label="Address/Name of location"
-							>
-								<Form.Control
-									type="text"
-									value={props.startPoint.name}
-									placeholder="Address/Name of location"
-									onChange={(event) => {
-										props.setStartPoint({
-											type: props.startPoint.type,
-											id: props.startPoint.id,
-											name: event.target.value,
-											lng: props.startPoint.lng,
-											lat: props.startPoint.lat
-										});
-									}}
-									required={
-										props.startPoint.type === 'Address/Name of location'
-									}
-								/>
-								<Form.Control.Feedback type="invalid">
-									Please insert a valid address/place name
-								</Form.Control.Feedback>
-							</FloatingLabel>
+							<Form.Label className={styles.title}>
+								Address/Name of location
+							</Form.Label>
+							<MapSearch
+								point={props.startPoint}
+								setPoint={props.setStartPoint}
+							/>
 						</Form.Group>
 					</Col>
 				)}
@@ -136,58 +119,48 @@ export default function StartPoint(props) {
 					<>
 						<Col>
 							<Form.Group>
-								<FloatingLabel
-									className={styles.title}
-									controlId="Longitude"
-									label="Longitude"
-								>
-									<Form.Control
-										type="number"
-										value={props.startPoint.lng}
-										placeholder="Longitude"
-										onChange={(event) => {
-											props.setStartPoint({
-												type: props.startPoint.type,
-												id: props.startPoint.id,
-												name: props.startPoint.name,
-												lng: event.target.value,
-												lat: props.startPoint.lat
-											});
-										}}
-										required={props.startPoint.type === 'GPS coordinates'}
-									/>
-									<Form.Control.Feedback type="invalid">
-										Please insert a valid Longitude
-									</Form.Control.Feedback>
-								</FloatingLabel>
+								<Form.Label className={styles.title}>Longitude</Form.Label>
+								<Form.Control
+									type="number"
+									value={props.startPoint.lon}
+									placeholder="Longitude"
+									onChange={(event) => {
+										props.setStartPoint({
+											type: props.startPoint.type,
+											id: props.startPoint.id,
+											name: props.startPoint.name,
+											lon: event.target.value,
+											lat: props.startPoint.lat
+										});
+									}}
+									required={props.startPoint.type === 'GPS coordinates'}
+								/>
+								<Form.Control.Feedback type="invalid">
+									Please insert a valid Longitude
+								</Form.Control.Feedback>
 							</Form.Group>
 						</Col>
 						<Col>
 							<Form.Group>
-								<FloatingLabel
-									controlId="Latitude"
-									className={styles.title}
-									label="Latitude"
-								>
-									<Form.Control
-										type="number"
-										value={props.startPoint.lat}
-										placeholder="Latitude"
-										onChange={(event) => {
-											props.setStartPoint({
-												type: props.startPoint.type,
-												id: props.startPoint.id,
-												name: props.startPoint.name,
-												lat: event.target.value,
-												lng: props.startPoint.lng
-											});
-										}}
-										required={props.startPoint.type === 'GPS coordinates'}
-									/>
-									<Form.Control.Feedback type="invalid">
-										Please insert a valid Latitude
-									</Form.Control.Feedback>
-								</FloatingLabel>
+								<Form.Label className={styles.title}>Latitude</Form.Label>
+								<Form.Control
+									type="number"
+									value={props.startPoint.lat}
+									placeholder="Latitude"
+									onChange={(event) => {
+										props.setStartPoint({
+											type: props.startPoint.type,
+											id: props.startPoint.id,
+											name: props.startPoint.name,
+											lat: event.target.value,
+											lon: props.startPoint.lon
+										});
+									}}
+									required={props.startPoint.type === 'GPS coordinates'}
+								/>
+								<Form.Control.Feedback type="invalid">
+									Please insert a valid Latitude
+								</Form.Control.Feedback>
 							</Form.Group>
 						</Col>
 					</>

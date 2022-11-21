@@ -10,6 +10,10 @@ export default function GPXFile(props) {
 			var gpx = new gpxParser();
 			gpx.parse(content);
 			props.setGpxData(gpx);
+			const length = gpx.tracks[0].distance.total / 1000;
+			props.setLength(length.toFixed(3));
+			const positiveElevationDiff = gpx.tracks[0].elevation.pos;
+			props.setAscent(positiveElevationDiff.toFixed(2));
 		};
 		if (typeof event.target.files[0] !== 'undefined') {
 			reader.readAsText(event.target.files[0]);
@@ -29,7 +33,6 @@ export default function GPXFile(props) {
 							onChange={(event) => {
 								props.setGpxFile(event.target.value);
 								readFile(event);
-								props.setRedraw(!props.redraw);
 							}}
 							required={true}
 							accept=".gpx"

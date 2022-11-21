@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import Select from 'react-select';
 import API from '../../API/api';
 import styles from './index.module.scss';
+import MapSearch from './MapSearch';
 
 export default function EndPoint(props) {
 	const [points, setPoints] = useState([]);
@@ -17,7 +18,7 @@ export default function EndPoint(props) {
 							label: item.name,
 							value: item.id_place,
 							lat: item.latitude,
-							lng: item.longitude
+							lon: item.longitude
 						};
 					});
 				})
@@ -50,7 +51,7 @@ export default function EndPoint(props) {
 										props.setEndPoint({
 											type: event.target.value,
 											lat: '',
-											lng: '',
+											lon: '',
 											name: ''
 										});
 									}}
@@ -90,7 +91,7 @@ export default function EndPoint(props) {
 										type: props.endPoint.type,
 										id: event.value,
 										name: event.label,
-										lng: event.lng,
+										lon: event.lon,
 										lat: event.lat
 									});
 								}}
@@ -101,30 +102,10 @@ export default function EndPoint(props) {
 				{props.endPoint.type === 'Address/Name of location' && (
 					<Col>
 						<Form.Group>
-							<FloatingLabel
-								className={styles.title}
-								controlId="address-placeName"
-								label="Address/Name of location"
-							>
-								<Form.Control
-									type="text"
-									value={props.endPoint.name}
-									placeholder="Address/Name of location"
-									onChange={(event) => {
-										props.setEndPoint({
-											type: props.endPoint.type,
-											id: props.endPoint.id,
-											name: event.target.value,
-											lng: props.endPoint.lng,
-											lat: props.endPoint.lat
-										});
-									}}
-									required={props.endPoint.type === 'Address/Name of location'}
-								/>
-								<Form.Control.Feedback type="invalid">
-									Please insert a valid address/place name
-								</Form.Control.Feedback>
-							</FloatingLabel>
+							<Form.Label className={styles.title}>
+								Address/Name of location
+							</Form.Label>
+							<MapSearch point={props.endPoint} setPoint={props.setEndPoint} />
 						</Form.Group>
 					</Col>
 				)}
@@ -132,58 +113,48 @@ export default function EndPoint(props) {
 					<>
 						<Col>
 							<Form.Group>
-								<FloatingLabel
-									controlId="Longitude"
-									label="Longitude"
-									className={styles.title}
-								>
-									<Form.Control
-										type="number"
-										value={props.endPoint.lng}
-										placeholder="Longitude"
-										onChange={(event) => {
-											props.setEndPoint({
-												type: props.endPoint.type,
-												id: props.endPoint.id,
-												name: props.endPoint.name,
-												lng: event.target.value,
-												lat: props.endPoint.lat
-											});
-										}}
-										required={props.endPoint.type === 'GPS coordinates'}
-									/>
-									<Form.Control.Feedback type="invalid">
-										Please insert a valid Longitude
-									</Form.Control.Feedback>
-								</FloatingLabel>
+								<Form.Label className={styles.title}>Longitude</Form.Label>
+								<Form.Control
+									type="number"
+									value={props.endPoint.lon}
+									placeholder="Longitude"
+									onChange={(event) => {
+										props.setEndPoint({
+											type: props.endPoint.type,
+											id: props.endPoint.id,
+											name: props.endPoint.name,
+											lon: event.target.value,
+											lat: props.endPoint.lat
+										});
+									}}
+									required={props.endPoint.type === 'GPS coordinates'}
+								/>
+								<Form.Control.Feedback type="invalid">
+									Please insert a valid Longitude
+								</Form.Control.Feedback>
 							</Form.Group>
 						</Col>
 						<Col>
 							<Form.Group>
-								<FloatingLabel
-									controlId="Latitude"
-									label="Latitude"
-									className={styles.title}
-								>
-									<Form.Control
-										type="number"
-										value={props.endPoint.lat}
-										placeholder="Latitude"
-										onChange={(event) => {
-											props.setEndPoint({
-												type: props.endPoint.type,
-												id: props.endPoint.id,
-												name: props.endPoint.name,
-												lat: event.target.value,
-												lng: props.endPoint.lng
-											});
-										}}
-										required={props.endPoint.type === 'GPS coordinates'}
-									/>
-									<Form.Control.Feedback type="invalid">
-										Please insert a valid Latitude
-									</Form.Control.Feedback>
-								</FloatingLabel>
+								<Form.Label className={styles.title}>Latitude</Form.Label>
+								<Form.Control
+									type="number"
+									value={props.endPoint.lat}
+									placeholder="Latitude"
+									onChange={(event) => {
+										props.setEndPoint({
+											type: props.endPoint.type,
+											id: props.endPoint.id,
+											name: props.endPoint.name,
+											lat: event.target.value,
+											lon: props.endPoint.lon
+										});
+									}}
+									required={props.endPoint.type === 'GPS coordinates'}
+								/>
+								<Form.Control.Feedback type="invalid">
+									Please insert a valid Latitude
+								</Form.Control.Feedback>
 							</Form.Group>
 						</Col>
 					</>

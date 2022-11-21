@@ -14,6 +14,7 @@ export default function Ascent(props) {
 				required={true}
 				min={0}
 				max={8849}
+				disabled
 			/>
 			<Form.Control.Feedback type="invalid">
 				Ascent can't be empty and must be in range 0 to 8849.

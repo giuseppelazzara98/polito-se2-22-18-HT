@@ -14,6 +14,7 @@ export default function Length(props) {
 				placeholder="0"
 				min={0}
 				max={40075}
+				disabled
 			/>
 			<Form.Control.Feedback type="invalid">
 				Length can't be empty and must be in range 0 to 40075
