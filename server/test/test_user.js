@@ -21,6 +21,7 @@ describe('Test user apis', () => {
 	//Registration tests
 	newUser('guide5@gmail.com', 'Paolo','Bosco', 'password', 2, 201);
 	newUser('hiker5@gmail.com', 'Giuseppe','Rossi', 'password', 1, 201);
+	newUser('hiker5@gmail.com', 'Giuseppe','Rossi', 'password', 1, 409);
 	newUser('guide5@gmail.com', 'Paolo','Bosco', 'password', 5, 422);
 	newUser('guide5gmail.com', 'Paolo','Bosco', 'password', 2, 422);
 	newUser('guide5@gmail.com', 'Paolosadasdasldkjalskdjlkasjdlkajsdlkjadlkjasldkjal','Bosco', 'password', 2, 422);
