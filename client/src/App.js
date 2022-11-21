@@ -32,7 +32,7 @@ function App2() {
 	const [provincesFacets, setProvincesFacets] = useState([]);
 	const [user, setUser] = useState({});
 	const [updateHikes, setUpdateHikes] = useState(0);
-	const	[showWelcomeModal, setShowWelcomeModal] = useState(false);
+	const [showWelcomeModal, setShowWelcomeModal] = useState(false);
 	const [showLogoutModal, setShowLogoutModal] = useState(false);
 	const [showAddNewHikeSuccess, setShowAddNewHikeSuccess] = useState(false);
 	const [showAddNewHikeError, setShowAddNewHikeError] = useState(false);
@@ -40,7 +40,7 @@ function App2() {
 	const getHikes = async (dataOnRequest) => {
 		try {
 			const { hikes, ...others } = await API.getAllHikes(dataOnRequest);
-			setHikes(orderByProvince(hikes));
+			setHikes([...hikes].sort((a,b)=>a.province.localeCompare(b.province)));//ORDER BY PROVINCE ASC BY DEFAULT
 			if (Object.keys(facets).length === 0) {
 				setFacets({
 					...others
@@ -187,9 +187,5 @@ function App2() {
 	);
 }
 
-function orderByProvince(hikes){
-    let newHikes =  [...hikes].sort((a,b)=>a.province.localeCompare(b.province));
-    return newHikes;
-  }
 
 export default App;

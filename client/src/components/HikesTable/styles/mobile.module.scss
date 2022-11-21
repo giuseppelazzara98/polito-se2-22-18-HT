@@ -3,6 +3,14 @@
 .containerWrap {
   margin-top: 40px;
   overflow: auto;
+  .button{
+    background-color: $primary-green;
+    border-color: transparent;
+    &:hover{
+      background-color: $tertiary-green;
+      border-color: transparent;
+    }
+  }
 }
 .wrap {
   min-width: 450px;
@@ -14,14 +22,7 @@
       }
     }
   }
-  .button{
-    background-color: $primary-green;
-    border-color: transparent;
-    &:hover{
-      background-color: $tertiary-green;
-      border-color: transparent;
-    }
-  }
+
   .dataTitle {
     @include font(700, 18px, 20px, 0);
     color: $primary-green-light;
@@ -60,16 +61,20 @@
   } 
 }
 
-.orderBy{
-  cursor: pointer;
-  &:active{
-    background-color: $secondary-green;
-    color: $primary-black;
+
+.dropdown{
+  width: 300px;
+  .orderBy{
+    width: 300px;
+    cursor: pointer;
+    &:active{
+      background-color: $secondary-green;
+      color: $primary-black;
+    }
+    &:hover{
+      background-color: $secondary-brown;
+    }
   }
-  &:hover{
-    background-color: $secondary-brown;
-  }
-  
 }
 
 
