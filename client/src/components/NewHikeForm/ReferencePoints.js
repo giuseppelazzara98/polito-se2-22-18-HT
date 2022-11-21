@@ -12,6 +12,7 @@ import PointsTable from './PointsTable';
 import Select from 'react-select';
 import API from '../../API/api';
 import styles from './index.module.scss';
+import MapSearch from './MapSearch';
 
 export default function ReferencePoints(props) {
 	const [open, setOpen] = useState(false);
@@ -80,7 +81,6 @@ export default function ReferencePoints(props) {
 												name: ''
 											});
 										}}
-										required
 									>
 										<option value="">-- Select point type --</option>
 										<option value="Hut/Parking lot">Hut/Parking lot</option>
@@ -89,9 +89,6 @@ export default function ReferencePoints(props) {
 										</option>
 										<option value="GPS coordinates">GPS coordinates</option>
 									</Form.Select>
-									<Form.Control.Feedback type="invalid">
-										Please select a valid type
-									</Form.Control.Feedback>
 								</Form.Group>
 							</Col>
 							{props.refPoint.type === 'Hut/Parking lot' && (
@@ -126,26 +123,10 @@ export default function ReferencePoints(props) {
 										<Form.Label className={styles.title}>
 											Address/Name of location
 										</Form.Label>
-										<Form.Control
-											type="text"
-											value={props.refPoint.name}
-											placeholder="Address/Name of location"
-											onChange={(event) => {
-												props.setRefPoint({
-													type: props.refPoint.type,
-													id: props.refPoint.id,
-													name: event.target.value,
-													lng: props.refPoint.lng,
-													lat: props.refPoint.lat
-												});
-											}}
-											required={
-												props.refPoint.type === 'Address/Name of location'
-											}
+										<MapSearch
+											point={props.refPoint}
+											setPoint={props.setRefPoint}
 										/>
-										<Form.Control.Feedback type="invalid">
-											Please insert a valid address/place name
-										</Form.Control.Feedback>
 									</Form.Group>
 								</Col>
 							)}

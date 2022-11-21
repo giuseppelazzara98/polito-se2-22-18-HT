@@ -17,11 +17,8 @@ import GPXFile from './GPXFile';
 import Map from './Map';
 
 export default function NewHikeForm(props) {
-	const {
-		setUpdateHikes,
-		setShowAddNewHikeSuccess,
-		setShowAddNewHikeError,
-	} = props;
+	const { setUpdateHikes, setShowAddNewHikeSuccess, setShowAddNewHikeError } =
+		props;
 	const [title, setTitle] = useState('');
 	const [province, setProvince] = useState('');
 	const [length, setLength] = useState('');
@@ -36,7 +33,6 @@ export default function NewHikeForm(props) {
 	const [refPoint, setRefPoint] = useState({});
 	const navigate = useNavigate();
 	const [gpxData, setGpxData] = useState({});
-	const [redraw, setRedraw] = useState(false);
 	const [validated, setValidated] = useState(false);
 
 	const handleSubmit = (event) => {
@@ -81,12 +77,14 @@ export default function NewHikeForm(props) {
 		hike.length = parseInt(length, 10);
 		const addNewHike = async () => {
 			await API.createNewHike(hike)
-			.then(() => setShowAddNewHikeSuccess(true))
-			.catch(() => setShowAddNewHikeError(true))
-			.finally(() => setTimeout(() => {
-				setShowAddNewHikeError(false);
-				setShowAddNewHikeSuccess(false);
-			}, 2500));
+				.then(() => setShowAddNewHikeSuccess(true))
+				.catch(() => setShowAddNewHikeError(true))
+				.finally(() =>
+					setTimeout(() => {
+						setShowAddNewHikeError(false);
+						setShowAddNewHikeSuccess(false);
+					}, 2500)
+				);
 		};
 
 		if (province === ""
@@ -114,19 +112,21 @@ export default function NewHikeForm(props) {
 	};
 
 	const addRefPoint = () => {
+		let list;
 		if (refPoint.type === 'Hut/Parking lot') {
 			if (
 				referencePoints.find((point) => point.id === refPoint.id) === undefined
 			) {
 				API.getPlaceById(refPoint.id)
 					.then((place) => {
-						const list = [...referencePoints, place];
+						list = [...referencePoints, place];
 						return list;
 					})
 					.then((list) => setReferencePoints(list));
 			}
 		} else if (refPoint.type === 'Address/Name of location') {
-			//! need map search first
+			list = [...referencePoints, refPoint];
+			setReferencePoints(list);
 		} else if (refPoint.type === 'GPS coordinates') {
 			//? just user the corrdinates we get from the user and set a random key and name ?
 		}
@@ -208,12 +208,10 @@ export default function NewHikeForm(props) {
 						gpxFile={gpxFile}
 						setGpxFile={setGpxFile}
 						setGpxData={setGpxData}
-						setRedraw={setRedraw}
-						redraw={redraw}
+						setLength={setLength}
+						setAscent={setAscent}
 					/>
-					{gpxData.tracks !== undefined && (
-						<Map gpxData={gpxData} redraw={redraw} />
-					)}
+					{gpxData.tracks !== undefined && <Map gpxData={gpxData} />}
 				</Col>
 			</Row>
 
