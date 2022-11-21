@@ -16,22 +16,25 @@ import { CDropdown, CDropdownToggle, CDropdownItem, CDropdownMenu } from '@coreu
     const [order,setOrder] = useState("Province");
     return (
       <div className={` ${styles.containerWrap}`}>
-        <div className={`table table-sm table-hover ${styles.wrap}`}>
-          <Container>
+        <Container>
             <Row>
               <Col></Col>
               <Col></Col>
               <Col>
-        <CDropdown>
+        <CDropdown className={styles.dropdown}>
           <CDropdownToggle className={styles.button}> Order by: {order}</CDropdownToggle>
           <CDropdownMenu>
-          <CDropdownItem className={styles.orderBy} onClick={()=>{props.setHikes(orderByDifficulty(props.hikes));setOrder("Difficulty")}}>Difficulty</CDropdownItem>
-          <CDropdownItem className={styles.orderBy} onClick={()=>{props.setHikes(orderByProvince(props.hikes));setOrder("Province")}}>Province</CDropdownItem>
+          <CDropdownItem className={styles.orderBy} onClick={()=>{props.setHikes(orderByDifficulty(props.hikes, true));setOrder("Difficulty (Ascending)")}}>Difficulty (Ascending)</CDropdownItem>
+          <CDropdownItem className={styles.orderBy} onClick={()=>{props.setHikes(orderByProvince(props.hikes, true));setOrder("Province (Ascending)")}}>Province (Ascending)</CDropdownItem>
+          <CDropdownItem className={styles.orderBy} onClick={()=>{props.setHikes(orderByDifficulty(props.hikes, false));setOrder("Difficulty (Descending)")}}>Difficulty (Descending)</CDropdownItem>
+          <CDropdownItem className={styles.orderBy} onClick={()=>{props.setHikes(orderByProvince(props.hikes, false));setOrder("Province (Descending)")}}>Province (Descending)</CDropdownItem>
           </CDropdownMenu>
           </CDropdown>
           </Col>
           </Row>
           </Container>
+        <div className={`table table-sm table-hover ${styles.wrap}`}>
+          
           <div className={styles.dataName}>
             <span>Name</span>
             <span>Province</span>
@@ -118,13 +121,24 @@ import { CDropdown, CDropdownToggle, CDropdownItem, CDropdownMenu } from '@coreu
   }
 
 
-  function orderByProvince(hikes){
-    let newHikes =  [...hikes].sort((a,b)=>a.province.localeCompare(b.province));
+  function orderByProvince(hikes, isAscending){
+    let newHikes =  [];
+    if(isAscending){
+      newHikes = hikes.sort((a,b)=>a.province.localeCompare(b.province));
+    }else{
+      newHikes = hikes.sort((a,b)=>b.province.localeCompare(a.province));
+    }
     return newHikes;
   }
 
-  function orderByDifficulty(hikes){
-    let newHikes =  [...hikes].sort((a,b)=>a.difficulty-b.difficulty);
+  function orderByDifficulty(hikes, isAscending){
+    let newHikes = [];
+    if(isAscending){
+      newHikes =  [...hikes].sort((a,b)=>a.difficulty-b.difficulty);
+    }
+    else{
+      newHikes =  [...hikes].sort((a,b)=>b.difficulty-a.difficulty);
+    }
     return newHikes;
   }
   
