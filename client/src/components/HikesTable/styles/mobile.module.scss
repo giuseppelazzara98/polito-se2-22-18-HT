@@ -63,9 +63,9 @@
 
 
 .dropdown{
-  min-width: 200px;
+  width: 300px;
   .orderBy{
-    min-width: 200px;
+    width: 300px;
     cursor: pointer;
     &:active{
       background-color: $secondary-green;

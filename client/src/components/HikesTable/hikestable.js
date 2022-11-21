@@ -13,7 +13,7 @@ import { formatDuration ,formatAscent} from "../../helpers/utility";
 import { CDropdown, CDropdownToggle, CDropdownItem, CDropdownMenu } from '@coreui/react'
   
   function HikesTable(props) {
-    const [order,setOrder] = useState("Province");
+    const [order,setOrder] = useState("Province (Ascending)");
     return (
       <div className={` ${styles.containerWrap}`}>
         <Container>
