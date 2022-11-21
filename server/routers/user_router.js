@@ -110,4 +110,15 @@ router.post('/newUser',
 		}
 	});
 
+//GET /api/roles
+router.get('/roles', async (req, res) => {
+    try {
+        const roles = await userDao.getAllRoles();
+        res.status(200).json(roles);
+    } catch (err) {
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+}
+);
+
 module.exports = router;

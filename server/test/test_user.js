@@ -26,6 +26,9 @@ describe('Test user apis', () => {
 	newUser('guide5@gmail.com', 'Paolosadasdasldkjalskdjlkasjdlkajsdlkjadlkjasldkjal','Bosco', 'password', 2, 422);
 	newUser('guide5@gmail.com', 'Paolo','Boscosadasdasldkjalskdjlkasjdlkajsdlkjadlkjasldkjal', 'password', 2, 422);
 
+	//Get roles tests
+	getAllRoles(200);
+
 });
 
 function logIn(username, password, ExpectedHTTPStatus) {
@@ -54,6 +57,17 @@ function newUser(email, name, surname, password, id_role, ExpectedHTTPStatus) {
 			.send(reqBody)
 			.then((res) => {
 				res.should.have.status(ExpectedHTTPStatus);
+				done();
+			});
+	});
+}
+
+function getAllRoles(ExpectedHTTPStatus) {
+	it('Get all roles', (done) => {
+		agent.get('/api/roles')
+			.then((res) => {
+				res.should.have.status(ExpectedHTTPStatus);
+				Object.keys(res.body).length.should.be.greaterThan(0);
 				done();
 			});
 	});
