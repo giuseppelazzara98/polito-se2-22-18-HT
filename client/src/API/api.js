@@ -88,7 +88,7 @@ const register = async (credentials) => {
 		body : JSON.stringify(credentials)
 	});
 	if (response.ok) {
-		const user = logIn(credentials);
+		const user = await response.json();
 		return user;}
 	else {
 		const errDetails = await response.text();
@@ -195,7 +195,9 @@ const API = {
 	createNewHike,
 	getAllHikes,
 	getProvincesFacets,
-	getUserInfo
+	getUserInfo,
+	register,
+	getRoles
 };
 
 export default API;

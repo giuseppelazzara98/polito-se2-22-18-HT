@@ -93,3 +93,39 @@ html{
     line-height: 32px;
   }
 }
+
+.form-control {
+  &:focus{
+  box-shadow: 0 0 0 1px $primary-green !important;
+  border-color: $tertiary-green !important;
+  }
+}
+
+.form-check-input {
+  &:checked{
+  background-color:$primary-green !important;
+  border-color:$tertiary-green !important;
+  box-shadow:0 0 0 1px $primary-green !important;
+  }
+}
+
+.css-1pahdxg-control {
+  box-shadow: 0 0 0 1px $primary-green !important;
+  border-color: $primary-green !important;
+  &:hover {
+    box-shadow: 0 0 0 1px $primary-green !important;
+    border-color: $primary-green !important;
+  }
+}
+.select__menu {
+  z-index: 2;
+  .select__option {
+    &.select__option--is-focused {
+      background-color: $secondary-brown !important;
+    }
+    &.select__option--is-selected {
+      background-color: $secondary-green !important;
+      color: $primary-black !important;
+    }
+  }
+}

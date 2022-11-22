@@ -32,3 +32,8 @@
         
       }
     }}
+
+    .title {
+      @include font(700, 18px, 20px, 0);
+      color: $primary-green;
+    }

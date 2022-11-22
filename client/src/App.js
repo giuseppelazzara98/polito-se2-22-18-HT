@@ -154,7 +154,13 @@ function App2() {
 							)
 						}
 					/>
-					<Route path="/signup" element={<Signup />} />
+					<Route path="/signup" element={
+							loggedIn ? (
+								<Navigate to="/" replace />
+							) : (
+								<Signup setLoggedIn={setLoggedIn} setUser={setUser} setShowWelcomeModal={setShowWelcomeModal}/>
+							)
+						} />
 					<Route path="*" element={<WrongPath />} />
 				</Routes>
 				<InfoModalComponent

@@ -8,24 +8,99 @@ import {
   FormControl,
   Button,
 } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import styles from "./index.module.scss";
-import { useState } from "react";
+import { useState ,useEffect} from "react";
 import Select from 'react-select';
-export default function SignupForm() {
+import API from "../../API/api";
+
+export default function SignupForm(props) {
 	const [name, setName] = useState("");
 	const [surname,setSurname] = useState("");
-	const [role, setRole] = useState("");
+	const [role, setRole] = useState(1);
 	const [password, setPassword] = useState("");
 	const [confPassword, setConfPassword] = useState("");
 	const [email, setEmail] = useState("");
+	const [validated, setValidated] = useState(false);
+	const [err, setErr] = useState(false);
+	const navigate = useNavigate();
+	const [roles,setRoles]=useState([]);
+
+	useEffect(() => {
+		const loadRoles = () => {
+			API.getRoles()
+				.then((list) => {
+					return list.map((item) => {
+						return {
+							label: item.description,
+							value: item.id
+						};
+					});
+				})
+				.then((newList) => {
+					setRoles(newList);
+				});
+		};
+		loadRoles();
+	}, []);
+
+	const signUp = async (hiker) => {
+		try {
+			const user = await API.register(hiker);
+			console.log(user);
+			props.setLoggedIn(true);
+			props.setUser(user);
+			props.setShowWelcomeModal(true);
+			setTimeout(() => {
+				props.setShowWelcomeModal(false)
+			}, 2500);
+			return true;
+		} catch (err) {
+			return false;
+		}
+	};
+
+	const handleSubmit = (event) => {
+		const form = event.currentTarget;
+		const hiker = { name,surname,id_role:role, password,email };
+		
+		event.preventDefault();
+		if (form.checkValidity() === false) {
+			event.stopPropagation();
+		} else {
+			console.log("arrivato");
+			signUp(hiker)
+				.then((val) => {
+					val ? setErr(false) : setErr(true);
+					return val;
+				})
+				.then((val) => {
+					if (val) {
+						navigate('/');
+					}
+				});
+
+		}
+		if(password===confPassword){
+			setValidated(true);
+		}
+		
+	};
+	const checkPassword= ()=>{
+		return password===confPassword;
+	}
+
   return (
     <Container>
       <Row>
 		<Col xs={{ span: 12 }} md={{ span: 4, offset: 4 }}>
-          <Form>
+          <Form
+		  noValidate
+		  validated={validated}
+		  onSubmit={handleSubmit}
+		  >
             <FormGroup className="mb-3">
-              <FormLabel>Name</FormLabel>
+              <FormLabel className={styles.title}>Name</FormLabel>
               <FormControl
 			  className = {styles.formGroup}
 			  type="text"
@@ -33,13 +108,14 @@ export default function SignupForm() {
 			  value={name}
 			  onChange={(event) =>setName(event.target.value)}
 			  required
+
 			  ></FormControl>
 			  <Form.Control.Feedback type="invalid">
-				Name can't be empty
+				Insert a name
 			  </Form.Control.Feedback>
             </FormGroup>
 			<FormGroup className="mb-3">
-              <FormLabel>Surname</FormLabel>
+              <FormLabel className={styles.title}>Surname</FormLabel>
               <FormControl
 			  className = {styles.formGroup}
 			  type="text"
@@ -49,15 +125,24 @@ export default function SignupForm() {
 			  required>
 			  </FormControl>
 			  <Form.Control.Feedback type="invalid">
-				Surname can't be empty
+				Insert a username
 			  </Form.Control.Feedback>
             </FormGroup>
 			<FormGroup className="mb-3">
-			<FormLabel>Role</FormLabel>
-				<Select></Select>
+			<FormLabel className={styles.title}>Role</FormLabel>
+				<Select
+					className={styles.customSelect}
+					classNamePrefix="select"
+					name="province"
+					isSearchable={true}
+					options={roles}
+					onChange={(event) => {
+						setRole(event.value);
+					}}
+				/>
             </FormGroup>
 			<FormGroup className="mb-3">
-              <FormLabel>Password</FormLabel>
+              <FormLabel className={styles.title}>Password</FormLabel>
               <FormControl
 			  className = {styles.formGroup}
 			  type="password"
@@ -66,13 +151,14 @@ export default function SignupForm() {
 			  onChange={(event) =>setPassword(event.target.value)}
 			  required
 			  minLength={8}
+			  maxLength={30}
 			  ></FormControl>
 			  <Form.Control.Feedback type="invalid">
-				Password must be at least 8 characters long
+				Password must be between 8 and 30 characters long
 			  </Form.Control.Feedback>
             </FormGroup>
 			<FormGroup className="mb-3">
-              <FormLabel>Confirm Password</FormLabel>
+              <FormLabel className={styles.title}>Confirm Password</FormLabel>
               <FormControl
 			  className = {styles.formGroup}
 			  type="password"
@@ -80,7 +166,11 @@ export default function SignupForm() {
 			  value={confPassword}
 			  onChange={(event) =>setConfPassword(event.target.value)}
 			  required
+			  validated={validated}
 			  minLength={8}
+			  maxLength={30}
+			  isValid={password===confPassword}
+
 			  >
 				</FormControl>
 			  <Form.Control.Feedback type="invalid">
@@ -88,7 +178,7 @@ export default function SignupForm() {
 			  </Form.Control.Feedback>
             </FormGroup>
 			<FormGroup className="mb-3">
-              <FormLabel>Email</FormLabel>
+              <FormLabel className={styles.title}>Email</FormLabel>
               <FormControl
 			  className = {styles.formGroup}
 			  type="email"
@@ -98,10 +188,12 @@ export default function SignupForm() {
 			  required
 			  ></FormControl>
 			  <Form.Control.Feedback type="invalid">
+			  	Please enter a valid email
 			  </Form.Control.Feedback>
             </FormGroup>
+			<Button className={styles.button} type="submit">Submit</Button>
           </Form>
-		  <Button className={styles.button}>Submit</Button>
+		  
         </Col>
       </Row>
       <Row>
