@@ -25,6 +25,9 @@ Developers: Gerardo Braia, Elisa Calì, Francesco Carpegna, Ahmed Khater, Giusep
     - `npm test` -> Unit tests
     - `npm run apiTest` -> Integration tests
 
+- Current test coverage file: `server/unitTestResult.txt`
+- Current front-end test reports: `client/tests.md`
+
 ## REACT CLIENT APPLICATION ROUTES:
 
 - Route `/`: the route contains the Home component. Here the user can see if not logged in, the complete list of hikes with the related filters and can create if logged in as a local guide, new hikes.
@@ -35,7 +38,7 @@ Developers: Gerardo Braia, Elisa Calì, Francesco Carpegna, Ahmed Khater, Giusep
 
 ## API SERVER:
 
-### Login
+### Login:
 
 __URL:__ `/api/sessions`  
 __Method:__ POST  
@@ -60,7 +63,7 @@ __Response body:__
 ```
 __Error responses:__ `401 Unauthorized`
 
-### Get current user informations
+### Get current user informations:
 
 __URL:__ `/api/sessions/current`  
 __Method:__ GET  
@@ -79,7 +82,7 @@ __Response body:__
 ```
 __Error responses:__ `401 Unauthorized`
 
-### Logout
+### Logout:
 
 __URL:__ `/api/sessions/current`  
 __Method:__ DELETE  
@@ -88,7 +91,7 @@ __Request body:__ _None_
 __Response:__ `200 Ok`  
 __Response body:__ _None_
 
-### Get all roles
+### Get all roles:
 
 __URL:__ `/api/roles`  
 __Method:__ GET  
@@ -110,11 +113,11 @@ __Response body:__
 ```
 __Error responses:__ `500 Internal Server Error`
 
-### User registration
+### User registration:
 
 __URL:__ `/api/newUser`  
 __Method:__ POST  
-__Description:__ Creates an account for a new user with a specific role. 
+__Description:__ Creates an account for a new user with a specific role.  
 __Request body:__ 
 ```
 {
@@ -138,11 +141,11 @@ __Response body:__
 ```
 __Error responses:__ `409 Conflict`, `422 Unprocessable Entity`, `503 Service Unavailable`
 
-### Get place by place id
+### Get place by place id:
 
 __URL:__ `/api/places/place/:placeId`  
 __Method:__ GET  
-__Description:__ Retrieves the informations of a place by its id.  
+__Description:__ Retrieves the informations of a place giving its id.  
 __Request body:__ _None_  
 __Response:__ `200 OK`  
 __Response body:__ 
@@ -158,7 +161,7 @@ __Response body:__
 ```
 __Error responses:__ `404 Not Found`, `422 Unprocessable Entity`, `500 Internal Server Error`
 
-### Get place by province id
+### Get place by province id:
 
 __URL:__ `/api/places/:provinceId`  
 __Method:__ GET  
@@ -188,7 +191,7 @@ __Response body:__
 ```
 __Error responses:__ `500 Internal Server Error`
 
-### Get all provinces
+### Get all provinces:
 
 __URL:__ `/api/provinces`  
 __Method:__ GET  
@@ -212,7 +215,7 @@ __Response body:__
 ```
 __Error responses:__ `500 Internal Server Error`
 
-### Get the list of all hikes (optionally filtered)
+### Get the list of all hikes (optionally filtered):
 
 __URL:__ `/api/hikes`  
 __Method:__ POST  
@@ -261,7 +264,7 @@ __Response body:__
 ``` 
 __Error responses:__ `422 Unprocessable Entity`, `500 Internal Server Error`
 
-### Create a new hike (only if the user is a local guide and is logged in)
+### Create a new hike (only if the user is a local guide and is logged in):
 
 __URL:__ `/api/newHike`  
 __Method:__ POST  
