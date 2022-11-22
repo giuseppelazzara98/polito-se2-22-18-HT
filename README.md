@@ -34,7 +34,7 @@ Developers: Gerardo Braia, Elisa Calì, Francesco Carpegna, Ahmed Khater, Giusep
 - Route `/login`: the route contains the login form, where the user can authenticate himself inserting username and password.
 - Route `/signup`: the route contains the register form, where the user can register himself inserting name, surname, email, password and the role for which he / she wants to register for.
 - Route `/newHike`: the route contains the form to create a new hike, where the local guide can insert all the useful informations related to the hike, including the GPX file.
-- Route `*`:  the route contains the Error component. Here the user is redirected if a known route is not found or the route is wrong. 
+- Route `*`:  the route displays an error message if a known route is not found or the current route is wrong. 
 
 ## API SERVER:
 
@@ -219,7 +219,7 @@ __Error responses:__ `500 Internal Server Error`
 
 __URL:__ `/api/hikes`  
 __Method:__ POST  
-__Description:__ Retrieves the list of all the filtered hikes. 
+__Description:__ Retrieves the list of all the filtered hikes.   
 __Request body:__ 
 ```
 {
@@ -268,7 +268,7 @@ __Error responses:__ `422 Unprocessable Entity`, `500 Internal Server Error`
 
 __URL:__ `/api/newHike`  
 __Method:__ POST  
-__Description:__ Create a new hike. 
+__Description:__ Create a new hike.   
 __Request body:__ 
 ```
 {
@@ -287,7 +287,7 @@ __Request body:__
 }
 ```
 __Response:__ `201 Created`  
-__Response body:__ _None_
+__Response body:__ _None_  
 __Error responses:__ `401 Unauthorized`, `404 Not Found`, `422 Unprocessable Entity`, `503 Service Unavailable`
 
 ## DATABASE TABLES:
