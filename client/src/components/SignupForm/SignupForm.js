@@ -22,9 +22,11 @@ export default function SignupForm(props) {
 	const [confPassword, setConfPassword] = useState("");
 	const [email, setEmail] = useState("");
 	const [validated, setValidated] = useState(false);
-	const [err, setErr] = useState(false);
 	const navigate = useNavigate();
 	const [roles,setRoles]=useState([]);
+	const [errServer, setErrServer] = useState(false);
+	const [err, setErr] = useState(false);
+	const [errMessage, setErrMessage] = useState("");
 
 	useEffect(() => {
 		const loadRoles = () => {
@@ -47,7 +49,6 @@ export default function SignupForm(props) {
 	const signUp = async (hiker) => {
 		try {
 			const user = await API.register(hiker);
-			console.log(user);
 			props.setLoggedIn(true);
 			props.setUser(user);
 			props.setShowWelcomeModal(true);
@@ -56,7 +57,21 @@ export default function SignupForm(props) {
 			}, 2500);
 			return true;
 		} catch (err) {
+			setErrServer(true);
+			console.log(err);
+			const errMessage =JSON.parse(err).error;
+			if (errMessage === undefined) {
+					setErrMessage("Server error");
+			}
+			else{
+				setErrMessage(errMessage);
+			}
+			setTimeout(() => {
+				setErrServer(false)
+			}, 2500);
 			return false;
+			
+			
 		}
 	};
 
@@ -67,11 +82,26 @@ export default function SignupForm(props) {
 		event.preventDefault();
 		if (form.checkValidity() === false) {
 			event.stopPropagation();
+			if (password !== confPassword) {
+				setErr(true);
+				event.stopPropagation();
+				setTimeout(() => {
+					setErr(false)
+				}
+				, 2500);
+			}
 		} else {
-			console.log("arrivato");
-			signUp(hiker)
+			if (password !== confPassword) {
+				setErr(true);
+				event.stopPropagation();
+				setTimeout(() => {
+					setErr(false)
+				}
+				, 2500);
+			}
+			else{
+				signUp(hiker)
 				.then((val) => {
-					val ? setErr(false) : setErr(true);
 					return val;
 				})
 				.then((val) => {
@@ -79,16 +109,13 @@ export default function SignupForm(props) {
 						navigate('/');
 					}
 				});
+			}
+
+		
 
 		}
-		if(password===confPassword){
-			setValidated(true);
-		}
-		
+		setValidated(true);
 	};
-	const checkPassword= ()=>{
-		return password===confPassword;
-	}
 
   return (
     <Container>
@@ -96,8 +123,8 @@ export default function SignupForm(props) {
 		<Col xs={{ span: 12 }} md={{ span: 4, offset: 4 }}>
           <Form
 		  noValidate
-		  validated={validated}
 		  onSubmit={handleSubmit}
+		  validated={validated}
 		  >
             <FormGroup className="mb-3">
               <FormLabel className={styles.title}>Name</FormLabel>
@@ -108,7 +135,6 @@ export default function SignupForm(props) {
 			  value={name}
 			  onChange={(event) =>setName(event.target.value)}
 			  required
-
 			  ></FormControl>
 			  <Form.Control.Feedback type="invalid">
 				Insert a name
@@ -133,6 +159,7 @@ export default function SignupForm(props) {
 				<Select
 					className={styles.customSelect}
 					classNamePrefix="select"
+					defaultValue= {1}
 					name="province"
 					isSearchable={true}
 					options={roles}
@@ -166,16 +193,13 @@ export default function SignupForm(props) {
 			  value={confPassword}
 			  onChange={(event) =>setConfPassword(event.target.value)}
 			  required
-			  validated={validated}
 			  minLength={8}
 			  maxLength={30}
-			  isValid={password===confPassword}
-
 			  >
 				</FormControl>
-			  <Form.Control.Feedback type="invalid">
-				The passwords don't match
-			  </Form.Control.Feedback>
+				{err ? (
+							<p className="text-danger">Password doesn't match</p>
+						) : null}
             </FormGroup>
 			<FormGroup className="mb-3">
               <FormLabel className={styles.title}>Email</FormLabel>
@@ -191,6 +215,9 @@ export default function SignupForm(props) {
 			  	Please enter a valid email
 			  </Form.Control.Feedback>
             </FormGroup>
+			{errServer ? (
+							<p className="text-danger">{errMessage}</p>
+						) : null}
 			<Button className={styles.button} type="submit">Submit</Button>
           </Form>
 		  
