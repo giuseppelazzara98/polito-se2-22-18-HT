@@ -21,14 +21,14 @@ const isLoggedIn = (req, res, next) => {
 /*
 	{
 		"province": null,
-		"difficulty": ["tourist"],
+		"difficulty": [1],
 		"exp_time": { "min": 5.2, "max": 7.0 },
 		"length": { "min": 0.0, "max": 15.7 },
 		"ascent": { "min": 500, "max": 2000 }
 	}
 	{
 		"province": 1,
-		"difficulty": ["professional hiker"],
+		"difficulty": [1,2],
 		"exp_time": { "min": 5.6, "max": 9.0 },
 		"length": { "min": 0.0, "max": 15.7 },
 		"ascent": { "min": 500, "max": 2900 }
@@ -36,40 +36,50 @@ const isLoggedIn = (req, res, next) => {
 */
 
 //POST /api/hikes
-router.post('/hikes', async (req, res) => {
-	if (Object.keys(req.body).length === 0) {
-		console.log('Empty body!');
-		return res.status(422).json({ error: 'Empty body request' });
-	}
+router.post('/hikes',
+	body('difficulty').isArray(),
+	async (req, res) => {
 
-	if (Object.keys(req.body).length !== 5) {
-		console.log('Data not formatted properly!');
-		return res.status(422).json({ error: 'Data not formatted properly' });
-	}
+		if (Object.keys(req.body).length === 0) {
+			console.log('Empty body!');
+			return res.status(422).json({ error: 'Empty body request' });
+		}
 
-	try {
-		const hikes = await hikeDao.getAllFilteredHikes(req.body);
+		if (Object.keys(req.body).length !== 5) {
+			console.log('Data not formatted properly!');
+			return res.status(422).json({ error: 'Data not formatted properly' });
+		}
 
-		const unique = (value, index, self) => {
-			return self.indexOf(value) === index;
-		};
+		const errors = validationResult(req);
 
-		const distinct_times = hikes.map((el) => el.expected_time).filter(unique);
-		const distinct_lengths = hikes.map((el) => el.length).filter(unique);
-		const distinct_ascents = hikes.map((el) => el.ascent).filter(unique);
+		if (!errors.isEmpty()) {
+			console.log("Error in body!");
+			return res.status(422).json({ errors: errors.array() });
+		}
 
-		const result = {
-			hikes: hikes,
-			distinct_times: distinct_times,
-			distinct_lengths: distinct_lengths,
-			distinct_ascents: distinct_ascents
-		};
+		try {
+			const hikes = await hikeDao.getAllFilteredHikes(req.body);
 
-		return res.status(200).json(result);
-	} catch (err) {
-		return res.status(500).json({ error: 'Internal Server Error' });
-	}
-});
+			const unique = (value, index, self) => {
+				return self.indexOf(value) === index;
+			};
+
+			const distinct_times = hikes.map((el) => el.expected_time).filter(unique);
+			const distinct_lengths = hikes.map((el) => el.length).filter(unique);
+			const distinct_ascents = hikes.map((el) => el.ascent).filter(unique);
+
+			const result = {
+				hikes: hikes,
+				distinct_times: distinct_times,
+				distinct_lengths: distinct_lengths,
+				distinct_ascents: distinct_ascents
+			};
+
+			return res.status(200).json(result);
+		} catch (err) {
+			return res.status(500).json({ error: 'Internal Server Error' });
+		}
+	});
 
 /*
 	{
@@ -85,7 +95,7 @@ router.post('/hikes', async (req, res) => {
 		"referencePoints":[],
 		"gpxFile":"",
 		"description":"Test1"
-}
+	}
 */
 
 //POST /api/newHike
@@ -125,7 +135,7 @@ router.post('/newHike',
 
 		try {
 
-			
+
 			// insert in hike-place table, cycling on reference points
 			for (let i = 0; i < req.body.referencePoints.length; i++) {
 
