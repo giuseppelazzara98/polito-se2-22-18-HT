@@ -219,7 +219,7 @@ __Error responses:__ `500 Internal Server Error`
 
 __URL:__ `/api/hikes`  
 __Method:__ POST  
-__Description:__ Retrieves the list of all the filtered hikes. 
+__Description:__ Retrieves the list of all the filtered hikes.   
 __Request body:__ 
 ```
 {
@@ -268,7 +268,7 @@ __Error responses:__ `422 Unprocessable Entity`, `500 Internal Server Error`
 
 __URL:__ `/api/newHike`  
 __Method:__ POST  
-__Description:__ Create a new hike. 
+__Description:__ Create a new hike.   
 __Request body:__ 
 ```
 {
@@ -287,7 +287,7 @@ __Request body:__
 }
 ```
 __Response:__ `201 Created`  
-__Response body:__ _None_ 
+__Response body:__ _None_  
 __Error responses:__ `401 Unauthorized`, `404 Not Found`, `422 Unprocessable Entity`, `503 Service Unavailable`
 
 ## DATABASE TABLES:
