@@ -97,7 +97,7 @@ export default function LoginForm(props) {
 							Login
 						</Button>
 					</Form>
-					<div className={styles.goToRegistrationContainer}>
+					<div className={`${styles.goToRegistrationContainer} pb-5`}>
 						<span>Don't you have a account yet? </span>
 						<Link to="/signup" className={styles.link}>Register now</Link>
 					</div>

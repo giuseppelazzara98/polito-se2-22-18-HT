@@ -223,7 +223,7 @@ export default function SignupForm(props) {
 		  
         </Col>
       </Row>
-      <Row>
+      <Row className="pb-5">
         <Col>
           <div className={styles.goToLoginContainer}>
             <span>Already registered? </span>
