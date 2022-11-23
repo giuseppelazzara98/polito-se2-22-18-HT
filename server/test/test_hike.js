@@ -68,7 +68,7 @@ describe('Test hikes apis', () => {
         "startPoint": 9,
         "endPoint": 5,
         "referencePoints": [],
-        "gpxFile": "",
+        "gpxData": "",
         "description": "Hike 1 description",
     };
 
@@ -88,7 +88,7 @@ describe('Test hikes apis', () => {
         "startPoint": 9,
         "endPoint": 5,
         "referencePoints": [5000],
-        "gpxFile": "",
+        "gpxData": "",
         "description": "Hike 3 description",
     };
 
@@ -105,7 +105,7 @@ describe('Test hikes apis', () => {
         "startPoint": 9,
         "endPoint": 5,
         "referencePoints": [5000],
-        "gpxFile": "",
+        "gpxData": "",
         "description": "Hike 5 description",
     };
 
@@ -120,7 +120,7 @@ describe('Test hikes apis', () => {
         "startPoint": 9,
         "endPoint": 5,
         "referencePoints": [1,2,3],
-        "gpxFile": "",
+        "gpxData": "",
         "description": "Hike 6 description",
     };
 
@@ -135,7 +135,7 @@ describe('Test hikes apis', () => {
         "startPoint": 9,
         "endPoint": 5,
         "referencePoints": [1,2,3],
-        "gpxFile": "",
+        "gpxData": "",
         "description": "Hike 7 description",
     };
 

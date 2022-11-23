@@ -282,7 +282,7 @@ __Request body:__
 	"startPoint":9,
 	"endPoint":5,
 	"referencePoints":[],
-	"gpxFile":"",
+	"gpxData":"",
 	"description":"Test1"
 }
 ```

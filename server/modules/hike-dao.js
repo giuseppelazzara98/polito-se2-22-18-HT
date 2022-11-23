@@ -23,7 +23,7 @@ class HikeDAO {
 	newHikeTable = () => {
 		return new Promise((resolve, reject) => {
 
-			const sql = "CREATE TABLE IF NOT EXISTS HIKE(id_hike INTEGER NOT NULL, name TEXT, id_start_place INTEGER NOT NULL, id_end_place INTEGER NOT NULL, id_province INTEGER, description TEXT, length REAL, expected_time REAL, ascent INTEGER, difficulty INTEGER, FOREIGN KEY(id_end_place) REFERENCES PLACE(id_place), FOREIGN KEY(id_start_place) REFERENCES PLACE(id_place), FOREIGN KEY(id_province) REFERENCES PROVINCE(id_province), PRIMARY KEY(id_hike AUTOINCREMENT));";
+			const sql = "CREATE TABLE IF NOT EXISTS HIKE(id_hike INTEGER NOT NULL, name TEXT, id_start_place INTEGER NOT NULL, id_end_place INTEGER NOT NULL, id_province INTEGER, description TEXT, length REAL, expected_time REAL, ascent INTEGER, difficulty INTEGER, gpx TEXT, FOREIGN KEY(id_end_place) REFERENCES PLACE(id_place), FOREIGN KEY(id_start_place) REFERENCES PLACE(id_place), FOREIGN KEY(id_province) REFERENCES PROVINCE(id_province), PRIMARY KEY(id_hike AUTOINCREMENT));";
 			this.db.run(sql, (err) => {
 				if (err) {
 					console.log('Error running sql: ' + sql);
@@ -75,7 +75,8 @@ class HikeDAO {
 				'HIKE.length',
 				'HIKE.expected_time',
 				'HIKE.ascent',
-				'HIKE.difficulty'
+				'HIKE.difficulty',
+				'HIKE.gpx'
 			)
 			.from('HIKE')
 			.join('PLACE as P1', { 'P1.id_place': 'HIKE.id_start_place' })
@@ -118,11 +119,12 @@ class HikeDAO {
 						description: el.description,
 						start_place: el.START_PLACE,
 						end_place: el.END_PLACE,
+						province: el.PROVINCE,
 						length: el.length,
 						expected_time: el.expected_time,
 						ascent: el.ascent,
 						difficulty: el.difficulty,
-						geographical_area: el.geographical_area,
+						gpx: el.gpx
 					}
 				});
 				resolve(hikes);
@@ -151,7 +153,7 @@ class HikeDAO {
 							expected_time: el.expected_time,
 							ascent: el.ascent,
 							difficulty: el.difficulty,
-							geographical_area: el.geographical_area
+							gpx: el.gpx
 						};
 					});
 					resolve(hikes);
@@ -163,22 +165,7 @@ class HikeDAO {
 	insertHike = (hike) => {
 		return new Promise((resolve, reject) => {
 			const sql =
-				'INSERT INTO HIKE (name, id_start_place, id_end_place, id_province, description, length, expected_time, ascent, difficulty) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
-
-			/*
-			title: title,
-			province: province,
-			length: length,
-			expectedTime: expectedTime,
-			ascent: ascent,
-			difficulty: difficulty,
-			startPoint: startPoint,
-			endPoint: endPoint,
-			referencePoints: referencePoints,
-			gpxFile: gpxFile,
-			description: description,
-			refPoint: refPoint
-			*/
+				'INSERT INTO HIKE (name, id_start_place, id_end_place, id_province, description, length, expected_time, ascent, difficulty, gpx) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
 
 			this.db.run(
 				sql,
@@ -191,7 +178,8 @@ class HikeDAO {
 					hike.length,
 					hike.expectedTime,
 					hike.ascent,
-					hike.difficulty
+					hike.difficulty,
+					hike.gpxData
 				],
 				function (err) {
 					if (err) {

@@ -50,7 +50,6 @@ export default function NewHikeForm(props) {
 			startPoint: startPoint,
 			endPoint: endPoint,
 			referencePoints: [],
-			gpxFile: gpxFile,
 			gpxData: JSON.stringify(gpxPoints),
 			description: description
 		};

@@ -93,7 +93,7 @@ router.post('/hikes',
 		"startPoint":9,
 		"endPoint":5,
 		"referencePoints":[],
-		"gpxFile":"",
+		"gpxData":"...",
 		"description":"Test1"
 	}
 */
@@ -111,17 +111,16 @@ router.post('/newHike',
 	body('startPoint').notEmpty().isInt({ min: 1 }),
 	body('endPoint').notEmpty().isInt({ min: 1 }),
 	body('referencePoints').isArray(),
+	body('gpxData').isString(),
 	body('description').isString().isLength({ max: 1000 }),
 	async (req, res) => {
-
-		//TODO: to insert controls for the gpxFile
 
 		if (Object.keys(req.body).length === 0) {
 			console.log('Empty body!');
 			return res.status(422).json({ error: 'Empty body request' });
 		}
 
-		if (Object.keys(req.body).length !== 12 || !(req.body.title && req.body.expectedTimeString && req.body.referencePoints && req.body.description)) {
+		if (Object.keys(req.body).length !== 12 || !(req.body.title && req.body.expectedTimeString && req.body.referencePoints && req.body.gpxData && req.body.description)) {
 			console.log('Data not formatted properly!');
 			return res.status(422).json({ error: 'Data not formatted properly' });
 		}

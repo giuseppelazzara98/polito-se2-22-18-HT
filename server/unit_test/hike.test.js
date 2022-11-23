@@ -78,7 +78,7 @@ describe('TestHikeDao', () => {
         "startPoint":9,
         "endPoint":5,
         "referencePoints":[],
-        "gpxFile":"",
+        "gpxData":"",
         "description":"Test1"
     };
 
@@ -93,7 +93,7 @@ describe('TestHikeDao', () => {
         "startPoint":9,
         "endPoint":5,
         "referencePoints":[],
-        "gpxFile":"",
+        "gpxData":"",
         "description":"Test2"
     };
 
