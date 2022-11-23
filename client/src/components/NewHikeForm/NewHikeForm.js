@@ -32,7 +32,7 @@ export default function NewHikeForm(props) {
 	const [description, setDescription] = useState('');
 	const [refPoint, setRefPoint] = useState({});
 	const navigate = useNavigate();
-	const [gpxData, setGpxData] = useState({});
+	const [gpxPoints, setGpxPoints] = useState({});
 	const [validated, setValidated] = useState(false);
 
 	const handleSubmit = (event) => {
@@ -51,7 +51,7 @@ export default function NewHikeForm(props) {
 			endPoint: endPoint,
 			referencePoints: [],
 			gpxFile: gpxFile,
-			gpxData: gpxData,
+			gpxData: JSON.stringify(gpxPoints),
 			description: description
 		};
 
@@ -207,11 +207,11 @@ export default function NewHikeForm(props) {
 					<GPXFile
 						gpxFile={gpxFile}
 						setGpxFile={setGpxFile}
-						setGpxData={setGpxData}
+						setGpxPoints={setGpxPoints}
 						setLength={setLength}
 						setAscent={setAscent}
 					/>
-					{gpxData.tracks !== undefined && <Map gpxData={gpxData} />}
+					{gpxPoints?.length > 0 && <Map gpxPoints={gpxPoints} />}
 				</Col>
 			</Row>
 

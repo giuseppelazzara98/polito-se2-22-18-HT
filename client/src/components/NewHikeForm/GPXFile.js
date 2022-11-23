@@ -9,7 +9,8 @@ export default function GPXFile(props) {
 			const content = reader.result;
 			var gpx = new gpxParser();
 			gpx.parse(content);
-			props.setGpxData(gpx);
+			let gpxPoints = gpx?.tracks?.[0]?.points || [];
+			props.setGpxPoints(gpxPoints);
 			const length = gpx.tracks[0].distance.total / 1000;
 			props.setLength(length.toFixed(3));
 			const positiveElevationDiff = gpx.tracks[0].elevation.pos;

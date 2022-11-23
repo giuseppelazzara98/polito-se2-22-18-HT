@@ -2,25 +2,27 @@ import { MapContainer, TileLayer, Polyline, useMapEvent } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import styles from './index.module.scss';
 import ChangeView from './ChangeView';
+import { useMemo } from 'react';
 
 export default function Map(props) {
-	const generatePoints = () => {
-		const points = props.gpxData.tracks[0].points.map((point) => [
+	const { gpxPoints } = props;
+
+	const points = useMemo(() => {
+		return gpxPoints?.map((point) => [
 			point.lat,
 			point.lon
-		]);
-		return points;
-	};
+		]) || [];
+	}, [JSON.stringify(gpxPoints)]);
 
 	return (
 		<MapContainer
 			className={styles.mapContainer}
-			center={generatePoints()[generatePoints.length / 2]}
+			center={points[points.length / 2]}
 			zoom={13}
 			scrollWheelZoom={false}
 		>
 			<ChangeView
-				center={generatePoints()[generatePoints.length / 2]}
+				center={points[points.length / 2]}
 				zoom={13}
 			></ChangeView>
 			<TileLayer
@@ -29,7 +31,7 @@ export default function Map(props) {
 			/>
 			<Polyline
 				pathOptions={{ fillColor: 'red', color: 'red' }}
-				positions={generatePoints()}
+				positions={points}
 			/>
 		</MapContainer>
 	);
