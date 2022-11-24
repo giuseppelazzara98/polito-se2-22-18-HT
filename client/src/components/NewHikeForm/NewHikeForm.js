@@ -49,7 +49,7 @@ export default function NewHikeForm(props) {
 			difficulty: difficulty,
 			startPoint: startPoint,
 			endPoint: endPoint,
-			referencePoints: [],
+			referencePoints: referencePoints,
 			gpxData: JSON.stringify(gpxPoints),
 			description: description
 		};
@@ -68,9 +68,6 @@ export default function NewHikeForm(props) {
 			}
 		});
 		hike.expectedTime = hours;
-		hike.referencePoints = referencePoints.map((point) => {
-			return point.id_place;
-		});
 		hike.difficulty = parseInt(difficulty, 10);
 		hike.ascent = parseInt(ascent, 10);
 		hike.length = parseInt(length, 10);
@@ -86,13 +83,16 @@ export default function NewHikeForm(props) {
 				);
 		};
 
-		if (province === ""
-			|| startPoint.type === ""
-			|| (startPoint.type === "Hut/Parking lot" && (startPoint.lat === "" || startPoint.lng === ""))
-			|| endPoint.type === ""
-			|| (endPoint.type === "Hut/Parking lot" && (endPoint.lat === "" || endPoint.lng === ""))
+		if (
+			province === '' ||
+			startPoint.type === '' ||
+			(startPoint.type === 'Hut/Parking lot' &&
+				(startPoint.lat === '' || startPoint.lng === '')) ||
+			endPoint.type === '' ||
+			(endPoint.type === 'Hut/Parking lot' &&
+				(endPoint.lat === '' || endPoint.lng === ''))
 		) {
-			valid = false
+			valid = false;
 		}
 
 		if (form.checkValidity() === false || !valid) {
@@ -124,10 +124,19 @@ export default function NewHikeForm(props) {
 					.then((list) => setReferencePoints(list));
 			}
 		} else if (refPoint.type === 'Address/Name of location') {
-			list = [...referencePoints, refPoint];
-			setReferencePoints(list);
+			if (
+				referencePoints.find((point) => point.id === refPoint.id) === undefined
+			) {
+				list = [...referencePoints, refPoint];
+				setReferencePoints(list);
+			}
 		} else if (refPoint.type === 'GPS coordinates') {
-			//? just user the corrdinates we get from the user and set a random key and name ?
+			if (
+				referencePoints.find((point) => point.id === refPoint.id) === undefined
+			) {
+				list = [...referencePoints, refPoint];
+				setReferencePoints(list);
+			}
 		}
 	};
 
@@ -150,7 +159,11 @@ export default function NewHikeForm(props) {
 				</Col>
 				<Col>
 					{/*Province field*/}
-					<Province province={province} setProvince={setProvince} validated={validated}/>
+					<Province
+						province={province}
+						setProvince={setProvince}
+						validated={validated}
+					/>
 				</Col>
 			</Row>
 
