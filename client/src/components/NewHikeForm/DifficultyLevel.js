@@ -1,6 +1,5 @@
 import { Col, Row, Form } from 'react-bootstrap';
-import styles from "./index.module.scss";
-
+import styles from './index.module.scss';
 
 export default function DifficultyLevel(props) {
 	return (
@@ -20,6 +19,8 @@ export default function DifficultyLevel(props) {
 						value={1}
 						onChange={(event) => props.setDifficulty(event.target.value)}
 						required={true}
+						feedback="Please chose a difficulty level"
+						feedbackType="invalid"
 					/>
 				</Col>
 				<Col>
@@ -33,6 +34,8 @@ export default function DifficultyLevel(props) {
 						value={2}
 						onChange={(event) => props.setDifficulty(event.target.value)}
 						required={true}
+						feedback="Please chose a difficulty level"
+						feedbackType="invalid"
 					/>
 				</Col>
 				<Col>
@@ -46,6 +49,8 @@ export default function DifficultyLevel(props) {
 						value={3}
 						onChange={(event) => props.setDifficulty(event.target.value)}
 						required={true}
+						feedback="Please chose a difficulty level"
+						feedbackType="invalid"
 					/>
 				</Col>
 			</Row>

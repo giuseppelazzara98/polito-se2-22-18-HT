@@ -73,7 +73,7 @@ router.post('/newUser',
 	body('surname').isString().isLength({ max: 50 }),
 	body('password').isString().isLength({ max: 255 }),
 	body('id_role').isInt({ min: 1, max: 4 }),
-	async (req, res) => {
+	async (req, res, next) => {
 
 		if (Object.keys(req.body).length === 0) {
 			console.log('Empty body!');
@@ -94,7 +94,13 @@ router.post('/newUser',
 
 		try {
 
-			const result = await userDao.insertNewUser(
+			const userPrev = await userDao.getUser(req.body.email, req.body.password);
+
+			if (userPrev !== false) {
+				return res.status(409).json({ error: 'User already exists' });
+			}
+
+			await userDao.insertNewUser(
 				req.body.email,
 				req.body.name,
 				req.body.surname,
@@ -102,12 +108,39 @@ router.post('/newUser',
 				req.body.id_role
 			);
 
-			return res.status(201).json(result);
+			const user = await userDao.getUser(req.body.email, req.body.password);
+
+			passport.authenticate('local', (err, info) => {
+				if (err) return next(err);
+				if (!user) {
+					// display wrong login messages
+					return res.status(401).json(info);
+				}
+				// success, perform the login
+				req.login(user, (err) => {
+					if (err) return next(err);
+		
+					// req.user contains the authenticated user, we send all the user info back
+					// this is coming from userDao.getUser()
+					return res.status(201).json(req.user);
+				});
+			})(req, res, next);
 
 		} catch (err) {
 			console.log(err);
 			return res.status(503).json({ error: 'Service Unavailable' });
 		}
 	});
+
+//GET /api/roles
+router.get('/roles', async (req, res) => {
+    try {
+        const roles = await userDao.getAllRoles();
+        res.status(200).json(roles);
+    } catch (err) {
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+}
+);
 
 module.exports = router;

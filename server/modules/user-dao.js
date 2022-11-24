@@ -7,12 +7,14 @@ class UserDAO {
 	}
 
 	// close the connection to database
-	closeUserTable = () => {
+	closeTables = () => {
 		return new Promise((resolve, reject) => {
 			this.db.close();
 			resolve(true);
 		});
 	};
+
+	/* --------------------------------------------- TABLE USER --------------------------------------------- */
 
 	/*
 
@@ -115,6 +117,63 @@ class UserDAO {
 						});
 					}
 				});
+			});
+		});
+	};
+
+	/* --------------------------------------------- TABLE ROLES --------------------------------------------- */
+
+	/*
+	// create the role table
+	newRoleTable = () => {
+		return new Promise((resolve, reject) => {
+			const sql =
+				'CREATE TABLE IF NOT EXISTS ROLE(id_role INTEGER NOT NULL, description TEXT, PRIMARY KEY(id_role));';
+			this.db.run(sql, (err) => {
+				if (err) {
+					console.log('Error running sql: ' + sql);
+					console.log(err);
+					reject(err);
+				}
+				resolve(this.lastID);
+			});
+		});
+	};
+	
+	// drop the role table
+	dropRoleTable = () => {
+		return new Promise((resolve, reject) => {
+			const sql = 'DROP TABLE IF EXISTS ROLE;';
+			this.db.run(sql, function (err) {
+				if (err) {
+					console.log('Error running sql: ' + sql);
+					console.log(err);
+					reject(err);
+				}
+				resolve(this.lastID);
+			});
+		});
+	};
+	*/
+
+	// get all roles
+	getAllRoles = () => {
+		return new Promise((resolve, reject) => {
+			const sql = 'SELECT * FROM ROLE;';
+			this.db.all(sql, [], (err, rows) => {
+				if (err) {
+					console.log('Error running sql: ' + sql);
+					console.log(err);
+					reject(err);
+				} else {
+					const role = rows.map((el) => {
+						return {
+							id: el.id_role,
+							description: el.description
+						};
+					});
+					resolve(role);
+				}
 			});
 		});
 	};

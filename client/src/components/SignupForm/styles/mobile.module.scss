@@ -1,0 +1,58 @@
+@import "../../../styles/configs";
+
+.goToLoginContainer {
+  margin-top: 15px;
+  @include font(400, 12px, 14px, 0);
+  .link {
+    font-weight: 500;
+    color: $primary-green;
+    &:focus,
+    &:hover {
+      color: $tertiary-green
+    }
+  }
+}
+
+.formGroup {
+  height: 40px;
+}
+
+  .button{
+    background-color: $primary-green;
+    border-color: transparent;
+    &:hover{
+      background-color: $tertiary-green;
+      border-color: transparent;
+      
+    }
+    &:global(.btn){
+      &:active{
+        background-color: $tertiary-green;
+        border-color: transparent;
+        
+      }
+    }}
+
+    .title {
+      @include font(700, 18px, 20px, 0);
+      color: $primary-green;
+    }
+
+.invalid {
+  :global(.select__control) {
+    @include invalidInput();
+  }
+}
+
+.valid {
+  :global(.select__control) {
+    @include validInput();
+  }
+}
+
+.feedbackContainer {
+  width: 100%;
+  margin-top: 0.25rem;
+  font-size: 0.875em;
+  color: $primary-error;
+}

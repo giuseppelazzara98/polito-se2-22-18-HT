@@ -13,12 +13,15 @@ describe('TestUserDao', () => {
     testGetUser(5, "Paolo", "Bitta", "Local guide", "guide9@gmail.com", "password", false);
     testNewUser("Giacomo", "Cresino", 1, "hiker1234@gmail.com", "password");
 
+    testGetAllRoles();
+
     // CLOSE CONNECTION TO USER TABLE
 
-    testCloseUserTable();
+    testCloseTables();
     testGetUserById(1, true);
     testGetUser(1, "Paolo", "Bitta", "Local guide", "guide1@gmail.com", "password");
     testNewUser("Giacomo", "Cresino", 1, "hiker1234@gmail.com", "password");
+    testGetAllRoles();
 
 });
 
@@ -85,10 +88,27 @@ function testNewUser(name, surname, role, email, password) {
     });
 }
 
-function testCloseUserTable() {
-    test('Close user table', async () => {
+function testGetAllRoles() {
+    test('Test get all roles', async () => {
+        try {
+
+            const roles = await testUserDao.getAllRoles();
+
+            expect(roles).not.toBeNull();
+            expect(roles).toBeInstanceOf(Array);
+
+        }
+        catch (err) {
+            console.log("---- Error on testGetAllRoles ----");
+            return;
+        }
+    });
+}
+
+function testCloseTables() {
+    test('Close tables', async () => {
         try{
-            await testUserDao.closeUserTable();
+            await testUserDao.closeTables();
         }
         catch(err) {
             console.log("---- Error on TestCloseUserTable ----");
