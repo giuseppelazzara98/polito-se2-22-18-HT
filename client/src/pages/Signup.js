@@ -10,7 +10,7 @@ export default function Signup(props) {
 				{' '}
 				<CiMountain1 color="black" size={50} /> HTracker
 			</h1>
-				<SignupForm  setLoggedIn={props.setLoggedIn} setUser={props.setUser} setShowWelcomeModal={props.setShowWelcomeModal}/>
+				<SignupForm  setLoggedIn={props.setLoggedIn} setUser={props.setUser} setShowRegistrationSuccess={props.setShowRegistrationSuccess}/>
 			</Container>
 		</>
 	);

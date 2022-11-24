@@ -51,10 +51,8 @@ export default function SignupForm(props) {
 			const user = await API.register(hiker);
 			props.setLoggedIn(true);
 			props.setUser(user);
-			props.setShowWelcomeModal(true);
-			setTimeout(() => {
-				props.setShowWelcomeModal(false)
-			}, 2500);
+			props.setShowRegistrationSuccess(true);
+			setTimeout(() => {props.setShowRegistrationSuccess(false)}, 2500);
 			return true;
 		} catch (err) {
 			setErrServer(true);

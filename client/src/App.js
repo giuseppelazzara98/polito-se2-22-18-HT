@@ -36,6 +36,7 @@ function App2() {
 	const [showLogoutModal, setShowLogoutModal] = useState(false);
 	const [showAddNewHikeSuccess, setShowAddNewHikeSuccess] = useState(false);
 	const [showAddNewHikeError, setShowAddNewHikeError] = useState(false);
+	const [showRegistrationSuccess, setShowRegistrationSuccess] = useState(false);
 
 	const getHikes = async (dataOnRequest) => {
 		try {
@@ -158,7 +159,7 @@ function App2() {
 							loggedIn ? (
 								<Navigate to="/" replace />
 							) : (
-								<Signup setLoggedIn={setLoggedIn} setUser={setUser} setShowWelcomeModal={setShowWelcomeModal}/>
+								<Signup setLoggedIn={setLoggedIn} setUser={setUser} setShowRegistrationSuccess={setShowRegistrationSuccess}/>
 							)
 						} />
 					<Route path="*" element={<WrongPath />} />
@@ -186,6 +187,12 @@ function App2() {
 					subtitle={`Oh no... there was a problem, try later`}
 					icon={faXmarkCircle}
 					success={false}
+				/>
+				<InfoModalComponent
+					show={showRegistrationSuccess}
+					title="Success!"
+					subtitle={`Registration completed successfully`}
+					icon={faCheckCircle}
 				/>
 				<div id="modal-root" />
 			</main>
