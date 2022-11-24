@@ -17,7 +17,7 @@ import API from "../../API/api";
 export default function SignupForm(props) {
 	const [name, setName] = useState("");
 	const [surname,setSurname] = useState("");
-	const [role, setRole] = useState(1);
+	const [role, setRole] = useState(0);
 	const [password, setPassword] = useState("");
 	const [confPassword, setConfPassword] = useState("");
 	const [email, setEmail] = useState("");
@@ -76,9 +76,13 @@ export default function SignupForm(props) {
 	const handleSubmit = (event) => {
 		const form = event.currentTarget;
 		const hiker = { name,surname,id_role:role, password,email };
+		let valid = true;
 		
 		event.preventDefault();
-		if (form.checkValidity() === false) {
+		if (role === 0) {
+			valid = false;
+		}
+		if (form.checkValidity() === false || !valid) {
 			event.stopPropagation();
 			if (password !== confPassword) {
 				setErr(true);
@@ -155,16 +159,23 @@ export default function SignupForm(props) {
 			<FormGroup className="mb-3">
 			<FormLabel className={styles.title}>Role</FormLabel>
 				<Select
-					className={styles.customSelect}
-					classNamePrefix="select"
-					defaultValue= {1}
-					name="province"
+					className={`${styles.customSelect} ${validated && role === 0 && styles.invalid} ${validated && role !== 0 && styles.valid}`}					classNamePrefix="select"
+					placeholder="Select a role"
+					defaultValue= {role}
+					name="role"
 					isSearchable={true}
 					options={roles}
 					onChange={(event) => {
 						setRole(event.value);
 					}}
 				/>
+				{validated && role === 0 && (
+					<div className={styles.feedbackContainer}>
+						<span className={styles.feedback}>
+							Please select a valid role
+						</span>
+					</div>
+				)}
             </FormGroup>
 			<FormGroup className="mb-3">
               <FormLabel className={styles.title}>Password</FormLabel>

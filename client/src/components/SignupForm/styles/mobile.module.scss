@@ -37,3 +37,22 @@
       @include font(700, 18px, 20px, 0);
       color: $primary-green;
     }
+
+.invalid {
+  :global(.select__control) {
+    @include invalidInput();
+  }
+}
+
+.valid {
+  :global(.select__control) {
+    @include validInput();
+  }
+}
+
+.feedbackContainer {
+  width: 100%;
+  margin-top: 0.25rem;
+  font-size: 0.875em;
+  color: $primary-error;
+}

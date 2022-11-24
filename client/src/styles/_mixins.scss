@@ -17,3 +17,17 @@
     line-height: 28px;
   }
 }
+
+@mixin invalidInput {
+  border-color: $primary-error !important;
+  &:hover {
+    box-shadow: 0 0 0 1px $primary-error !important;
+  }
+}
+
+@mixin validInput {
+  border-color: $primary-valid !important;
+  &:hover {
+    box-shadow: 0 0 0 1px $primary-green !important;
+  }
+}
