@@ -153,6 +153,25 @@ const getProvincesFacets = async () => {
 	}
 };
 
+const getMunicipalitiesFacets = async (provinceId) => {
+	let err = new Error();
+	const response = await fetch(new URL(`municipalities/${provinceId}`, APIURL));
+	if (response.ok) {
+		const municipalitiesJson = await response.json();
+		const municipalities = municipalitiesJson?.map((municipality) => ({
+			id: municipality.id_municipality,
+			value: municipality.name,
+			label: municipality.name
+		}));
+		return municipalities;
+	} else {
+		if (response.status === 500) {
+			err.message = '500 INTERNAL SERVER ERROR';
+			throw err;
+		}
+	}
+};
+
 const API = {
 	logIn,
 	logOut,
@@ -162,6 +181,7 @@ const API = {
 	createNewHike,
 	getAllHikes,
 	getProvincesFacets,
+	getMunicipalitiesFacets,
 	getUserInfo
 };
 

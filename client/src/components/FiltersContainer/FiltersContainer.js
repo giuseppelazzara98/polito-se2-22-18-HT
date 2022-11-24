@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ReactDom from "react-dom";
 import styles from "./index.module.scss";
-import { useMediaQuery }  from "react-responsive";
+import { useMediaQuery } from "react-responsive";
 import { maxBreakpoints } from "../../helpers/configs";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter, faXmark } from '@fortawesome/free-solid-svg-icons';
@@ -22,7 +22,7 @@ function FilterModal(props) {
         <div className={styles.header}>
           <h5 className={styles.modalTitle}>Filters</h5>
           <button className={styles.closeButton} onClick={() => setModalOpen(false)}>
-            <FontAwesomeIcon icon={faXmark}/>
+            <FontAwesomeIcon icon={faXmark} />
           </button>
         </div>
         <div className={styles.modalBody}>
@@ -34,14 +34,16 @@ function FilterModal(props) {
 }
 
 export default function FiltersContainer(props) {
-  const {filters, setFilters, facets, provincesFacets} = props;
+  const { filters, setFilters, facets, provincesFacets, municipalitiesFacets, setFetchMunicipalities } = props;
   const [modalOpen, setModalOpen] = useState(false);
   const [currentMinMaxExpectedTime, setCurrentMinMaxExpectedTime] = useState([null, null])
   const [currentMinMaxLength, setCurrentMinMaxLength] = useState([null, null])
   const [currentMinMaxAscent, setCurrentMinMaxAscent] = useState([null, null])
+  const [isMunDisabled, setIsMunDisabled] = useState(true);
   const isMobile = useMediaQuery({ maxWidth: maxBreakpoints.tabletLandscape });
 
   const geograficAreaFacets = provincesFacets;
+  const munFacets = municipalitiesFacets;
 
   const difficultyFacets = [
     {
@@ -69,39 +71,52 @@ export default function FiltersContainer(props) {
 
 
   const addFilter = (key, id) => {
-    setFilters(prevFilters => [...prevFilters, {key: key, id:id}])
+    setFilters(prevFilters => [...prevFilters, { key: key, id: id }])
   }
 
   const removeFilter = (key, id) => {
     let newFilter = filters.filter(prevFilter => {
-      return prevFilter.key !== key || (prevFilter.key === key  && prevFilter.id !== id)
+      return prevFilter.key !== key || (prevFilter.key === key && prevFilter.id !== id)
     })
     setFilters(newFilter)
   }
 
   const removeAndAddFilter = (key, min, max) => {
     let newFilter = filters.filter(prevFilter => prevFilter.key !== key);
-    newFilter.push({key: key, values: [min, max]});
+    newFilter.push({ key: key, values: [min, max] });
     setFilters(newFilter);
   }
 
   const removeAndAddFilterSelect = (key, id) => {
     let newFilter = filters.filter(prevFilter => prevFilter.key !== key);
     if (geograficAreaFacets?.find(geoOption => geoOption.id === id)) {
-      newFilter.push({key: key, id: id});
+      newFilter.push({ key: key, id: id });
     }
     setFilters(newFilter);
   }
 
   const geograficFilters = () => {
     return (
-      <SelectFilter
-        title="Geografic area"
-        name="provinces"
-        facets={geograficAreaFacets}
-        filters={filters}
-        removeAndAddFilter={removeAndAddFilterSelect}
-      />
+      <>
+        <SelectFilter
+          title="Province"
+          name="provinces"
+          isDisabled={false}
+          setIsMunDisabled={setIsMunDisabled}
+          setFetchMunicipalities={setFetchMunicipalities}
+          facets={geograficAreaFacets}
+          filters={filters}
+          removeAndAddFilter={removeAndAddFilterSelect}
+        />
+        <SelectFilter
+          title="Municipality"
+          name="municipalities"
+          isDisabled={isMunDisabled}
+          facets={munFacets}
+          filters={filters}
+          removeAndAddFilter={removeAndAddFilterSelect}
+        />
+      </>
     )
   }
 
@@ -185,7 +200,7 @@ export default function FiltersContainer(props) {
       <div className={styles.wrap}>
         {isMobile && (
           <button className={styles.button} onClick={() => setModalOpen(true)}>
-            Filters <FontAwesomeIcon icon={faFilter}/>
+            Filters <FontAwesomeIcon icon={faFilter} />
           </button>
         )}
         {!isMobile && (
