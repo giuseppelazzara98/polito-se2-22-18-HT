@@ -11,9 +11,9 @@ export default function SelectFilter(props) {
     filters = [],
     isDisabled = false,
     removeAndAddFilter = () => { },
+    inputValue = () => {},
+    setInputValue = () => {}
   } = props;
-
-  const [inputValue, setInputValue] = useState("");
 
   return (
     <>
@@ -26,22 +26,10 @@ export default function SelectFilter(props) {
         isDisabled={isDisabled}
         name={name}
         options={facets}
-        onChange={(val) => {
-          removeAndAddFilter(name, val?.id);
-
-          if (name === "provinces" && val !== null) {
-            props.setIsMunDisabled(false);
-            props.setFetchMunicipalities(true);
-          }
-          else if (name === "provinces" && val === null) {
-            props.setIsMunDisabled(true);
-            removeAndAddFilter("municipalities", val?.id);
-          }
-
-        }}
+        onChange={(val) => removeAndAddFilter(name, val?.id)}
         inputValue={inputValue}
         onInputChange={(newString) => setInputValue(newString)}
-        defaultValue={facets?.filter(facet => facet.id === filters?.filter(filterSelected => filterSelected.key === name)?.[0]?.id)?.[0] || null}
+        value={facets?.filter(facet => facet.id === filters?.filter(filterSelected => filterSelected.key === name)?.[0]?.id)?.[0] || null}
       />
     </>
   )

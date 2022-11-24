@@ -39,9 +39,9 @@ export default function FiltersContainer(props) {
   const [currentMinMaxExpectedTime, setCurrentMinMaxExpectedTime] = useState([null, null])
   const [currentMinMaxLength, setCurrentMinMaxLength] = useState([null, null])
   const [currentMinMaxAscent, setCurrentMinMaxAscent] = useState([null, null])
-  const [isMunDisabled, setIsMunDisabled] = useState(true);
   const isMobile = useMediaQuery({ maxWidth: maxBreakpoints.tabletLandscape });
-
+  const [inputValueProvince, setInputValueProvince] = useState("");
+  const [inputValueMunicipalities, setInputValueMunicipalities] = useState("");
   const geograficAreaFacets = provincesFacets;
   const munFacets = municipalitiesFacets;
 
@@ -90,7 +90,13 @@ export default function FiltersContainer(props) {
   const removeAndAddFilterSelect = (key, id) => {
     let newFilter = filters.filter(prevFilter => prevFilter.key !== key);
     if (geograficAreaFacets?.find(geoOption => geoOption.id === id)) {
+      setFetchMunicipalities(id);
       newFilter.push({ key: key, id: id });
+    } else {
+      if (key === "provinces") {
+        setInputValueMunicipalities("");
+        newFilter = newFilter.filter(filterEl => filterEl.key !== "municipalities");
+      }
     }
     setFilters(newFilter);
   }
@@ -101,20 +107,22 @@ export default function FiltersContainer(props) {
         <SelectFilter
           title="Province"
           name="provinces"
-          isDisabled={false}
-          setIsMunDisabled={setIsMunDisabled}
           setFetchMunicipalities={setFetchMunicipalities}
           facets={geograficAreaFacets}
           filters={filters}
           removeAndAddFilter={removeAndAddFilterSelect}
+          inputValue={inputValueProvince}
+          setInputValue={setInputValueProvince}
         />
         <SelectFilter
           title="Municipality"
           name="municipalities"
-          isDisabled={isMunDisabled}
+          isDisabled={!(filters?.filter((filterEl) => filterEl.key === "provinces")?.length > 0)}
           facets={munFacets}
           filters={filters}
           removeAndAddFilter={removeAndAddFilterSelect}
+          inputValue={inputValueMunicipalities}
+          setInputValue={setInputValueMunicipalities}
         />
       </>
     )

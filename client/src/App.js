@@ -30,7 +30,7 @@ function App2() {
 	const [filters, setFilters] = useState([]);
 	const [facets, setFacets] = useState({});
 	const [provincesFacets, setProvincesFacets] = useState([]);
-	const [fetchMunicipalities, setFetchMunicipalities] = useState(false);
+	const [fetchMunicipalities, setFetchMunicipalities] = useState(0);
 	const [municipalitiesFacets, setMunicipalitiesFacets] = useState([]);
 	const [user, setUser] = useState({});
 	const [updateHikes, setUpdateHikes] = useState(0);
@@ -77,8 +77,6 @@ function App2() {
 			filters.filter((filterEle) => filterEle.key === 'ascent')?.[0]?.values ||
 			[];
 
-		console.log(municipalitiesFilter);
-
 		const newObj = {
 			province: provinceFilter,
 			municipality: municipalitiesFilter,
@@ -120,13 +118,8 @@ function App2() {
 	}, []);
 
 	useEffect(() => {
-		if (fetchMunicipalities === true) {
-			const provinceId =
-				filters
-					.filter((filterEle) => filterEle.key === 'provinces')
-					?.map((ele) => ele.id)?.[0] || "";
-
-			API.getMunicipalitiesFacets(provinceId).then((response) => { setMunicipalitiesFacets(response); setFetchMunicipalities(false); });
+		if (fetchMunicipalities !== 0) {
+			API.getMunicipalitiesFacets(fetchMunicipalities).then((response) => { setMunicipalitiesFacets(response); });
 		}
 	}, [fetchMunicipalities]);
 
