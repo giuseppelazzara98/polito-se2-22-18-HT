@@ -236,6 +236,7 @@ router.get('/hikePoints/:id',
 			const starEndPoints = await hikeDao.getStartEndPoints(id_hike);
 			const startPointId = starEndPoints.id_start_place;
 			const endPointId = starEndPoints.id_end_place;
+			const gpx = starEndPoints.gpx;
 			const referencePoints = await hikeDao.getReferencePoints(id_hike);
 
 			const hikePoints = referencePoints.map((el) => {
@@ -246,7 +247,8 @@ router.get('/hikePoints/:id',
 					latitude: el.latitude,
 					longitude: el.longitude,
 					startPoint: el.id_place === startPointId,
-					endPoint: el.id_place === endPointId
+					endPoint: el.id_place === endPointId,
+					gpx_data : gpx,
 				};
 			});
 

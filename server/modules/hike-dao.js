@@ -274,7 +274,7 @@ class HikeDAO {
 
 	getStartEndPoints = (id_hike) => {
 		return new Promise((resolve, reject) => {
-			const sql = "SELECT id_start_place, id_end_place FROM HIKE H WHERE id_hike = ?";
+			const sql = "SELECT id_start_place, id_end_place, gpx FROM HIKE H WHERE id_hike = ?";
 			this.db.get(sql, [id_hike], function (err, row) {
 				if (err) {
 					console.log('Error running sql: ' + sql);
@@ -285,6 +285,7 @@ class HikeDAO {
 						const starEndPoints = {
 							id_start_place: row.id_start_place,
 							id_end_place: row.id_end_place,
+							gpx: row.gpx
 						};
 						resolve(starEndPoints);
 					} else {
