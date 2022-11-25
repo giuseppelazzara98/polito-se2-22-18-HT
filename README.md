@@ -292,7 +292,7 @@ __Error responses:__ `401 Unauthorized`, `404 Not Found`, `422 Unprocessable Ent
 
 ### Get hike points by hike id:
 
-__URL:__ `/hikePoints/:id`  
+__URL:__ `api/hikePoints/:id`  
 __Method:__ GET  
 __Description:__ Retrieves the detailed list of all points related to a specific hike.  
 __Request body:__ _None_  
