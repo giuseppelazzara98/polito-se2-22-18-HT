@@ -31,6 +31,7 @@ export default function MapSearch(props) {
 		<AsyncSelect
 			defaultValue={props.point.id}
 			className={styles.customSelect}
+			classNamePrefix="select"
 			isClearable={true}
 			cacheOptions
 			defaultOptions

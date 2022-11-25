@@ -1,12 +1,4 @@
-import {
-	Row,
-	Col,
-	Form,
-	Button,
-	Collapse,
-	Container,
-	FloatingLabel
-} from 'react-bootstrap';
+import { Row, Col, Form, Button, Collapse, Container } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 import PointsTable from './PointsTable';
 import Select from 'react-select';
@@ -19,6 +11,13 @@ export default function ReferencePoints(props) {
 	const [points, setPoints] = useState([]);
 	const max = 50000;
 	const min = 1000;
+
+	const pointTypeOptions = [
+		{ label: '-- Select point type --', value: '' },
+		{ label: 'Hut/Parking lot', value: 'Hut/Parking lot' },
+		{ label: 'Address/Name of location', value: 'Address/Name of location' },
+		{ label: 'GPS coordinates', value: 'GPS coordinates' }
+	];
 
 	useEffect(() => {
 		const loadPoints = () => {
@@ -66,31 +65,26 @@ export default function ReferencePoints(props) {
 									<Form.Label className={styles.title}>
 										Select refernce point type
 									</Form.Label>
-									<Form.Select
+									<Select
 										className={styles.customSelect}
-										aria-label="reference point type"
-										value={
+										classNamePrefix="select"
+										defaultValue={
 											props.refPoint.type === ''
 												? undefined
 												: props.refPoint.type
 										}
+										name="reference point type"
+										options={pointTypeOptions}
 										onChange={(event) => {
 											props.setRefPoint({
 												id: '',
-												type: event.target.value,
+												type: event.value,
 												lat: '',
 												lon: '',
 												name: ''
 											});
 										}}
-									>
-										<option value="">-- Select point type --</option>
-										<option value="Hut/Parking lot">Hut/Parking lot</option>
-										<option value="Address/Name of location">
-											Address/Name of location
-										</option>
-										<option value="GPS coordinates">GPS coordinates</option>
-									</Form.Select>
+									/>
 								</Form.Group>
 							</Col>
 							{props.refPoint.type === 'Hut/Parking lot' && (
