@@ -39,6 +39,7 @@ function App2() {
 	const [showAddNewHikeError, setShowAddNewHikeError] = useState(false);
 	const [showRegistrationSuccess, setShowRegistrationSuccess] = useState(false);
 	const [showMapModal,setShowMapModal]=useState(false);
+	const [markers, setMarkers] = useState([]);
 
 	const getHikes = async (dataOnRequest) => {
 		try {
@@ -112,6 +113,12 @@ function App2() {
 		API.getProvincesFacets().then((response) => setProvincesFacets(response));
 	}, []);
 
+	useEffect(() => {
+		if (!showMapModal) {
+			setMarkers([]);
+		}
+	}, [showMapModal]);
+
 	return (
 		<div className="App">
 			<NavbarHead
@@ -135,6 +142,7 @@ function App2() {
 								facets={facets}
 								provincesFacets={provincesFacets}
 								setShowMapModal={setShowMapModal}
+								setMarkers={setMarkers}
 							/>
 						}
 					/>
@@ -203,6 +211,7 @@ function App2() {
 					subtitle={`Registration completed successfully`}
 					icon={faCheckCircle}
 					setShowMapModal={setShowMapModal}
+					markers={markers}
 				/>
 
 				<div id="modal-root" />

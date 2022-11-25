@@ -186,6 +186,19 @@ const getProvincesFacets = async () => {
 	}
 };
 
+const getHikePoints = async (id) => {
+	const response = await fetch(new URL(`hikePoints/${id}`, APIURL), {
+		credentials: 'include',
+	});
+	if (response.ok) {
+		const points = await response.json();
+		return points;
+	} else {
+		const errorPoints = await response.text();
+		throw errorPoints;
+	}
+}
+
 const API = {
 	logIn,
 	logOut,
@@ -197,7 +210,8 @@ const API = {
 	getProvincesFacets,
 	getUserInfo,
 	register,
-	getRoles
+	getRoles,
+	getHikePoints,
 };
 
 export default API;

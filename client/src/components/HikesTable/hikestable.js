@@ -9,6 +9,7 @@ import { formatDuration } from "../../helpers/utility";
 import { CDropdown, CDropdownToggle, CDropdownItem, CDropdownMenu } from '@coreui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMap } from '@fortawesome/free-solid-svg-icons';
+import API from "../../API/api";
 
 function HikesTable(props) {
   const [order, setOrder] = useState("Province (Ascending)");
@@ -38,6 +39,7 @@ function HikesTable(props) {
               hike={hike}
               key={hike.key}
               setShowMapModal={props.setShowMapModal}
+              setMarkers={props.setMarkers}
             />
           ))}
         </div>
@@ -48,6 +50,12 @@ function HikesTable(props) {
 
 function HikeRow(props) {
   const [tab, setTab] = useState(false);
+
+  const handleOpenMapModal = () => {
+    API.getHikePoints(props.hike.key).then(response => {
+      props.setMarkers(response);
+    });
+  }
 
   return (
     <div className={styles.hikeRow}>
@@ -60,6 +68,7 @@ function HikeRow(props) {
             className={styles.button}
             onClick={() => {
               props.setShowMapModal(true);
+              handleOpenMapModal();
             }}
           >
             <FontAwesomeIcon icon={faMap}/>

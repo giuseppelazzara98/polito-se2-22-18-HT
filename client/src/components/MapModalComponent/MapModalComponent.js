@@ -4,9 +4,11 @@ import Modal from 'react-bootstrap/Modal';
 import styles from "./index.module.scss";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import CloseButton from 'react-bootstrap/CloseButton';
+import Map from "../MapComponent/Map";
 
 
 export default function MapModalComponent (props) {
+  const { markers } = props;
   return (
     <Modal
       {...props}                
@@ -22,7 +24,7 @@ export default function MapModalComponent (props) {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-       
+       {markers?.length > 0 && <Map markers={markers}/>}
       </Modal.Body>
     </Modal>
   );
