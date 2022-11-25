@@ -4,7 +4,7 @@ import FiltersContainer from "../components/FiltersContainer/FiltersContainer";
 import { HikesTable } from "../components/HikesTable/hikestable";
 
 export default function HomePage(props) {
-  const {filters, setFilters, facets, provincesFacets, hikes, setHikes} = props;
+  const {filters, setFilters, facets, provincesFacets, hikes, setHikes,setShowMapModal} = props;
   return (
     <Container>
       <Row>
@@ -12,7 +12,7 @@ export default function HomePage(props) {
           <FiltersContainer filters={filters} setFilters={setFilters} facets={facets} provincesFacets={provincesFacets}/>
         </Col>
         <Col xs={12} md={8}>
-          <HikesTable hikes={hikes} setHikes={setHikes}></HikesTable>
+          <HikesTable hikes={hikes} setHikes={setHikes} setShowMapModal={setShowMapModal}></HikesTable>
         </Col>
       </Row>
     </Container>

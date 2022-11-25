@@ -14,6 +14,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import API from './API/api';
 import InfoModalComponent from './components/InfoModalComponent/InfoModalComponent';
+import MapModalComponent from './components/MapModalComponent/MapModalComponent';
 import { faCheckCircle, faXmarkCircle } from '@fortawesome/free-solid-svg-icons';
 
 function App() {
@@ -37,6 +38,7 @@ function App2() {
 	const [showAddNewHikeSuccess, setShowAddNewHikeSuccess] = useState(false);
 	const [showAddNewHikeError, setShowAddNewHikeError] = useState(false);
 	const [showRegistrationSuccess, setShowRegistrationSuccess] = useState(false);
+	const [showMapModal,setShowMapModal]=useState(false);
 
 	const getHikes = async (dataOnRequest) => {
 		try {
@@ -132,6 +134,7 @@ function App2() {
 								setFilters={setFilters}
 								facets={facets}
 								provincesFacets={provincesFacets}
+								setShowMapModal={setShowMapModal}
 							/>
 						}
 					/>
@@ -194,6 +197,14 @@ function App2() {
 					subtitle={`Registration completed successfully`}
 					icon={faCheckCircle}
 				/>
+				<MapModalComponent
+					show={showMapModal}
+					title="Success!"
+					subtitle={`Registration completed successfully`}
+					icon={faCheckCircle}
+					setShowMapModal={setShowMapModal}
+				/>
+
 				<div id="modal-root" />
 			</main>
 		</div>

@@ -14,7 +14,7 @@ import Description from './Description';
 import API from '../../API/api';
 import styles from './index.module.scss';
 import GPXFile from './GPXFile';
-import Map from './Map';
+import Map from '../MapComponent/Map';
 
 export default function NewHikeForm(props) {
 	const { setUpdateHikes, setShowAddNewHikeSuccess, setShowAddNewHikeError } =
