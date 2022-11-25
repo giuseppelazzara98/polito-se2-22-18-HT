@@ -272,18 +272,46 @@ __Description:__ Create a new hike.
 __Request body:__ 
 ```
 {
-	"title":"Test1",
-	"province":1,
-	"length":345,
-	"expectedTimeString":"12h",
-	"expectedTime":12,
-	"ascent":123,
-	"difficulty":2,
-	"startPoint":9,
-	"endPoint":5,
-	"referencePoints":[],
-	"gpxData":"",
-	"description":"Test1"
+  title: "Test1",
+  province: 4,
+  length: 4,
+  expectedTimeString: "56m",
+  expectedTime: 0.93,
+  ascent: 1406,
+  difficulty: 1,
+  startPoint: {
+    type: "Hut/Parking lot",
+    id: 8,
+    name: "Alevè",
+    lon: 21.244,
+    lat: 3.325
+  },
+  endPoint: {
+    type: "Hut/Parking lot",
+    id: 12,
+    name: "Monte d'Oro",
+    lon: 8.474,
+    lat: 21.2475
+  },
+  referencePoints: [
+    {
+      id: 15,
+      name: "Monte Talm",
+      description: "...",
+      lat: 18.364,
+      lon: 13.412,
+      type: "hut"
+    },
+    {
+      type: "Address/Name of location",
+      id: 298324244,
+      name: "Politecnico di Torino, Corso Francesco Ferrucci, Cenisia, Circoscrizione 3, Torino, Piemonte, 10138, Italia",
+      lat: 45.063697399999995,
+      lon: 7.657527285508495
+    }
+  ],
+  gpxData: '[...]',
+  description: "Test1"
 }
 ```
 __Response:__ `201 Created`  
@@ -307,7 +335,8 @@ __Response body:__
         "latitude": 20.811,
         "longitude": 14.32,
         "startPoint": true,
-        "endPoint": false
+        "endPoint": false,
+        "gpx_data": [...]
     },
     {
         "id_place": 2,
@@ -316,7 +345,8 @@ __Response body:__
         "latitude": 25.037,
         "longitude": 34.522,
         "startPoint": false,
-        "endPoint": true
+        "endPoint": true,
+        "gpx_data": [...]
     },
     {
         "id_place": 7,
@@ -325,7 +355,8 @@ __Response body:__
         "latitude": 33.25,
         "longitude": 12.724,
         "startPoint": false,
-        "endPoint": false
+        "endPoint": false,
+        "gpx_data": [...]
     }
 ]
 ```

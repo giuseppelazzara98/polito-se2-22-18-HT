@@ -19,7 +19,7 @@ class PlaceDAO {
 	newPlaceTable = () => {
 		return new Promise((resolve, reject) => {
 
-			const sql = "CREATE TABLE IF NOT EXISTS PLACE(id_place INTEGER NOT NULL, id_province INTEGER, name TEXT, description TEXT, latitude REAL NOT NULL, longitude NUMERIC NOT NULL, type BLOB NOT NULL, PRIMARY KEY(id_place AUTOINCREMENT), FOREIGN KEY(id_province) REFERENCES PROVINCE(id_province));";
+			const sql = "CREATE TABLE IF NOT EXISTS PLACE(id_place INTEGER NOT NULL, id_province INTEGER NOT NULL, id_municipality INTEGER NOT NULL, name TEXT, description TEXT, latitude REAL NOT NULL, longitude NUMERIC NOT NULL, type BLOB NOT NULL, PRIMARY KEY(id_place AUTOINCREMENT), FOREIGN KEY(id_province) REFERENCES PROVINCE(id_province), 	FOREIGN KEY("id_municipality") REFERENCES "MUNICIPALITY"("id_municipality"));";
 			this.db.run(sql, (err) => {
 				if (err) {
 					console.log('Error running sql: ' + sql);
@@ -103,13 +103,13 @@ class PlaceDAO {
 		});
 	};
 
-			/*
-				id: ,
-				name: ,
-				type: ,
-				lat: ,
-				lon: 
-			*/
+	/*
+		id: ,
+		name: ,
+		type: ,
+		lat: ,
+		lon: 
+	*/
 	insertPlace = (referencePoint, idProvince) => {
 		return new Promise((resolve, reject) => {
 			const sql = 'INSERT INTO PLACE (id_province, name, latitude, longitude, type) VALUES (?, ?, ?, ?, ?)';

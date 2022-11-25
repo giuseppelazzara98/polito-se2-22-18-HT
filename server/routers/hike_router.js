@@ -143,32 +143,32 @@ router.post('/newHike',
 		}
 
 		try {
-			
+
 			let idStart = null;
 			let idEnd = null;
 
 			//start point
 			console.log("start type: " + req.body.startPoint.type);
-			if(req.body.startPoint.type == "Hut/Parking lot"){
+			if (req.body.startPoint.type == "Hut/Parking lot") {
 				idStart = req.body.startPoint.id;
 			}
-			else{
+			else {
 				//lo inserisco a db
 				idStart = await placeDao.insertPlace(req.body.startPoint, req.body.province);
 			}
 			console.log("idstart: " + idStart);
 			//end point
 			console.log("end type: " + req.body.endPoint.type);
-			if(req.body.endPoint.type == "Hut/Parking lot"){
+			if (req.body.endPoint.type == "Hut/Parking lot") {
 				idEnd = req.body.endPoint.id;
 			}
-			else{
+			else {
 				//lo inserisco a db
 				idEnd = await placeDao.insertPlace(req.body.endPoint, req.body.province);
 			}
 			console.log("idend: " + idEnd);
 			//result = idhike inserted.
-            //now i can enter the data in hike-place table
+			//now i can enter the data in hike-place table
 			const result = await hikeDao.insertHike(req.body, idStart, idEnd);
 
 			//reference points
@@ -180,11 +180,11 @@ router.post('/newHike',
 
 				let place_ok = null;
 				console.log("ref type: " + referencePoint.type);
-				if(referencePoint.type == "parking lot" || referencePoint.type == "hut" ){
+				if (referencePoint.type == "parking lot" || referencePoint.type == "hut") {
 					place_ok = await placeDao.getPlaceById(referencePoint.id);
 					idReferencePoint = referencePoint.id;
 				}
-				else{
+				else {
 					//lo inserisco a db
 					idReferencePoint = await placeDao.insertPlace(referencePoint, req.body.province);
 					place_ok = "ok";
@@ -248,7 +248,7 @@ router.get('/hikePoints/:id',
 					longitude: el.longitude,
 					startPoint: el.id_place === startPointId,
 					endPoint: el.id_place === endPointId,
-					gpx_data : gpx,
+					gpx_data: gpx,
 				};
 			});
 

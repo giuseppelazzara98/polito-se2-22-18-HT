@@ -71,13 +71,9 @@ describe('TestHikeDao', () => {
         "title": "Test3",
         "province": 1,
         "length": 345,
-        "expectedTimeString": "12h",
         "expectedTime": 12,
         "ascent": 123,
         "difficulty": 2,
-        "startPoint": 9,
-        "endPoint": 5,
-        "referencePoints": [],
         "gpxData": "",
         "description": "Test1"
     };
@@ -86,19 +82,15 @@ describe('TestHikeDao', () => {
         "title": "Test4",
         "province": 2,
         "length": 345,
-        "expectedTimeString": "12h",
         "expectedTime": 12,
         "ascent": 78,
         "difficulty": 1,
-        "startPoint": 9,
-        "endPoint": 5,
-        "referencePoints": [],
         "gpxData": "",
         "description": "Test2"
     };
 
-    testInsertNewHike(bodyNewHike1);
-    testInsertNewHike(bodyNewHike2);
+    testInsertNewHike(bodyNewHike1, 9, 5);
+    testInsertNewHike(bodyNewHike2, 9, 5);
 
     testGetHikeById(1, true);
     testGetHikeById(2, true);
@@ -117,7 +109,7 @@ describe('TestHikeDao', () => {
     testCloseTables();
     testGetFilteredHikes(bodyFilter1, true);
     testInsertHikePlace(4, 3, 3);
-    testInsertNewHike(bodyNewHike1);
+    testInsertNewHike(bodyNewHike1, 9, 5);
     testGetHikeById(1, true);
     testGetStartEndPointsByHikeId(1, true);
     testGetReferencePointsByHikeId(1, true);
@@ -146,10 +138,10 @@ function testGetFilteredHikes(body, expectedResult) {
     });
 }
 
-function testInsertNewHike(body) {
+function testInsertNewHike(hike, id_start, id_end) {
     test('Test insert new hike', async () => {
         try {
-            const result = await testHikeDao.insertHike(body);
+            const result = await testHikeDao.insertHike(hike, id_start, id_end);
 
             expect(result).not.toBeNull();
 

@@ -99,13 +99,13 @@ export default function NewHikeForm(props) {
 			event.stopPropagation();
 		} else {
 			console.log(
-				'🚀 ~ file: NewHikeForm.js ~ line 80 ~ handleSubmit ~ hike',
+				'🚀 ~ file: NewHikeForm.js ~ line 103 ~ handleSubmit ~ hike',
 				hike
 			);
 
-			//addNewHike();
-			//setUpdateHikes((prevstate) => prevstate + 1);
-			//navigate('/');
+			addNewHike();
+			setUpdateHikes((prevstate) => prevstate + 1);
+			navigate('/');
 		}
 		setValidated(true);
 	};
