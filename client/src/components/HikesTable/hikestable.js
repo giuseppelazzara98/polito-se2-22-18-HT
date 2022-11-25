@@ -7,6 +7,8 @@ import { useState } from "react";
 import styles from "./index.module.scss";
 import { formatDuration } from "../../helpers/utility";
 import { CDropdown, CDropdownToggle, CDropdownItem, CDropdownMenu } from '@coreui/react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMap } from '@fortawesome/free-solid-svg-icons';
 
 function HikesTable(props) {
   const [order, setOrder] = useState("Province (Ascending)");
@@ -35,6 +37,7 @@ function HikesTable(props) {
             <HikeRow
               hike={hike}
               key={hike.key}
+              setShowMapModal={props.setShowMapModal}
             />
           ))}
         </div>
@@ -53,6 +56,15 @@ function HikeRow(props) {
         <span>{props.hike.province}</span>
         <span>{getDifficulty(props.hike.difficulty)}</span>
         <div>
+        <Button
+            className={styles.button}
+            onClick={() => {
+              props.setShowMapModal(true);
+            }}
+          >
+            <FontAwesomeIcon icon={faMap}/>
+          </Button>
+        
           <Button
             className={styles.button}
             onClick={() => {
