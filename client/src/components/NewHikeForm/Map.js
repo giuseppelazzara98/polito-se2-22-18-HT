@@ -17,12 +17,12 @@ export default function Map(props) {
 	return (
 		<MapContainer
 			className={styles.mapContainer}
-			center={points[points.length / 2]}
+			center={points?.[parseInt(points?.length / 2)]}
 			zoom={13}
 			scrollWheelZoom={false}
 		>
 			<ChangeView
-				center={points[points.length / 2]}
+				center={points?.[parseInt(points?.length / 2)]}
 				zoom={13}
 			></ChangeView>
 			<TileLayer
