@@ -120,7 +120,7 @@ router.post('/newHike',
 			return res.status(422).json({ error: 'Empty body request' });
 		}
 
-		if (Object.keys(req.body).length !== 12 || !(req.body.title && req.body.expectedTimeString && req.body.referencePoints && req.body.gpxData && req.body.description)) {
+		if (Object.keys(req.body).length !== 12) {
 			console.log('Data not formatted properly!');
 			return res.status(422).json({ error: 'Data not formatted properly' });
 		}
@@ -159,44 +159,54 @@ router.post('/newHike',
 			return res.status(503).json({ error: 'Service Unavailable' });
 		}
 	});
-	router.get(
-		'/hikePoints/:id',
-		isLoggedIn,
-		[check('id').notEmpty().isNumeric().isInt({ min: 1 })],
-		async (req, res) => {
-			const errors = validationResult(req);
-	
-			if (!errors.isEmpty()) {
-				console.log('Validation of provinceId failed!');
-				return res.status(422).json({ errors: errors.array() });
-			}
-	
-			if (!req.params) {
-				console.log('Error in request parameters!');
-				return res.status(422).json({ error: 'Error in request parameters' });
-			}
-	
-			try {
-				const id_hike = req.params.id;
-				const starEndPoints = await hikeDao.getStartEndPoints(id_hike);
-				const startPointId = starEndPoints.id_start_place;
-				const endPointId = starEndPoints.id_end_place;
-				const referencePoints = await hikeDao.getReferencePoints(id_hike);
-				const hikePoints  = referencePoints.map((el) => {
-					return {
-						id_place: el.id_place,
-						name: el.name,
-						description: el.description,
-						latitude: el.latitude,
-						longitude: el.longitude,
-						startPoint : el.id_place === startPointId,
-						endPoint : el.id_place === endPointId
-					};
-				});
-				res.status(200).json(hikePoints);
-			} catch (err) {
-				res.status(500).json({ error: 'Internal Server Error' });
-			}
+
+//GET /api/hikePoints/:id
+router.get('/hikePoints/:id',
+	isLoggedIn,
+	[check('id').notEmpty().isNumeric().isInt({ min: 1 })],
+	async (req, res) => {
+		const errors = validationResult(req);
+
+		if (!errors.isEmpty()) {
+			console.log('Validation of provinceId failed!');
+			return res.status(422).json({ errors: errors.array() });
 		}
-	);
+
+		if (!req.params) {
+			console.log('Error in request parameters!');
+			return res.status(422).json({ error: 'Error in request parameters' });
+		}
+
+		try {
+			const id_hike = req.params.id;
+
+			const hike = await hikeDao.getHikeById(id_hike);
+
+			if (hike === null) {
+				return res.status(404).json({ error: 'Not Found' });
+			}
+
+			const starEndPoints = await hikeDao.getStartEndPoints(id_hike);
+			const startPointId = starEndPoints.id_start_place;
+			const endPointId = starEndPoints.id_end_place;
+			const referencePoints = await hikeDao.getReferencePoints(id_hike);
+
+			const hikePoints = referencePoints.map((el) => {
+				return {
+					id_place: el.id_place,
+					name: el.name,
+					description: el.description,
+					latitude: el.latitude,
+					longitude: el.longitude,
+					startPoint: el.id_place === startPointId,
+					endPoint: el.id_place === endPointId
+				};
+			});
+
+			res.status(200).json(hikePoints);
+		} catch (err) {
+			res.status(500).json({ error: 'Internal Server Error' });
+		}
+	}
+);
 module.exports = router;

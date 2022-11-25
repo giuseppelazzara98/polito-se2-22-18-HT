@@ -4,7 +4,7 @@ chai.use(chaiHttp);
 chai.should();
 
 const app = require('../server');
-var agent = chai.request.agent(app);
+let agent = chai.request.agent(app);
 
 describe('Test user apis', () => {
 
@@ -19,13 +19,13 @@ describe('Test user apis', () => {
 	logIn(null, null, 401);
 
 	//Registration tests
-	newUser('guide5@gmail.com', 'Paolo','Bosco', 'password', 2, 201);
-	newUser('hiker5@gmail.com', 'Giuseppe','Rossi', 'password', 1, 201);
-	newUser('hiker5@gmail.com', 'Giuseppe','Rossi', 'password', 1, 409);
-	newUser('guide5@gmail.com', 'Paolo','Bosco', 'password', 5, 422);
-	newUser('guide5gmail.com', 'Paolo','Bosco', 'password', 2, 422);
-	newUser('guide5@gmail.com', 'Paolosadasdasldkjalskdjlkasjdlkajsdlkjadlkjasldkjal','Bosco', 'password', 2, 422);
-	newUser('guide5@gmail.com', 'Paolo','Boscosadasdasldkjalskdjlkasjdlkajsdlkjadlkjasldkjal', 'password', 2, 422);
+	newUser('guide50000@gmail.com', 'Paolo', 'Bosco', 'password', 2, 201);
+	newUser('hiker50000@gmail.com', 'Giuseppe', 'Rossi', 'password', 1, 201);
+	newUser('hiker50000@gmail.com', 'Giuseppe', 'Rossi', 'password', 1, 409);
+	newUser('guide50000@gmail.com', 'Paolo', 'Bosco', 'password', 5, 422);
+	newUser('guide50000gmail.com', 'Paolo', 'Bosco', 'password', 2, 422);
+	newUser('guide50000@gmail.com', 'Paolosadasdasldkjalskdjlkasjdlkajsdlkjadlkjasldkjal', 'Bosco', 'password', 2, 422);
+	newUser('guide50000@gmail.com', 'Paolo', 'Boscosadasdasldkjalskdjlkasjdlkajsdlkjadlkjasldkjal', 'password', 2, 422);
 
 	//Get roles tests
 	getAllRoles(200);

@@ -55,7 +55,7 @@ router.get(
 		try {
 			const place = await placeDao.getPlaceById(req.params.placeId);
 
-			if(place === null) {
+			if (place === null) {
 				res.status(404).json({ error: 'Not found' });
 			}
 

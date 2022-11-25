@@ -194,6 +194,29 @@ class HikeDAO {
 		});
 	};
 
+	getHikeById = (id_hike) => {
+		return new Promise((resolve, reject) => {
+			const sql = "SELECT * FROM HIKE WHERE id_hike = ?;";
+			this.db.get(sql, [id_hike], function (err, row) {
+				if (err) {
+					console.log('Error running sql: ' + sql);
+					console.log(err);
+					reject(err);
+				} else {
+					if (row !== undefined) {
+						const hike = {
+							name: row.name,
+							key: row.id_hike
+						}
+						resolve(hike);
+					} else {
+						resolve(null);
+					}
+				}
+			});
+		});
+	};
+
 	/* --------------------------------------------- TABLE HIKE_PLACE --------------------------------------------- */
 
 	/*
@@ -248,10 +271,11 @@ class HikeDAO {
 			});
 		});
 	};
+
 	getStartEndPoints = (id_hike) => {
 		return new Promise((resolve, reject) => {
 			const sql = "SELECT id_start_place, id_end_place FROM HIKE H WHERE id_hike = ?";
-			this.db.get(sql, [id_hike], function (err,row) {
+			this.db.get(sql, [id_hike], function (err, row) {
 				if (err) {
 					console.log('Error running sql: ' + sql);
 					console.log(err);
@@ -270,36 +294,30 @@ class HikeDAO {
 			});
 		});
 	};
+
 	getReferencePoints = (id_hike) => {
 		return new Promise((resolve, reject) => {
 			const sql = "SELECT P.id_place, P.name, P.description, P.latitude, P.longitude  FROM HIKE H,  HIKE_PLACE HP, PLACE P WHERE H.id_hike = ? AND H.id_hike = HP.id_hike AND P.id_place = HP.id_place ";
-			this.db.all(sql, [id_hike], function (err,rows) {
+			this.db.all(sql, [id_hike], function (err, rows) {
 				if (err) {
 					console.log('Error running sql: ' + sql);
 					console.log(err);
 					reject(err);
 				} else {
-					if (rows !== undefined) {
-						const referencePoints = rows.map((el) => {
-							return {
-								id_place: el.id_place,
-								name: el.name,
-								description: el.description,
-								latitude: el.latitude,
-								longitude: el.longitude,
-							};
-						});
-						resolve(referencePoints);
-					} else {
-						resolve(null);
-					}
+					const referencePoints = rows.map((el) => {
+						return {
+							id_place: el.id_place,
+							name: el.name,
+							description: el.description,
+							latitude: el.latitude,
+							longitude: el.longitude,
+						};
+					});
+					resolve(referencePoints);
 				}
 			});
 		});
 	};
 }
-
-
-
 
 module.exports = HikeDAO;
