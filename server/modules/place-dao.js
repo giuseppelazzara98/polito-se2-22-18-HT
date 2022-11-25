@@ -102,6 +102,31 @@ class PlaceDAO {
 			});
 		});
 	};
+
+			/*
+				id: ,
+				name: ,
+				type: ,
+				lat: ,
+				lon: 
+			*/
+	insertPlace = (referencePoint, idProvince) => {
+		return new Promise((resolve, reject) => {
+			const sql = 'INSERT INTO PLACE (id_province, name, latitude, longitude, type) VALUES (?, ?, ?, ?, ?)';
+
+			this.db.run(sql, [idProvince, referencePoint.name, referencePoint.lat, referencePoint.lon, referencePoint.type], function (err) {
+				if (err) {
+					console.log('Error running sql: ' + sql);
+					console.log(err);
+					reject(err);
+				} else {
+					resolve(this.lastID); //returns the entered ID
+				}
+			});
+		});
+	};
+
+
 }
 
 module.exports = PlaceDAO;

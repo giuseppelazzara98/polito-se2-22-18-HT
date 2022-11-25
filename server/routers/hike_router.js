@@ -81,8 +81,8 @@ router.post('/hikes',
 		}
 	});
 
-/*
-	{
+/*			HIKE
+	{	
 		"title":"Test1",
 		"province":1,
 		"length":345,
@@ -98,6 +98,16 @@ router.post('/hikes',
 	}
 */
 
+/*			POINT
+			{
+				id: ,
+				name: ,
+				type: ,
+				lat: ,
+				lon: 
+			}
+			*/
+
 //POST /api/newHike
 router.post('/newHike',
 	isLoggedIn,
@@ -108,8 +118,8 @@ router.post('/newHike',
 	body('expectedTime').isFloat({ min: 0.0 }),
 	body('ascent').isInt({ min: 0 }),
 	body('difficulty').isInt({ min: 0, max: 2 }),
-	body('startPoint').notEmpty().isInt({ min: 1 }),
-	body('endPoint').notEmpty().isInt({ min: 1 }),
+	body('startPoint').notEmpty(),
+	body('endPoint').notEmpty(),
 	body('referencePoints').isArray(),
 	body('gpxData').isString(),
 	body('description').isString().isLength({ max: 1000 }),
@@ -133,25 +143,62 @@ router.post('/newHike',
 		}
 
 		try {
+			
+			let idStart = null;
+			let idEnd = null;
 
+			//start point
+			console.log("start type: " + req.body.startPoint.type);
+			if(req.body.startPoint.type == "Hut/Parking lot"){
+				idStart = req.body.startPoint.id;
+			}
+			else{
+				//lo inserisco a db
+				idStart = await placeDao.insertPlace(req.body.startPoint, req.body.province);
+			}
+			console.log("idstart: " + idStart);
+			//end point
+			console.log("end type: " + req.body.endPoint.type);
+			if(req.body.endPoint.type == "Hut/Parking lot"){
+				idEnd = req.body.endPoint.id;
+			}
+			else{
+				//lo inserisco a db
+				idEnd = await placeDao.insertPlace(req.body.endPoint, req.body.province);
+			}
+			console.log("idend: " + idEnd);
+			//result = idhike inserted.
+            //now i can enter the data in hike-place table
+			const result = await hikeDao.insertHike(req.body, idStart, idEnd);
 
+			//reference points
 			// insert in hike-place table, cycling on reference points
 			for (let i = 0; i < req.body.referencePoints.length; i++) {
 
 				let referencePoint = req.body.referencePoints[i];
+				let idReferencePoint = null;
 
-				let place_ok = await placeDao.getPlaceById(referencePoint);
+				let place_ok = null;
+				console.log("ref type: " + referencePoint.type);
+				if(referencePoint.type == "parking lot" || referencePoint.type == "hut" ){
+					place_ok = await placeDao.getPlaceById(referencePoint.id);
+					idReferencePoint = referencePoint.id;
+				}
+				else{
+					//lo inserisco a db
+					idReferencePoint = await placeDao.insertPlace(referencePoint, req.body.province);
+					place_ok = "ok";
+				}
+				console.log("idreferencepoint: " + idReferencePoint);
 
 				if (place_ok !== null) {
-					await hikeDao.insertHikePlace(result, referencePoint, i + 1);
+					await hikeDao.insertHikePlace(result, idReferencePoint);
 				}
 				else {
 					console.log("Place not found!");
 					return res.status(404).json({ error: 'Not Found' });
 				}
 			}
-
-			const result = await hikeDao.insertHike(req.body);
 
 			return res.status(201).json(result);
 		} catch (err) {

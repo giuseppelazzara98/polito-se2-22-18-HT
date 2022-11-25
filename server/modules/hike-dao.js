@@ -162,7 +162,7 @@ class HikeDAO {
 		});
 	};
 
-	insertHike = (hike) => {
+	insertHike = (hike, idStart, idEnd) => {
 		return new Promise((resolve, reject) => {
 			const sql =
 				'INSERT INTO HIKE (name, id_start_place, id_end_place, id_province, description, length, expected_time, ascent, difficulty, gpx) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
@@ -171,8 +171,8 @@ class HikeDAO {
 				sql,
 				[
 					hike.title,
-					hike.startPoint,
-					hike.endPoint,
+					idStart,
+					idEnd,
 					hike.province,
 					hike.description,
 					hike.length,
@@ -187,7 +187,7 @@ class HikeDAO {
 						console.log(err);
 						reject(err);
 					} else {
-						resolve(this.lastID); //faccio tornare il l'id inserito
+						resolve(this.lastID); //returns the entered ID
 					}
 				}
 			);
@@ -255,12 +255,12 @@ class HikeDAO {
 
 	*/
 
-	insertHikePlace = (id_hike, id_reference_point, sort) => {
+	insertHikePlace = (id_hike, id_reference_point) => {
 		return new Promise((resolve, reject) => {
 			const sql =
-				'INSERT INTO HIKE_PLACE (id_hike, id_place, sort) VALUES (?, ?, ?)';
+				'INSERT INTO HIKE_PLACE (id_hike, id_place) VALUES (?, ?)';
 
-			this.db.run(sql, [id_hike, id_reference_point, sort], function (err) {
+			this.db.run(sql, [id_hike, id_reference_point], function (err) {
 				if (err) {
 					console.log('Error running sql: ' + sql);
 					console.log(err);
