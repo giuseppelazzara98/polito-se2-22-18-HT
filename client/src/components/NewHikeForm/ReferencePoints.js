@@ -17,6 +17,8 @@ import MapSearch from './MapSearch';
 export default function ReferencePoints(props) {
 	const [open, setOpen] = useState(false);
 	const [points, setPoints] = useState([]);
+	const max = 50000;
+	const min = 1000;
 
 	useEffect(() => {
 		const loadPoints = () => {
@@ -77,7 +79,7 @@ export default function ReferencePoints(props) {
 												id: '',
 												type: event.target.value,
 												lat: '',
-												lng: '',
+												lon: '',
 												name: ''
 											});
 										}}
@@ -109,7 +111,7 @@ export default function ReferencePoints(props) {
 													type: props.refPoint.type,
 													id: event.value,
 													name: event.label,
-													lng: event.lng,
+													lon: event.lon,
 													lat: event.lat
 												});
 											}}
@@ -139,18 +141,25 @@ export default function ReferencePoints(props) {
 											</Form.Label>
 											<Form.Control
 												type="number"
-												value={props.refPoint.lng}
+												value={props.refPoint.lon}
 												placeholder="Longitude"
 												onChange={(event) => {
 													props.setRefPoint({
 														type: props.refPoint.type,
-														id: props.refPoint.id,
+														id:
+															props.refPoint.id === undefined ||
+															props.refPoint.id === ''
+																? Math.floor(Math.random() * (max - min) + min)
+																: props.refPoint.id,
 														name: props.refPoint.name,
-														lng: event.target.value,
+														lon: event.target.value,
 														lat: props.refPoint.lat
 													});
 												}}
 												required={props.refPoint.type === 'GPS coordinates'}
+												min={-180}
+												max={180}
+												step={0.0001}
 											/>
 											<Form.Control.Feedback type="invalid">
 												Please insert a valid Longitude
@@ -167,13 +176,20 @@ export default function ReferencePoints(props) {
 												onChange={(event) => {
 													props.setRefPoint({
 														type: props.refPoint.type,
-														id: props.refPoint.id,
+														id:
+															props.refPoint.id === undefined ||
+															props.refPoint.id === ''
+																? Math.floor(Math.random() * (max - min) + min)
+																: props.refPoint.id,
 														name: props.refPoint.name,
 														lat: event.target.value,
-														lng: props.refPoint.lng
+														lon: props.refPoint.lon
 													});
 												}}
 												required={props.refPoint.type === 'GPS coordinates'}
+												min={-90}
+												max={90}
+												step={0.0001}
 											/>
 											<Form.Control.Feedback type="invalid">
 												Please insert a valid Latitude

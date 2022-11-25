@@ -26,10 +26,10 @@ function testGetAllProvinces(result) {
 
 function testCloseProvinceTable() {
     test('close province table', async () => {
-        try{
+        try {
             await testProvinceDao.closeProvinceTable();
         }
-        catch(err) {
+        catch (err) {
             console.log("---- Error on TestCloseProvinceTable ----");
         }
     });

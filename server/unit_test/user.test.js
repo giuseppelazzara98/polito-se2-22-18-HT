@@ -31,7 +31,7 @@ function testGetUserById(id_user, expextedResult) {
 
             const user = await testUserDao.getUserById(id_user);
 
-            if(expextedResult === true) {
+            if (expextedResult === true) {
                 expect(user).not.toBeNull();
             }
             else {
@@ -53,7 +53,7 @@ function testGetUser(id, name, surname, role, email, password, expectedResult) {
 
             expect(user).not.toBeNull();
 
-            if(expectedResult === true) {
+            if (expectedResult === true) {
                 expect(user.id).toBe(id);
                 expect(user.username).toBe(email);
                 expect(user.name).toBe(name);
@@ -107,10 +107,10 @@ function testGetAllRoles() {
 
 function testCloseTables() {
     test('Close tables', async () => {
-        try{
+        try {
             await testUserDao.closeTables();
         }
-        catch(err) {
+        catch (err) {
             console.log("---- Error on TestCloseUserTable ----");
         }
     });

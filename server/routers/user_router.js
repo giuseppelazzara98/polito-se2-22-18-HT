@@ -80,7 +80,7 @@ router.post('/newUser',
 			return res.status(422).json({ error: 'Empty body request' });
 		}
 
-		if (Object.keys(req.body).length !== 5 || !(req.body.email && req.body.name && req.body.surname && req.body.password)) {
+		if (Object.keys(req.body).length !== 5) {
 			console.log('Data not formatted properly!');
 			return res.status(422).json({ error: 'Data not formatted properly' });
 		}
@@ -119,7 +119,7 @@ router.post('/newUser',
 				// success, perform the login
 				req.login(user, (err) => {
 					if (err) return next(err);
-		
+
 					// req.user contains the authenticated user, we send all the user info back
 					// this is coming from userDao.getUser()
 					return res.status(201).json(req.user);
@@ -134,12 +134,12 @@ router.post('/newUser',
 
 //GET /api/roles
 router.get('/roles', async (req, res) => {
-    try {
-        const roles = await userDao.getAllRoles();
-        res.status(200).json(roles);
-    } catch (err) {
-        res.status(500).json({ error: "Internal Server Error" });
-    }
+	try {
+		const roles = await userDao.getAllRoles();
+		res.status(200).json(roles);
+	} catch (err) {
+		res.status(500).json({ error: "Internal Server Error" });
+	}
 }
 );
 

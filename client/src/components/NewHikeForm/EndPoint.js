@@ -6,8 +6,30 @@ import styles from './index.module.scss';
 import MapSearch from './MapSearch';
 
 export default function EndPoint(props) {
+	const { validated, endPoint } = props;
 	const [points, setPoints] = useState([]);
 	const [isDisabled, setIsDisabled] = useState(false);
+	const max = 50000;
+	const min = 1000;
+
+	const optionEndPoint = [
+		{
+			value: '',
+			label: '-- Select point type --'
+		},
+		{
+			value: 'Hut/Parking lot',
+			label: 'Hut/Parking lot'
+		},
+		{
+			value: 'Address/Name of location',
+			label: 'Address/Name of location'
+		},
+		{
+			value: 'GPS coordinates',
+			label: 'GPS coordinates'
+		}
+	];
 
 	useEffect(() => {
 		const loadPoints = () => {
@@ -41,33 +63,42 @@ export default function EndPoint(props) {
 						<Row>
 							<Col>
 								<Form.Label className={styles.title}>End point</Form.Label>
-								<Form.Select
-									className={styles.customSelect}
-									aria-label="End point type"
-									value={
-										props.endPoint.type === '' ? undefined : props.endPoint.type
-									}
+								<Select
+									className={`${styles.customSelect} ${
+										validated &&
+										(endPoint?.type === '' ||
+											Object.keys(endPoint).length === 0) &&
+										styles.invalid
+									} ${
+										validated &&
+										Object.keys(endPoint).length > 0 &&
+										endPoint.type !== '' &&
+										styles.valid
+									}`}
+									classNamePrefix="select"
+									defaultValue={props?.endPoint?.value}
+									placeholder="-- Select point type --"
 									onChange={(event) => {
 										props.setEndPoint({
-											type: event.target.value,
+											type: event.value,
 											lat: '',
 											lon: '',
 											name: ''
 										});
 									}}
-									disabled={isDisabled}
+									isDisabled={isDisabled}
+									options={optionEndPoint}
 									required
-								>
-									<option value="">-- Select point type --</option>
-									<option value="Hut/Parking lot">Hut/Parking lot</option>
-									<option value="Address/Name of location">
-										Address/Name of location
-									</option>
-									<option value="GPS coordinates">GPS coordinates</option>
-								</Form.Select>
-								<Form.Control.Feedback type="invalid">
-									Please select a valid type
-								</Form.Control.Feedback>
+								></Select>
+								{validated &&
+									(endPoint?.type === '' ||
+										Object.keys(endPoint).length === 0) && (
+										<div className={styles.feedbackContainer}>
+											<span className={styles.feedback}>
+												Please select a valid type
+											</span>
+										</div>
+									)}
 							</Col>
 						</Row>
 					</Form.Group>
@@ -79,8 +110,22 @@ export default function EndPoint(props) {
 						<Form.Group>
 							<Form.Label className={styles.title}>Select a point</Form.Label>
 							<Select
-								className={styles.customSelect}
+								className={`${styles.customSelect} ${
+									validated &&
+									(endPoint?.type === '' ||
+										Object.keys(endPoint).length === 0 ||
+										(endPoint.type === 'Hut/Parking lot' &&
+											(endPoint.lat === '' || endPoint.lng === ''))) &&
+									styles.invalid
+								} ${
+									validated &&
+									Object.keys(endPoint).length > 0 &&
+									endPoint.type === 'Hut/Parking lot' &&
+									(endPoint.lat !== '' || endPoint.lng !== '') &&
+									styles.valid
+								}`}
 								classNamePrefix="select"
+								placeholder="Select a point"
 								defaultValue={props.endPoint.id}
 								name="endPoint"
 								isSearchable={true}
@@ -96,6 +141,17 @@ export default function EndPoint(props) {
 									});
 								}}
 							/>
+							{validated &&
+								(endPoint?.type === '' ||
+									Object.keys(endPoint).length === 0 ||
+									(endPoint.type === 'Hut/Parking lot' &&
+										(endPoint.lat === '' || endPoint.lng === ''))) && (
+									<div className={styles.feedbackContainer}>
+										<span className={styles.feedback}>
+											Please select a valid point
+										</span>
+									</div>
+								)}
 						</Form.Group>
 					</Col>
 				)}
@@ -121,13 +177,19 @@ export default function EndPoint(props) {
 									onChange={(event) => {
 										props.setEndPoint({
 											type: props.endPoint.type,
-											id: props.endPoint.id,
+											id:
+												props.endPoint.id === undefined
+													? Math.floor(Math.random() * (max - min) + min)
+													: props.endPoint.id,
 											name: props.endPoint.name,
 											lon: event.target.value,
 											lat: props.endPoint.lat
 										});
 									}}
 									required={props.endPoint.type === 'GPS coordinates'}
+									min={-180}
+									max={180}
+									step={0.0001}
 								/>
 								<Form.Control.Feedback type="invalid">
 									Please insert a valid Longitude
@@ -144,13 +206,19 @@ export default function EndPoint(props) {
 									onChange={(event) => {
 										props.setEndPoint({
 											type: props.endPoint.type,
-											id: props.endPoint.id,
+											id:
+												props.endPoint.id === undefined
+													? Math.floor(Math.random() * (max - min) + min)
+													: props.endPoint.id,
 											name: props.endPoint.name,
 											lat: event.target.value,
 											lon: props.endPoint.lon
 										});
 									}}
 									required={props.endPoint.type === 'GPS coordinates'}
+									min={-90}
+									max={90}
+									step={0.0001}
 								/>
 								<Form.Control.Feedback type="invalid">
 									Please insert a valid Latitude

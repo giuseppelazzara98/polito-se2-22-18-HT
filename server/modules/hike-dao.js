@@ -23,7 +23,7 @@ class HikeDAO {
 	newHikeTable = () => {
 		return new Promise((resolve, reject) => {
 
-			const sql = "CREATE TABLE IF NOT EXISTS HIKE(id_hike INTEGER NOT NULL, name TEXT, id_start_place INTEGER NOT NULL, id_end_place INTEGER NOT NULL, id_province INTEGER, description TEXT, length REAL, expected_time REAL, ascent INTEGER, difficulty INTEGER, FOREIGN KEY(id_end_place) REFERENCES PLACE(id_place), FOREIGN KEY(id_start_place) REFERENCES PLACE(id_place), FOREIGN KEY(id_province) REFERENCES PROVINCE(id_province), PRIMARY KEY(id_hike AUTOINCREMENT));";
+			const sql = "CREATE TABLE IF NOT EXISTS HIKE(id_hike INTEGER NOT NULL, name TEXT, id_start_place INTEGER NOT NULL, id_end_place INTEGER NOT NULL, id_province INTEGER, description TEXT, length REAL, expected_time REAL, ascent INTEGER, difficulty INTEGER, gpx TEXT, FOREIGN KEY(id_end_place) REFERENCES PLACE(id_place), FOREIGN KEY(id_start_place) REFERENCES PLACE(id_place), FOREIGN KEY(id_province) REFERENCES PROVINCE(id_province), PRIMARY KEY(id_hike AUTOINCREMENT));";
 			this.db.run(sql, (err) => {
 				if (err) {
 					console.log('Error running sql: ' + sql);
@@ -75,7 +75,8 @@ class HikeDAO {
 				'HIKE.length',
 				'HIKE.expected_time',
 				'HIKE.ascent',
-				'HIKE.difficulty'
+				'HIKE.difficulty',
+				'HIKE.gpx'
 			)
 			.from('HIKE')
 			.join('PLACE as P1', { 'P1.id_place': 'HIKE.id_start_place' })
@@ -118,11 +119,12 @@ class HikeDAO {
 						description: el.description,
 						start_place: el.START_PLACE,
 						end_place: el.END_PLACE,
+						province: el.PROVINCE,
 						length: el.length,
 						expected_time: el.expected_time,
 						ascent: el.ascent,
 						difficulty: el.difficulty,
-						geographical_area: el.geographical_area,
+						gpx: el.gpx
 					}
 				});
 				resolve(hikes);
@@ -151,7 +153,7 @@ class HikeDAO {
 							expected_time: el.expected_time,
 							ascent: el.ascent,
 							difficulty: el.difficulty,
-							geographical_area: el.geographical_area
+							gpx: el.gpx
 						};
 					});
 					resolve(hikes);
@@ -163,22 +165,7 @@ class HikeDAO {
 	insertHike = (hike) => {
 		return new Promise((resolve, reject) => {
 			const sql =
-				'INSERT INTO HIKE (name, id_start_place, id_end_place, id_province, description, length, expected_time, ascent, difficulty) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
-
-			/*
-			title: title,
-			province: province,
-			length: length,
-			expectedTime: expectedTime,
-			ascent: ascent,
-			difficulty: difficulty,
-			startPoint: startPoint,
-			endPoint: endPoint,
-			referencePoints: referencePoints,
-			gpxFile: gpxFile,
-			description: description,
-			refPoint: refPoint
-			*/
+				'INSERT INTO HIKE (name, id_start_place, id_end_place, id_province, description, length, expected_time, ascent, difficulty, gpx) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
 
 			this.db.run(
 				sql,
@@ -191,7 +178,8 @@ class HikeDAO {
 					hike.length,
 					hike.expectedTime,
 					hike.ascent,
-					hike.difficulty
+					hike.difficulty,
+					hike.gpxData
 				],
 				function (err) {
 					if (err) {
@@ -203,6 +191,29 @@ class HikeDAO {
 					}
 				}
 			);
+		});
+	};
+
+	getHikeById = (id_hike) => {
+		return new Promise((resolve, reject) => {
+			const sql = "SELECT * FROM HIKE WHERE id_hike = ?;";
+			this.db.get(sql, [id_hike], function (err, row) {
+				if (err) {
+					console.log('Error running sql: ' + sql);
+					console.log(err);
+					reject(err);
+				} else {
+					if (row !== undefined) {
+						const hike = {
+							name: row.name,
+							key: row.id_hike
+						}
+						resolve(hike);
+					} else {
+						resolve(null);
+					}
+				}
+			});
 		});
 	};
 
@@ -256,6 +267,53 @@ class HikeDAO {
 					reject(err);
 				} else {
 					resolve(true);
+				}
+			});
+		});
+	};
+
+	getStartEndPoints = (id_hike) => {
+		return new Promise((resolve, reject) => {
+			const sql = "SELECT id_start_place, id_end_place FROM HIKE H WHERE id_hike = ?";
+			this.db.get(sql, [id_hike], function (err, row) {
+				if (err) {
+					console.log('Error running sql: ' + sql);
+					console.log(err);
+					reject(err);
+				} else {
+					if (row !== undefined) {
+						const starEndPoints = {
+							id_start_place: row.id_start_place,
+							id_end_place: row.id_end_place,
+						};
+						resolve(starEndPoints);
+					} else {
+						resolve(null);
+					}
+				}
+			});
+		});
+	};
+
+	getReferencePoints = (id_hike) => {
+		return new Promise((resolve, reject) => {
+			const sql = "SELECT P.id_place, P.name, P.description, P.latitude, P.longitude  FROM HIKE H,  HIKE_PLACE HP, PLACE P WHERE H.id_hike = ? AND H.id_hike = HP.id_hike AND P.id_place = HP.id_place ";
+			this.db.all(sql, [id_hike], function (err, rows) {
+				if (err) {
+					console.log('Error running sql: ' + sql);
+					console.log(err);
+					reject(err);
+				} else {
+					const referencePoints = rows.map((el) => {
+						return {
+							id_place: el.id_place,
+							name: el.name,
+							description: el.description,
+							latitude: el.latitude,
+							longitude: el.longitude,
+						};
+					});
+					resolve(referencePoints);
 				}
 			});
 		});

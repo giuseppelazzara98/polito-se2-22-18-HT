@@ -32,11 +32,12 @@ export default function NewHikeForm(props) {
 	const [description, setDescription] = useState('');
 	const [refPoint, setRefPoint] = useState({});
 	const navigate = useNavigate();
-	const [gpxData, setGpxData] = useState({});
+	const [gpxPoints, setGpxPoints] = useState({});
 	const [validated, setValidated] = useState(false);
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
+		let valid = true;
 		const form = event.currentTarget;
 		const hike = {
 			title: title,
@@ -48,9 +49,8 @@ export default function NewHikeForm(props) {
 			difficulty: difficulty,
 			startPoint: startPoint,
 			endPoint: endPoint,
-			referencePoints: [],
-			gpxFile: gpxFile,
-			gpxData: gpxData,
+			referencePoints: referencePoints,
+			gpxData: JSON.stringify(gpxPoints),
 			description: description
 		};
 
@@ -68,9 +68,6 @@ export default function NewHikeForm(props) {
 			}
 		});
 		hike.expectedTime = hours;
-		hike.referencePoints = referencePoints.map((point) => {
-			return point.id_place;
-		});
 		hike.difficulty = parseInt(difficulty, 10);
 		hike.ascent = parseInt(ascent, 10);
 		hike.length = parseInt(length, 10);
@@ -86,7 +83,19 @@ export default function NewHikeForm(props) {
 				);
 		};
 
-		if (form.checkValidity() === false) {
+		if (
+			province === '' ||
+			startPoint.type === '' ||
+			(startPoint.type === 'Hut/Parking lot' &&
+				(startPoint.lat === '' || startPoint.lng === '')) ||
+			endPoint.type === '' ||
+			(endPoint.type === 'Hut/Parking lot' &&
+				(endPoint.lat === '' || endPoint.lng === ''))
+		) {
+			valid = false;
+		}
+
+		if (form.checkValidity() === false || !valid) {
 			event.stopPropagation();
 		} else {
 			console.log(
@@ -115,10 +124,19 @@ export default function NewHikeForm(props) {
 					.then((list) => setReferencePoints(list));
 			}
 		} else if (refPoint.type === 'Address/Name of location') {
-			list = [...referencePoints, refPoint];
-			setReferencePoints(list);
+			if (
+				referencePoints.find((point) => point.id === refPoint.id) === undefined
+			) {
+				list = [...referencePoints, refPoint];
+				setReferencePoints(list);
+			}
 		} else if (refPoint.type === 'GPS coordinates') {
-			//? just user the corrdinates we get from the user and set a random key and name ?
+			if (
+				referencePoints.find((point) => point.id === refPoint.id) === undefined
+			) {
+				list = [...referencePoints, refPoint];
+				setReferencePoints(list);
+			}
 		}
 	};
 
@@ -141,7 +159,11 @@ export default function NewHikeForm(props) {
 				</Col>
 				<Col>
 					{/*Province field*/}
-					<Province province={province} setProvince={setProvince} />
+					<Province
+						province={province}
+						setProvince={setProvince}
+						validated={validated}
+					/>
 				</Col>
 			</Row>
 
@@ -178,6 +200,7 @@ export default function NewHikeForm(props) {
 						startPoint={startPoint}
 						setStartPoint={setStartPoint}
 						province={province}
+						validated={validated}
 					/>
 				</Col>
 				<Col>
@@ -186,6 +209,7 @@ export default function NewHikeForm(props) {
 						endPoint={endPoint}
 						setEndPoint={setEndPoint}
 						province={province}
+						validated={validated}
 					/>
 				</Col>
 			</Row>
@@ -195,11 +219,11 @@ export default function NewHikeForm(props) {
 					<GPXFile
 						gpxFile={gpxFile}
 						setGpxFile={setGpxFile}
-						setGpxData={setGpxData}
+						setGpxPoints={setGpxPoints}
 						setLength={setLength}
 						setAscent={setAscent}
 					/>
-					{gpxData.tracks !== undefined && <Map gpxData={gpxData} />}
+					{gpxPoints?.length > 0 && <Map gpxPoints={gpxPoints} />}
 				</Col>
 			</Row>
 
