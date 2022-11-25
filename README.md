@@ -290,6 +290,47 @@ __Response:__ `201 Created`
 __Response body:__ _None_  
 __Error responses:__ `401 Unauthorized`, `404 Not Found`, `422 Unprocessable Entity`, `503 Service Unavailable`
 
+### Get hike points by hike id:
+
+__URL:__ `api/hikePoints/:id`  
+__Method:__ GET  
+__Description:__ Retrieves the detailed list of all points related to a specific hike.  
+__Request body:__ _None_  
+__Response:__ `200 OK`  
+__Response body:__ 
+```
+[
+    {
+        "id_place": 1,
+        "name": "Parking lot 1",
+        "description": "...",
+        "latitude": 20.811,
+        "longitude": 14.32,
+        "startPoint": true,
+        "endPoint": false
+    },
+    {
+        "id_place": 2,
+        "name": "Parking lot 2",
+        "description": "...",
+        "latitude": 25.037,
+        "longitude": 34.522,
+        "startPoint": false,
+        "endPoint": true
+    },
+    {
+        "id_place": 7,
+        "name": "Alpe Bondolo",
+        "description": "...",
+        "latitude": 33.25,
+        "longitude": 12.724,
+        "startPoint": false,
+        "endPoint": false
+    }
+]
+```
+__Error responses:__ `401 Unauthorized`, `404 Not Found`, `422 Unprocessable Entity`, `500 Internal Server Error`
+
 ## DATABASE TABLES:
 
 - Table `HIKE`: contains the hikes informations, including name, description, province, difficulty, expected time, length, ascent, GPX file, local guide, start place and end place.

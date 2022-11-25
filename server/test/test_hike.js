@@ -4,7 +4,7 @@ chai.use(chaiHttp);
 chai.should();
 
 const app = require('../server');
-var agent = chai.request.agent(app);
+let agent = chai.request.agent(app);
 
 const hike_dao = require('../modules/DbManager').hike_dao;
 
@@ -119,7 +119,7 @@ describe('Test hikes apis', () => {
         "difficulty": 2,
         "startPoint": 9,
         "endPoint": 5,
-        "referencePoints": [1,2,3],
+        "referencePoints": [1, 2, 3],
         "gpxData": "",
         "description": "Hike 6 description",
     };
@@ -134,7 +134,7 @@ describe('Test hikes apis', () => {
         "difficulty": 7,
         "startPoint": 9,
         "endPoint": 5,
-        "referencePoints": [1,2,3],
+        "referencePoints": [1, 2, 3],
         "gpxData": "",
         "description": "Hike 7 description",
     };
@@ -147,6 +147,13 @@ describe('Test hikes apis', () => {
     newHike(422, bodyNewHike5);
     newHike(422, bodyNewHike6);
     newHike(422, bodyNewHike7);
+
+    //Testing GET /api/hike/:id
+    getHikePointsByHikeId(200, 1);
+    getHikePointsByHikeId(200, 2);
+    getHikePointsByHikeId(200, 3);
+    getHikePointsByHikeId(404, 12234567);
+    getHikePointsByHikeId(422, 0);
 
 });
 
@@ -191,5 +198,25 @@ function newHike(expectedHTTPStatus, bodyNew) {
             }
         }
 
+    });
+}
+
+function getHikePointsByHikeId(id_hike, expectedHTTPStatus) {
+    it('Getting hike points by id', async () => {
+        try {
+            agent.get('/api/hikePoints/' + id_hike)
+                .then(function (r) {
+                    r.should.have.status(expectedHTTPStatus);
+
+                    if (expectedHTTPStatus !== 200) {
+                        Object.keys(r.body).length.should.gt(0);
+                    }
+                });
+
+        } catch (err) {
+            if (r.status === 500) {
+                console.log("---- Error on getHikePointsByHikeId ----");
+            }
+        }
     });
 }

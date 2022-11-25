@@ -32,9 +32,9 @@ function testGetPlacesByProvinceId(id_province, expextedResult) {
 
             const places = await testPlaceDao.getAllPlacesByProvinceId(id_province);
 
-            
 
-            if(expextedResult === true) {
+
+            if (expextedResult === true) {
                 expect(places).not.toBeNull();
                 expect(places.length).toBeGreaterThan(0);
             }
@@ -58,7 +58,7 @@ function testGetPlacesById(id_place, expextedResult) {
 
             expect(places).not.toBeNull();
 
-            if(expextedResult === true) {
+            if (expextedResult === true) {
                 expect(places.length).toBeGreaterThan(0);
             }
             else {
@@ -74,10 +74,10 @@ function testGetPlacesById(id_place, expextedResult) {
 
 function testClosePlaceTable() {
     test('Close place table', async () => {
-        try{
+        try {
             await testPlaceDao.closePlaceTable();
         }
-        catch(err) {
+        catch (err) {
             console.log("---- Error on TestClosePlaceTable ----");
         }
     });
