@@ -170,7 +170,9 @@ router.post('/newHike',
 			//result = idhike inserted.
 			//now i can enter the data in hike-place table
 			const result = await hikeDao.insertHike(req.body, idStart, idEnd);
-
+			// Inserting start point and end point in hike-place table
+			await hikeDao.insertHikePlace(result, idStart);
+			await hikeDao.insertHikePlace(result, idEnd);
 			//reference points
 			// insert in hike-place table, cycling on reference points
 			for (let i = 0; i < req.body.referencePoints.length; i++) {

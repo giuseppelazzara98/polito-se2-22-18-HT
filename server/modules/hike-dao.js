@@ -293,7 +293,8 @@ class HikeDAO {
 					if (row !== undefined) {
 						const starEndPoints = {
 							id_start_place: row.id_start_place,
-							id_end_place: row.id_end_place
+							id_end_place: row.id_end_place,
+							gpx: row.gpx
 						};
 						resolve(starEndPoints);
 					} else {
