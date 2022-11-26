@@ -116,13 +116,13 @@ export default function StartPoint(props) {
 									(startPoint?.type === '' ||
 										Object.keys(startPoint).length === 0 ||
 										(startPoint.type === 'Hut/Parking lot' &&
-											(startPoint.lat === '' || startPoint.lng === ''))) &&
+											(startPoint.lat === '' || startPoint.lon === ''))) &&
 									styles.invalid
 								} ${
 									validated &&
 									Object.keys(startPoint).length > 0 &&
 									startPoint.type === 'Hut/Parking lot' &&
-									(startPoint.lat !== '' || startPoint.lng !== '') &&
+									(startPoint.lat !== '' || startPoint.lon !== '') &&
 									styles.valid
 								}`}
 								placeholder="Select a point"
@@ -146,7 +146,7 @@ export default function StartPoint(props) {
 								(startPoint?.type === '' ||
 									Object.keys(startPoint).length === 0 ||
 									(startPoint.type === 'Hut/Parking lot' &&
-										(startPoint.lat === '' || startPoint.lng === ''))) && (
+										(startPoint.lat === '' || startPoint.lon === ''))) && (
 									<div className={styles.feedbackContainer}>
 										<span className={styles.feedback}>
 											Please select a valid point
@@ -163,6 +163,7 @@ export default function StartPoint(props) {
 								Address/Name of location
 							</Form.Label>
 							<MapSearch
+								validated={validated}
 								point={props.startPoint}
 								setPoint={props.setStartPoint}
 							/>

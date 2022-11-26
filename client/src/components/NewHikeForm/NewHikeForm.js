@@ -90,10 +90,14 @@ export default function NewHikeForm(props) {
 			province === '' ||
 			startPoint.type === '' ||
 			(startPoint.type === 'Hut/Parking lot' &&
-				(startPoint.lat === '' || startPoint.lng === '')) ||
+				(startPoint.lat === '' || startPoint.lon === '')) ||
 			endPoint.type === '' ||
 			(endPoint.type === 'Hut/Parking lot' &&
-				(endPoint.lat === '' || endPoint.lng === ''))
+				(endPoint.lat === '' || endPoint.lon === '')) ||
+			(startPoint.type === 'Address/Name of location' &&
+				(startPoint.lat === '' || startPoint.lon === '')) ||
+			(endPoint.type === 'Address/Name of location' &&
+				(endPoint.lat === '' || endPoint.lon === ''))
 		) {
 			valid = false;
 		}
@@ -101,7 +105,6 @@ export default function NewHikeForm(props) {
 		if (form.checkValidity() === false || !valid) {
 			event.stopPropagation();
 		} else {
-
 			addNewHike();
 			navigate('/');
 		}
