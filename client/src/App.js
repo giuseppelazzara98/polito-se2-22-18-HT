@@ -208,9 +208,6 @@ function App2() {
 				/>
 				<MapModalComponent
 					show={showMapModal}
-					title="Success!"
-					subtitle={`Registration completed successfully`}
-					icon={faCheckCircle}
 					setShowMapModal={setShowMapModal}
 					hikePointsInfo={hikePointsInfo}
 				/>
