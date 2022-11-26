@@ -73,7 +73,10 @@ export default function NewHikeForm(props) {
 		hike.length = parseInt(length, 10);
 		const addNewHike = async () => {
 			await API.createNewHike(hike)
-				.then(() => setShowAddNewHikeSuccess(true))
+				.then(() => {
+					setShowAddNewHikeSuccess(true);
+					setUpdateHikes((prevstate) => prevstate + 1);
+				})
 				.catch(() => setShowAddNewHikeError(true))
 				.finally(() =>
 					setTimeout(() => {
@@ -98,13 +101,8 @@ export default function NewHikeForm(props) {
 		if (form.checkValidity() === false || !valid) {
 			event.stopPropagation();
 		} else {
-			console.log(
-				'🚀 ~ file: NewHikeForm.js ~ line 103 ~ handleSubmit ~ hike',
-				hike
-			);
 
 			addNewHike();
-			setUpdateHikes((prevstate) => prevstate + 1);
 			navigate('/');
 		}
 		setValidated(true);
