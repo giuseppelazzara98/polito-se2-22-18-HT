@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { ModalBody, ModalHeader } from "react-bootstrap";
 import Modal from 'react-bootstrap/Modal';
 import styles from "./index.module.scss";
@@ -8,7 +8,28 @@ import Map from "../MapComponent/Map";
 
 
 export default function MapModalComponent (props) {
-  const { markers } = props;
+  const { hikePointsInfo } = props;
+
+  const { markers, gpxPoints } = useMemo(() => {
+    let markers = [];
+    let gpxPoints = [];
+
+    if (Object.keys(hikePointsInfo).length > 0) {
+      markers = hikePointsInfo.hikePoints?.sort((point1, point2) => {
+        if (point1.startPoint || point2.endPoint) {
+          return -1;
+        }
+        if (point1.endPoint || point2.startPoint) {
+          return 1;
+        }
+        return 0;
+      }) || [];
+      gpxPoints = hikePointsInfo.gpx ? JSON.parse(hikePointsInfo.gpx) : [];
+    }
+
+    return {markers, gpxPoints};
+  }, [JSON.stringify(hikePointsInfo)]);
+
   return (
     <Modal
       {...props}                
@@ -24,7 +45,7 @@ export default function MapModalComponent (props) {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-       {markers?.length > 0 && <Map markers={markers}/>}
+       {(markers?.length > 0 || gpxPoints?.length > 0) && <Map markers={markers} gpxPoints={gpxPoints}/>}
       </Modal.Body>
     </Modal>
   );

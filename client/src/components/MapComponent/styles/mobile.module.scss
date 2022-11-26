@@ -34,4 +34,14 @@
     text-align: center;
     @include font(600, 16px, 18px, 0);
   }
+  .pointType {
+    &:not(:last-child) {
+      margin-bottom: 10px;
+    }
+    .icon {
+      color:  $primary-green;
+      font-size: 16px;
+      margin-left: 5px;
+    }
+  }
 }

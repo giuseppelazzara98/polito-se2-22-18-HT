@@ -39,7 +39,7 @@ function HikesTable(props) {
               hike={hike}
               key={hike.key}
               setShowMapModal={props.setShowMapModal}
-              setMarkers={props.setMarkers}
+              setHikePointsInfo={props.setHikePointsInfo}
             />
           ))}
         </div>
@@ -52,8 +52,8 @@ function HikeRow(props) {
   const [tab, setTab] = useState(false);
 
   const handleOpenMapModal = () => {
-    API.getHikePoints(props.hike.key).then(response => {
-      props.setMarkers(response);
+    API.getHikePointsInfo(props.hike.key).then(response => {
+      props.setHikePointsInfo(response);
     });
   }
 

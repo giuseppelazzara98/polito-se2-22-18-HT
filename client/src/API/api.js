@@ -186,7 +186,7 @@ const getProvincesFacets = async () => {
 	}
 };
 
-const getHikePoints = async (id) => {
+const getHikePointsInfo = async (id) => {
 	const response = await fetch(new URL(`hikePoints/${id}`, APIURL), {
 		credentials: 'include',
 	});
@@ -211,7 +211,7 @@ const API = {
 	getUserInfo,
 	register,
 	getRoles,
-	getHikePoints,
+	getHikePointsInfo,
 };
 
 export default API;

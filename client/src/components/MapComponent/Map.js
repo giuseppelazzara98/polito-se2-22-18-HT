@@ -5,6 +5,8 @@ import ChangeView from './ChangeView';
 import { useMemo } from 'react';
 import L from 'leaflet';
 import ReactDOMServer from "react-dom/server";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSquareParking, faHouseChimneyWindow } from '@fortawesome/free-solid-svg-icons';
 
 export default function Map(props) {
 	const { gpxPoints = [], markers = [] } = props;
@@ -48,10 +50,15 @@ export default function Map(props) {
 				<Marker key={index} position={[marker.latitude, marker.longitude]} icon={L.divIcon({className: "custom-icon-mine", html: ReactDOMServer.renderToString(<CustomMarker marker={marker} index={index + 1}/>)})} >
 					<Popup>
 						<div className={styles.popup}>
-							<span className={styles.title}>{marker.name}</span>
-							<p className={styles.description}>{marker.description}</p>
+							{(marker.name || marker.type.trim() === "GPS coordinates") && (
+								<span className={styles.title}>{marker.name || marker.type}</span>
+							)}
+							{marker.description && <p className={styles.description}>{marker.description}</p>}
 							{(marker.startPoint || marker.endPoint) && (
 								<span className={styles.pointType}>This is a {marker.startPoint ? "starting point" : "end point"}</span>
+							)}
+							{(marker.type.trim() === "hut" || marker.type.trim() === "parking lot") && (
+								<span className={styles.pointType}>Tipology: {marker.type} <FontAwesomeIcon icon={marker.type === "hut" ? faHouseChimneyWindow : faSquareParking} className={styles.icon}/> </span>
 							)}
 						</div>
 					</Popup>

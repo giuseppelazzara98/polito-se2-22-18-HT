@@ -39,7 +39,7 @@ function App2() {
 	const [showAddNewHikeError, setShowAddNewHikeError] = useState(false);
 	const [showRegistrationSuccess, setShowRegistrationSuccess] = useState(false);
 	const [showMapModal,setShowMapModal]=useState(false);
-	const [markers, setMarkers] = useState([]);
+	const [hikePointsInfo, setHikePointsInfo] = useState({});
 
 	const getHikes = async (dataOnRequest) => {
 		try {
@@ -115,7 +115,7 @@ function App2() {
 
 	useEffect(() => {
 		if (!showMapModal) {
-			setMarkers([]);
+			setHikePointsInfo({});
 		}
 	}, [showMapModal]);
 
@@ -142,7 +142,7 @@ function App2() {
 								facets={facets}
 								provincesFacets={provincesFacets}
 								setShowMapModal={setShowMapModal}
-								setMarkers={setMarkers}
+								setHikePointsInfo={setHikePointsInfo}
 							/>
 						}
 					/>
@@ -211,7 +211,7 @@ function App2() {
 					subtitle={`Registration completed successfully`}
 					icon={faCheckCircle}
 					setShowMapModal={setShowMapModal}
-					markers={markers}
+					hikePointsInfo={hikePointsInfo}
 				/>
 
 				<div id="modal-root" />
