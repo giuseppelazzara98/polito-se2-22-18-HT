@@ -143,6 +143,7 @@ function App2() {
 								provincesFacets={provincesFacets}
 								setShowMapModal={setShowMapModal}
 								setHikePointsInfo={setHikePointsInfo}
+								isHiker={user.role==="Hiker"}
 							/>
 						}
 					/>

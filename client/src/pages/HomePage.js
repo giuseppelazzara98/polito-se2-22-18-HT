@@ -12,7 +12,7 @@ export default function HomePage(props) {
           <FiltersContainer filters={filters} setFilters={setFilters} facets={facets} provincesFacets={provincesFacets}/>
         </Col>
         <Col xs={12} md={8}>
-          <HikesTable hikes={hikes} setHikes={setHikes} setShowMapModal={setShowMapModal} setHikePointsInfo={setHikePointsInfo}></HikesTable>
+          <HikesTable hikes={hikes} setHikes={setHikes} setShowMapModal={setShowMapModal} setHikePointsInfo={setHikePointsInfo} isHiker={props.isHiker}></HikesTable>
         </Col>
       </Row>
     </Container>
