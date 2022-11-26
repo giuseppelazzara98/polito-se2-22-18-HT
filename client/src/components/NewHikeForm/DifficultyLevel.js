@@ -13,9 +13,9 @@ export default function DifficultyLevel(props) {
 						className={styles.check}
 						inline
 						type="radio"
-						label="Turist"
+						label="tourist"
 						name="Difficuilty"
-						id="Turist"
+						id="tourist"
 						value={1}
 						onChange={(event) => props.setDifficulty(event.target.value)}
 						required={true}

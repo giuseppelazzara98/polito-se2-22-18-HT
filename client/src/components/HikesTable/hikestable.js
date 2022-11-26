@@ -121,7 +121,7 @@ function HikeRow(props) {
 function getDifficulty(diff) {
   switch (diff) {
     case 1:
-      return "turist"
+      return "tourist"
     case 2:
       return "hiker"
     case 3:

@@ -46,8 +46,8 @@ export default function FiltersContainer(props) {
   const difficultyFacets = [
     {
       id: 1,
-      value: "turist",
-      label: "turist",
+      value: "tourist",
+      label: "tourist",
     },
     {
       id: 2,
