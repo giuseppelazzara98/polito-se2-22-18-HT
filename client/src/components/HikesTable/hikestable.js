@@ -96,8 +96,8 @@ function HikeRow(props) {
                 <span>Ascent</span>
               </div>
               <div className={styles.bodyHinner}>
-                <span>{props.hike.startPlace}</span>
-                <span>{props.hike.endPlace}</span>
+                <span>{returnName(props.hike, true)}</span>
+                <span>{returnName(props.hike, false)}</span>
                 <span>{props.hike.pathLength} km</span>
                 <span>{formatDuration(props.hike.expTime)}</span>
                 <span>{(props.hike.ascent)} m </span>
@@ -152,6 +152,20 @@ function orderByDifficulty(hikes, isAscending) {
   }
   return newHikes;
 }
+function returnName(hike, isStart) {
+  if (hike.startPlace === ""){
+    return hike.province
+  }
+  else {
+    if(isStart){
+      return hike.startPlace
+    }
+    else {
+      return hike.endPlace
+    }
+  }
+}
+
 
 
 export { HikesTable };
