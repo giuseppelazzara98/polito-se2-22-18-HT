@@ -233,13 +233,12 @@ router.get('/hikePoints/:id',
 				return res.status(404).json({ error: 'Not Found' });
 			}
 
-			const starEndPoints = await hikeDao.getStartEndPoints(id_hike);
-			const startPointId = starEndPoints.id_start_place;
-			const endPointId = starEndPoints.id_end_place;
-			const gpx = starEndPoints.gpx;
+			const startPointId = hike.id_start_place;
+			const endPointId = hike.id_end_place;
+			const gpx = hike.gpx;
 			const referencePoints = await hikeDao.getReferencePoints(id_hike);
 
-			const hikePoints = referencePoints.map((el) => {
+			let hikePoints = referencePoints.map((el) => {
 				return {
 					id_place: el.id_place,
 					name: el.name,
@@ -248,11 +247,11 @@ router.get('/hikePoints/:id',
 					longitude: el.longitude,
 					startPoint: el.id_place === startPointId,
 					endPoint: el.id_place === endPointId,
-					gpx_data: gpx,
+					type: el.type,
 				};
 			});
 
-			res.status(200).json(hikePoints);
+			res.status(200).json({hikePoints: hikePoints, gpx: gpx});
 		} catch (err) {
 			res.status(500).json({ error: 'Internal Server Error' });
 		}
