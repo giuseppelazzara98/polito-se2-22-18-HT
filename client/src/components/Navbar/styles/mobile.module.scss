@@ -48,6 +48,7 @@
   margin-left: 10px;
   position: relative;
   display: inline-block;
+  z-index: 1;
   &:hover {
     .userInfoContainer {
       color: $primary-black;
