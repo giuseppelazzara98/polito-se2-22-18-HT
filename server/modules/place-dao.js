@@ -51,7 +51,7 @@ class PlaceDAO {
 
 	// get all places by province id
 	getAllPlacesByProvinceId = (province_id) => {
-		const sql = 'SELECT * FROM PLACE WHERE id_province = ?;';
+		const sql = 'SELECT * FROM PLACE WHERE id_province = ? AND type = "hut" OR type = "parking lot";';
 
 		return new Promise((resolve, reject) => {
 			this.db.all(sql, [province_id], (err, rows) => {
