@@ -7,6 +7,7 @@
     background-color: $primary-green;
     border-color: transparent;
     margin-left: auto;
+    min-width: 44px;
     &:hover{
       background-color: $tertiary-green;
       border-color: transparent;
@@ -15,8 +16,9 @@
   .mapButton{
     background-color: $primary-blue;
     border-color: transparent;
-    margin-right: 10px;
-    margin-left: 10px;
+    margin-right: 5px;
+    margin-left: 5px;
+    min-width: 44px;
     
   }
   .flexcontainer {
@@ -42,7 +44,7 @@
   .dataName {
     color: $primary-green;
     display: grid;
-    grid-template-columns: 3fr 1fr 1fr 0.5fr;
+    grid-template-columns: 3fr 1fr 1fr 1fr;
     @include font(700, 14px, 16px, 0);
     padding: 10px;
   }
@@ -52,7 +54,7 @@
       flex-direction: column;
       .hikeFirstRow {
         display: grid;
-        grid-template-columns: 3fr 1fr 1fr 0.5fr;
+        grid-template-columns: 3fr 1fr 1fr 1fr;
         padding: 5px;
         border-bottom: 1px solid $secondary-blue;
       }
