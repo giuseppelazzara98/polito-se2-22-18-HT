@@ -143,6 +143,7 @@ function App2() {
 								provincesFacets={provincesFacets}
 								setShowMapModal={setShowMapModal}
 								setHikePointsInfo={setHikePointsInfo}
+								isHiker={user.role==="Hiker"}
 							/>
 						}
 					/>
@@ -207,9 +208,6 @@ function App2() {
 				/>
 				<MapModalComponent
 					show={showMapModal}
-					title="Success!"
-					subtitle={`Registration completed successfully`}
-					icon={faCheckCircle}
 					setShowMapModal={setShowMapModal}
 					hikePointsInfo={hikePointsInfo}
 				/>

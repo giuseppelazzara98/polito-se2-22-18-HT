@@ -1,3 +1,4 @@
+
 # Test fe - description
 
 This is a document of test for the ui parte ofe the application
@@ -90,16 +91,20 @@ Point 3 and 4 are true
 
 #### Procedure
 
-1. write a name for the hike in the title
-2. Select a province for the hike in the drop down menu
-3. Insert a length , an expected time and the ascent of the hike using integers
+1. Write a name for the hike in the title(between 4 and 30 characters long)
+2. Select a province for the hike in the drop down menu. It will unlock the two drop down menu for the start and end point
+3. Add the expected time for the hike,(h for hours, m for minutes) .The max value is 23 hours and 59 minutes
 4. Select a difficulty by click the round button near the level of difficulty,it will change colour
-5. Select a starting point in the drop down menu
-6. Select an ending point in the dropdown menu
-7. Add reference points selecting them from a database
-8. Insert a description for the hike in the description form
-9. Press submit to insert the hike in the database
-10. The hike is showed in the hike tables(depending on the activated filters)
+5. Upload a gpx file of the hike you want to add
+6. It will apper the lenght of the hike, his ascent and the map with the track.
+7. Select a starting point in the drop down menu
+8. (optional)Select a tipe of the reference point, it will appear a dop down menu with the select points. If the guide has selected
+9. (optional)Insert a description for the hike in the description form the gpx coordinates, he need to add the longitude and latitude of the point.
+10. Press the button Add reference point
+11. The new reference point will appear in the form
+12. (optional) add a description in the text form
+13. Press submit to insert the hike in the database.If there are some errors in the forms, the error message will appear under the wrong field
+14. The hike is showed in the hike tables(depending on the activated filters)
 
 #### Expected result
 
@@ -118,7 +123,6 @@ Point 10 is true
 #### Expected result
 
 Point 5 is true
-
 
 ## Story 3 - Register
 
@@ -145,12 +149,48 @@ So that I can use its advanced services
    3. choose a password that has a number of letter betweeen 8 and 30
    4. confirm your password
    5. insert the user's email, unique betweeen users
-3. Press the submit button
-4. If something has gone wrong,it will apper the allert message under the wrong fiels
-5. If the mail had been already used,it will appear an error message and the user can login in the bottom part or in the upper right corner of the page,by pressing the login button
-6. If evrithing is correct, it will return to the main page, logged in
-7. It will appear a modal that confirm the right registration of the user(a error modal if the)
+2. Press the submit button
+3. If something has gone wrong,it will apper the allert message under the wrong fiels
+4. If the mail had been already used,it will appear an error message and the user can login in the bottom part or in the upper right corner of the page,by pressing the login button
+5. If evrithing is correct, it will return to the main page, logged in
+6. It will appear a modal that confirm the right registration of the user(a error modal if the)
 
 #### Expected result
 
 Point 6 is true
+
+
+## Story 4 - See hikes' details
+
+```
+As a hiker \
+I want to see the full list of hikes \
+So that I can get information (including tracks) on them
+```
+
+### Test 1 - open the map
+
+#### Procedure
+
+1. the user nedd to be logged in as an hiker
+2. it will appear a blue butoon with th icon of a map in the line of the hike
+3. press it
+4. it will open a modal form with the map for the specific hike
+
+#### Expected result
+
+Point 4 is true
+
+
+### Test 2 - using the modal map
+
+#### Procedure
+
+1. the user can zoom in or zoom out the map with the + or  - button in the upper left corner. It can do the same moving the mouse wheel ,towards to zoom in , backwards to zoom out
+2. passing over the reference points in the hike , the user can see the description of it
+3. pressing the x button in the upper right corner, the modal map will close,returning to the hike table
+
+
+#### Expected result
+
+Point 4 is true

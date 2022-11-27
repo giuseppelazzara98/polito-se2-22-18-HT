@@ -6,10 +6,22 @@
   .button{
     background-color: $primary-green;
     border-color: transparent;
+    margin-left: auto;
     &:hover{
       background-color: $tertiary-green;
       border-color: transparent;
     }
+  }
+  .mapButton{
+    background-color: $primary-blue;
+    border-color: transparent;
+    margin-right: 10px;
+    margin-left: 10px;
+    
+  }
+  .flexcontainer {
+    display: flex;
+    
   }
 }
 .wrap {

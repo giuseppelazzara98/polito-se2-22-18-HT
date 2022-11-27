@@ -40,6 +40,7 @@ function HikesTable(props) {
               key={hike.key}
               setShowMapModal={props.setShowMapModal}
               setHikePointsInfo={props.setHikePointsInfo}
+              isHiker={props.isHiker}
             />
           ))}
         </div>
@@ -63,9 +64,10 @@ function HikeRow(props) {
         <span>{props.hike.name}</span>
         <span>{props.hike.province}</span>
         <span>{getDifficulty(props.hike.difficulty)}</span>
-        <div>
+        <div className={styles.flexcontainer}>
+        {props.isHiker ? (
         <Button
-            className={styles.button}
+            className={styles.mapButton}
             onClick={() => {
               props.setShowMapModal(true);
               handleOpenMapModal();
@@ -73,6 +75,9 @@ function HikeRow(props) {
           >
             <FontAwesomeIcon icon={faMap}/>
           </Button>
+        ): (
+          ""
+        )}
         
           <Button
             className={styles.button}

@@ -28,25 +28,51 @@ export default function MapSearch(props) {
 		});
 
 	return (
-		<AsyncSelect
-			defaultValue={props.point.id}
-			className={styles.customSelect}
-			classNamePrefix="select"
-			isClearable={true}
-			cacheOptions
-			defaultOptions
-			loadOptions={promiseOptions}
-			onChange={(event) => {
-				if (event !== null) {
-					props.setPoint({
-						type: props.point.type,
-						id: event.value,
-						name: event.label,
-						lat: event.lat,
-						lon: event.lon
-					});
-				}
-			}}
-		/>
+		<>
+			<AsyncSelect
+				defaultValue={props.point.id}
+				className={`${styles.customSelect} ${
+					props.validated &&
+					(props.point?.type === '' ||
+						Object.keys(props.point).length === 0 ||
+						(props.point.type === 'Address/Name of location' &&
+							(props.point.lat === '' || props.point.lon === ''))) &&
+					styles.invalid
+				} ${
+					props.validated &&
+					Object.keys(props.point).length > 0 &&
+					props.point.type === 'Address/Name of location' &&
+					(props.point.lat !== '' || props.point.lon !== '') &&
+					styles.valid
+				}`}
+				classNamePrefix="select"
+				isClearable={true}
+				cacheOptions
+				defaultOptions
+				loadOptions={promiseOptions}
+				onChange={(event) => {
+					if (event !== null) {
+						props.setPoint({
+							type: props.point.type,
+							id: event.value,
+							name: event.label,
+							lat: event.lat,
+							lon: event.lon
+						});
+					}
+				}}
+			/>
+			{props.validated &&
+				(props.point?.type === '' ||
+					Object.keys(props.point).length === 0 ||
+					(props.point.type === 'Address/Name of location' &&
+						(props.point.lat === '' || props.point.lng === ''))) && (
+					<div className={styles.feedbackContainer}>
+						<span className={styles.feedback}>
+							Please select a valid address / name of loacation
+						</span>
+					</div>
+				)}
+		</>
 	);
 }

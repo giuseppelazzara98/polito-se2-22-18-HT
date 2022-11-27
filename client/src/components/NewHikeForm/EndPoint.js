@@ -115,13 +115,13 @@ export default function EndPoint(props) {
 									(endPoint?.type === '' ||
 										Object.keys(endPoint).length === 0 ||
 										(endPoint.type === 'Hut/Parking lot' &&
-											(endPoint.lat === '' || endPoint.lng === ''))) &&
+											(endPoint.lat === '' || endPoint.lon === ''))) &&
 									styles.invalid
 								} ${
 									validated &&
 									Object.keys(endPoint).length > 0 &&
 									endPoint.type === 'Hut/Parking lot' &&
-									(endPoint.lat !== '' || endPoint.lng !== '') &&
+									(endPoint.lat !== '' || endPoint.lon !== '') &&
 									styles.valid
 								}`}
 								classNamePrefix="select"
@@ -145,7 +145,7 @@ export default function EndPoint(props) {
 								(endPoint?.type === '' ||
 									Object.keys(endPoint).length === 0 ||
 									(endPoint.type === 'Hut/Parking lot' &&
-										(endPoint.lat === '' || endPoint.lng === ''))) && (
+										(endPoint.lat === '' || endPoint.lon === ''))) && (
 									<div className={styles.feedbackContainer}>
 										<span className={styles.feedback}>
 											Please select a valid point
@@ -161,7 +161,11 @@ export default function EndPoint(props) {
 							<Form.Label className={styles.title}>
 								Address/Name of location
 							</Form.Label>
-							<MapSearch point={props.endPoint} setPoint={props.setEndPoint} />
+							<MapSearch
+								point={props.endPoint}
+								setPoint={props.setEndPoint}
+								validated={validated}
+							/>
 						</Form.Group>
 					</Col>
 				)}
