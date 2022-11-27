@@ -28,3 +28,7 @@ This README is useful to understand how to build and run the Docker images for t
 
 `sudo docker-compose up`
 `sudp docker-compose down`
+
+# Use the Hike Tracker application
+
+Open the browser and go to the following address: `http://localhost:3000`
