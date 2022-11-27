@@ -1,0 +1,10 @@
+@import "../../../styles/configs";
+
+@media (min-width: $tablet-landscape) {
+  .goToLoginContainer {
+    .link {
+      font-size: 16px;
+      line-height: 18px;
+    }
+  }
+}

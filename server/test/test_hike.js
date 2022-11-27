@@ -4,7 +4,7 @@ chai.use(chaiHttp);
 chai.should();
 
 const app = require('../server');
-var agent = chai.request.agent(app);
+let agent = chai.request.agent(app);
 
 const hike_dao = require('../modules/DbManager').hike_dao;
 
@@ -28,7 +28,7 @@ describe('Test hikes apis', () => {
 
     const bodyHike3 = {
         "province": 1,
-        "difficulty": ["turist","professional hiker"],
+        "difficulty": ["turist", "professional hiker"],
         "exp_time": null,
         "length": { "min": 0.0, "max": 15.7 },
         "ascent": null
@@ -58,31 +58,102 @@ describe('Test hikes apis', () => {
     getFilteredHikes(200, bodyHike5);
 
     const bodyNewHike1 = {
-        "title":"Hike 1",
-        "province":1,
-        "length":345,
-        "expectedTimeString":"12h",
-        "expectedTime":12,
-        "ascent":123,
-        "difficulty":2,
-        "startPoint":9,
-        "endPoint":5,
-        "referencePoints":[],
-        "gpxFile":"",
-        "description":"Hike 1 description",
+        "title": "Hike 1",
+        "province": 1,
+        "length": 345,
+        "expectedTimeString": "12h",
+        "expectedTime": 12,
+        "ascent": 123,
+        "difficulty": 2,
+        "startPoint": 9,
+        "endPoint": 5,
+        "referencePoints": [],
+        "gpxData": "",
+        "description": "Hike 1 description",
     };
 
     const bodyNewHike2 = {
-        "title":"Hike 2",
-        "province":1
+        "title": "Hike 2",
+        "province": 1
     };
 
-    const bodyNewHike3 = {};
+    const bodyNewHike3 = {
+        "title": "Hike 3",
+        "province": 1,
+        "length": 345,
+        "expectedTimeString": "12h",
+        "expectedTime": 12,
+        "ascent": 123,
+        "difficulty": 2,
+        "startPoint": 9,
+        "endPoint": 5,
+        "referencePoints": [5000],
+        "gpxData": "",
+        "description": "Hike 3 description",
+    };
+
+    const bodyNewHike4 = {};
+
+    const bodyNewHike5 = {
+        "title": "Hike 5",
+        "province": 0,
+        "length": 345,
+        "expectedTimeString": "12h",
+        "expectedTime": 12,
+        "ascent": 123,
+        "difficulty": 2,
+        "startPoint": 9,
+        "endPoint": 5,
+        "referencePoints": [5000],
+        "gpxData": "",
+        "description": "Hike 5 description",
+    };
+
+    const bodyNewHike6 = {
+        "title": "Hike 6",
+        "province": 1,
+        "length": 345,
+        "expectedTimeString": "s12hsdflshdfkjshdkajffhsakljdfdsf",
+        "expectedTime": 12,
+        "ascent": 123,
+        "difficulty": 2,
+        "startPoint": 9,
+        "endPoint": 5,
+        "referencePoints": [1, 2, 3],
+        "gpxData": "",
+        "description": "Hike 6 description",
+    };
+
+    const bodyNewHike7 = {
+        "title": "Hike 7",
+        "province": 1,
+        "length": 345,
+        "expectedTimeString": "12h",
+        "expectedTime": 12,
+        "ascent": 123,
+        "difficulty": 7,
+        "startPoint": 9,
+        "endPoint": 5,
+        "referencePoints": [1, 2, 3],
+        "gpxData": "",
+        "description": "Hike 7 description",
+    };
 
     //Testing POST /api/newHike
     newHike(200, bodyNewHike1);
     newHike(422, bodyNewHike2);
-    newHike(422, bodyNewHike3);
+    newHike(404, bodyNewHike3);
+    newHike(422, bodyNewHike4);
+    newHike(422, bodyNewHike5);
+    newHike(422, bodyNewHike6);
+    newHike(422, bodyNewHike7);
+
+    //Testing GET /api/hike/:id
+    getHikePointsByHikeId(200, 1);
+    getHikePointsByHikeId(200, 2);
+    getHikePointsByHikeId(200, 3);
+    getHikePointsByHikeId(404, 12234567);
+    getHikePointsByHikeId(422, 0);
 
 });
 
@@ -113,8 +184,9 @@ function newHike(expectedHTTPStatus, bodyNew) {
     it('Inserting a new Hike', async () => {
 
         try {
-            
+
             agent.post('/api/newHike')
+                .set('Content-Type', 'application/json')
                 .send(bodyNew)
                 .then(function (r) {
                     r.should.have.status(expectedHTTPStatus);
@@ -126,5 +198,25 @@ function newHike(expectedHTTPStatus, bodyNew) {
             }
         }
 
+    });
+}
+
+function getHikePointsByHikeId(id_hike, expectedHTTPStatus) {
+    it('Getting hike points by id', async () => {
+        try {
+            agent.get('/api/hikePoints/' + id_hike)
+                .then(function (r) {
+                    r.should.have.status(expectedHTTPStatus);
+
+                    if (expectedHTTPStatus !== 200) {
+                        Object.keys(r.body).length.should.gt(0);
+                    }
+                });
+
+        } catch (err) {
+            if (r.status === 500) {
+                console.log("---- Error on getHikePointsByHikeId ----");
+            }
+        }
     });
 }

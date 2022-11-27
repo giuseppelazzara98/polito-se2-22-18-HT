@@ -1,15 +1,19 @@
 import { useState } from 'react';
 import { Form, Button, Row, Col } from 'react-bootstrap';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import API from '../../API/api';
 import styles from './index.module.scss';
 
 export default function LoginForm(props) {
+	const {
+		setShowWelcomeModal,
+	} = props;
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 	const [err, setErr] = useState(false);
 	const navigate = useNavigate();
+	const [validated, setValidated] = useState(false);
 
 	// login function, passed as props to loginForm
 	const login = async (credentials) => {
@@ -17,6 +21,10 @@ export default function LoginForm(props) {
 			const user = await API.logIn(credentials);
 			props.setLoggedIn(true);
 			props.setUser(user);
+			setShowWelcomeModal(true);
+			setTimeout(() => {
+				setShowWelcomeModal(false)
+			}, 2500);
 			return true;
 		} catch (err) {
 			return false;
@@ -24,34 +32,43 @@ export default function LoginForm(props) {
 	};
 
 	const handleSubmit = (event) => {
-		event.preventDefault();
+		const form = event.currentTarget;
 		const credentials = { username, password };
-		login(credentials)
-			.then((val) => {
-				val ? setErr(false) : setErr(true);
-				return val;
-			})
-			.then((val) => {
-				if (val) {
-					navigate('/');
-				}
-			});
+		event.preventDefault();
+		if (form.checkValidity() === false) {
+			event.stopPropagation();
+		} else {
+			login(credentials)
+				.then((val) => {
+					val ? setErr(false) : setErr(true);
+					return val;
+				})
+				.then((val) => {
+					if (val) {
+						navigate('/');
+					}
+				});
+		}
+		setValidated(true);
 	};
 
 	return (
 		<>
 			<Row>
-				<Col xs={{span: 12}} md={{ span: 4, offset: 4 }}>
-					<Form onSubmit={handleSubmit}>
+				<Col xs={{ span: 12 }} md={{ span: 4, offset: 4 }}>
+					<Form noValidate validated={validated} onSubmit={handleSubmit}>
 						<FloatingLabel label="Email" controlId="Email" className="my-5">
 							<Form.Control
-							    className={styles.customInsert}
+								className={styles.customInsert}
 								type="email"
 								placeholder="email@example.com"
 								value={username}
 								onChange={(event) => setUsername(event.target.value)}
 								required={true}
 							/>
+							<Form.Control.Feedback type="invalid">
+								Please enter a valid email
+							</Form.Control.Feedback>
 						</FloatingLabel>
 						<FloatingLabel
 							label="Password"
@@ -69,6 +86,9 @@ export default function LoginForm(props) {
 								required={true}
 								minLength={8}
 							/>
+							<Form.Control.Feedback type="invalid">
+								Password must be at least 8 characters
+							</Form.Control.Feedback>
 						</FloatingLabel>
 						{err ? (
 							<p className="text-danger">Wrong Email or/and password</p>
@@ -77,6 +97,10 @@ export default function LoginForm(props) {
 							Login
 						</Button>
 					</Form>
+					<div className={`${styles.goToRegistrationContainer} pb-5`}>
+						<span>Don't you have a account yet? </span>
+						<Link to="/signup" className={styles.link}>Register now</Link>
+					</div>
 				</Col>
 			</Row>
 		</>

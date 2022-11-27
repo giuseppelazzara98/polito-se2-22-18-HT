@@ -27,3 +27,16 @@
       border-color: $tertiary-green;
   }
 }
+
+.goToRegistrationContainer {
+  margin-top: 15px;
+  @include font(400, 12px, 14px, 0);
+  .link {
+    font-weight: 500;
+    color: $primary-green;
+    &:focus,
+    &:hover {
+      color: $tertiary-green
+    }
+  }
+}

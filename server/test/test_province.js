@@ -4,7 +4,7 @@ chai.use(chaiHttp);
 chai.should();
 
 const app = require('../server');
-var agent = chai.request.agent(app);
+let agent = chai.request.agent(app);
 
 const province_dao = require('../modules/DbManager').province_dao;
 

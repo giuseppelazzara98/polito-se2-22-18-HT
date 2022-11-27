@@ -79,6 +79,39 @@ const getPlaceById = async (placeId) => {
 		throw errDetails;
 	}
 };
+const register = async (credentials) => {
+	const response = await fetch(new URL('newUser', APIURL), {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body : JSON.stringify(credentials)
+	});
+	if (response.ok) {
+		const user = await response.json();
+		return user;}
+	else {
+		const errDetails = await response.text();
+		throw errDetails;
+	};}
+
+	const getRoles = async () => {
+		let err = new Error();
+		const response = await fetch(new URL('roles', APIURL));
+		if (response.ok) {
+			const rolesJson = await response.json();
+			const roles = rolesJson?.map((role) => ({
+				id: role.id,
+				description: role.description,
+			}));
+			return roles;
+		} else {
+			if (response.status === 500) {
+				err.message = '500 INTERNAL SERVER ERROR';
+				throw err;
+			}
+		}
+	};
 
 const createNewHike = async (hike) => {
 	const response = await fetch(new URL('newHike', APIURL), {
@@ -153,6 +186,19 @@ const getProvincesFacets = async () => {
 	}
 };
 
+const getHikePointsInfo = async (id) => {
+	const response = await fetch(new URL(`hikePoints/${id}`, APIURL), {
+		credentials: 'include',
+	});
+	if (response.ok) {
+		const points = await response.json();
+		return points;
+	} else {
+		const errorPoints = await response.text();
+		throw errorPoints;
+	}
+}
+
 const API = {
 	logIn,
 	logOut,
@@ -162,7 +208,10 @@ const API = {
 	createNewHike,
 	getAllHikes,
 	getProvincesFacets,
-	getUserInfo
+	getUserInfo,
+	register,
+	getRoles,
+	getHikePointsInfo,
 };
 
 export default API;

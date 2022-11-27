@@ -85,7 +85,7 @@ export default function RangeFilter(props) {
     }
   }, [arrayRange]);
 
-  const updatePrice = (sliderStates) => {
+  const updateValue = (sliderStates) => {
     setCurrentMinMax([sliderStates?.values[0], sliderStates?.values[1]]);
   };
 
@@ -108,7 +108,7 @@ export default function RangeFilter(props) {
               <Rheostat
                 pitComponent={Test}
                 pitPoints={pitArray}
-                onValuesUpdated={updatePrice}
+                onValuesUpdated={updateValue}
                 onSliderDragEnd={applyFilter}
                 min={minRange}
                 max={maxRange}
@@ -131,7 +131,7 @@ export default function RangeFilter(props) {
                         :
                           isLength ? 
                             `${handleProps["aria-valuenow"]} km`
-                          : `${handleProps["aria-valuenow"]/100} %`
+                          : `${handleProps["aria-valuenow"]} m`
                       }
                     </div>
                     <div className={`${styles.handleButton}`}></div>

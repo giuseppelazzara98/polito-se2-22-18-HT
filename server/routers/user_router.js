@@ -2,8 +2,8 @@
 
 const express = require('express');
 const router = express.Router();
-
 const passport = require('../passport'); // auth middleware
+const { check, body, validationResult } = require('express-validator');
 
 const userDao = require('../modules/DbManager').user_dao; // module for accessing the users in the DB
 
@@ -54,38 +54,93 @@ router.get('/sessions/current', (req, res) => {
 	}
 });
 
+/* Example of body:
+
+{
+	"email": "hiker3@gmail.com",
+	"name": "Paolo",
+	"surname": "Bari", 
+	"password": "password",
+	"id_role": "1"
+}
+
+*/
+
 //POST /api/newUser
-router.post('/newUser', async (req, res) => {
-	if (Object.keys(req.body).length === 0) {
-		console.log('Empty body!');
-		return res.status(422).json({ error: 'Empty body request' });
-	}
+router.post('/newUser',
+	body('email').isEmail(),
+	body('name').isString().isLength({ max: 50 }),
+	body('surname').isString().isLength({ max: 50 }),
+	body('password').isString().isLength({ max: 255 }),
+	body('id_role').isInt({ min: 1, max: 4 }),
+	async (req, res, next) => {
 
-	try {
-		console.log('req.body.user:' + req.body.user);
-		//Qui cripto la password
-		let password;
+		if (Object.keys(req.body).length === 0) {
+			console.log('Empty body!');
+			return res.status(422).json({ error: 'Empty body request' });
+		}
 
-		bcrypt.genSalt(10, function (err, Salt) {
-			// The bcrypt is used for encrypting password.
-			bcrypt.hash(password, Salt, function (err, hash) {
-				if (err) {
-					return console.log('Cannot encrypt the password');
+		if (Object.keys(req.body).length !== 5) {
+			console.log('Data not formatted properly!');
+			return res.status(422).json({ error: 'Data not formatted properly' });
+		}
+
+		const errors = validationResult(req);
+
+		if (!errors.isEmpty()) {
+			console.log("Error in body!");
+			return res.status(422).json({ errors: errors.array() });
+		}
+
+		try {
+
+			const userPrev = await userDao.getUser(req.body.email, req.body.password);
+
+			if (userPrev !== false) {
+				return res.status(409).json({ error: 'User already exists' });
+			}
+
+			await userDao.insertNewUser(
+				req.body.email,
+				req.body.name,
+				req.body.surname,
+				req.body.password,
+				req.body.id_role
+			);
+
+			const user = await userDao.getUser(req.body.email, req.body.password);
+
+			passport.authenticate('local', (err, info) => {
+				if (err) return next(err);
+				if (!user) {
+					// display wrong login messages
+					return res.status(401).json(info);
 				}
-				password = hash;
-			});
-		});
+				// success, perform the login
+				req.login(user, (err) => {
+					if (err) return next(err);
 
-		const result = await userDao.insertNewUser(
-			req.body.user.email,
-			password,
-			req.body.user.role
-		);
-		return res.status(201).json(result);
+					// req.user contains the authenticated user, we send all the user info back
+					// this is coming from userDao.getUser()
+					return res.status(201).json(req.user);
+				});
+			})(req, res, next);
+
+		} catch (err) {
+			console.log(err);
+			return res.status(503).json({ error: 'Service Unavailable' });
+		}
+	});
+
+//GET /api/roles
+router.get('/roles', async (req, res) => {
+	try {
+		const roles = await userDao.getAllRoles();
+		res.status(200).json(roles);
 	} catch (err) {
-		console.log(err);
-		return res.status(503).json({ error: 'Service Unavailable' });
+		res.status(500).json({ error: "Internal Server Error" });
 	}
-});
+}
+);
 
 module.exports = router;

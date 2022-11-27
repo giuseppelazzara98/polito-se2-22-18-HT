@@ -1,5 +1,11 @@
 @import "../../../styles/configs";
 
 @media (min-width: $tablet-landscape) {
-
+  .userContainer {
+    .userInfoContainer {
+      .userName {
+        margin-right: 5px;
+      }
+    }
+  }
 }

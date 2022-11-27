@@ -1,0 +1,48 @@
+@import "../../../styles/configs";
+
+.mapContainer{
+  width: 100%;
+  height: 500px;
+  border: 1px solid $tertiary-green;
+  border-radius: 5px;
+  z-index: 0;
+}
+
+.marker {
+  height: 30px;
+  width: 30px;
+  border-radius: 100%;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.7);
+  border: 2px solid $primary-white;
+  color: $primary-white;
+  font-weight: 500;;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $primary-blue;
+  &.startPoint {
+    background-color: $primary-green;
+  }
+  &.endPoint {
+    background-color: $primary-brown;
+  }
+}
+
+.popup {
+  display: flex;
+  flex-direction: column;
+  .title {
+    text-align: center;
+    @include font(600, 16px, 18px, 0);
+  }
+  .pointType {
+    &:not(:last-child) {
+      margin-bottom: 10px;
+    }
+    .icon {
+      color:  $primary-green;
+      font-size: 16px;
+      margin-left: 5px;
+    }
+  }
+}
