@@ -202,6 +202,8 @@ export default function NewHikeForm(props) {
 						setStartPoint={setStartPoint}
 						province={province}
 						validated={validated}
+						endPoint={endPoint}
+						referencePoints={referencePoints}
 					/>
 				</Col>
 				<Col>
@@ -211,6 +213,8 @@ export default function NewHikeForm(props) {
 						setEndPoint={setEndPoint}
 						province={province}
 						validated={validated}
+						startPoint={startPoint}
+						referencePoints={referencePoints}
 					/>
 				</Col>
 			</Row>
@@ -239,6 +243,8 @@ export default function NewHikeForm(props) {
 						addRefPoint={addRefPoint}
 						delRefPoint={delRefPoint}
 						province={province}
+						startPoint={startPoint}
+						endPoint={endPoint}
 					/>
 				</Col>
 			</Row>

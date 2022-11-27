@@ -99,7 +99,7 @@ export default function ReferencePoints(props) {
 											defaultValue={props.refPoint.id}
 											name="refPoint"
 											isSearchable={true}
-											options={points}
+											options={points.filter((item) => item.value !== props.endPoint.id && item.value !== props.startPoint.id)}
 											onChange={(event) => {
 												props.setRefPoint({
 													type: props.refPoint.type,

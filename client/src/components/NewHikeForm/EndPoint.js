@@ -6,7 +6,7 @@ import styles from './index.module.scss';
 import MapSearch from './MapSearch';
 
 export default function EndPoint(props) {
-	const { validated, endPoint } = props;
+	const { validated, endPoint, startPoint, referencePoints } = props;
 	const [points, setPoints] = useState([]);
 	const [isDisabled, setIsDisabled] = useState(false);
 	const max = 50000;
@@ -130,7 +130,17 @@ export default function EndPoint(props) {
 								name="endPoint"
 								isSearchable={true}
 								isDisabled={isDisabled}
-								options={points}
+								options={points
+									.filter((item) => item.value !== startPoint.id)
+									.filter((item) => {
+										for (let i = 0; i < referencePoints.length; i++) {
+										  if (item.value === referencePoints[i].id) {
+											return false;
+										  }
+										}
+									  
+									  return true;
+									})}
 								onChange={(event) => {
 									props.setEndPoint({
 										type: props.endPoint.type,

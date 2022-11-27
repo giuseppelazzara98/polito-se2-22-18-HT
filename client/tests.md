@@ -1,4 +1,3 @@
-
 # Test fe - description
 
 This is a document of test for the ui parte ofe the application
@@ -54,6 +53,19 @@ Point 5 is true
 #### Expected result
 
 Point 2 is true
+
+### Test 4 - changes order of the hike
+
+#### Procedure
+
+1. In the upper right corner,go to the green button with the writes Order by
+2. Press it
+3. It will open a drop down menu were the user can choose to order by diffivulty or province, in a ascending or a descending way
+4. the list of the hikes cahngfe according to the selected criterion
+
+#### Expected result
+
+Point 4 is true
 
 ## Story 2 - Describe Hikes
 
@@ -159,7 +171,6 @@ So that I can use its advanced services
 
 Point 6 is true
 
-
 ## Story 4 - See hikes' details
 
 ```
@@ -172,7 +183,7 @@ So that I can get information (including tracks) on them
 
 #### Procedure
 
-1. the user nedd to be logged in as an hiker
+1. the user need to be logged in as an hiker
 2. it will appear a blue butoon with th icon of a map in the line of the hike
 3. press it
 4. it will open a modal form with the map for the specific hike
@@ -181,16 +192,15 @@ So that I can get information (including tracks) on them
 
 Point 4 is true
 
-
 ### Test 2 - using the modal map
 
 #### Procedure
 
-1. the user can zoom in or zoom out the map with the + or  - button in the upper left corner. It can do the same moving the mouse wheel ,towards to zoom in , backwards to zoom out
-2. passing over the reference points in the hike , the user can see the description of it
-3. pressing the x button in the upper right corner, the modal map will close,returning to the hike table
-
+1. the user can zoom in or zoom out the map with the + or  - button in the upper left corner of the modal
+2. the user can move the map view by keeping pressed the mouse and movint the mouse
+3. pressing with the mouse the reference points in the hike , the user can see the description of it
+4. pressing the x button in the upper right corner, the modal map will close,returning to the hike table
 
 #### Expected result
 
-Point 4 is true
+Point 3 is true
