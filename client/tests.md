@@ -197,8 +197,9 @@ Point 4 is true
 #### Procedure
 
 1. the user can zoom in or zoom out the map with the + or  - button in the upper left corner of the modal
-2. pressing with the mouse the reference points in the hike , the user can see the description of it
-3. pressing the x button in the upper right corner, the modal map will close,returning to the hike table
+2. the user can move the map view by keeping pressed the mouse and movint the mouse
+3. pressing with the mouse the reference points in the hike , the user can see the description of it
+4. pressing the x button in the upper right corner, the modal map will close,returning to the hike table
 
 #### Expected result
 
