@@ -25,16 +25,15 @@ router.get('/municipalities/:provinceId',
         }
 
         try {
-            //const municipalities = await municipalityDao....;
-            const municipalities = [
-                {id_municipality: 1, name: "TORINO"},
-                {id_municipality: 2, name: "MONCALIERI"},
-                {id_municipality: 3, name: "IVREA"},
-                {id_municipality: 4, name: "ALMESE"},
-                {id_municipality: 5, name: "CUNEO"},
-                {id_municipality: 6, name: "CHIVASSO"}
-            ];
-            res.status(200).json(municipalities);
+            const municipalities = await municipalityDao.getMunicipalitiesByIdProvince(req.params.provinceId);
+           
+            const muni = municipalities.map((el) => {
+                return{
+                    id_municipality: el.id_municipality,
+                    name: el.name
+                }
+            });
+            res.status(200).json(muni);
         } catch (err) {
             res.status(500).json({ error: "Internal Server Error" });
         }

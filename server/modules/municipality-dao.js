@@ -51,6 +51,32 @@ class MunicipalityDAO {
 
     //TODO: add the municipality to the database
 
+    getMunicipalitiesByIdProvince = (provinceId) => {
+		return new Promise((resolve, reject) => {
+			const sql = "select id_municipality, name from municipality where id_province = ?;";
+			this.db.all(sql, [provinceId], function (err, rows) {
+				if (err) {
+					console.log('Error running sql: ' + sql);
+					console.log(err);
+					reject(err);
+				} else {
+					if (rows !== undefined) {
+						const municipalities = rows.map((el) => {
+                            return {
+                                id_municipality: el.id_municipality,
+                                name: el.name
+                            };
+                        });
+                        
+                        resolve(municipalities);
+					} else {
+						resolve(null);
+					}
+				}
+			});
+		});
+	};
+
 }
 
 module.exports = MunicipalityDAO;
