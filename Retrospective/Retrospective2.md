@@ -62,15 +62,15 @@ sections:
 | *#4* | Map View of the Hike         |        | 11h        | 11h          |
 | *#4* | Test API Story 4             |        | 2h         | 2h           |
 | *#4* | Test FE                      |        | 1h         | 1h           |
-| *#4*  | Code Review FE               |        | 30m        | 30m          |
+| *#4* | Code Review FE               |        | 30m        | 30m          |
 | *#4* | Code Review BE Story 4       |        | 1h         | 1h           |
 
 - Hours per task average, standard deviation (estimate and actual)
-  - estimate hours per task average: 2
-  - estimate standard deviation:
-  - actual hours per task average: 2.08
-  - actual standard deviation:
-- Total task estimation error ratio: sum of total hours estimation / sum of total hours spent - 1: -0,038
+  - estimate hours per task average: 2.04
+  - estimate standard deviation: 2.01
+  - actual hours per task average: 2.12
+  - actual standard deviation: 2.18
+- Total task estimation error ratio: sum of total hours estimation / sum of total hours spent - 1: -0,0377
 
 The total task estimation error ratio is negative because the number of hours spent is greater than the number of hours estimated.
 
