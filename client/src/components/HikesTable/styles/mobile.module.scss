@@ -44,7 +44,7 @@
   .dataName {
     color: $primary-green;
     display: grid;
-    grid-template-columns: 3fr 1fr 1fr 1fr;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
     @include font(700, 14px, 16px, 0);
     padding: 10px;
   }
@@ -54,7 +54,7 @@
       flex-direction: column;
       .hikeFirstRow {
         display: grid;
-        grid-template-columns: 3fr 1fr 1fr 1fr;
+        grid-template-columns: 2fr 1fr 1fr 1fr 0.5fr;
         padding: 5px;
         border-bottom: 1px solid $secondary-blue;
       }
@@ -64,7 +64,7 @@
         .headerHinner,
         .bodyHinner {
           display: grid;
-          grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+          grid-template-columns: 1fr 1fr 1fr 1fr 0.5fr;
           padding: 5px;
         }
         .headerHinner {
