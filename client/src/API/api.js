@@ -150,7 +150,8 @@ async function getAllHikes(data) {
 			key: r.key,
 			name: r.name,
 			description: r.description,
-			province : r.province
+			province : r.province,
+			municipality: r.municipality,
 		}));
 		return {
 			hikes: hikes,

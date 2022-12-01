@@ -29,4 +29,4 @@ This README is useful to understand how to build and run the Docker images for t
 # Build and run the Docker images with docker-compose
 
 `sudo docker-compose up`
-`sudp docker-compose down`
+`sudo docker-compose down`

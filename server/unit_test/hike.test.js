@@ -100,16 +100,16 @@ describe('TestHikeDao', () => {
     testInsertNewHike(bodyNewHike1);
     testInsertNewHike(bodyNewHike2);
 
-    testGetHikeById(1, true);
-    testGetHikeById(2, true);
+    testGetHikeById(12, true);
+    testGetHikeById(24, true);
     testGetHikeById(31234253, false);
 
-    testGetStartEndPointsByHikeId(1, true);
-    testGetStartEndPointsByHikeId(2, true);
+    testGetStartEndPointsByHikeId(12, true);
+    testGetStartEndPointsByHikeId(24, true);
     testGetStartEndPointsByHikeId(31234253, false);
 
-    testGetReferencePointsByHikeId(1, true);
-    testGetReferencePointsByHikeId(2, true);
+    testGetReferencePointsByHikeId(21, true);
+    testGetReferencePointsByHikeId(22, true);
     testGetReferencePointsByHikeId(31234253, false);
 
     // CLOSE CONNECTION TO HIKE TABLE

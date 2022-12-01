@@ -9,14 +9,15 @@ let agent = chai.request.agent(app);
 describe('Test municipality apis', () => {
 
 	//Get municipality tests
-	getmunicipalityById(1, 200);
+	getMunicipalityProvinceById(1, 200);
+    getMunicipalityProvinceById(0, 422);
 
 });
 
-function getmunicipalityById(idMunicipality, expectedHTTPStatus) {
-    it('Getting municipality by id', async () => {
+function getMunicipalityProvinceById(idProvince, expectedHTTPStatus) {
+    it('Getting municipality by province id', async () => {
         try {
-            agent.get('/municipalities/' + idMunicipality)
+            agent.get('api/municipalities/' + idProvince)
                 .then(function (r) {
                     r.should.have.status(expectedHTTPStatus);
 

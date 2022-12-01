@@ -92,6 +92,8 @@ export default function FiltersContainer(props) {
     if (geograficAreaFacets?.find(geoOption => geoOption.id === id)) {
       setFetchMunicipalities(id);
       newFilter.push({ key: key, id: id });
+    } else if (munFacets?.find(munOption => munOption.id === id)) {
+      newFilter.push({ key: key, id: id });
     } else {
       if (key === "provinces") {
         setInputValueMunicipalities("");
