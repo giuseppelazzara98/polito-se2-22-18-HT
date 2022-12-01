@@ -7,12 +7,12 @@ This README is useful to understand how to build and run the Docker images for t
 ### Server image
 
 `cd server`
-`sudo docker image build - t giulazzara/polito-se2-22-18-ht:server .`
+`sudo docker image build -t giulazzara/polito-se2-22-18-ht:server .`
 
 ### Client image
 
 `cd client`
-`sudo docker image build - t giulazzara/polito-se2-22-18-ht:client .`
+`sudo docker image build -t giulazzara/polito-se2-22-18-ht:client .`
 
 ## Run the Docker images for the Hike Tracker application
 
