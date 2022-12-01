@@ -21,8 +21,10 @@ function HikesTable(props) {
           <CDropdownMenu>
             <CDropdownItem className={styles.orderBy} onClick={() => { props.setHikes(orderByDifficulty(props.hikes, true)); setOrder("Difficulty (Ascending)") }}>Difficulty (Ascending)</CDropdownItem>
             <CDropdownItem className={styles.orderBy} onClick={() => { props.setHikes(orderByProvince(props.hikes, true)); setOrder("Province (Ascending)") }}>Province (Ascending)</CDropdownItem>
+            <CDropdownItem className={styles.orderBy} onClick={() => { props.setHikes(orderByMunicipality(props.hikes, true)); setOrder("Municipality (Ascending)") }}>Municipality (Ascending)</CDropdownItem>
             <CDropdownItem className={styles.orderBy} onClick={() => { props.setHikes(orderByDifficulty(props.hikes, false)); setOrder("Difficulty (Descending)") }}>Difficulty (Descending)</CDropdownItem>
             <CDropdownItem className={styles.orderBy} onClick={() => { props.setHikes(orderByProvince(props.hikes, false)); setOrder("Province (Descending)") }}>Province (Descending)</CDropdownItem>
+            <CDropdownItem className={styles.orderBy} onClick={() => { props.setHikes(orderByMunicipality(props.hikes, false)); setOrder("Municipality (Descending)") }}>Municipality (Descending)</CDropdownItem>
           </CDropdownMenu>
         </CDropdown>
       </div>
@@ -31,6 +33,7 @@ function HikesTable(props) {
         <div className={styles.dataName}>
           <span>Name</span>
           <span>Province</span>
+          <span>Municipality</span>
           <span>Difficulty</span>
         </div>
         <div className={styles.bodyWrap}>
@@ -63,6 +66,7 @@ function HikeRow(props) {
       <div className={styles.hikeFirstRow}>
         <span>{props.hike.name}</span>
         <span>{props.hike.province}</span>
+        <span>{props.hike.municipality}</span>
         <span>{getDifficulty(props.hike.difficulty)}</span>
         <div className={styles.flexcontainer}>
         {props.isHiker ? (
@@ -171,6 +175,16 @@ function returnName(hike, isStart) {
   }
 }
 
+
+function orderByMunicipality(hikes, isAscending) {
+  let newHikes = [];
+  if (isAscending) {
+    newHikes = hikes.sort((a, b) => a.municipality.localeCompare(b.municipality));
+  } else {
+    newHikes = hikes.sort((a, b) => b.municipality.localeCompare(a.municipality));
+  }
+  return newHikes;
+}
 
 
 export { HikesTable };

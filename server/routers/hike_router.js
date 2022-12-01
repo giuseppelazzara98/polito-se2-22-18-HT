@@ -45,7 +45,7 @@ router.post('/hikes',
 			return res.status(422).json({ error: 'Empty body request' });
 		}
 
-		if (Object.keys(req.body).length !== 5) {
+		if (Object.keys(req.body).length !== 6) {
 			console.log('Data not formatted properly!');
 			return res.status(422).json({ error: 'Data not formatted properly' });
 		}

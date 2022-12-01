@@ -9,10 +9,11 @@ export default function SelectFilter(props) {
     facets = [],
     name = "",
     filters = [],
-    removeAndAddFilter = () => {},
+    isDisabled = false,
+    removeAndAddFilter = () => { },
+    inputValue = () => {},
+    setInputValue = () => {}
   } = props;
-
-  const [inputValue, setInputValue] = useState("");
 
   return (
     <>
@@ -22,12 +23,13 @@ export default function SelectFilter(props) {
         classNamePrefix="select"
         isClearable={true}
         isSearchable={true}
+        isDisabled={isDisabled}
         name={name}
         options={facets}
         onChange={(val) => removeAndAddFilter(name, val?.id)}
         inputValue={inputValue}
         onInputChange={(newString) => setInputValue(newString)}
-        defaultValue={facets?.filter(facet => facet.id === filters?.filter(filterSelected => filterSelected.key === name)?.[0]?.id)?.[0] || null}
+        value={facets?.filter(facet => facet.id === filters?.filter(filterSelected => filterSelected.key === name)?.[0]?.id)?.[0] || null}
       />
     </>
   )
