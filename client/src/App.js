@@ -42,6 +42,7 @@ function App2() {
 	const [showAddNewHikeError, setShowAddNewHikeError] = useState(false);
 	const [showRegistrationSuccess, setShowRegistrationSuccess] = useState(false);
 	const [showEmailVerificationSuccess, setShowEmailVerificationSuccess] = useState(false);
+	const [showEmailVerificationError, setShowEmailVerificationError] = useState(false);
 	const [showMapModal,setShowMapModal]=useState(false);
 	const [hikePointsInfo, setHikePointsInfo] = useState({});
 
@@ -196,7 +197,7 @@ function App2() {
 						loggedIn ? (
 							<Navigate to="/" replace />
 						) : (
-							<EmailVerified setShowEmailVerificationSuccess={setShowEmailVerificationSuccess} />
+							<EmailVerified setShowEmailVerificationSuccess={setShowEmailVerificationSuccess} setShowEmailVerificationError={setShowEmailVerificationError} />
 						)
 					} />
 				</Routes>
@@ -236,6 +237,14 @@ function App2() {
 					subtitle={`Email verified successfully`}
 					icon={faCheckCircle}
 				/>
+				<InfoModalComponent
+					show={showEmailVerificationError}
+					title="Error"
+					subtitle={`Something went wrong with the confirmation of the email, try later`}
+					icon={faXmarkCircle}
+					success={false}
+				/>
+
 				<MapModalComponent
 					show={showMapModal}
 					setShowMapModal={setShowMapModal}

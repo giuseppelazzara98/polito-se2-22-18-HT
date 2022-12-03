@@ -16,7 +16,9 @@ export default function EmailVerified(props){
                 setTimeout(() => {props.setShowEmailVerificationSuccess(false)}, 2500);
                 navigate("/login");
             } catch (err) {
-                console.log(err);
+                props.setShowEmailVerificationError(true);
+                setTimeout(() => {props.setShowEmailVerificationError(false)}, 2500);
+                navigate("/");
             }
         };
         verifyEmail();
