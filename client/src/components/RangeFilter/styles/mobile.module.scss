@@ -17,6 +17,7 @@
     display: block;
     position: relative;
     padding-top: 16px;
+    z-index: 0;
   }
   .progressBar {
     background-color: $primary-green;
