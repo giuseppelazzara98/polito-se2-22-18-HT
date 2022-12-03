@@ -12,6 +12,7 @@ import NewHike from './pages/NewHike';
 import WrongPath from './pages/WrongPath';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import EmailVerified from './pages/EmailVerified';
 import API from './API/api';
 import InfoModalComponent from './components/InfoModalComponent/InfoModalComponent';
 import MapModalComponent from './components/MapModalComponent/MapModalComponent';
@@ -40,6 +41,7 @@ function App2() {
 	const [showAddNewHikeSuccess, setShowAddNewHikeSuccess] = useState(false);
 	const [showAddNewHikeError, setShowAddNewHikeError] = useState(false);
 	const [showRegistrationSuccess, setShowRegistrationSuccess] = useState(false);
+	const [showEmailVerificationSuccess, setShowEmailVerificationSuccess] = useState(false);
 	const [showMapModal,setShowMapModal]=useState(false);
 	const [hikePointsInfo, setHikePointsInfo] = useState({});
 
@@ -190,6 +192,13 @@ function App2() {
 						)
 					} />
 					<Route path="*" element={<WrongPath />} />
+					<Route path = "emailVerified/:id" element={
+						loggedIn ? (
+							<Navigate to="/" replace />
+						) : (
+							<EmailVerified setShowEmailVerificationSuccess={setShowEmailVerificationSuccess} />
+						)
+					} />
 				</Routes>
 				<InfoModalComponent
 					show={showWelcomeModal}
@@ -218,7 +227,13 @@ function App2() {
 				<InfoModalComponent
 					show={showRegistrationSuccess}
 					title="Success!"
-					subtitle={`Registration completed successfully`}
+					subtitle={`Registration completed successfully. We sent you an email to confirm your account`}
+					icon={faCheckCircle}
+				/>
+				<InfoModalComponent
+					show={showEmailVerificationSuccess}
+					title="Success!"
+					subtitle={`Email verified successfully`}
 					icon={faCheckCircle}
 				/>
 				<MapModalComponent
