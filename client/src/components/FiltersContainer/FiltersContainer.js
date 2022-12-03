@@ -205,6 +205,18 @@ export default function FiltersContainer(props) {
     }
   }, [modalOpen]);
 
+  useEffect(() => {
+    if (facets?.distinctTimes?.length > 0 && currentMinMaxExpectedTime?.[0] === null && currentMinMaxExpectedTime?.[1] === null) {
+      setCurrentMinMaxExpectedTime([Math.min(...facets.distinctTimes), Math.max(...facets.distinctTimes)])
+    }
+    if (facets?.distinctLengths?.length > 0 && currentMinMaxLength?.[0] === null && currentMinMaxLength?.[1] === null) {
+      setCurrentMinMaxLength([Math.min(...facets.distinctLengths), Math.max(...facets.distinctLengths)])
+    }
+    if (facets?.distinctAscents?.length > 0 && currentMinMaxAscent?.[0] === null && currentMinMaxAscent?.[1] === null) {
+      setCurrentMinMaxAscent([Math.min(...facets.distinctAscents), Math.max(...facets.distinctAscents)])
+    }
+  }, [JSON.stringify(facets)]);
+
   return (
     <>
       <div className={styles.wrap}>
