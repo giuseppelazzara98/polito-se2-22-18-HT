@@ -117,7 +117,7 @@ __Error responses:__ `500 Internal Server Error`
 
 __URL:__ `/api/newUser`  
 __Method:__ POST  
-__Description:__ Creates an account for a new user with a specific role.  
+__Description:__ Creates an account for a new user with a specific role sending also an email to verify the account.  
 __Request body:__ 
 ```
 {
@@ -140,6 +140,16 @@ __Response body:__
 } 
 ```
 __Error responses:__ `409 Conflict`, `422 Unprocessable Entity`, `503 Service Unavailable`
+
+### User email verification:
+
+__URL:__ `/api/verify/:token`  
+__Method:__ PUT  
+__Description:__ Verifies the token sent by email to the user and activates the account.     
+__Request body:__ _None_   
+__Response:__ `200 Ok`  
+__Response body:__ _None_
+__Error responses:__ `401 Unauthorized`, `422 Unprocessable Entity`, `503 Service Unavailable`
 
 ### Get place by place id:
 

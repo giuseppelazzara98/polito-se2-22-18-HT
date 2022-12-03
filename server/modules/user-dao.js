@@ -59,7 +59,12 @@ class UserDAO {
 				if (err) reject(err);
 				else if (row === undefined) resolve(null);
 				else {
-					const user = { id: row.id_user, username: row.email, role: row.role };
+					const user = { 
+						id: row.id_user, 
+						username: row.email, 
+						role: row.role,
+						verfied: row.verified, 
+					};
 					resolve(user);
 				}
 			});
@@ -82,7 +87,8 @@ class UserDAO {
 						username: row.email,
 						name: row.name,
 						surname: row.surname,
-						role: row.ROLE
+						role: row.ROLE,
+						verfied: row.verified,
 					};
 
 					this.bcrypt.compare(password, row.password).then((result) => {
@@ -94,10 +100,10 @@ class UserDAO {
 		});
 	};
 
-	insertNewUser = (email, name, surname, plainPassword, role) => {
+	insertNewUser = (email, name, surname, plainPassword, role, verified) => {
 		return new Promise((resolve, reject) => {
 
-			const sql = 'INSERT INTO USER (id_role, email, password, name, surname) VALUES (?,?,?,?,?)';
+			const sql = 'INSERT INTO USER (id_role, email, password, name, surname, verified) VALUES (?,?,?,?,?,?)';
 
 			this.bcrypt.genSalt(10, (err, salt) => {
 				// The bcrypt is used for encrypting password.
@@ -106,7 +112,7 @@ class UserDAO {
 						return console.log("Error in hashing password");
 					}
 					else {
-						this.db.run(sql, [role, email, hash, name, surname], function (err) {
+						this.db.run(sql, [role, email, hash, name, surname, verified], function (err) {
 							if (err) {
 								console.log('Error running sql: ' + sql);
 								console.log(err);
@@ -117,6 +123,22 @@ class UserDAO {
 						});
 					}
 				});
+			});
+		});
+	};
+
+	// update verified user
+	updateVerifiedUser = (id) => {
+		return new Promise((resolve, reject) => {
+			const sql = 'UPDATE user SET verified = 1 WHERE id_user = ?';
+			this.db.run(sql, [id], function (err) {
+				if (err) {
+					console.log('Error running sql: ' + sql);
+					console.log(err);
+					reject(err);
+				} else {
+					resolve(true);
+				}	
 			});
 		});
 	};
