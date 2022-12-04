@@ -66,4 +66,60 @@ router.get(
 	}
 );
 
+//POST /api/newHut
+router.post('/newHut',
+	isLoggedIn,
+	body('province').notEmpty().isInt({ min: 1 }),
+	body('municipality').notEmpty().isInt({ min: 1 }),
+	body('name').isString(),
+	body('description').isString(),
+	body('latitude').notEmpty().isFloat(),
+	body('longitude').notEmpty().isFloat(),
+	body('type').equals('hut'),
+	body('altitude').notEmpty().isInt({ min: 1 }),
+	body('nBeds').notEmpty().isInt({ min: 1 }),
+	body('phone').isString(),
+	body('email').isString(),
+	body('website').isString(),
+	async (req, res) => {
+
+		if (Object.keys(req.body).length === 0) {
+			console.log('Empty body!');
+			return res.status(422).json({ error: 'Empty body request' });
+		}
+
+		if (!(Object.keys(req.body).length == 11 || Object.keys(req.body).length == 12)) {
+			console.log('Data not formatted properly!');
+			return res.status(422).json({ error: 'Data not formatted properly' });
+		}
+
+		const errors = validationResult(req);
+
+		if (!errors.isEmpty()) {
+			console.log("Error in body!");
+			return res.status(422).json({ errors: errors.array() });
+		}
+
+		try {
+
+			const newPlace = {
+				name: req.body.name,
+				description: req.body.description,
+				lat: req.body.latitude,
+				lon: req.body.longitude,
+				type: req.body.type
+			}
+		
+			idPlace	= await placeDao.insertPlace(newPlace, req.body.province);
+			console.log("idPlace: " + idPlace);
+			
+			await placeDao.insertHutData(idPlace, req.body);
+			
+			return res.status(201).json(result);
+		} catch (err) {
+			console.log(err);
+			return res.status(503).json({ error: 'Service Unavailable' });
+		}
+	});
+
 module.exports = router;
