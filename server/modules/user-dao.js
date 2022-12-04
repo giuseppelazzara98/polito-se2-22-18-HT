@@ -63,7 +63,7 @@ class UserDAO {
 						id: row.id_user, 
 						username: row.email, 
 						role: row.role,
-						verfied: row.verified, 
+						verified: row.verified, 
 					};
 					resolve(user);
 				}
@@ -74,7 +74,7 @@ class UserDAO {
 	// get user, used for login purposes
 	getUser = (email, password) => {
 		return new Promise((resolve, reject) => {
-			const sql = 'SELECT U.id_user, U.email, U.password, U.name, U.surname, R.description AS ROLE FROM USER U, ROLE R WHERE U.id_role = R.id_role AND U.email = ?';
+			const sql = 'SELECT U.id_user, U.email, U.password, U.name, U.surname, U.verified, R.description AS ROLE FROM USER U, ROLE R WHERE U.id_role = R.id_role AND U.email = ?';
 			this.db.get(sql, [email], (err, row) => {
 				if (err) {
 					reject(err);
@@ -88,7 +88,7 @@ class UserDAO {
 						name: row.name,
 						surname: row.surname,
 						role: row.ROLE,
-						verfied: row.verified,
+						verified: row.verified,
 					};
 
 					this.bcrypt.compare(password, row.password).then((result) => {
