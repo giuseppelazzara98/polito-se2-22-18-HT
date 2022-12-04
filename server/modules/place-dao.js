@@ -112,9 +112,9 @@ class PlaceDAO {
 	*/
 	insertPlace = (referencePoint, idProvince) => {
 		return new Promise((resolve, reject) => {
-			const sql = 'INSERT INTO PLACE (id_province, name, latitude, longitude, type) VALUES (?, ?, ?, ?, ?)';
+			const sql = 'INSERT INTO PLACE (id_province, name, description, latitude, longitude, type) VALUES (?, ?, ?, ?, ?)';
 
-			this.db.run(sql, [idProvince, referencePoint.name, referencePoint.lat, referencePoint.lon, referencePoint.type], function (err) {
+			this.db.run(sql, [idProvince, referencePoint.name, referencePoint.description, referencePoint.lat, referencePoint.lon, referencePoint.type], function (err) {
 				if (err) {
 					console.log('Error running sql: ' + sql);
 					console.log(err);
@@ -126,7 +126,21 @@ class PlaceDAO {
 		});
 	};
 
+	insertParkingLotData = (idPlace, capacity) => {
+		return new Promise((resolve, reject) => {
+			const sql = 'INSERT INTO PARKING_DATA (id_place, capacity) VALUES ( ?, ?)';
 
+			this.db.run(sql, [idPlace, capacity], function (err) {
+				if (err) {
+					console.log('Error running sql: ' + sql);
+					console.log(err);
+					reject(err);
+				} else {
+					resolve(true); //returns the entered ID
+				}
+			});
+		});
+	};
 }
 
 module.exports = PlaceDAO;
