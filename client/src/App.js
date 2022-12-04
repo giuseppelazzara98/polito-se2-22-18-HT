@@ -193,7 +193,7 @@ function App2() {
 						)
 					} />
 					<Route path="*" element={<WrongPath />} />
-					<Route path = "emailVerified/:id" element={
+					<Route path = "verify/:token" element={
 						loggedIn ? (
 							<Navigate to="/" replace />
 						) : (

@@ -95,6 +95,22 @@ const register = async (credentials) => {
 		throw errDetails;
 	};}
 
+	const verifyEmail = async (token) => {
+		const response = await fetch(new URL(`verify/${token}`, APIURL), {
+			method: 'PUT',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+		});
+		if (response.ok) {
+			const id_user = await response.json();
+			return id_user;
+		} else {
+			const errDetails = await response.text();
+			throw errDetails;
+		}
+	};
+
 	const getRoles = async () => {
 		let err = new Error();
 		const response = await fetch(new URL('roles', APIURL));
@@ -232,6 +248,7 @@ const API = {
 	register,
 	getRoles,
 	getHikePointsInfo,
+	verifyEmail,
 };
 
 export default API;

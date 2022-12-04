@@ -5,13 +5,13 @@ import API from "../API/api";
 
 
 export default function EmailVerified(props){
-    let {id} = useParams();
+    let {token} = useParams();
     const navigate = useNavigate();
-    console.log("ID:"+id);
+    console.log("token:"+token);
     useEffect(() => {
         const verifyEmail = async () => {
             try {
-                //const user = await API.verifyEmail(id);
+                const id_user = await API.verifyEmail(token);
                 props.setShowEmailVerificationSuccess(true);
                 setTimeout(() => {props.setShowEmailVerificationSuccess(false)}, 2500);
                 navigate("/login");

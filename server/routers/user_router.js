@@ -27,6 +27,11 @@ router.post('/sessions', function (req, res, next) {
 			// display wrong login messages
 			return res.status(401).json(info);
 		}
+		console.log('user', user);
+		if (user.verified === 0) {
+			return res.status(401).json({ error: 'User not verified. Please confirm your account through the link that we sent you on your email' });
+		}
+
 		// success, perform the login
 		req.login(user, (err) => {
 			if (err) return next(err);
