@@ -4,10 +4,16 @@ Sofware engineering 2 a.a. 2022 / 2023
 
 Developers: Gerardo Braia, Elisa Calì, Francesco Carpegna, Ahmed Khater, Giuseppe Lazzara, Francesco Rosati.
 
+[![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-white.svg)](https://sonarcloud.io/summary/new_code?id=giuseppelazzara98_polito-se2-22-18-HT)
+
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=giuseppelazzara98_polito-se2-22-18-HT&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=giuseppelazzara98_polito-se2-22-18-HT)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=giuseppelazzara98_polito-se2-22-18-HT&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=giuseppelazzara98_polito-se2-22-18-HT)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=giuseppelazzara98_polito-se2-22-18-HT&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=giuseppelazzara98_polito-se2-22-18-HT)
+
 ## TECHNOLOGIES USED:  
 
 - **Front-end**: React, SASS;  
-- **Back-end**: nodejs, SQLite, Knex; 
+- **Back-end**: nodejs, SQLite, Knex, NodeMailer, JWT; 
 - **Maps**: OpenStreetMap;  
 
 ## HOW TO RUN THE HIKE TRACKER APPLICATION:
