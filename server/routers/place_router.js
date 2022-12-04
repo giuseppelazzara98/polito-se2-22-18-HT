@@ -70,7 +70,6 @@ router.get(
 router.post('/newHut',
 	isLoggedIn,
 	body('province').notEmpty().isInt({ min: 1 }),
-	body('municipality').notEmpty().isInt({ min: 1 }),
 	body('name').isString(),
 	body('description').isString(),
 	body('latitude').notEmpty().isFloat(),
@@ -88,7 +87,7 @@ router.post('/newHut',
 			return res.status(422).json({ error: 'Empty body request' });
 		}
 
-		if (!(Object.keys(req.body).length == 11 || Object.keys(req.body).length == 12)) {
+		if (!(Object.keys(req.body).length == 10 || Object.keys(req.body).length == 11)) {
 			console.log('Data not formatted properly!');
 			return res.status(422).json({ error: 'Data not formatted properly' });
 		}
