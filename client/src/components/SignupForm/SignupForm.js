@@ -49,8 +49,6 @@ export default function SignupForm(props) {
 	const signUp = async (hiker) => {
 		try {
 			const user = await API.register(hiker);
-			props.setLoggedIn(true);
-			props.setUser(user);
 			props.setShowRegistrationSuccess(true);
 			setTimeout(() => {props.setShowRegistrationSuccess(false)}, 2500);
 			return true;
@@ -108,13 +106,10 @@ export default function SignupForm(props) {
 				})
 				.then((val) => {
 					if (val) {
-						navigate('/');
+						navigate('/login');
 					}
 				});
 			}
-
-		
-
 		}
 		setValidated(true);
 	};

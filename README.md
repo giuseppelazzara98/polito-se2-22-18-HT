@@ -4,10 +4,16 @@ Sofware engineering 2 a.a. 2022 / 2023
 
 Developers: Gerardo Braia, Elisa Calì, Francesco Carpegna, Ahmed Khater, Giuseppe Lazzara, Francesco Rosati.
 
+[![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-white.svg)](https://sonarcloud.io/summary/new_code?id=giuseppelazzara98_polito-se2-22-18-HT)
+
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=giuseppelazzara98_polito-se2-22-18-HT&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=giuseppelazzara98_polito-se2-22-18-HT)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=giuseppelazzara98_polito-se2-22-18-HT&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=giuseppelazzara98_polito-se2-22-18-HT)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=giuseppelazzara98_polito-se2-22-18-HT&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=giuseppelazzara98_polito-se2-22-18-HT)
+
 ## TECHNOLOGIES USED:  
 
 - **Front-end**: React, SASS;  
-- **Back-end**: nodejs, SQLite, Knex; 
+- **Back-end**: nodejs, SQLite, Knex, NodeMailer, JWT; 
 - **Maps**: OpenStreetMap;  
 
 ## HOW TO RUN THE HIKE TRACKER APPLICATION:
@@ -117,7 +123,7 @@ __Error responses:__ `500 Internal Server Error`
 
 __URL:__ `/api/newUser`  
 __Method:__ POST  
-__Description:__ Creates an account for a new user with a specific role.  
+__Description:__ Creates an account for a new user with a specific role sending also an email to verify the account.  
 __Request body:__ 
 ```
 {
@@ -140,6 +146,16 @@ __Response body:__
 } 
 ```
 __Error responses:__ `409 Conflict`, `422 Unprocessable Entity`, `503 Service Unavailable`
+
+### User email verification:
+
+__URL:__ `/api/verify/:token`  
+__Method:__ PUT  
+__Description:__ Verifies the token sent by email to the user and activates the account.     
+__Request body:__ _None_   
+__Response:__ `200 Ok`  
+__Response body:__ _None_  
+__Error responses:__ `401 Unauthorized`, `422 Unprocessable Entity`, `503 Service Unavailable`
 
 ### Get place by place id:
 

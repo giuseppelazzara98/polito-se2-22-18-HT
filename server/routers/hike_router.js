@@ -21,6 +21,7 @@ const isLoggedIn = (req, res, next) => {
 /*
 	{
 		"province": null,
+		"municipality": null,
 		"difficulty": [1],
 		"exp_time": { "min": 5.2, "max": 7.0 },
 		"length": { "min": 0.0, "max": 15.7 },
@@ -28,6 +29,7 @@ const isLoggedIn = (req, res, next) => {
 	}
 	{
 		"province": 1,
+		"municipality": 7078,
 		"difficulty": [1,2],
 		"exp_time": { "min": 5.6, "max": 9.0 },
 		"length": { "min": 0.0, "max": 15.7 },
@@ -45,7 +47,7 @@ router.post('/hikes',
 			return res.status(422).json({ error: 'Empty body request' });
 		}
 
-		if (Object.keys(req.body).length !== 5) {
+		if (Object.keys(req.body).length !== 6) {
 			console.log('Data not formatted properly!');
 			return res.status(422).json({ error: 'Data not formatted properly' });
 		}

@@ -4,6 +4,8 @@ const express = require('express');
 const router = express.Router();
 const passport = require('../passport'); // auth middleware
 const { check, body, validationResult } = require('express-validator');
+const nodemailer = require('nodemailer');
+const jwt = require('jsonwebtoken');
 
 const userDao = require('../modules/DbManager').user_dao; // module for accessing the users in the DB
 
@@ -25,6 +27,11 @@ router.post('/sessions', function (req, res, next) {
 			// display wrong login messages
 			return res.status(401).json(info);
 		}
+		console.log('user', user);
+		if (user.verified === 0) {
+			return res.status(401).json({ error: 'User not verified. Please confirm your account through the link that we sent you on your email' });
+		}
+
 		// success, perform the login
 		req.login(user, (err) => {
 			if (err) return next(err);
@@ -73,7 +80,7 @@ router.post('/newUser',
 	body('surname').isString().isLength({ max: 50 }),
 	body('password').isString().isLength({ max: 255 }),
 	body('id_role').isInt({ min: 1, max: 4 }),
-	async (req, res, next) => {
+	async (req, res) => {
 
 		if (Object.keys(req.body).length === 0) {
 			console.log('Empty body!');
@@ -100,37 +107,101 @@ router.post('/newUser',
 				return res.status(409).json({ error: 'User already exists' });
 			}
 
-			await userDao.insertNewUser(
+			const transporter = nodemailer.createTransport({
+				service: 'gmail',
+				auth: {
+					user: 'hike.tracker18@gmail.com',
+					pass: 'clvvccqtodlrnezi'
+				}
+			});
+
+			const id_user = await userDao.insertNewUser(
 				req.body.email,
 				req.body.name,
 				req.body.surname,
 				req.body.password,
-				req.body.id_role
+				req.body.id_role,
+				0
 			);
 
-			const user = await userDao.getUser(req.body.email, req.body.password);
+			const token = jwt.sign(
+				{
+					id_user: `${id_user}`
+				},
+				'ourSecretKey',
+				{ expiresIn: '10m' }
+			);
 
-			passport.authenticate('local', (err, info) => {
-				if (err) return next(err);
-				if (!user) {
-					// display wrong login messages
-					return res.status(401).json(info);
+
+			const mailConfigurations = {
+				// It should be a string of sender/server email
+				from: 'hike.tracker18@gmail.com',
+
+				to: `${req.body.email}`,
+
+				// Subject of Email
+				subject: 'Email Verification',
+
+				// This would be the text of email body
+				html:
+					`<div><span>Hello <strong>${req.body.name} ${req.body.surname}</strong></span><span>!</span></div>
+				<div><span></span></div>
+				<div><span>Welcome to the Hike Tracker application!</span></div>
+				<div><span> We just need to verify your email address before accessing our web site.</span></div>
+				<div><span>Please follow the given <a href="http://localhost:3000/verify/${token}">link</a> to verify your email</span></div>
+				<p>Best regards, the Hike Tracker team!</p>`
+
+			};
+
+			transporter.sendMail(mailConfigurations, function (error, info) {
+				if (error) {
+					throw Error(error);
 				}
-				// success, perform the login
-				req.login(user, (err) => {
-					if (err) return next(err);
+			});
 
-					// req.user contains the authenticated user, we send all the user info back
-					// this is coming from userDao.getUser()
-					return res.status(201).json(req.user);
-				});
-			})(req, res, next);
+			return res.status(201).json(id_user);
 
 		} catch (err) {
 			console.log(err);
 			return res.status(503).json({ error: 'Service Unavailable' });
 		}
 	});
+
+//PUT /api/verify/:token
+router.put(
+	'/verify/:token',
+	[check('token').notEmpty().isString()],
+	async (req, res) => {
+		const errors = validationResult(req);
+
+		if (!errors.isEmpty()) {
+			console.log('Validation of token failed!');
+			return res.status(422).json({ errors: errors.array() });
+		}
+
+		if (!req.params) {
+			console.log('Error in request parameters!');
+			return res.status(422).json({ error: 'Error in request parameters' });
+		}
+
+		try {
+			let decoded = {};
+
+			try {
+				decoded = jwt.verify(req.params.token, 'ourSecretKey');
+			} catch (err) {
+				console.log('Token expired!');
+				return res.status(401).json({ error: 'Token expired' });
+			}
+
+			const result = await userDao.updateVerifiedUser(decoded.id_user);
+
+			res.status(200).json(result);
+		} catch (err) {
+			res.status(503).json({ error: 'Service Unavailable' });
+		}
+	}
+);
 
 //GET /api/roles
 router.get('/roles', async (req, res) => {

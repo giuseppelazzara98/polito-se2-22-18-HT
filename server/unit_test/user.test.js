@@ -13,6 +13,9 @@ describe('TestUserDao', () => {
     testGetUser(5, "Paolo", "Bitta", "Local guide", "guide9@gmail.com", "password", false);
     testNewUser("Giacomo", "Cresino", 1, "hiker1234@gmail.com", "password");
 
+    testUpdateUserVerified(1);
+    testUpdateUserVerified(2);
+
     testGetAllRoles();
 
     // CLOSE CONNECTION TO USER TABLE
@@ -21,6 +24,7 @@ describe('TestUserDao', () => {
     testGetUserById(1, true);
     testGetUser(1, "Paolo", "Bitta", "Local guide", "guide1@gmail.com", "password");
     testNewUser("Giacomo", "Cresino", 1, "hiker1234@gmail.com", "password");
+    testUpdateUserVerified(1);
     testGetAllRoles();
 
 });
@@ -83,6 +87,23 @@ function testNewUser(name, surname, role, email, password) {
         }
         catch (err) {
             console.log("---- Error on testGetUser ----");
+            return;
+        }
+    });
+}
+
+function testUpdateUserVerified(id_user) {
+    test('Test update user verified', async () => {
+        try {
+
+            const result = await testUserDao.updateVerifiedUser(id_user);
+
+            expect(result).not.toBeNull();
+            expect(result).toBe(true);
+
+        }
+        catch (err) {
+            console.log("---- Error on testUpdateUserVerified ----");
             return;
         }
     });

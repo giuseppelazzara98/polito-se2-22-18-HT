@@ -12,6 +12,7 @@ import NewHike from './pages/NewHike';
 import WrongPath from './pages/WrongPath';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import EmailVerified from './pages/EmailVerified';
 import API from './API/api';
 import InfoModalComponent from './components/InfoModalComponent/InfoModalComponent';
 import MapModalComponent from './components/MapModalComponent/MapModalComponent';
@@ -31,6 +32,8 @@ function App2() {
 	const [filters, setFilters] = useState([]);
 	const [facets, setFacets] = useState({});
 	const [provincesFacets, setProvincesFacets] = useState([]);
+	const [fetchMunicipalities, setFetchMunicipalities] = useState(0);
+	const [municipalitiesFacets, setMunicipalitiesFacets] = useState([]);
 	const [user, setUser] = useState({});
 	const [updateHikes, setUpdateHikes] = useState(0);
 	const [showWelcomeModal, setShowWelcomeModal] = useState(false);
@@ -38,13 +41,15 @@ function App2() {
 	const [showAddNewHikeSuccess, setShowAddNewHikeSuccess] = useState(false);
 	const [showAddNewHikeError, setShowAddNewHikeError] = useState(false);
 	const [showRegistrationSuccess, setShowRegistrationSuccess] = useState(false);
+	const [showEmailVerificationSuccess, setShowEmailVerificationSuccess] = useState(false);
+	const [showEmailVerificationError, setShowEmailVerificationError] = useState(false);
 	const [showMapModal,setShowMapModal]=useState(false);
 	const [hikePointsInfo, setHikePointsInfo] = useState({});
 
 	const getHikes = async (dataOnRequest) => {
 		try {
 			const { hikes, ...others } = await API.getAllHikes(dataOnRequest);
-			setHikes([...hikes].sort((a,b)=>a.province.localeCompare(b.province)));//ORDER BY PROVINCE ASC BY DEFAULT
+			setHikes([...hikes].sort((a, b) => a.province.localeCompare(b.province)));//ORDER BY PROVINCE ASC BY DEFAULT
 			if (Object.keys(facets).length === 0) {
 				setFacets({
 					...others
@@ -59,6 +64,10 @@ function App2() {
 		const provinceFilter =
 			filters
 				.filter((filterEle) => filterEle.key === 'provinces')
+				?.map((ele) => ele.id)?.[0] || null;
+		const municipalitiesFilter =
+			filters
+				.filter((filterEle) => filterEle.key === 'municipalities')
 				?.map((ele) => ele.id)?.[0] || null;
 		const difficultyFilter =
 			filters
@@ -76,6 +85,7 @@ function App2() {
 
 		const newObj = {
 			province: provinceFilter,
+			municipality: municipalitiesFilter,
 			difficulty: difficultyFilter,
 			exp_time:
 				expTimeFilter?.length === 2
@@ -119,6 +129,12 @@ function App2() {
 		}
 	}, [showMapModal]);
 
+	useEffect(() => {
+		if (fetchMunicipalities !== 0) {
+			API.getMunicipalitiesFacets(fetchMunicipalities).then((response) => { setMunicipalitiesFacets(response); });
+		}
+	}, [fetchMunicipalities]);
+
 	return (
 		<div className="App">
 			<NavbarHead
@@ -144,6 +160,8 @@ function App2() {
 								setShowMapModal={setShowMapModal}
 								setHikePointsInfo={setHikePointsInfo}
 								isHiker={user.role==="Hiker"}
+								municipalitiesFacets={municipalitiesFacets}
+								setFetchMunicipalities={setFetchMunicipalities}
 							/>
 						}
 					/>
@@ -151,7 +169,7 @@ function App2() {
 						path="/newHike"
 						element={
 							loggedIn && user.role === 'Local guide' ? (
-								<NewHike setUpdateHikes={setUpdateHikes} setShowAddNewHikeSuccess={setShowAddNewHikeSuccess} setShowAddNewHikeError={setShowAddNewHikeError}/>
+								<NewHike setUpdateHikes={setUpdateHikes} setShowAddNewHikeSuccess={setShowAddNewHikeSuccess} setShowAddNewHikeError={setShowAddNewHikeError} />
 							) : (
 								<Navigate to="/login" replace />
 							)
@@ -163,18 +181,25 @@ function App2() {
 							loggedIn ? (
 								<Navigate to="/" replace />
 							) : (
-								<Login setLoggedIn={setLoggedIn} setUser={setUser} setShowWelcomeModal={setShowWelcomeModal}/>
+								<Login setLoggedIn={setLoggedIn} setUser={setUser} setShowWelcomeModal={setShowWelcomeModal} />
 							)
 						}
 					/>
 					<Route path="/signup" element={
-							loggedIn ? (
-								<Navigate to="/" replace />
-							) : (
-								<Signup setLoggedIn={setLoggedIn} setUser={setUser} setShowRegistrationSuccess={setShowRegistrationSuccess}/>
-							)
-						} />
+						loggedIn ? (
+							<Navigate to="/" replace />
+						) : (
+							<Signup setLoggedIn={setLoggedIn} setUser={setUser} setShowRegistrationSuccess={setShowRegistrationSuccess} />
+						)
+					} />
 					<Route path="*" element={<WrongPath />} />
+					<Route path = "verify/:token" element={
+						loggedIn ? (
+							<Navigate to="/" replace />
+						) : (
+							<EmailVerified setShowEmailVerificationSuccess={setShowEmailVerificationSuccess} setShowEmailVerificationError={setShowEmailVerificationError} />
+						)
+					} />
 				</Routes>
 				<InfoModalComponent
 					show={showWelcomeModal}
@@ -203,9 +228,23 @@ function App2() {
 				<InfoModalComponent
 					show={showRegistrationSuccess}
 					title="Success!"
-					subtitle={`Registration completed successfully`}
+					subtitle={`Registration completed successfully. We sent you an email to confirm your account`}
 					icon={faCheckCircle}
 				/>
+				<InfoModalComponent
+					show={showEmailVerificationSuccess}
+					title="Success!"
+					subtitle={`Email verified successfully`}
+					icon={faCheckCircle}
+				/>
+				<InfoModalComponent
+					show={showEmailVerificationError}
+					title="Error"
+					subtitle={`Something went wrong with the confirmation of the email, try later`}
+					icon={faXmarkCircle}
+					success={false}
+				/>
+
 				<MapModalComponent
 					show={showMapModal}
 					setShowMapModal={setShowMapModal}

@@ -91,7 +91,7 @@ export default function LoginForm(props) {
 							</Form.Control.Feedback>
 						</FloatingLabel>
 						{err ? (
-							<p className="text-danger">Wrong Email or/and password</p>
+							<p className="text-danger">Wrong Email or/and password. Also check that you have confirmed your email if you have just registered</p>
 						) : null}
 						<Button className={styles.button} size="lg" type="submit">
 							Login

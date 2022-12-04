@@ -1,5 +1,7 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
+const jwt = require('jsonwebtoken');
+
 chai.use(chaiHttp);
 chai.should();
 
@@ -26,6 +28,35 @@ describe('Test user apis', () => {
 	newUser('guide50000gmail.com', 'Paolo', 'Bosco', 'password', 2, 422);
 	newUser('guide50000@gmail.com', 'Paolosadasdasldkjalskdjlkasjdlkajsdlkjadlkjasldkjal', 'Bosco', 'password', 2, 422);
 	newUser('guide50000@gmail.com', 'Paolo', 'Boscosadasdasldkjalskdjlkasjdlkajsdlkjadlkjasldkjal', 'password', 2, 422);
+
+	const token1 = jwt.sign(
+		{
+			id_user: 5
+		},
+		'ourSecretKey',
+		{ expiresIn: '3s' }
+	);
+
+	const token2 = jwt.sign(
+		{
+			id_user: 6
+		},
+		'ourSecretKey',
+		{ expiresIn: '3s' }
+	);
+
+	const token3 = jwt.sign(
+		{
+			id_user: 7
+		},
+		'ourSecretKey',
+		{ expiresIn: '0s' }
+	);
+
+	//Test verify user
+	verifyUser(token1, 200);
+	verifyUser(token2, 200);
+	verifyUser(token3, 401);
 
 	//Get roles tests
 	getAllRoles(200);
@@ -56,6 +87,19 @@ function newUser(email, name, surname, password, id_role, ExpectedHTTPStatus) {
 		agent.post('/api/newUser')
 			.set('Content-Type', 'application/json')
 			.send(reqBody)
+			.then((res) => {
+				res.should.have.status(ExpectedHTTPStatus);
+				done();
+				return res.body;
+			});
+	});
+}
+
+function verifyUser(token, ExpectedHTTPStatus) {
+	it('Verify user', (done) => {
+
+		agent.put(`/api/verify/${token}`)
+			.set('Content-Type', 'application/json')
 			.then((res) => {
 				res.should.have.status(ExpectedHTTPStatus);
 				done();

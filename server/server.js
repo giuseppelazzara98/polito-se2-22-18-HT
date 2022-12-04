@@ -9,6 +9,7 @@ const session = require('express-session'); // enable sessions
 
 const hikeRouter = require('./routers/hike_router');
 const provinceRouter = require('./routers/province_router');
+const municipalityRouter = require('./routers/municipality_router');
 const placeRouter = require('./routers/place_router');
 const userRouter = require('./routers/user_router');
 
@@ -46,6 +47,7 @@ app.use(passport.session());
 
 app.use('/api', hikeRouter);
 app.use('/api', provinceRouter);
+app.use('/api', municipalityRouter);
 app.use('/api', placeRouter);
 app.use('/api', userRouter);
 

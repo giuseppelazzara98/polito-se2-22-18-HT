@@ -72,6 +72,7 @@ class HikeDAO {
 				'P1.name as START_PLACE',
 				'P2.name as END_PLACE',
 				'PR.name as PROVINCE',
+				'M.name as MUNICIPALITY',
 				'HIKE.length',
 				'HIKE.expected_time',
 				'HIKE.ascent',
@@ -81,10 +82,14 @@ class HikeDAO {
 			.from('HIKE')
 			.join('PLACE as P1', { 'P1.id_place': 'HIKE.id_start_place' })
 			.join('PLACE as P2', { 'P2.id_place': 'HIKE.id_end_place' })
-			.join('PROVINCE as PR', { 'PR.id_province': 'HIKE.id_province' });
+			.join('PROVINCE as PR', { 'PR.id_province': 'HIKE.id_province' })
+			.join('MUNICIPALITY as M', { 'M.id_municipality': 'HIKE.id_municipality' });
 
 		if (filters.province !== null) {
 			sql = sql.where('HIKE.id_province', filters.province);
+		}
+		if(filters.province !== null && filters.municipality !== null) {
+			sql = sql.where('HIKE.id_municipality', filters.municipality);
 		}
 		if (filters.difficulty.length !== 0) {
 			sql = sql.whereIn('HIKE.difficulty', filters.difficulty);
@@ -149,6 +154,7 @@ class HikeDAO {
 							start_place: el.START_PLACE,
 							end_place: el.END_PLACE,
 							province: el.PROVINCE,
+							municipality: el.MUNICIPALITY,
 							length: el.length,
 							expected_time: el.expected_time,
 							ascent: el.ascent,
