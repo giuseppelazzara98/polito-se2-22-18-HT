@@ -12,6 +12,7 @@ describe('Test hikes apis', () => {
 
     const bodyHike1 = {
         "province": null,
+        "municipality": null,
         "difficulty": [],
         "exp_time": null,
         "length": null,
@@ -20,6 +21,7 @@ describe('Test hikes apis', () => {
 
     const bodyHike2 = {
         "province": null,
+        "municipality": null,
         "difficulty": ["turist"],
         "exp_time": { "min": 5.2, "max": 7.0 },
         "length": { "min": 0.0, "max": 15.7 },
@@ -28,6 +30,7 @@ describe('Test hikes apis', () => {
 
     const bodyHike3 = {
         "province": 1,
+        "municipality": 7474,
         "difficulty": ["turist", "professional hiker"],
         "exp_time": null,
         "length": { "min": 0.0, "max": 15.7 },
@@ -36,6 +39,7 @@ describe('Test hikes apis', () => {
 
     const bodyHike4 = {
         "province": 3,
+        "municipality": 7474,
         "difficulty": [],
         "exp_time": { "min": 5.2, "max": 7.0 },
         "length": null,
@@ -44,6 +48,7 @@ describe('Test hikes apis', () => {
 
     const bodyHike5 = {
         "province": null,
+        "municipality": null,
         "difficulty": ["hiker"],
         "exp_time": null,
         "length": { "min": 0.0, "max": 15.7 },

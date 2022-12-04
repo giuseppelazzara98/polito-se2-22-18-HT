@@ -22,7 +22,7 @@ class UserDAO {
 	newUserTable = () => {
 		return new Promise((resolve, reject) => {
 			const sql =
-				'CREATE TABLE IF NOT EXISTS USER(id_user INTEGER NOT NULL, id_role INTEGER NOT NULL, email TEXT NOT NULL UNIQUE, password TEXT NOT NULL, name TEXT NOT NULL, surname TEXT NOT NULL, PRIMARY KEY(id_user AUTOINCREMENT));';
+				'CREATE TABLE IF NOT EXISTS USER(id_user INTEGER NOT NULL, id_role INTEGER NOT NULL, email TEXT NOT NULL UNIQUE, password TEXT NOT NULL, name TEXT NOT NULL, surname TEXT NOT NULL, verified INTEGER, PRIMARY KEY(id_user AUTOINCREMENT));';
 			this.db.run(sql, (err) => {
 				if (err) {
 					console.log('Error running sql: ' + sql);
