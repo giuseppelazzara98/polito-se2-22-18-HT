@@ -34,6 +34,7 @@ export default function NewHikeForm(props) {
 	const navigate = useNavigate();
 	const [gpxPoints, setGpxPoints] = useState({});
 	const [validated, setValidated] = useState(false);
+	const [isFormValid, setIsFormValid] = useState(false);
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
@@ -103,8 +104,10 @@ export default function NewHikeForm(props) {
 		}
 
 		if (form.checkValidity() === false || !valid) {
+			setIsFormValid(false);
 			event.stopPropagation();
 		} else {
+			setIsFormValid(true);
 			addNewHike();
 			navigate('/');
 		}
@@ -262,10 +265,13 @@ export default function NewHikeForm(props) {
 
 			{/*Submit button*/}
 			<Row className="my-5">
-				<Col className="col-md-3 mb-4">
+				<Col className="mb-4">
 					<Button className={styles.button} type="submit">
 						Submit
 					</Button>
+					{validated && !isFormValid && (
+						<span className={styles.disclaimer}>Fill all required fields</span>
+					)}
 				</Col>
 			</Row>
 		</Form>
