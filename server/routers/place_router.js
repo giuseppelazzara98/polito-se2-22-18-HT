@@ -5,6 +5,15 @@ const { check, body, validationResult } = require('express-validator');
 const router = express.Router();
 const placeDao = require('../modules/DbManager').place_dao;
 
+// custom middleware: check if a given request is coming from an authenticated user
+const isLoggedIn = (req, res, next) => {
+	if (req.isAuthenticated()) {
+		return next();
+	}
+
+	return res.status(401).json({ error: 'User not authenticated' });
+};
+
 /*** Places APIs ***/
 
 //GET /api/places/:provinceId
