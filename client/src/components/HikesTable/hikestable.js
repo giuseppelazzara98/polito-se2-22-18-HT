@@ -46,6 +46,11 @@ function HikesTable(props) {
               isHiker={props.isHiker}
             />
           ))}
+          {props.hikes?.length === 0 && (
+            <div className={styles.hikeRow}>
+              <span>There is no result</span>
+            </div>
+          )}
         </div>
       </div>
     </div>
@@ -89,7 +94,7 @@ function HikeRow(props) {
               setTab((value) => !value);
             }}
           >
-            <FontAwesomeIcon icon={faCircleInfo}/>
+            <FontAwesomeIcon icon={faCircleInfo} className={styles.iconInfo}/>
           </Button>
         </div>
       </div>
