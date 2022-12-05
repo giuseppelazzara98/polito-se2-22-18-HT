@@ -196,7 +196,7 @@ export default function StartPoint(props) {
                         props.startPoint.id === undefined
                           ? Math.floor(Math.random() * (max - min) + min)
                           : props.startPoint.id,
-                      name: props.startPoint.name,
+                      name: "GPS coordinates",
                       lon: event.target.value,
                       lat: props.startPoint.lat,
                     });

@@ -16,7 +16,8 @@ describe('Test hikes apis', () => {
         "difficulty": [],
         "exp_time": null,
         "length": null,
-        "ascent": null
+        "ascent": null,
+        "range": null,
     };
 
     const bodyHike2 = {
@@ -25,7 +26,8 @@ describe('Test hikes apis', () => {
         "difficulty": ["turist"],
         "exp_time": { "min": 5.2, "max": 7.0 },
         "length": { "min": 0.0, "max": 15.7 },
-        "ascent": { "min": 500, "max": 2000 }
+        "ascent": { "min": 500, "max": 2000 },
+        "range": null,
     };
 
     const bodyHike3 = {
@@ -34,7 +36,8 @@ describe('Test hikes apis', () => {
         "difficulty": ["turist", "professional hiker"],
         "exp_time": null,
         "length": { "min": 0.0, "max": 15.7 },
-        "ascent": null
+        "ascent": null,
+        "range": null,
     };
 
     const bodyHike4 = {
@@ -43,7 +46,8 @@ describe('Test hikes apis', () => {
         "difficulty": [],
         "exp_time": { "min": 5.2, "max": 7.0 },
         "length": null,
-        "ascent": { "min": 500, "max": 2000 }
+        "ascent": { "min": 500, "max": 2000 },
+        "range": null,
     };
 
     const bodyHike5 = {
@@ -52,7 +56,8 @@ describe('Test hikes apis', () => {
         "difficulty": ["hiker"],
         "exp_time": null,
         "length": { "min": 0.0, "max": 15.7 },
-        "ascent": { "min": 1000, "max": 2000 }
+        "ascent": { "min": 1000, "max": 2000 },
+        "range": null,
     };
 
     //Testing POST /api/hikes

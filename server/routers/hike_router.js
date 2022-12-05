@@ -25,7 +25,8 @@ const isLoggedIn = (req, res, next) => {
 		"difficulty": [1],
 		"exp_time": { "min": 5.2, "max": 7.0 },
 		"length": { "min": 0.0, "max": 15.7 },
-		"ascent": { "min": 500, "max": 2000 }
+		"ascent": { "min": 500, "max": 2000 },
+		"range": null,
 	}
 	{
 		"province": 1,
@@ -33,7 +34,8 @@ const isLoggedIn = (req, res, next) => {
 		"difficulty": [1,2],
 		"exp_time": { "min": 5.6, "max": 9.0 },
 		"length": { "min": 0.0, "max": 15.7 },
-		"ascent": { "min": 500, "max": 2900 }
+		"ascent": { "min": 500, "max": 2900 },
+		"range": { "center": {"lat": 0.0, "long": 0.0}, "radius": 1000.0 },
 	}
 */
 
@@ -47,7 +49,7 @@ router.post('/hikes',
 			return res.status(422).json({ error: 'Empty body request' });
 		}
 
-		if (Object.keys(req.body).length !== 6) {
+		if (Object.keys(req.body).length !== 7) {
 			console.log('Data not formatted properly!');
 			return res.status(422).json({ error: 'Data not formatted properly' });
 		}
@@ -60,28 +62,83 @@ router.post('/hikes',
 		}
 
 		try {
-			const hikes = await hikeDao.getAllFilteredHikes(req.body);
 
 			const unique = (value, index, self) => {
 				return self.indexOf(value) === index;
 			};
 
-			const distinct_times = hikes.map((el) => el.expected_time).filter(unique);
-			const distinct_lengths = hikes.map((el) => el.length).filter(unique);
-			const distinct_ascents = hikes.map((el) => el.ascent).filter(unique);
+			let hikes = await hikeDao.getAllFilteredHikes(req.body);
 
-			const result = {
-				hikes: hikes,
-				distinct_times: distinct_times,
-				distinct_lengths: distinct_lengths,
-				distinct_ascents: distinct_ascents
-			};
+			let hikes_ranged = [];
+			let distinct_ascents = [];
+			let distinct_times = [];
+			let distinct_lengths = [];
+			let result = {};
+
+			if (req.body.range !== null) {
+
+				for (let hike of hikes) {
+
+					const start_place = await hikeDao.getLatLongStartPlaceByHikeId(hike.key);
+
+					/*
+						Haversine formula
+						lat1, lon1 = latitude and longitude of the center point
+						lat2, lon2 = latitude and longitude of the hike's start point
+					*/
+
+					const lat1 = req.body.range.center.lat;
+					const lon1 = req.body.range.center.long;
+					const lat2 = start_place.latitude;
+					const lon2 = start_place.longitude;
+
+					let distance = 6372795.477598 *
+						Math.acos(Math.sin(toRad(lat2)) *
+							Math.sin(toRad(lat1)) +
+							Math.cos(toRad(lat2)) *
+							Math.cos(toRad(lat1)) *
+							Math.cos(toRad(lon2 - lon1)));
+
+					console.log(distance);
+
+					if (distance <= req.body.range.radius) {
+						hikes_ranged.push(hike);
+					}
+				}
+
+				distinct_times = hikes_ranged.map((el) => el.expected_time).filter(unique);
+				distinct_lengths = hikes_ranged.map((el) => el.length).filter(unique);
+				distinct_ascents = hikes_ranged.map((el) => el.ascent).filter(unique);
+
+				result = {
+					hikes: hikes_ranged,
+					distinct_times: distinct_times,
+					distinct_lengths: distinct_lengths,
+					distinct_ascents: distinct_ascents
+				};
+			} else {
+
+				distinct_times = hikes.map((el) => el.expected_time).filter(unique);
+				distinct_lengths = hikes.map((el) => el.length).filter(unique);
+				distinct_ascents = hikes.map((el) => el.ascent).filter(unique);
+
+				result = {
+					hikes: hikes,
+					distinct_times: distinct_times,
+					distinct_lengths: distinct_lengths,
+					distinct_ascents: distinct_ascents
+				};
+			}
 
 			return res.status(200).json(result);
 		} catch (err) {
 			return res.status(500).json({ error: 'Internal Server Error' });
 		}
 	});
+
+function toRad(Value) {
+	return ((Value * Math.PI) / 180);
+}
 
 /*			HIKE
 	{	
@@ -255,7 +312,7 @@ router.get('/hikePoints/:id',
 				};
 			});
 
-			res.status(200).json({hikePoints: hikePoints, gpx: gpx});
+			res.status(200).json({ hikePoints: hikePoints, gpx: gpx });
 		} catch (err) {
 			res.status(500).json({ error: 'Internal Server Error' });
 		}

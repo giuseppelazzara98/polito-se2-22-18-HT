@@ -145,7 +145,7 @@ export default function ReferencePoints(props) {
 															props.refPoint.id === ''
 																? Math.floor(Math.random() * (max - min) + min)
 																: props.refPoint.id,
-														name: props.refPoint.name,
+														name: "GPS coordinates",
 														lon: event.target.value,
 														lat: props.refPoint.lat
 													});

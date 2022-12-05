@@ -98,7 +98,8 @@ function App2() {
 			ascent:
 				ascentFilter?.length === 2
 					? { min: ascentFilter[0], max: ascentFilter[1] }
-					: null
+					: null,
+			range: null
 		};
 
 		return newObj;

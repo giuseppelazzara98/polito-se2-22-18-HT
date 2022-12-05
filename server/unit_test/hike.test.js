@@ -7,7 +7,8 @@ describe('TestHikeDao', () => {
         "difficulty": [],
         "exp_time": null,
         "length": null,
-        "ascent": null
+        "ascent": null,
+        "range": null
     };
 
     const bodyFilter2 = {
@@ -15,7 +16,8 @@ describe('TestHikeDao', () => {
         "difficulty": ["turist", "hiker"],
         "exp_time": null,
         "length": { "min": 0.0, "max": 15.7 },
-        "ascent": null
+        "ascent": null,
+        "range": null
     };
 
     const bodyFilter3 = {
@@ -23,7 +25,8 @@ describe('TestHikeDao', () => {
         "difficulty": ["turist", "professional hiker"],
         "exp_time": null,
         "length": { "min": 0.0, "max": 15.7 },
-        "ascent": null
+        "ascent": null,
+        "range": null
     };
 
     const bodyFilter4 = {
@@ -31,7 +34,8 @@ describe('TestHikeDao', () => {
         "difficulty": [],
         "exp_time": { "min": 5.2, "max": 7.0 },
         "length": null,
-        "ascent": { "min": 500, "max": 2000 }
+        "ascent": { "min": 500, "max": 2000 },
+        "range": null
     };
 
     const bodyFilter5 = {
@@ -39,7 +43,8 @@ describe('TestHikeDao', () => {
         "difficulty": ["professional hiker"],
         "exp_time": null,
         "length": { "min": 0.0, "max": 15.7 },
-        "ascent": { "min": 1000, "max": 2000 }
+        "ascent": { "min": 1000, "max": 2000 },
+        "range": null
     };
 
     const bodyFilter6 = {
@@ -47,7 +52,8 @@ describe('TestHikeDao', () => {
         "difficulty": [],
         "exp_time": { "min": 5.2, "max": 7.0 },
         "length": { "min": 0.0, "max": 11.5 },
-        "ascent": { "min": 5000, "max": 6500 }
+        "ascent": { "min": 5000, "max": 6500 },
+        "range": null
     };
 
     /*
@@ -61,6 +67,13 @@ describe('TestHikeDao', () => {
     testGetFilteredHikes(bodyFilter4, true);
     testGetFilteredHikes(bodyFilter5, true);
     testGetFilteredHikes(bodyFilter6, false);
+
+    getLatLongStartPlaceByHikeId(12, true);
+    getLatLongStartPlaceByHikeId(13, true);
+    getLatLongStartPlaceByHikeId(14, true);
+    getLatLongStartPlaceByHikeId(15, true);
+    getLatLongStartPlaceByHikeId(304320, false);
+    getLatLongStartPlaceByHikeId(3041230, false);
 
     testInsertHikePlace(1, 1, 1);
     testInsertHikePlace(2, 2, 2);
@@ -108,6 +121,7 @@ describe('TestHikeDao', () => {
 
     testCloseTables();
     testGetFilteredHikes(bodyFilter1, true);
+    getLatLongStartPlaceByHikeId(1, true);
     testInsertHikePlace(4, 3, 3);
     testInsertNewHike(bodyNewHike1, 9, 5);
     testGetHikeById(1, true);
@@ -133,6 +147,26 @@ function testGetFilteredHikes(body, expectedResult) {
         }
         catch (err) {
             console.log("---- Error on testGetPlacesByProvinceId ----");
+            return;
+        }
+    });
+}
+
+function getLatLongStartPlaceByHikeId(id, expected_result) {
+    test('Test get start place by hike id', async () => {
+        try {
+            const result = await testHikeDao.getLatLongStartPlaceByHikeId(id);
+
+            if (expected_result === true) {
+                expect(result).not.toBeNull();
+            }
+            else {
+                expect(result).toBeNull();
+            }
+
+        }
+        catch (err) {
+            console.log("---- Error on getLatLongStartPlaceByHikeId ----");
             return;
         }
     });

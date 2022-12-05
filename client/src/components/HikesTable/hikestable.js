@@ -8,7 +8,7 @@ import styles from "./index.module.scss";
 import { formatDuration } from "../../helpers/utility";
 import { CDropdown, CDropdownToggle, CDropdownItem, CDropdownMenu } from '@coreui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMap } from '@fortawesome/free-solid-svg-icons';
+import { faCircleInfo, faMap } from '@fortawesome/free-solid-svg-icons';
 import API from "../../API/api";
 
 function HikesTable(props) {
@@ -46,6 +46,11 @@ function HikesTable(props) {
               isHiker={props.isHiker}
             />
           ))}
+          {props.hikes?.length === 0 && (
+            <div className={styles.hikeRow}>
+              <span>There is no result</span>
+            </div>
+          )}
         </div>
       </div>
     </div>
@@ -89,7 +94,7 @@ function HikeRow(props) {
               setTab((value) => !value);
             }}
           >
-            {tab ? "↑" : "↓"}
+            <FontAwesomeIcon icon={faCircleInfo} className={styles.iconInfo}/>
           </Button>
         </div>
       </div>

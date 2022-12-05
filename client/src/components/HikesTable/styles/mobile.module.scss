@@ -12,6 +12,9 @@
       background-color: $tertiary-green;
       border-color: transparent;
     }
+    .iconInfo {
+      font-size: 18px;
+    }
   }
   .mapButton{
     background-color: $primary-blue;
@@ -54,7 +57,7 @@
       flex-direction: column;
       .hikeFirstRow {
         display: grid;
-        grid-template-columns: 2fr 1fr 1fr 1fr 0.5fr;
+        grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
         padding: 5px;
         border-bottom: 1px solid $secondary-blue;
       }
@@ -64,7 +67,7 @@
         .headerHinner,
         .bodyHinner {
           display: grid;
-          grid-template-columns: 1fr 1fr 1fr 1fr 0.5fr;
+          grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
           padding: 5px;
         }
         .headerHinner {

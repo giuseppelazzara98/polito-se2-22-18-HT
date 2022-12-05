@@ -168,6 +168,29 @@ class HikeDAO {
 		});
 	};
 
+	getLatLongStartPlaceByHikeId = (hike_id) => {
+		let sql = "SELECT P.latitude, P.longitude FROM PLACE P, HIKE H WHERE H.id_start_place = P.id_place AND H.id_hike = ?";
+		return new Promise((resolve, reject) => {
+			this.db.get(sql, [hike_id], (err, row) => {
+				if (err) {
+					console.log('Error running sql: ' + sql);
+					console.log(err);
+					reject(err);
+				} else {
+					if(row !== undefined) {
+						const latLong = {
+							latitude: row.latitude,
+							longitude: row.longitude
+						};
+						resolve(latLong);
+					} else {
+						resolve(null);
+					}
+				}
+			});
+		});
+	};
+
 	insertHike = (hike, idStart, idEnd) => {
 		return new Promise((resolve, reject) => {
 			const sql =

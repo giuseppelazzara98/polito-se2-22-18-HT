@@ -168,6 +168,7 @@ async function getAllHikes(data) {
 			description: r.description,
 			province : r.province,
 			municipality: r.municipality,
+			gpx: r.gpx,
 		}));
 		return {
 			hikes: hikes,
