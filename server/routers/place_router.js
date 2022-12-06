@@ -75,17 +75,50 @@ router.get(
 	}
 );
 
+/*** Huts APIs ***/
+
+/*
+	Example of body request:
+	{
+		"province": 1,
+		"name": "Hut 1",
+		"description": "Hut 1 description",
+		"latitude": 45.123456,
+		"longitude": 7.123456,
+		"type": "hut",
+		"altitude": 1000,
+		"nBeds": 10,
+		"phone": "+39 3331234567",
+		"email": "guide1@gmail.com",
+		"website": "www.hut1.com"
+	}
+
+	{
+		"province": 1,
+		"name": "Hut 1",
+		"description": "Hut 1 description",
+		"latitude": 45.123456,
+		"longitude": 7.123456,
+		"type": "hut",
+		"altitude": 1000,
+		"nBeds": 10,
+		"phone": "+39 3331234567",
+		"email": "guide1@gmail.com",
+		"website": ""
+	}
+*/
+
 //POST /api/newHut
 router.post('/newHut',
 	isLoggedIn,
 	body('province').notEmpty().isInt({ min: 1 }),
-	body('name').isString(),
-	body('description').isString(),
+	body('name').isString().isLength({ max: 300 }),
+	body('description').isString().isLength({ max: 1000 }),
 	body('latitude').notEmpty().isFloat(),
 	body('longitude').notEmpty().isFloat(),
 	body('type').equals('hut'),
-	body('altitude').notEmpty().isInt({ min: 1 }),
-	body('nBeds').notEmpty().isInt({ min: 1 }),
+	body('altitude').notEmpty().isInt({ min: 0 }),
+	body('nBeds').notEmpty().isInt({ min: 0 }),
 	body('phone').isString(),
 	body('email').isString(),
 	body('website').isString(),
@@ -96,7 +129,7 @@ router.post('/newHut',
 			return res.status(422).json({ error: 'Empty body request' });
 		}
 
-		if (!(Object.keys(req.body).length == 10 || Object.keys(req.body).length == 11)) {
+		if (!(Object.keys(req.body).length === 11)) {
 			console.log('Data not formatted properly!');
 			return res.status(422).json({ error: 'Data not formatted properly' });
 		}
@@ -117,13 +150,16 @@ router.post('/newHut',
 				lon: req.body.longitude,
 				type: req.body.type
 			}
-		
-			idPlace	= await placeDao.insertPlace(newPlace, req.body.province);
+
+			console.log("newPlace: " + JSON.stringify(newPlace));
+
+			const idPlace = await placeDao.insertPlace(newPlace, req.body.province);
 			console.log("idPlace: " + idPlace);
-			
-			await placeDao.insertHutData(idPlace, req.body);
-			
+
+			const result = await placeDao.insertHutData(idPlace, req.body);
+
 			return res.status(201).json(result);
+
 		} catch (err) {
 			console.log(err);
 			return res.status(503).json({ error: 'Service Unavailable' });

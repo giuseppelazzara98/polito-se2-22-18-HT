@@ -5,8 +5,10 @@ class PlaceDAO {
 		this.db = db;
 	}
 
+	/* ------------------- PLACE TABLE ------------------- */
+
 	// close the connection to database
-	closePlaceTable = () => {
+	closeTables = () => {
 		return new Promise((resolve, reject) => {
 			this.db.close();
 			resolve(true);
@@ -103,16 +105,9 @@ class PlaceDAO {
 		});
 	};
 
-	/*
-		id: ,
-		name: ,
-		type: ,
-		lat: ,
-		lon: 
-	*/
 	insertPlace = (referencePoint, idProvince) => {
 		return new Promise((resolve, reject) => {
-			const sql = 'INSERT INTO PLACE (id_province, name, description, latitude, longitude, type) VALUES (?, ?, ?, ?, ?)';
+			const sql = 'INSERT INTO PLACE (id_province, name, description, latitude, longitude, type) VALUES (?, ?, ?, ?, ?, ?);';
 
 			this.db.run(sql, [idProvince, referencePoint.name, referencePoint.description, referencePoint.lat, referencePoint.lon, referencePoint.type], function (err) {
 				if (err) {
@@ -126,6 +121,45 @@ class PlaceDAO {
 		});
 	};
 
+	/* ---------------------- HUT DATA ---------------------- */
+
+	/*
+
+	// create the hut data table
+	newHutDataTable = () => {
+		return new Promise((resolve, reject) => {
+
+			const sql = "CREATE TABLE IF NOT EXISTS HUT_DATA (id_place INTEGER NOT NULL, altitude INTEGER NOT NULL, n_beds INTEGER NOT NULL, phone TEXT NOT NULL, email TEXT NOT NULL, website TEXT, PRIMARY KEY(id_place), FOREIGN KEY(id_place) REFERENCES PLACE(id_place)
+);";
+			this.db.run(sql, (err) => {
+				if (err) {
+					console.log('Error running sql: ' + sql);
+					console.log(err);
+					reject(err);
+				}
+				resolve(this.lastID);
+			});
+		});
+	}
+
+	// drop the hut data table
+	dropHutDataTable = () => {
+		return new Promise((resolve, reject) => {
+			const sql = "DROP TABLE IF EXISTS HUT_DATA;";
+			this.db.run(sql, function (err) {
+				if (err) {
+					console.log('Error running sql: ' + sql);
+					console.log(err);
+					reject(err);
+				}
+				resolve(this.lastID);
+			})
+
+		});
+	}
+
+	*/
+
 	insertHutData = (idPlace, hut) => {
 		return new Promise((resolve, reject) => {
 			const sql = 'INSERT INTO HUT_DATA (id_place, altitude, n_beds, phone, email, website) VALUES (?, ?, ?, ?, ?, ?)';
@@ -136,7 +170,7 @@ class PlaceDAO {
 					console.log(err);
 					reject(err);
 				} else {
-					resolve(true); //returns the entered ID
+					resolve(true);
 				}
 			});
 		});
