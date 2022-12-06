@@ -6,7 +6,7 @@ import styles from "./index.module.scss";
 
 
 export default function NewHutForm(props){
-    const {setShowAddNewHutSuccess, setShowAddNewHutError } =
+    const {setShowAddNewHutSuccess, setShowAddNewHutError,isHut=false} =
 		props;
     const [name,setName]=useState("");
     const [description,setDescription]=useState("");
@@ -15,6 +15,7 @@ export default function NewHutForm(props){
     const [phoneNumber,setPhoneNumber]=useState("");
     const [email,setEmail]=useState("");
     const [webSite,setWebSite]=useState("");
+    const [capacity,setCapacity]=useState(0);
 
 
     const handleSubmit = (event) =>{
@@ -48,6 +49,8 @@ export default function NewHutForm(props){
                     <Insert title={"Altitude"} type={"number"} param={altitude} setParam={setAltitude} placeholder={"Altitude"} text={"Altitude in meters"} min={0} max={8000}/>
 				</Col>
 			</Row>
+            {isHut?(
+            <div>
             <Row className="mb-3">
 				<Col>				
 					<Insert title={"Number Of Beds"} type={"number"} param={nBeds} setParam={setNBeds} placeholder={"Number of beds"} min={0}/>
@@ -73,6 +76,22 @@ export default function NewHutForm(props){
             <Button className={styles.button} type="submit">
                 Submit
             </Button>
+            </div>):(
+            <div>
+                <Row className="mb-3">
+				{/*Description field*/}
+				<Col>
+                    <Insert title={"Position"} type={"textarea"} param={description} setParam={setDescription}  as={"textarea"}/>
+				</Col>
+			</Row>
+            <Row className="mb-3">
+				{/*Description field*/}
+				<Col>
+                    <Insert title={"Capacity"} type={"number"} param={description} setParam={setDescription}  min={0}/>
+				</Col>
+			</Row>
+            </div>)
+            }
         </Form>
     );
 }
