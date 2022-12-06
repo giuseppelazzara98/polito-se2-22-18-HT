@@ -181,7 +181,13 @@ function App2() {
 					/>
 					<Route
 						path="/newHut"
-						element={<NewHut  setShowAddNewHutSuccess={setShowAddNewHutSuccess} setShowAddNewHutError={setShowAddNewHutError} />}
+						element={
+							loggedIn && user.role === 'Local guide' ? (
+								<NewHut  setShowAddNewHutSuccess={setShowAddNewHutSuccess} setShowAddNewHutError={setShowAddNewHutError} />
+							) : (
+								<Navigate to="/login" replace />
+							)
+						}
 					/>
 					<Route
 						path="/login"
