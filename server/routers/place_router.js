@@ -120,7 +120,7 @@ router.post('/newHut',
 	body('altitude').notEmpty().isInt({ min: 0 }),
 	body('nBeds').notEmpty().isInt({ min: 0 }),
 	body('phone').isString(),
-	body('email').isString(),
+	body('email').isEmail(),
 	body('website').isString(),
 	async (req, res) => {
 
@@ -151,10 +151,7 @@ router.post('/newHut',
 				type: req.body.type
 			}
 
-			console.log("newPlace: " + JSON.stringify(newPlace));
-
 			const idPlace = await placeDao.insertPlace(newPlace, req.body.province);
-			console.log("idPlace: " + idPlace);
 
 			const result = await placeDao.insertHutData(idPlace, req.body);
 
