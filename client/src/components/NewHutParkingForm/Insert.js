@@ -1,19 +1,19 @@
-import { Form} from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 import styles from './index.module.scss';
 
 export default function Insert(props) {
-    const {
-        min=null,
-        max=null,
-        minLength=null,
-		maxLength=null,
-        required=true,
+	const {
+		min = null,
+		max = null,
+		minLength = null,
+		maxLength = null,
+		required = true,
 		as,
-		text="",
+		text = "",
 		placeholder,
 		setParam,
 		param
-    }=props;
+	} = props;
 	return (
 		<Form.Group>
 			<Form.Label className={styles.title}>{props.title}</Form.Label>
@@ -24,15 +24,15 @@ export default function Insert(props) {
 				//value={props.title}
 				onChange={(event) => setParam(event.target.value)}
 				as={as}
-                rows={5}
+				rows={5}
 				required={required}
 				value={param}
 				minLength={minLength}
 				maxLength={maxLength}
-                min={min}
-                max={max}
+				min={min}
+				max={max}
 			/>
-            <Form.Text>{text}</Form.Text>
+			<Form.Text>{text}</Form.Text>
 			<Form.Control.Feedback type="invalid">
 				{props.invalid}
 			</Form.Control.Feedback>
