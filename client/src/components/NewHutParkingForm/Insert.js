@@ -12,7 +12,8 @@ export default function Insert(props) {
 		text = "",
 		placeholder,
 		setParam,
-		param
+		param,
+		pattern = null,
 	} = props;
 	return (
 		<Form.Group>
@@ -31,6 +32,7 @@ export default function Insert(props) {
 				maxLength={maxLength}
 				min={min}
 				max={max}
+				pattern={pattern}
 			/>
 			<Form.Text>{text}</Form.Text>
 			<Form.Control.Feedback type="invalid">

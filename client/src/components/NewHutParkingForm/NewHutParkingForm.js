@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Form, Row, Col, Button } from 'react-bootstrap';
 import Insert from "./Insert"
 import styles from "./index.module.scss";
+import API from '../../API/api';
 
 
 export default function NewHutForm(props) {
@@ -12,31 +13,49 @@ export default function NewHutForm(props) {
     const [description, setDescription] = useState("");
     const [altitude, setAltitude] = useState(0);
     const [nBeds, setNBeds] = useState(0);
-    const [phoneNumber, setPhoneNumber] = useState("+39");
+    const [phoneNumber, setPhoneNumber] = useState("");
     const [email, setEmail] = useState("");
     const [webSite, setWebSite] = useState("");
     const [capacity, setCapacity] = useState(0);
     const [formValidated, setFormValidated] = useState(false);
+    const navigate = useNavigate();
 
 
     const handleSubmit = (event) => {
         event.preventDefault();
         let valid = true;
         const form = event.currentTarget;
-        const hut = {
-            name,
-            altitude,
-            nBeds,
-            phoneNumber,
-            email,
-            webSite,
-            description
-        };
 
         if (form.checkValidity() === false) {
             valid = false;
         } else {
-            
+            if (isHut) {
+                const hut = {
+                    name,
+                    altitude,
+                    nBeds,
+                    phone: phoneNumber,
+                    email,
+                    website: webSite,
+                    description,
+                    latitude: "20.10",
+                    longitude: "98.3536",
+                    type: "hut",
+                    province: 1,
+                };
+                API.insertHut(hut).then(() => {
+                    setShowAddNewHutSuccess(true);
+                    setTimeout(() => {
+                        setShowAddNewHutSuccess(false)
+                    }, 2500);
+                }).catch(() => {
+                    setShowAddNewHutError(true);
+                    setTimeout(() => {
+                        setShowAddNewHutError(false)
+                    }, 2500);
+                });
+                navigate('/');
+            }
         }
         setFormValidated(true);
     }
@@ -71,7 +90,7 @@ export default function NewHutForm(props) {
                             <Insert title={"Email"} type={"email"} param={email} setParam={setEmail} placeholder={"Email"} />
                         </Col>
                         <Col>
-                            <Insert title={"Phone Number"} type={"text"} param={phoneNumber} setParam={setPhoneNumber} placeholder={"Phone Number"} />
+                            <Insert title={"Phone Number"} type={"text"} param={phoneNumber} setParam={setPhoneNumber} placeholder={"Phone Number"} minLength={10} maxLength={15} pattern={"\+([0-9]){9}(([0-9][0-9]){1,2})?([0-9])?"} text={"es. +391504896352"} />
                         </Col>
                     </Row>
                     <Row className="mb-3">
