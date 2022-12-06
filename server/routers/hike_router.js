@@ -99,8 +99,6 @@ router.post('/hikes',
 							Math.cos(toRad(lat1)) *
 							Math.cos(toRad(lon2 - lon1)));
 
-					console.log(distance);
-
 					if (distance <= req.body.range.radius) {
 						hikes_ranged.push(hike);
 					}

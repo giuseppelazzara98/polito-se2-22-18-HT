@@ -135,16 +135,7 @@ __Request body:__
 }
 ```
 __Response:__ `201 Created`  
-__Response body:__ 
-```
-{
-    "id": 1,
-    "username": "guide1@gmail.com",
-    "name": "Paolo",
-    "surname": "Bitta",
-    "role": "Local guide"
-} 
-```
+__Response body:__ _None_  
 __Error responses:__ `409 Conflict`, `422 Unprocessable Entity`, `503 Service Unavailable`
 
 ### User email verification:
@@ -243,7 +234,8 @@ __Request body:__
 	"difficulty": [1,2],
 	"exp_time": { "min": 5.6, "max": 9.0 },
 	"length": { "min": 0.0, "max": 15.7 },
-	"ascent": { "min": 500, "max": 2900 }
+	"ascent": { "min": 500, "max": 2900 },
+    "range": {"center": {"lat": 10.21, "long": 11.63}, "radius": 3850000}
 }
 ```
 __Response:__ `200 Ok`  
@@ -252,16 +244,21 @@ __Response body:__
 {
     "hikes": [
         {
-            "name": "Il Monte Cervia",
-            "key": 1,
+            "name": "Afframont Lake",
+            "key": 10,
             "description": "...",
-            "start_place": "Parking lot 1",
-            "end_place": "Parking lot 2",
+            "start_place": "Alpe Bondolo",
+            "end_place": "La Calla",
             "province": "TORINO",
-            "length": 12,
-            "expected_time": 6.5,
-            "ascent": 1500,
-            "difficulty": 1
+            "municipality": "BALME",
+            "length": 4,
+            "expected_time": 5,
+            "ascent": 810,
+            "difficulty": 2,
+            "position": {
+                "lat": 45.3015,
+                "long": 7.2238
+            }
         }, ...
     ],
     "distinct_ascents": [
@@ -275,7 +272,7 @@ __Response body:__
         1450,
         123,
         78
-    ]
+    ], ...
 }
 ``` 
 __Error responses:__ `422 Unprocessable Entity`, `500 Internal Server Error`
