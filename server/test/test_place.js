@@ -15,9 +15,6 @@ describe('Test places apis', () => {
     getAllPlacesByProvinceId(200);
     getPlaceByWrongProvinceId(422, 0);
 
-    //Authenticating the user
-    logIn("guide1@gmail.com","password",200);
-
     const newParkingLot1 = {
         "province": 1,
 		"name": "Parking lot 24",
@@ -68,6 +65,11 @@ describe('Test places apis', () => {
     };
 
     //Testing POST /api/newParkingLot
+    newParkingLot(401, newParkingLot1);
+
+    //Authenticating the user
+    logIn("guide1@gmail.com","password",200);
+
     newParkingLot(201, newParkingLot1);
     newParkingLot(201, newParkingLot2);
     newParkingLot(422, newParkingLot3);
