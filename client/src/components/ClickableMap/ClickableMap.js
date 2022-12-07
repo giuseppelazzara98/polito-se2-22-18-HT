@@ -14,6 +14,7 @@ L.Icon.Default.mergeOptions({
 });
 
 export default function Map(props) {
+	const {point, setPoint} = props;
 	return (
 		<MapContainer
 			className={styles.map}
@@ -25,7 +26,7 @@ export default function Map(props) {
 				attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 				url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 			/>
-			<NewMarker /> {/* This is the marker component */}
+			<NewMarker point={point} setPoint={setPoint}/> {/* This is the marker component */}
 			{/* This is used to draw the provinces */}
 			{geoData.provinces.map((province) => {
 				return (

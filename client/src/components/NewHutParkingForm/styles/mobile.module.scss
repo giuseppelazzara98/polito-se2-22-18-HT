@@ -1,5 +1,27 @@
 @import "../../../styles/configs";
 
+  .toggle {
+    background-color: unset;
+    border: unset;
+    padding: 0;
+    @include font(500, 16px, 20px, 0);
+    color: $primary-green;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    &:hover {
+      color: $tertiary-green;
+    }
+    &.open {
+      .toggleIcon {
+        transform: rotate(180deg);
+      }
+    }
+    .toggleIcon {
+      transition: transform 0.3s ease;
+    }
+  }
 
   .button{
     background-color: $primary-green;
@@ -20,6 +42,18 @@
   .title {
     @include font(700, 18px, 20px, 0);
     color: $primary-green;
+    .province,
+    .noProvince {
+      color: $primary-black;
+      font-weight: 400;
+      font-size: 16px;
+    }
+    .noProvince {
+      &.error {
+        color: $primary-error;
+        font-weight: 700;
+      }
+    }
   }
   .button{
     background-color: $primary-green;

@@ -252,6 +252,8 @@ const insertHut = async (data) => {
 		if (response.status === 500) {
 			err.message = '500 INTERNAL SERVER ERROR';
 			throw err;
+		} else {
+			throw err;
 		}
 	}
 }

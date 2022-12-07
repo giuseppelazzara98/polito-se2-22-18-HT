@@ -183,7 +183,7 @@ function App2() {
 						path="/newHut"
 						element={
 							loggedIn && user.role === 'Local guide' ? (
-								<NewHut  setShowAddNewHutSuccess={setShowAddNewHutSuccess} setShowAddNewHutError={setShowAddNewHutError} />
+								<NewHut  setShowAddNewHutSuccess={setShowAddNewHutSuccess} setShowAddNewHutError={setShowAddNewHutError} provincesFacets={provincesFacets}/>
 							) : (
 								<Navigate to="/login" replace />
 							)
