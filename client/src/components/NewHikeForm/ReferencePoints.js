@@ -21,7 +21,7 @@ export default function ReferencePoints(props) {
 
 	useEffect(() => {
 		const loadPoints = () => {
-			API.getPointsByProvinceId(props.province)
+			API.getPointsByProvinceId(props.province?.prov_istat_code_num)
 				.then((list) => {
 					return list.map((item) => {
 						return {
@@ -34,7 +34,7 @@ export default function ReferencePoints(props) {
 					setPoints(newList);
 				});
 		};
-		if (props.province !== '') {
+		if (Object.keys(props.province).length !== 0) {
 			loadPoints();
 		}
 	}, [props.province]);
@@ -99,7 +99,11 @@ export default function ReferencePoints(props) {
 											defaultValue={props.refPoint.id}
 											name="refPoint"
 											isSearchable={true}
-											options={points.filter((item) => item.value !== props.endPoint.id && item.value !== props.startPoint.id)}
+											options={points.filter(
+												(item) =>
+													item.value !== props.endPoint.id &&
+													item.value !== props.startPoint.id
+											)}
 											onChange={(event) => {
 												props.setRefPoint({
 													type: props.refPoint.type,
@@ -145,7 +149,7 @@ export default function ReferencePoints(props) {
 															props.refPoint.id === ''
 																? Math.floor(Math.random() * (max - min) + min)
 																: props.refPoint.id,
-														name: "GPS coordinates",
+														name: 'GPS coordinates',
 														lon: event.target.value,
 														lat: props.refPoint.lat
 													});
