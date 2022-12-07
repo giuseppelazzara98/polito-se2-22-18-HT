@@ -9,6 +9,7 @@ import noScroll from "no-scroll";
 import CheckboxFilter from "../CheckboxFilter/CheckboxFilter";
 import RangeFilter from "../RangeFilter/RangeFilter";
 import SelectFilter from "../SelectFilter/SelectFilter";
+import RadiusMapFilter from "../RadiusMapFilter/RadiusMapFilter";
 
 function FilterModal(props) {
   const {
@@ -102,7 +103,14 @@ export default function FiltersContainer(props) {
     }
     setFilters(newFilter);
   }
-
+  const radiusFilter = () => {
+    return (<RadiusMapFilter
+    title = "Distance from"
+    name = "radius"
+    />
+    
+    )
+  }
   const geograficFilters = () => {
     return (
       <>
@@ -228,6 +236,7 @@ export default function FiltersContainer(props) {
         {!isMobile && (
           <>
             <h5 className={styles.filtersTitle}>Filters</h5>
+            {radiusFilter()}
             {geograficFilters()}
             {difficultyFilter()}
             {expectedTimeFilter()}
@@ -239,6 +248,7 @@ export default function FiltersContainer(props) {
       {modalOpen && (
         ReactDom.createPortal(
           <FilterModal setModalOpen={setModalOpen}>
+            {radiusFilter()}
             {geograficFilters()}
             {difficultyFilter()}
             {expectedTimeFilter()}
