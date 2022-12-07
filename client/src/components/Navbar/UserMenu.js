@@ -25,16 +25,16 @@ export default function UserMenu(props) {
         {isMobile && <span className={styles.userName}>{user.name} {user.surname}</span>}
         <div className={styles.option} onClick={() => navigate("/newHike")}>
           <span className={styles.label}>New Hike </span>
-               <FontAwesomeIcon icon={faSquarePlus} />
+               <FontAwesomeIcon icon={faSquarePlus} className={styles.iconOption}/>
           
         </div>
         <div className={styles.option} onClick={() => navigate("/newHut")}>
           <span className={styles.label}>New Hut</span>
-            <FontAwesomeIcon icon={faBed} />  
+            <FontAwesomeIcon icon={faBed} className={styles.iconOption}/>  
         </div>
         <div className={styles.option} onClick={() => navigate("/newParkingLot")}>
           <span className={styles.label}>New Parking Lot</span>
-          <FontAwesomeIcon icon={faParking} />
+          <FontAwesomeIcon icon={faParking} className={styles.iconOption}/>
         </div>
         <div className={styles.option} onClick={() => handleLogOut()}>
           <span className={styles.label}>Logout</span>
