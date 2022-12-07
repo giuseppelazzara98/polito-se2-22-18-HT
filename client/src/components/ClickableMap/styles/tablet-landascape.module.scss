@@ -1,0 +1,8 @@
+@import "../../../styles/configs";
+
+@media (min-width: $tablet-landscape) {
+  .wrap {
+    padding: 10px;
+    background-color: $primary-green-light;
+  }
+}

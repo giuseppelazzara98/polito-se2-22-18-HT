@@ -18,6 +18,7 @@
     "leaflet": "^1.9.3",
     "leaflet-geosearch": "^3.7.0",
     "no-scroll": "^2.1.1",
+    "point-in-polygon": "^1.1.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.5.0",
     "react-bootstrap-icons": "^1.9.1",

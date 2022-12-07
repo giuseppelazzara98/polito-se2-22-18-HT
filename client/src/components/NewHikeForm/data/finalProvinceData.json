@@ -1,0 +1,858 @@
+[
+	{
+		"province": "Torino",
+		"province_id": 1,
+		"prov_abbreviation": "TO",
+		"region": "Piemonte",
+		"region_id": 1,
+		"oldProvinceId": 1
+	},
+	{
+		"province": "Vercelli",
+		"province_id": 2,
+		"prov_abbreviation": "VC",
+		"region": "Piemonte",
+		"region_id": 1,
+		"oldProvinceId": 2
+	},
+	{
+		"province": "Novara",
+		"province_id": 3,
+		"prov_abbreviation": "NO",
+		"region": "Piemonte",
+		"region_id": 1,
+		"oldProvinceId": 3
+	},
+	{
+		"province": "Cuneo",
+		"province_id": 4,
+		"prov_abbreviation": "CN",
+		"region": "Piemonte",
+		"region_id": 1,
+		"oldProvinceId": 4
+	},
+	{
+		"province": "Asti",
+		"province_id": 5,
+		"prov_abbreviation": "AT",
+		"region": "Piemonte",
+		"region_id": 1,
+		"oldProvinceId": 5
+	},
+	{
+		"province": "Alessandria",
+		"province_id": 6,
+		"prov_abbreviation": "AL",
+		"region": "Piemonte",
+		"region_id": 1,
+		"oldProvinceId": 6
+	},
+	{
+		"province": "Biella",
+		"province_id": 96,
+		"prov_abbreviation": "BI",
+		"region": "Piemonte",
+		"region_id": 1,
+		"oldProvinceId": 96
+	},
+	{
+		"province": "Verbano-Cusio-Ossola",
+		"province_id": 103,
+		"prov_abbreviation": "VB",
+		"region": "Piemonte",
+		"region_id": 1,
+		"oldProvinceId": 103
+	},
+	{
+		"province": "Valle d'Aosta/Vallée d'Aoste",
+		"province_id": 7,
+		"prov_abbreviation": "AO",
+		"region": "Valle d'Aosta/Vallée d'Aoste",
+		"region_id": 2,
+		"oldProvinceId": 7
+	},
+	{
+		"province": "Varese",
+		"province_id": 12,
+		"prov_abbreviation": "VA",
+		"region": "Lombardia",
+		"region_id": 3,
+		"oldProvinceId": 12
+	},
+	{
+		"province": "Como",
+		"province_id": 13,
+		"prov_abbreviation": "CO",
+		"region": "Lombardia",
+		"region_id": 3,
+		"oldProvinceId": 13
+	},
+	{
+		"province": "Sondrio",
+		"province_id": 14,
+		"prov_abbreviation": "SO",
+		"region": "Lombardia",
+		"region_id": 3,
+		"oldProvinceId": 14
+	},
+	{
+		"province": "Milano",
+		"province_id": 15,
+		"prov_abbreviation": "MI",
+		"region": "Lombardia",
+		"region_id": 3,
+		"oldProvinceId": 15
+	},
+	{
+		"province": "Bergamo",
+		"province_id": 16,
+		"prov_abbreviation": "BG",
+		"region": "Lombardia",
+		"region_id": 3,
+		"oldProvinceId": 16
+	},
+	{
+		"province": "Brescia",
+		"province_id": 17,
+		"prov_abbreviation": "BS",
+		"region": "Lombardia",
+		"region_id": 3,
+		"oldProvinceId": 17
+	},
+	{
+		"province": "Pavia",
+		"province_id": 18,
+		"prov_abbreviation": "PV",
+		"region": "Lombardia",
+		"region_id": 3,
+		"oldProvinceId": 18
+	},
+	{
+		"province": "Cremona",
+		"province_id": 19,
+		"prov_abbreviation": "CR",
+		"region": "Lombardia",
+		"region_id": 3,
+		"oldProvinceId": 19
+	},
+	{
+		"province": "Mantova",
+		"province_id": 20,
+		"prov_abbreviation": "MN",
+		"region": "Lombardia",
+		"region_id": 3,
+		"oldProvinceId": 20
+	},
+	{
+		"province": "Lecco",
+		"province_id": 97,
+		"prov_abbreviation": "LC",
+		"region": "Lombardia",
+		"region_id": 3,
+		"oldProvinceId": 97
+	},
+	{
+		"province": "Lodi",
+		"province_id": 98,
+		"prov_abbreviation": "LO",
+		"region": "Lombardia",
+		"region_id": 3,
+		"oldProvinceId": 98
+	},
+	{
+		"province": "Monza e della Brianza",
+		"province_id": 108,
+		"prov_abbreviation": "MB",
+		"region": "Lombardia",
+		"region_id": 3,
+		"oldProvinceId": 104
+	},
+	{
+		"province": "Bolzano/Bozen",
+		"province_id": 21,
+		"prov_abbreviation": "BZ",
+		"region": "Trentino-Alto Adige/Südtirol",
+		"region_id": 4,
+		"oldProvinceId": 21
+	},
+	{
+		"province": "Trento",
+		"province_id": 22,
+		"prov_abbreviation": "TN",
+		"region": "Trentino-Alto Adige/Südtirol",
+		"region_id": 4,
+		"oldProvinceId": 22
+	},
+	{
+		"province": "Verona",
+		"province_id": 23,
+		"prov_abbreviation": "VR",
+		"region": "Veneto",
+		"region_id": 5,
+		"oldProvinceId": 23
+	},
+	{
+		"province": "Vicenza",
+		"province_id": 24,
+		"prov_abbreviation": "VI",
+		"region": "Veneto",
+		"region_id": 5,
+		"oldProvinceId": 24
+	},
+	{
+		"province": "Belluno",
+		"province_id": 25,
+		"prov_abbreviation": "BL",
+		"region": "Veneto",
+		"region_id": 5,
+		"oldProvinceId": 25
+	},
+	{
+		"province": "Treviso",
+		"province_id": 26,
+		"prov_abbreviation": "TV",
+		"region": "Veneto",
+		"region_id": 5,
+		"oldProvinceId": 26
+	},
+	{
+		"province": "Venezia",
+		"province_id": 27,
+		"prov_abbreviation": "VE",
+		"region": "Veneto",
+		"region_id": 5,
+		"oldProvinceId": 27
+	},
+	{
+		"province": "Padova",
+		"province_id": 28,
+		"prov_abbreviation": "PD",
+		"region": "Veneto",
+		"region_id": 5,
+		"oldProvinceId": 28
+	},
+	{
+		"province": "Rovigo",
+		"province_id": 29,
+		"prov_abbreviation": "RO",
+		"region": "Veneto",
+		"region_id": 5,
+		"oldProvinceId": 29
+	},
+	{
+		"province": "Udine",
+		"province_id": 30,
+		"prov_abbreviation": "UD",
+		"region": "Friuli-Venezia Giulia",
+		"region_id": 6,
+		"oldProvinceId": 30
+	},
+	{
+		"province": "Gorizia",
+		"province_id": 31,
+		"prov_abbreviation": "GO",
+		"region": "Friuli-Venezia Giulia",
+		"region_id": 6,
+		"oldProvinceId": 31
+	},
+	{
+		"province": "Trieste",
+		"province_id": 32,
+		"prov_abbreviation": "TS",
+		"region": "Friuli-Venezia Giulia",
+		"region_id": 6,
+		"oldProvinceId": 32
+	},
+	{
+		"province": "Pordenone",
+		"province_id": 93,
+		"prov_abbreviation": "PN",
+		"region": "Friuli-Venezia Giulia",
+		"region_id": 6,
+		"oldProvinceId": 93
+	},
+	{
+		"province": "Imperia",
+		"province_id": 8,
+		"prov_abbreviation": "IM",
+		"region": "Liguria",
+		"region_id": 7,
+		"oldProvinceId": 8
+	},
+	{
+		"province": "Savona",
+		"province_id": 9,
+		"prov_abbreviation": "SV",
+		"region": "Liguria",
+		"region_id": 7,
+		"oldProvinceId": 9
+	},
+	{
+		"province": "Genova",
+		"province_id": 10,
+		"prov_abbreviation": "GE",
+		"region": "Liguria",
+		"region_id": 7,
+		"oldProvinceId": 10
+	},
+	{
+		"province": "La Spezia",
+		"province_id": 11,
+		"prov_abbreviation": "SP",
+		"region": "Liguria",
+		"region_id": 7,
+		"oldProvinceId": 11
+	},
+	{
+		"province": "Piacenza",
+		"province_id": 33,
+		"prov_abbreviation": "PC",
+		"region": "Emilia-Romagna",
+		"region_id": 8,
+		"oldProvinceId": 33
+	},
+	{
+		"province": "Parma",
+		"province_id": 34,
+		"prov_abbreviation": "PR",
+		"region": "Emilia-Romagna",
+		"region_id": 8,
+		"oldProvinceId": 34
+	},
+	{
+		"province": "Reggio nell'Emilia",
+		"province_id": 35,
+		"prov_abbreviation": "RE",
+		"region": "Emilia-Romagna",
+		"region_id": 8,
+		"oldProvinceId": 35
+	},
+	{
+		"province": "Modena",
+		"province_id": 36,
+		"prov_abbreviation": "MO",
+		"region": "Emilia-Romagna",
+		"region_id": 8,
+		"oldProvinceId": 36
+	},
+	{
+		"province": "Bologna",
+		"province_id": 37,
+		"prov_abbreviation": "BO",
+		"region": "Emilia-Romagna",
+		"region_id": 8,
+		"oldProvinceId": 37
+	},
+	{
+		"province": "Ferrara",
+		"province_id": 38,
+		"prov_abbreviation": "FE",
+		"region": "Emilia-Romagna",
+		"region_id": 8,
+		"oldProvinceId": 38
+	},
+	{
+		"province": "Ravenna",
+		"province_id": 39,
+		"prov_abbreviation": "RA",
+		"region": "Emilia-Romagna",
+		"region_id": 8,
+		"oldProvinceId": 39
+	},
+	{
+		"province": "Forlì-Cesena",
+		"province_id": 40,
+		"prov_abbreviation": "FC",
+		"region": "Emilia-Romagna",
+		"region_id": 8,
+		"oldProvinceId": 40
+	},
+	{
+		"province": "Rimini",
+		"province_id": 99,
+		"prov_abbreviation": "RN",
+		"region": "Emilia-Romagna",
+		"region_id": 8,
+		"oldProvinceId": 99
+	},
+	{
+		"province": "Massa-Carrara",
+		"province_id": 45,
+		"prov_abbreviation": "MS",
+		"region": "Toscana",
+		"region_id": 9,
+		"oldProvinceId": 45
+	},
+	{
+		"province": "Lucca",
+		"province_id": 46,
+		"prov_abbreviation": "LU",
+		"region": "Toscana",
+		"region_id": 9,
+		"oldProvinceId": 46
+	},
+	{
+		"province": "Pistoia",
+		"province_id": 47,
+		"prov_abbreviation": "PT",
+		"region": "Toscana",
+		"region_id": 9,
+		"oldProvinceId": 47
+	},
+	{
+		"province": "Firenze",
+		"province_id": 48,
+		"prov_abbreviation": "FI",
+		"region": "Toscana",
+		"region_id": 9,
+		"oldProvinceId": 48
+	},
+	{
+		"province": "Livorno",
+		"province_id": 49,
+		"prov_abbreviation": "LI",
+		"region": "Toscana",
+		"region_id": 9,
+		"oldProvinceId": 49
+	},
+	{
+		"province": "Pisa",
+		"province_id": 50,
+		"prov_abbreviation": "PI",
+		"region": "Toscana",
+		"region_id": 9,
+		"oldProvinceId": 50
+	},
+	{
+		"province": "Arezzo",
+		"province_id": 51,
+		"prov_abbreviation": "AR",
+		"region": "Toscana",
+		"region_id": 9,
+		"oldProvinceId": 51
+	},
+	{
+		"province": "Siena",
+		"province_id": 52,
+		"prov_abbreviation": "SI",
+		"region": "Toscana",
+		"region_id": 9,
+		"oldProvinceId": 52
+	},
+	{
+		"province": "Grosseto",
+		"province_id": 53,
+		"prov_abbreviation": "GR",
+		"region": "Toscana",
+		"region_id": 9,
+		"oldProvinceId": 53
+	},
+	{
+		"province": "Prato",
+		"province_id": 100,
+		"prov_abbreviation": "PO",
+		"region": "Toscana",
+		"region_id": 9,
+		"oldProvinceId": 100
+	},
+	{
+		"province": "Perugia",
+		"province_id": 54,
+		"prov_abbreviation": "PG",
+		"region": "Umbria",
+		"region_id": 10,
+		"oldProvinceId": 54
+	},
+	{
+		"province": "Terni",
+		"province_id": 55,
+		"prov_abbreviation": "TR",
+		"region": "Umbria",
+		"region_id": 10,
+		"oldProvinceId": 55
+	},
+	{
+		"province": "Pesaro e Urbino",
+		"province_id": 41,
+		"prov_abbreviation": "PU",
+		"region": "Marche",
+		"region_id": 11,
+		"oldProvinceId": 41
+	},
+	{
+		"province": "Ancona",
+		"province_id": 42,
+		"prov_abbreviation": "AN",
+		"region": "Marche",
+		"region_id": 11,
+		"oldProvinceId": 42
+	},
+	{
+		"province": "Macerata",
+		"province_id": 43,
+		"prov_abbreviation": "MC",
+		"region": "Marche",
+		"region_id": 11,
+		"oldProvinceId": 43
+	},
+	{
+		"province": "Ascoli Piceno",
+		"province_id": 44,
+		"prov_abbreviation": "AP",
+		"region": "Marche",
+		"region_id": 11,
+		"oldProvinceId": 44
+	},
+	{
+		"province": "Fermo",
+		"province_id": 109,
+		"prov_abbreviation": "FM",
+		"region": "Marche",
+		"region_id": 11,
+		"oldProvinceId": 105
+	},
+	{
+		"province": "Viterbo",
+		"province_id": 56,
+		"prov_abbreviation": "VT",
+		"region": "Lazio",
+		"region_id": 12,
+		"oldProvinceId": 56
+	},
+	{
+		"province": "Rieti",
+		"province_id": 57,
+		"prov_abbreviation": "RI",
+		"region": "Lazio",
+		"region_id": 12,
+		"oldProvinceId": 57
+	},
+	{
+		"province": "Roma",
+		"province_id": 58,
+		"prov_abbreviation": "RM",
+		"region": "Lazio",
+		"region_id": 12,
+		"oldProvinceId": 58
+	},
+	{
+		"province": "Latina",
+		"province_id": 59,
+		"prov_abbreviation": "LT",
+		"region": "Lazio",
+		"region_id": 12,
+		"oldProvinceId": 59
+	},
+	{
+		"province": "Frosinone",
+		"province_id": 60,
+		"prov_abbreviation": "FR",
+		"region": "Lazio",
+		"region_id": 12,
+		"oldProvinceId": 60
+	},
+	{
+		"province": "L'Aquila",
+		"province_id": 66,
+		"prov_abbreviation": "AQ",
+		"region": "Abruzzo",
+		"region_id": 13,
+		"oldProvinceId": 66
+	},
+	{
+		"province": "Teramo",
+		"province_id": 67,
+		"prov_abbreviation": "TE",
+		"region": "Abruzzo",
+		"region_id": 13,
+		"oldProvinceId": 67
+	},
+	{
+		"province": "Pescara",
+		"province_id": 68,
+		"prov_abbreviation": "PE",
+		"region": "Abruzzo",
+		"region_id": 13,
+		"oldProvinceId": 68
+	},
+	{
+		"province": "Chieti",
+		"province_id": 69,
+		"prov_abbreviation": "CH",
+		"region": "Abruzzo",
+		"region_id": 13,
+		"oldProvinceId": 69
+	},
+	{
+		"province": "Campobasso",
+		"province_id": 70,
+		"prov_abbreviation": "CB",
+		"region": "Molise",
+		"region_id": 14,
+		"oldProvinceId": 70
+	},
+	{
+		"province": "Isernia",
+		"province_id": 94,
+		"prov_abbreviation": "IS",
+		"region": "Molise",
+		"region_id": 14,
+		"oldProvinceId": 94
+	},
+	{
+		"province": "Caserta",
+		"province_id": 61,
+		"prov_abbreviation": "CE",
+		"region": "Campania",
+		"region_id": 15,
+		"oldProvinceId": 61
+	},
+	{
+		"province": "Benevento",
+		"province_id": 62,
+		"prov_abbreviation": "BN",
+		"region": "Campania",
+		"region_id": 15,
+		"oldProvinceId": 62
+	},
+	{
+		"province": "Napoli",
+		"province_id": 63,
+		"prov_abbreviation": "NA",
+		"region": "Campania",
+		"region_id": 15,
+		"oldProvinceId": 63
+	},
+	{
+		"province": "Avellino",
+		"province_id": 64,
+		"prov_abbreviation": "AV",
+		"region": "Campania",
+		"region_id": 15,
+		"oldProvinceId": 64
+	},
+	{
+		"province": "Salerno",
+		"province_id": 65,
+		"prov_abbreviation": "SA",
+		"region": "Campania",
+		"region_id": 15,
+		"oldProvinceId": 65
+	},
+	{
+		"province": "Foggia",
+		"province_id": 71,
+		"prov_abbreviation": "FG",
+		"region": "Puglia",
+		"region_id": 16,
+		"oldProvinceId": 71
+	},
+	{
+		"province": "Bari",
+		"province_id": 72,
+		"prov_abbreviation": "BA",
+		"region": "Puglia",
+		"region_id": 16,
+		"oldProvinceId": 72
+	},
+	{
+		"province": "Taranto",
+		"province_id": 73,
+		"prov_abbreviation": "TA",
+		"region": "Puglia",
+		"region_id": 16,
+		"oldProvinceId": 73
+	},
+	{
+		"province": "Brindisi",
+		"province_id": 74,
+		"prov_abbreviation": "BR",
+		"region": "Puglia",
+		"region_id": 16,
+		"oldProvinceId": 74
+	},
+	{
+		"province": "Lecce",
+		"province_id": 75,
+		"prov_abbreviation": "LE",
+		"region": "Puglia",
+		"region_id": 16,
+		"oldProvinceId": 75
+	},
+	{
+		"province": "Barletta-Andria-Trani",
+		"province_id": 110,
+		"prov_abbreviation": "BT",
+		"region": "Puglia",
+		"region_id": 16,
+		"oldProvinceId": 106
+	},
+	{
+		"province": "Potenza",
+		"province_id": 76,
+		"prov_abbreviation": "PZ",
+		"region": "Basilicata",
+		"region_id": 17,
+		"oldProvinceId": 76
+	},
+	{
+		"province": "Matera",
+		"province_id": 77,
+		"prov_abbreviation": "MT",
+		"region": "Basilicata",
+		"region_id": 17,
+		"oldProvinceId": 77
+	},
+	{
+		"province": "Cosenza",
+		"province_id": 78,
+		"prov_abbreviation": "CS",
+		"region": "Calabria",
+		"region_id": 18,
+		"oldProvinceId": 78
+	},
+	{
+		"province": "Catanzaro",
+		"province_id": 79,
+		"prov_abbreviation": "CZ",
+		"region": "Calabria",
+		"region_id": 18,
+		"oldProvinceId": 79
+	},
+	{
+		"province": "Reggio di Calabria",
+		"province_id": 80,
+		"prov_abbreviation": "RC",
+		"region": "Calabria",
+		"region_id": 18,
+		"oldProvinceId": 80
+	},
+	{
+		"province": "Crotone",
+		"province_id": 101,
+		"prov_abbreviation": "KR",
+		"region": "Calabria",
+		"region_id": 18,
+		"oldProvinceId": 101
+	},
+	{
+		"province": "Vibo Valentia",
+		"province_id": 102,
+		"prov_abbreviation": "VV",
+		"region": "Calabria",
+		"region_id": 18,
+		"oldProvinceId": 102
+	},
+	{
+		"province": "Trapani",
+		"province_id": 81,
+		"prov_abbreviation": "TP",
+		"region": "Sicilia",
+		"region_id": 19,
+		"oldProvinceId": 81
+	},
+	{
+		"province": "Palermo",
+		"province_id": 82,
+		"prov_abbreviation": "PA",
+		"region": "Sicilia",
+		"region_id": 19,
+		"oldProvinceId": 82
+	},
+	{
+		"province": "Messina",
+		"province_id": 83,
+		"prov_abbreviation": "ME",
+		"region": "Sicilia",
+		"region_id": 19,
+		"oldProvinceId": 83
+	},
+	{
+		"province": "Agrigento",
+		"province_id": 84,
+		"prov_abbreviation": "AG",
+		"region": "Sicilia",
+		"region_id": 19,
+		"oldProvinceId": 84
+	},
+	{
+		"province": "Caltanissetta",
+		"province_id": 85,
+		"prov_abbreviation": "CL",
+		"region": "Sicilia",
+		"region_id": 19,
+		"oldProvinceId": 85
+	},
+	{
+		"province": "Enna",
+		"province_id": 86,
+		"prov_abbreviation": "EN",
+		"region": "Sicilia",
+		"region_id": 19,
+		"oldProvinceId": 86
+	},
+	{
+		"province": "Catania",
+		"province_id": 87,
+		"prov_abbreviation": "CT",
+		"region": "Sicilia",
+		"region_id": 19,
+		"oldProvinceId": 87
+	},
+	{
+		"province": "Ragusa",
+		"province_id": 88,
+		"prov_abbreviation": "RG",
+		"region": "Sicilia",
+		"region_id": 19,
+		"oldProvinceId": 88
+	},
+	{
+		"province": "Siracusa",
+		"province_id": 89,
+		"prov_abbreviation": "SR",
+		"region": "Sicilia",
+		"region_id": 19,
+		"oldProvinceId": 89
+	},
+	{
+		"province": "Sassari",
+		"province_id": 90,
+		"prov_abbreviation": "SS",
+		"region": "Sardegna",
+		"region_id": 20,
+		"oldProvinceId": 90
+	},
+	{
+		"province": "Nuoro",
+		"province_id": 91,
+		"prov_abbreviation": "NU",
+		"region": "Sardegna",
+		"region_id": 20,
+		"oldProvinceId": 91
+	},
+	{
+		"province": "Cagliari",
+		"province_id": 92,
+		"prov_abbreviation": "CA",
+		"region": "Sardegna",
+		"region_id": 20,
+		"oldProvinceId": 92
+	},
+	{
+		"province": "Oristano",
+		"province_id": 95,
+		"prov_abbreviation": "OR",
+		"region": "Sardegna",
+		"region_id": 20,
+		"oldProvinceId": 95
+	},
+	{
+		"province": "Sud Sardegna",
+		"province_id": 111,
+		"prov_abbreviation": "SU",
+		"region": "Sardegna",
+		"region_id": 20,
+		"oldProvinceId": null
+	}
+]
