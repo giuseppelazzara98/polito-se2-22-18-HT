@@ -5,6 +5,13 @@ const { check, body, validationResult } = require('express-validator');
 const router = express.Router();
 const placeDao = require('../modules/DbManager').place_dao;
 
+// custom middleware: check if a given request is coming from an authenticated user
+const isLoggedIn = (req, res, next) => {
+	if (req.isAuthenticated()) return next();
+
+	return res.status(401).json({ error: 'User not authenticated' });
+};
+
 /*** Places APIs ***/
 
 //GET /api/places/:provinceId
@@ -66,16 +73,31 @@ router.get(
 	}
 );
 
+/*** Parking Lots APIs ***/
+
+/*
+	Example of body:
+	{
+		"province": 1,
+		"name": "Parking lot 134",
+		"description": "Parking lot 134 description",
+		"latitude": 45.123456,
+		"longitude": 7.123456,
+		"type": "parking lot",
+		"capacity": 100
+	}
+*/
+
 //POST /api/newParkingLot
 router.post('/newParkingLot',
 	isLoggedIn,
 	body('province').notEmpty().isInt({ min: 1 }),
-	body('name').isString(),
-	body('description').isString(),
+	body('name').isString().isLength({ max: 500 }),
+	body('description').isString().isLength({ max: 1000 }),
 	body('latitude').notEmpty().isFloat(),
 	body('longitude').notEmpty().isFloat(),
 	body('type').equals('parking lot'),
-	body('capacity').notEmpty().isInt({ min: 1 }),
+	body('capacity').notEmpty().isInt({ min: 0 }),
 	async (req, res) => {
 
 		if (Object.keys(req.body).length === 0) {
@@ -83,7 +105,7 @@ router.post('/newParkingLot',
 			return res.status(422).json({ error: 'Empty body request' });
 		}
 
-		if ( Object.keys(req.body).length !== 7 ) {
+		if (Object.keys(req.body).length !== 7) {
 			console.log('Data not formatted properly!');
 			return res.status(422).json({ error: 'Data not formatted properly' });
 		}
@@ -104,12 +126,11 @@ router.post('/newParkingLot',
 				lon: req.body.longitude,
 				type: req.body.type
 			}
-		
-			idPlace	= await placeDao.insertPlace(newPlace, req.body.province);
-			console.log("idPlace: " + idPlace);
-			
-			await placeDao.insertParkingLotData(idPlace, capacity);
-			
+
+			const idPlace = await placeDao.insertPlace(newPlace, req.body.province);
+
+			const result = await placeDao.insertParkingLotData(idPlace, req.body.capacity);
+
 			return res.status(201).json(result);
 		} catch (err) {
 			console.log(err);

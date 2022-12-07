@@ -6,7 +6,7 @@ class PlaceDAO {
 	}
 
 	// close the connection to database
-	closePlaceTable = () => {
+	closeTables = () => {
 		return new Promise((resolve, reject) => {
 			this.db.close();
 			resolve(true);
@@ -112,7 +112,7 @@ class PlaceDAO {
 	*/
 	insertPlace = (referencePoint, idProvince) => {
 		return new Promise((resolve, reject) => {
-			const sql = 'INSERT INTO PLACE (id_province, name, description, latitude, longitude, type) VALUES (?, ?, ?, ?, ?)';
+			const sql = 'INSERT INTO PLACE (id_province, name, description, latitude, longitude, type) VALUES (?, ?, ?, ?, ?, ?)';
 
 			this.db.run(sql, [idProvince, referencePoint.name, referencePoint.description, referencePoint.lat, referencePoint.lon, referencePoint.type], function (err) {
 				if (err) {
@@ -126,6 +126,42 @@ class PlaceDAO {
 		});
 	};
 
+	/* ------------------- PARKING_DATA ------------------- */
+
+	/*
+	// create the parking data table
+	newParkingDataTable = () => {
+		return new Promise((resolve, reject) => {
+
+			const sql = "CREATE TABLE IF NOT EXISTS PARKING_DATA(id_place INTEGER NOT NULL, capacity INTEGER NOT NULL, PRIMARY KEY(id_place), FOREIGN KEY(id_place) REFERENCES PLACE(id_place));";
+			this.db.run(sql, (err) => {
+				if (err) {
+					console.log('Error running sql: ' + sql);
+					console.log(err);
+					reject(err);
+				}
+				resolve(this.lastID);
+			});
+		});
+	}
+
+	// drop the parking data table
+	dropParkingDataTable = () => {
+		return new Promise((resolve, reject) => {
+			const sql = "DROP TABLE IF EXISTS PARKING_DATA;";
+			this.db.run(sql, function (err) {
+				if (err) {
+					console.log('Error running sql: ' + sql);
+					console.log(err);
+					reject(err);
+				}
+				resolve(this.lastID);
+			})
+
+		});
+	}
+	*/
+
 	insertParkingLotData = (idPlace, capacity) => {
 		return new Promise((resolve, reject) => {
 			const sql = 'INSERT INTO PARKING_DATA (id_place, capacity) VALUES ( ?, ?)';
@@ -136,7 +172,7 @@ class PlaceDAO {
 					console.log(err);
 					reject(err);
 				} else {
-					resolve(true); //returns the entered ID
+					resolve(true);
 				}
 			});
 		});
