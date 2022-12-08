@@ -10,16 +10,16 @@ let found = false;
 let data = [];
 let province = {};
 
-for (let i = 0; i < newData.length; i++) {
+for (const newProvince in newData) {
 	for (let j = 0; j < oldData.length && !found; j++) {
-		if (oldData[j].abbreviation === newData[i].prov_abbreviation) {
+		if (oldData[j].abbreviation === newProvince.prov_abbreviation) {
 			found = true;
-			province = { ...newData[i], oldProvinceId: oldData[j].id_province };
+			province = { ...newProvince, oldProvinceId: oldData[j].id_province };
 			data.push(province);
 		}
 	}
 	if (!found) {
-		province = { ...newData[i], oldProvinceId: null };
+		province = { ...newProvince, oldProvinceId: null };
 		data.push(province);
 	}
 	found = false;
