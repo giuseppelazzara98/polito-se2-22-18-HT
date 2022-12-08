@@ -45,10 +45,10 @@
     .province,
     .noProvince {
       color: $primary-black;
-      font-weight: 400;
       font-size: 16px;
     }
     .noProvince {
+      font-weight: 400;
       &.error {
         color: $primary-error;
         font-weight: 700;
