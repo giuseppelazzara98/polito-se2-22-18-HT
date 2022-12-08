@@ -5,7 +5,7 @@ import API from '../../API/api';
 import styles from './index.module.scss';
 
 export default function Municipality(props) {
-    const { validated, province, municipality } = props;
+    const { validated, province, municipality, setMunicipality } = props;
     const [municipalitiesList, setMunicipalitiesList] = useState([]);
     const [oldProvince, setOldProvince] = useState('');
 
@@ -45,7 +45,7 @@ export default function Municipality(props) {
                 isClearable={true}
                 options={municipalitiesList}
                 onChange={(event) => {
-                    props.setMunicipality(event !== null ? event.value : '');
+                    setMunicipality(event !== null ? event.value : '');
                 }}
                 defaultValue={municipality}
             />

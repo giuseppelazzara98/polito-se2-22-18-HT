@@ -33,10 +33,11 @@ export default function NewHikeForm(props) {
 	const [gpxFile, setGpxFile] = useState('');
 	const [description, setDescription] = useState('');
 	const [refPoint, setRefPoint] = useState({});
-	const navigate = useNavigate();
 	const [gpxPoints, setGpxPoints] = useState({});
 	const [validated, setValidated] = useState(false);
 	const [isFormValid, setIsFormValid] = useState(false);
+
+	const navigate = useNavigate();
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
@@ -75,8 +76,6 @@ export default function NewHikeForm(props) {
 		hike.difficulty = parseInt(difficulty, 10);
 		hike.ascent = parseInt(ascent, 10);
 		hike.length = parseInt(length, 10);
-
-		console.log(JSON.stringify(hike));
 
 		const addNewHike = async () => {
 			await API.createNewHike(hike)
