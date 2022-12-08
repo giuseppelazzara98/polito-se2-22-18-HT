@@ -285,46 +285,46 @@ __Description:__ Create a new hike.
 __Request body:__ 
 ```
 {
-  title: "Test1",
-  province: 4,
-  length: 4,
-  expectedTimeString: "56m",
-  expectedTime: 0.93,
-  ascent: 1406,
-  difficulty: 1,
-  startPoint: {
-    type: "Hut/Parking lot",
-    id: 8,
-    name: "Alevè",
-    lon: 21.244,
-    lat: 3.325
+  "title": "Test1",
+  "province": 4,
+  "length": 4,
+  "expectedTimeString": "56m",
+  "expectedTime": 0.93,
+  "ascent": 1406,
+  "difficulty": 1,
+  "startPoint": {
+    "type": "Hut/Parking lot",
+    "id": 8,
+    "name": "Alevè",
+    "lon": 21.244,
+    "lat": 3.325
   },
-  endPoint: {
-    type: "Hut/Parking lot",
-    id: 12,
-    name: "Monte d'Oro",
-    lon: 8.474,
-    lat: 21.2475
+  "endPoint": {
+    "type": "Hut/Parking lot",
+    "id": 12,
+    "name": "Monte d'Oro",
+    "lon": 8.474,
+    "lat": 21.2475
   },
-  referencePoints: [
+  "referencePoints": [
     {
-      id: 15,
-      name: "Monte Talm",
-      description: "...",
-      lat: 18.364,
-      lon: 13.412,
-      type: "hut"
+      "id": 15,
+      "name": "Monte Talm",
+      "description": "...",
+      "lat": 18.364,
+      "lon": 13.412,
+      "type": "hut"
     },
     {
-      type: "Address/Name of location",
-      id: 298324244,
-      name: "Politecnico di Torino, Corso Francesco Ferrucci, Cenisia, Circoscrizione 3, Torino, Piemonte, 10138, Italia",
-      lat: 45.063697399999995,
-      lon: 7.657527285508495
+      "type": "Address/Name of location",
+      "id": 298324244,
+      "name": "Politecnico di Torino, Corso Francesco Ferrucci, Cenisia, Circoscrizione 3, Torino, Piemonte, 10138, Italia",
+      "lat": 45.063697399999995,
+      "lon": 7.657527285508495
     }
   ],
-  gpxData: '[...]',
-  description: "Test1"
+  "gpxData": '[...]',
+  "description": "Test1"
 }
 ```
 __Response:__ `201 Created`  
@@ -393,6 +393,31 @@ __Request body:__
 	"longitude": 7.123456,
 	"type": "parking lot",
 	"capacity": 100
+}
+```
+__Response:__ `201 Created`  
+__Response body:__ _None_  
+__Error responses:__ `401 Unauthorized`, `422 Unprocessable Entity`, `503 Service Unavailable`
+
+### Create a new hut (only if the user is a local guide and is logged in):
+
+__URL:__ `/api/newHut`  
+__Method:__ POST  
+__Description:__ Create a new hut.   
+__Request body:__ 
+```
+{
+	"province": 1,
+	"name": "Hut 1",
+	"description": "Hut 1 description",
+	"latitude": 45.123456,
+	"longitude": 7.123456,
+	"type": "hut",
+	"altitude": 1000,
+	"nBeds": 10,
+	"phone": "+39 3331234567",
+	"email": "guide1@gmail.com",
+	"website": "www.hut1.com"
 }
 ```
 __Response:__ `201 Created`  

@@ -44,14 +44,6 @@ function NavbarHead(props) {
 							{isMobile && <FontAwesomeIcon icon={faHouse} />}
 						</NavLink>
 					)}
-					{props.loggedIn &&
-						props.user.role === 'Local guide' &&
-						location.pathname !== '/newHike' && (
-							<NavLink className={`btn ${styles.buttonNavLink}`} to="/newHike">
-								{!isMobile && 'New Hike'}
-								{isMobile && <FontAwesomeIcon icon={faPlus} />}
-							</NavLink>
-						)}
 					{!props.loggedIn && location.pathname !== '/signup' && (
 						<Button
 							className={styles.button}

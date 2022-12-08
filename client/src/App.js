@@ -9,6 +9,7 @@ import {
 } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import NewHike from './pages/NewHike';
+import NewHut from './pages/NewHut';
 import WrongPath from './pages/WrongPath';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
@@ -40,6 +41,8 @@ function App2() {
 	const [showLogoutModal, setShowLogoutModal] = useState(false);
 	const [showAddNewHikeSuccess, setShowAddNewHikeSuccess] = useState(false);
 	const [showAddNewHikeError, setShowAddNewHikeError] = useState(false);
+	const [showAddNewHutSuccess, setShowAddNewHutSuccess] = useState(false);
+	const [showAddNewHutError, setShowAddNewHutError] = useState(false);
 	const [showRegistrationSuccess, setShowRegistrationSuccess] = useState(false);
 	const [showEmailVerificationSuccess, setShowEmailVerificationSuccess] = useState(false);
 	const [showEmailVerificationError, setShowEmailVerificationError] = useState(false);
@@ -177,6 +180,16 @@ function App2() {
 						}
 					/>
 					<Route
+						path="/newHut"
+						element={
+							loggedIn && user.role === 'Local guide' ? (
+								<NewHut  setShowAddNewHutSuccess={setShowAddNewHutSuccess} setShowAddNewHutError={setShowAddNewHutError} provincesFacets={provincesFacets}/>
+							) : (
+								<Navigate to="/login" replace />
+							)
+						}
+					/>
+					<Route
 						path="/login"
 						element={
 							loggedIn ? (
@@ -242,6 +255,19 @@ function App2() {
 					show={showEmailVerificationError}
 					title="Error"
 					subtitle={`Something went wrong with the confirmation of the email, try later`}
+					icon={faXmarkCircle}
+					success={false}
+				/>
+				<InfoModalComponent
+					show={showAddNewHutSuccess}
+					title="Success!"
+					subtitle={`New hut added successfully`}
+					icon={faCheckCircle}
+				/>
+				<InfoModalComponent
+					show={showAddNewHutError}
+					title="Error"
+					subtitle={`Oh no... there was a problem, try later`}
 					icon={faXmarkCircle}
 					success={false}
 				/>

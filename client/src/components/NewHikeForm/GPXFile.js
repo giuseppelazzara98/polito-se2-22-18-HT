@@ -1,6 +1,7 @@
 import { Row, Col, Form } from 'react-bootstrap';
 import styles from './index.module.scss';
 import gpxParser from 'gpxparser';
+import point from './utility/geoChecks';
 
 export default function GPXFile(props) {
 	const readFile = (event) => {
@@ -15,6 +16,9 @@ export default function GPXFile(props) {
 			props.setLength(length.toFixed(3));
 			const positiveElevationDiff = gpx.tracks[0].elevation.pos;
 			props.setAscent(positiveElevationDiff.toFixed(2));
+			const startPoint = gpx.tracks[0].points[0];
+			const province = point.getProvince([startPoint.lat, startPoint.lon]);
+			props.setProvince(province);
 		};
 		if (typeof event.target.files[0] !== 'undefined') {
 			reader.readAsText(event.target.files[0]);

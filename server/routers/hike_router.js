@@ -139,31 +139,60 @@ function toRad(Value) {
 }
 
 /*			HIKE
-	{	
-		"title":"Test1",
-		"province":1,
-		"length":345,
-		"expectedTimeString":"12h",
-		"expectedTime":12,
-		"ascent":123,
-		"difficulty":2,
-		"startPoint":9,
-		"endPoint":5,
-		"referencePoints":[],
-		"gpxData":"...",
-		"description":"Test1"
+	{
+  "title": "Test1",
+  "province": 4,
+  "length": 4,
+  "expectedTimeString": "56m",
+  "expectedTime": 0.93,
+  "ascent": 1406,
+  "difficulty": 1,
+  "startPoint": {
+	"type": "Hut/Parking lot",
+	"id": 8,
+	"name": "Alevè",
+	"lon": 21.244,
+	"lat": 3.325
+  },
+  "endPoint": {
+	"type": "Hut/Parking lot",
+	"id": 12,
+	"name": "Monte d'Oro",
+	"lon": 8.474,
+	"lat": 21.2475
+  },
+  "referencePoints": [
+	{
+	  "id": 15,
+	  "name": "Monte Talm",
+	  "description": "...",
+	  "lat": 18.364,
+	  "lon": 13.412,
+	  "type": "hut"
+	},
+	{
+	  "type": "Address/Name of location",
+	  "id": 298324244,
+	  "name": "Politecnico di Torino, Corso Francesco Ferrucci, Cenisia, Circoscrizione 3, Torino, Piemonte, 10138, Italia",
+	  "lat": 45.063697399999995,
+	  "lon": 7.657527285508495
 	}
+  ],
+  "gpxData": '[...]',
+  "description": "Test1"
+}
 */
 
-/*			POINT
-			{
-				id: ,
-				name: ,
-				type: ,
-				lat: ,
-				lon: 
-			}
-			*/
+/*			
+	POINT
+	{
+		id: ,
+		name: ,
+		type: ,
+		lat: ,
+		lon: 
+	}
+*/
 
 //POST /api/newHike
 router.post('/newHike',
@@ -206,14 +235,17 @@ router.post('/newHike',
 
 			//start point
 			console.log("start type: " + req.body.startPoint.type);
+
 			if (req.body.startPoint.type == "Hut/Parking lot") {
 				idStart = req.body.startPoint.id;
 			}
 			else {
 				//lo inserisco a db
-				idStart = await placeDao.insertPlace(req.body.startPoint, req.body.province);
+				const start_place = {...req.body.startPoint, description: null}
+				idStart = await placeDao.insertPlace(start_place, req.body.province);
 			}
 			console.log("idstart: " + idStart);
+
 			//end point
 			console.log("end type: " + req.body.endPoint.type);
 			if (req.body.endPoint.type == "Hut/Parking lot") {
@@ -221,15 +253,20 @@ router.post('/newHike',
 			}
 			else {
 				//lo inserisco a db
-				idEnd = await placeDao.insertPlace(req.body.endPoint, req.body.province);
+				const end_place = {...req.body.endPoint, description: null}
+				idEnd = await placeDao.insertPlace(end_place, req.body.province);
 			}
+
 			console.log("idend: " + idEnd);
+
 			//result = idhike inserted.
 			//now i can enter the data in hike-place table
 			const result = await hikeDao.insertHike(req.body, idStart, idEnd);
+
 			// Inserting start point and end point in hike-place table
 			await hikeDao.insertHikePlace(result, idStart);
 			await hikeDao.insertHikePlace(result, idEnd);
+
 			//reference points
 			// insert in hike-place table, cycling on reference points
 			for (let i = 0; i < req.body.referencePoints.length; i++) {
@@ -245,8 +282,9 @@ router.post('/newHike',
 				}
 				else {
 					//lo inserisco a db
-					idReferencePoint = await placeDao.insertPlace(referencePoint, req.body.province);
-					place_ok = "ok";
+					const ref_point = {...referencePoint, description: null}
+					idReferencePoint = await placeDao.insertPlace(ref_point, req.body.province);
+					place_ok = idReferencePoint;
 				}
 				console.log("idreferencepoint: " + idReferencePoint);
 

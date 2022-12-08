@@ -21,6 +21,7 @@ describe('TestPlaceDao', () => {
     const referencePoint1 = {
         name: 'Piazza del Duomo',
         type: 'Address/Name of location',
+        description: "Piazza del Duomo, 20121 Milano MI, Italia",
         lat: 45.464211,
         lon: 9.189982
     };
@@ -28,6 +29,7 @@ describe('TestPlaceDao', () => {
     const referencePoint2 = {
         name: 'Alpe di Siusi',
         type: 'Hut/Parking lot',
+        description: "Alpe di Siusi, 39030 Siusi allo Sciliar BZ, Italia",
         lat: 78.12,
         lon: 23.32
     };
@@ -35,6 +37,7 @@ describe('TestPlaceDao', () => {
     const referencePoint3 = {
         name: 'eremo di San Romedio',
         type: 'hut',
+        description: "eremo di San Romedio, 39030 Siusi allo Sciliar BZ, Italia",
         lat: 65.23,
         lon: 45.12
     };
@@ -73,6 +76,37 @@ describe('TestPlaceDao', () => {
         capacity: 20
     };
 
+    const newHut1 = {
+        province: 1,
+        name: "test Hut 1",
+        description: "test Hut 1 description",
+        latitude: 45.123456,
+        longitude: 7.123456,
+        type: "hut",
+        altitude: 1000,
+        nBeds: 10,
+        phone: "+39 3331234567",
+        email: "test_hut1@gmail.com",
+        website: ""
+    };
+
+    const newHut2 = {
+        province: 2,
+        name: "test Hut 2",
+        description: "test Hut 2 description",
+        latitude: 45.123456,
+        longitude: 7.123456,
+        type: "hut",
+        altitude: 1000,
+        nBeds: 10,
+        phone: "+39 3331234567",
+        email: "test_hut2@gmail.com",
+        website: "testhut2.com"
+    };
+
+    testHutData(newHut1, false);
+    testHutData(newHut2, false);
+
     testNewParkingLot(newParkingLot1, false);
     testNewParkingLot(newParkingLot2, false);
     testNewParkingLot(newParkingLot3, false);
@@ -84,6 +118,7 @@ describe('TestPlaceDao', () => {
     testGetPlacesById(2, true);
     testInsertPlace(referencePoint1, 1);
     testNewParkingLot(newParkingLot1, true);
+    testHutData(newHut1, true);
 
 });
 
@@ -92,8 +127,6 @@ function testGetPlacesByProvinceId(id_province, expextedResult) {
         try {
 
             const places = await testPlaceDao.getAllPlacesByProvinceId(id_province);
-
-
 
             if (expextedResult === true) {
                 expect(places).not.toBeNull();
@@ -179,6 +212,35 @@ function testNewParkingLot(newParkingLot, dbClosed) {
     });
 }
 
+function testHutData(newHut, dbClosed) {
+    test('Test new hut', async () => {
+        try {
+
+            const newPlace = {
+                name: newHut.name,
+                description: newHut.description,
+                lat: newHut.latitude,
+                lon: newHut.longitude,
+                type: newHut.type
+            }
+
+            let idPlace = null;
+
+            if (dbClosed !== true) {
+                idPlace = await testPlaceDao.insertPlace(newPlace, newHut.province);
+            }
+
+            const result = await testPlaceDao.insertHutData(idPlace, newHut);
+
+            expect(result).not.toBeNull();
+            expect(result).toBe(true);
+        }
+        catch (err) {
+            console.log("---- Error on testHutData ----");
+            return;
+        }
+    });
+}
 
 function testCloseTables() {
     test('Close tables', async () => {

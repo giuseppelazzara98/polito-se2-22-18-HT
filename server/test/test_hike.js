@@ -149,6 +149,9 @@ describe('Test hikes apis', () => {
         "description": "Hike 7 description",
     };
 
+    //Authenticating the user
+    logIn("guide1@gmail.com", "password", 200);
+
     //Testing POST /api/newHike
     newHike(200, bodyNewHike1);
     newHike(422, bodyNewHike2);
@@ -167,6 +170,20 @@ describe('Test hikes apis', () => {
 
 });
 
+function logIn(username, password, ExpectedHTTPStatus) {
+	it('User login', (done) => {
+		const credentials = { username, password };
+		reqBody = JSON.stringify(credentials);
+		agent
+			.post('/api/sessions')
+			.set('Content-Type', 'application/json')
+			.send(reqBody)
+			.then((res) => {
+				res.should.have.status(ExpectedHTTPStatus);
+				done();
+			});
+	});
+}
 
 function getFilteredHikes(expectedHTTPStatus, body) {
     it('Getting filtered hikes', async () => {
@@ -175,6 +192,7 @@ function getFilteredHikes(expectedHTTPStatus, body) {
             const currentHikes = await hike_dao.getAllFilteredHikes(body);
 
             agent.post('/api/hikes')
+                .set('Content-Type', 'application/json')
                 .send(body)
                 .then(function (r) {
                     r.should.have.status(expectedHTTPStatus);

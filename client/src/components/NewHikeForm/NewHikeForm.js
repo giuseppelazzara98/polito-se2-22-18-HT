@@ -20,7 +20,7 @@ export default function NewHikeForm(props) {
 	const { setUpdateHikes, setShowAddNewHikeSuccess, setShowAddNewHikeError } =
 		props;
 	const [title, setTitle] = useState('');
-	const [province, setProvince] = useState('');
+	const [province, setProvince] = useState({});
 	const [length, setLength] = useState('');
 	const [expectedTime, setExpectedTime] = useState('');
 	const [ascent, setAscent] = useState('');
@@ -42,7 +42,7 @@ export default function NewHikeForm(props) {
 		const form = event.currentTarget;
 		const hike = {
 			title: title,
-			province: province,
+			province: province?.prov_istat_code_num,
 			length: length,
 			expectedTimeString: expectedTime,
 			expectedTime: 0,
@@ -230,6 +230,7 @@ export default function NewHikeForm(props) {
 						setGpxPoints={setGpxPoints}
 						setLength={setLength}
 						setAscent={setAscent}
+						setProvince={setProvince}
 					/>
 					{gpxPoints?.length > 0 && <Map gpxPoints={gpxPoints} />}
 				</Col>

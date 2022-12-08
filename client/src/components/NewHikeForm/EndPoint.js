@@ -33,7 +33,7 @@ export default function EndPoint(props) {
 
 	useEffect(() => {
 		const loadPoints = () => {
-			API.getPointsByProvinceId(props.province)
+			API.getPointsByProvinceId(props.province?.prov_istat_code_num)
 				.then((list) => {
 					return list.map((item) => {
 						return {
@@ -48,7 +48,7 @@ export default function EndPoint(props) {
 					setPoints(newList);
 				});
 		};
-		if (props.province !== '') {
+		if (Object.keys(props.province).length !== 0) {
 			loadPoints();
 			setIsDisabled(false);
 		} else {
@@ -134,12 +134,12 @@ export default function EndPoint(props) {
 									.filter((item) => item.value !== startPoint.id)
 									.filter((item) => {
 										for (let i = 0; i < referencePoints.length; i++) {
-										  if (item.value === referencePoints[i].id) {
-											return false;
-										  }
+											if (item.value === referencePoints[i].id) {
+												return false;
+											}
 										}
-									  
-									  return true;
+
+										return true;
 									})}
 								onChange={(event) => {
 									props.setEndPoint({
@@ -195,7 +195,7 @@ export default function EndPoint(props) {
 												props.endPoint.id === undefined
 													? Math.floor(Math.random() * (max - min) + min)
 													: props.endPoint.id,
-											name: "GPS coordinates",
+											name: 'GPS coordinates',
 											lon: event.target.value,
 											lat: props.endPoint.lat
 										});

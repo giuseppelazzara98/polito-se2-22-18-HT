@@ -17,33 +17,33 @@ describe('Test places apis', () => {
 
     const newParkingLot1 = {
         "province": 1,
-		"name": "Parking lot 24",
-		"description": "Parking lot 24 description",
-		"latitude": 45.123456,
-		"longitude": 7.123456,
-		"type": "parking lot",
-		"capacity": 345
+        "name": "Parking lot 24",
+        "description": "Parking lot 24 description",
+        "latitude": 45.123456,
+        "longitude": 7.123456,
+        "type": "parking lot",
+        "capacity": 345
     };
 
     const newParkingLot2 = {
-		"province": 1,
-		"name": "Parking lot 134",
-		"description": "Parking lot 134 description",
-		"latitude": 45.123456,
-		"longitude": 7.123456,
-		"type": "parking lot",
-		"capacity": 100
-	};
+        "province": 1,
+        "name": "Parking lot 134",
+        "description": "Parking lot 134 description",
+        "latitude": 45.123456,
+        "longitude": 7.123456,
+        "type": "parking lot",
+        "capacity": 100
+    };
 
     const newParkingLot3 = {
-		"province": 0,
-		"name": "Parking lot 12",
-		"description": "Parking lot 12 description",
-		"latitude": 45.123456,
-		"longitude": 7.123456,
-		"type": "parking lot",
-		"capacity": 100
-	};
+        "province": 0,
+        "name": "Parking lot 12",
+        "description": "Parking lot 12 description",
+        "latitude": 45.123456,
+        "longitude": 7.123456,
+        "type": "parking lot",
+        "capacity": 100
+    };
 
     const newParkingLot4 = {
         "province": 1,
@@ -68,7 +68,7 @@ describe('Test places apis', () => {
     newParkingLot(401, newParkingLot1);
 
     //Authenticating the user
-    logIn("guide1@gmail.com","password",200);
+    logIn("guide1@gmail.com", "password", 200);
 
     newParkingLot(201, newParkingLot1);
     newParkingLot(201, newParkingLot2);
@@ -76,23 +76,101 @@ describe('Test places apis', () => {
     newParkingLot(422, newParkingLot4);
     newParkingLot(422, newParkingLot5);
 
+    //Testing POST /api/newHut
+    const newHut1 = {
+        "province": 1,
+        "name": "Hut 1",
+        "description": "Hut 1 description",
+        "latitude": 45.123456,
+        "longitude": 7.123456,
+        "type": "hut",
+        "altitude": 1000,
+        "nBeds": 10,
+        "phone": "+39 3331234567",
+        "email": "guide1@gmail.com",
+        "website": "www.hut1.com"
+    }
+
+    const newHut2 = {
+        "province": 1,
+        "name": "Hut 1",
+        "description": "Hut 1 description",
+        "latitude": 45.123456,
+        "longitude": 7.123456,
+        "type": "hut",
+        "altitude": 1000,
+        "nBeds": 10,
+        "phone": "+39 3331234567",
+        "email": "guide1@gmail.com",
+        "website": ""
+    }
+
+    const newHut3 = {
+        "province": 0,
+        "name": "Hut 1",
+        "description": "Hut 1 description",
+        "latitude": 45.123456,
+        "longitude": 7.123456,
+        "type": "hut",
+        "altitude": 1000,
+        "nBeds": 10,
+        "phone": "+39 3331234567",
+        "email": "guide1@gmail.com",
+        "website": ""
+    }
+
+    const newHut4 = {
+        "province": 1,
+        "name": "Hut 1",
+        "description": "Hut 1 description",
+        "latitude": 45.123456,
+        "longitude": 7.123456,
+        "type": "hut",
+        "altitude": 1000,
+        "nBeds": 10,
+        "phone": "+39 3331234567",
+        "email": "guide1gmail.com",
+        "website": ""
+    }
+
+    const newHut5 = {
+        "province": 1,
+        "name": "Hut 1",
+        "description": "Hut 1 description",
+        "latitude": 45.123456,
+        "longitude": 7.123456,
+        "type": "hut",
+        "altitude": 1000,
+        "nBeds": 10,
+        "phone": "+39 3331234567",
+        "email": "guide1@gmail.com"
+    }
+
+    //Authenticating the user
+    logIn('guide1@gmail.com', 'password', 200);
+
+    insertNewHut(201, newHut1);
+    insertNewHut(201, newHut2);
+    insertNewHut(422, newHut3);
+    insertNewHut(422, newHut4);
+    insertNewHut(422, newHut5);
+
 });
 
 function logIn(username, password, ExpectedHTTPStatus) {
-	it('User login', (done) => {
-		const credentials = { username, password };
-		reqBody = JSON.stringify(credentials);
-		agent
-			.post('/api/sessions')
-			.set('Content-Type', 'application/json')
-			.send(reqBody)
-			.then((res) => {
-				res.should.have.status(ExpectedHTTPStatus);
-				done();
-			});
-	});
+    it('User login', (done) => {
+        const credentials = { username, password };
+        reqBody = JSON.stringify(credentials);
+        agent
+            .post('/api/sessions')
+            .set('Content-Type', 'application/json')
+            .send(reqBody)
+            .then((res) => {
+                res.should.have.status(ExpectedHTTPStatus);
+                done();
+            });
+    });
 }
-
 
 function getAllPlacesByProvinceId(expectedHTTPStatus) {
     it('Getting all places by province_ids', async () => {
@@ -140,7 +218,7 @@ function getPlaceByWrongProvinceId(expectedHTTPStatus, id_province) {
     });
 }
 
-function newParkingLot(expectedHTTPStatus, newParkingLot){
+function newParkingLot(expectedHTTPStatus, newParkingLot) {
     it('New parking lot', (done) => {
 
         reqBody = JSON.stringify(newParkingLot);
@@ -152,5 +230,25 @@ function newParkingLot(expectedHTTPStatus, newParkingLot){
                 res.should.have.status(expectedHTTPStatus);
                 done();
             });
+    });
+}
+
+function insertNewHut(expectedHTTPStatus, newHut) {
+    it('Inserting new hut', async () => {
+
+        try {
+            agent.post('/api/newHut')
+                .set('Content-Type', 'application/json')
+                .send(newHut)
+                .then(function (r) {
+                    r.should.have.status(expectedHTTPStatus);
+                });
+
+        } catch (err) {
+            if (r.status === 503) {
+                console.log("---- Error on insertNewHut ----");
+            }
+        }
+
     });
 }
