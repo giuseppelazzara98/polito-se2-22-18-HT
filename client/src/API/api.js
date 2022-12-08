@@ -258,6 +258,29 @@ const insertHut = async (data) => {
 	}
 }
 
+const insertParkingLot = async (data) => {
+	let err = new Error();
+	const response = await fetch(new URL(`newParkingLot/`, APIURL), {
+		credentials: 'include',
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(data) 
+	})
+	if (response.ok) {
+		const okAdd = await response.json();
+		return okAdd;
+	} else {
+		if (response.status === 500) {
+			err.message = '500 INTERNAL SERVER ERROR';
+			throw err;
+		} else {
+			throw err;
+		}
+	}
+}
+
 const API = {
 	logIn,
 	logOut,
@@ -274,6 +297,7 @@ const API = {
 	getHikePointsInfo,
 	verifyEmail,
 	insertHut,
+	insertParkingLot,
 };
 
 export default API;

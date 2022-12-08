@@ -12,7 +12,7 @@ import Map from '../ClickableMap/ClickableMap';
 
 
 export default function NewHutForm(props) {
-    const { setShowAddNewHutSuccess, setShowAddNewHutError, isHut = false, provincesFacets } =
+    const { setShowAddNewSuccess, setShowAddNewError, isHut = false, provincesFacets } =
         props;
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
@@ -33,18 +33,18 @@ export default function NewHutForm(props) {
         event.preventDefault();
         let valid = true;
         const form = event.currentTarget;
-
+        
         if (form.checkValidity() === false || province.coordinates?.length !== 2) {
             valid = false;
         } else {
             const provinceId = provincesFacets.filter(provinceFacet => provinceFacet.value?.trim() === province?.province?.trim())?.[0]?.id;
             if (!provinceId) {
-                if (isHut) {
-                    setShowAddNewHutError(true);
+               
+                    setShowAddNewError(true);
                     setTimeout(() => {
-                        setShowAddNewHutError(false)
+                        setShowAddNewError(false)
                     }, 2500);
-                }
+                
             } else {
                 if (isHut) {
                     const hut = {
@@ -61,14 +61,37 @@ export default function NewHutForm(props) {
                         province: provinceId,
                     };
                     API.insertHut(hut).then((response) => {
-                        setShowAddNewHutSuccess(true);
+                        setShowAddNewSuccess(true);
                         setTimeout(() => {
-                            setShowAddNewHutSuccess(false)
+                            setShowAddNewSuccess(false)
                         }, 2500);
                     }).catch(() => {
-                        setShowAddNewHutError(true);
+                        setShowAddNewError(true);
                         setTimeout(() => {
-                            setShowAddNewHutError(false)
+                            setShowAddNewError(false)
+                        }, 2500);
+                    });
+                    navigate('/');
+                }
+                else{
+                    const parkingLot={
+                        province: provinceId,
+                        name,
+                        description,
+                        latitude: province.coordinates[0],
+                        longitude: province.coordinates[1],
+                        type: "parking lot",
+                        capacity
+                    };
+                    API.insertParkingLot(parkingLot).then((response) => {
+                        setShowAddNewSuccess(true);
+                        setTimeout(() => {
+                            setShowAddNewSuccess(false)
+                        }, 2500);
+                    }).catch(() => {
+                        setShowAddNewError(true);
+                        setTimeout(() => {
+                            setShowAddNewError(false)
                         }, 2500);
                     });
                     navigate('/');
@@ -93,7 +116,7 @@ export default function NewHutForm(props) {
                 <Col>
                     <Row className="mb-3">
                         <Col>
-                            <Insert title={"Name"} type={"text"} param={name} setParam={setName} placeholder={"Name of the Hut"} minLength={4} maxLength={30} invalid={"The name of the hut must be between 4 and 30 character long"}/>
+                            <Insert title={"Name"} type={"text"} param={name} setParam={setName} placeholder={"Name"} minLength={4} maxLength={30} invalid={"The name of the hut must be between 4 and 30 character long"}/>
                         </Col>
                         {isHut && (
                             <Col>
@@ -126,13 +149,13 @@ export default function NewHutForm(props) {
                             <Row className="mb-3">
                                 {/*Description field*/}
                                 <Col>
-                                    <Insert title={"Position"} type={"textarea"} param={description} setParam={setDescription} as={"textarea"} />
+                                    <Insert title={"Capacity"} type={"number"} param={capacity} setParam={setCapacity} min={0} invalid={"Capacity must be grater than 0"} />
                                 </Col>
                             </Row>
                             <Row className="mb-3">
                                 {/*Description field*/}
                                 <Col>
-                                    <Insert title={"Capacity"} type={"number"} param={description} setParam={setDescription} min={0} />
+                                    <Insert title={"Description"} type={"textarea"} param={description} setParam={setDescription} as={"textarea"} required={false}/>
                                 </Col>
                             </Row>
                         </>
