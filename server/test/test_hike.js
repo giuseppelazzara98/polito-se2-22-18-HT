@@ -70,6 +70,7 @@ describe('Test hikes apis', () => {
     const bodyNewHike1 = {
         "title": "Hike 1",
         "province": 1,
+        "municipality": 7474,
         "length": 345,
         "expectedTimeString": "12h",
         "expectedTime": 12,
@@ -84,12 +85,14 @@ describe('Test hikes apis', () => {
 
     const bodyNewHike2 = {
         "title": "Hike 2",
-        "province": 1
+        "province": 1,
+        "municipality": 7474,
     };
 
     const bodyNewHike3 = {
         "title": "Hike 3",
         "province": 1,
+        "municipality": 7474,
         "length": 345,
         "expectedTimeString": "12h",
         "expectedTime": 12,
@@ -107,6 +110,7 @@ describe('Test hikes apis', () => {
     const bodyNewHike5 = {
         "title": "Hike 5",
         "province": 0,
+        "municipality": 7474,
         "length": 345,
         "expectedTimeString": "12h",
         "expectedTime": 12,
@@ -122,6 +126,7 @@ describe('Test hikes apis', () => {
     const bodyNewHike6 = {
         "title": "Hike 6",
         "province": 1,
+        "municipality": 7474,
         "length": 345,
         "expectedTimeString": "s12hsdflshdfkjshdkajffhsakljdfdsf",
         "expectedTime": 12,
@@ -149,8 +154,11 @@ describe('Test hikes apis', () => {
         "description": "Hike 7 description",
     };
 
+    //Authenticating the user
+    logIn("guide1@gmail.com", "password", 200);
+
     //Testing POST /api/newHike
-    newHike(200, bodyNewHike1);
+    newHike(201, bodyNewHike1);
     newHike(422, bodyNewHike2);
     newHike(404, bodyNewHike3);
     newHike(422, bodyNewHike4);
@@ -167,6 +175,20 @@ describe('Test hikes apis', () => {
 
 });
 
+function logIn(username, password, ExpectedHTTPStatus) {
+	it('User login', (done) => {
+		const credentials = { username, password };
+		reqBody = JSON.stringify(credentials);
+		agent
+			.post('/api/sessions')
+			.set('Content-Type', 'application/json')
+			.send(reqBody)
+			.then((res) => {
+				res.should.have.status(ExpectedHTTPStatus);
+				done();
+			});
+	});
+}
 
 function getFilteredHikes(expectedHTTPStatus, body) {
     it('Getting filtered hikes', async () => {

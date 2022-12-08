@@ -195,7 +195,7 @@ class HikeDAO {
 	insertHike = (hike, idStart, idEnd) => {
 		return new Promise((resolve, reject) => {
 			const sql =
-				'INSERT INTO HIKE (name, id_start_place, id_end_place, id_province, description, length, expected_time, ascent, difficulty, gpx) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+				'INSERT INTO HIKE (name, id_start_place, id_end_place, id_province, id_municipality, description, length, expected_time, ascent, difficulty, gpx) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
 
 			this.db.run(
 				sql,
@@ -204,6 +204,7 @@ class HikeDAO {
 					idStart,
 					idEnd,
 					hike.province,
+					hike.municipality,
 					hike.description,
 					hike.length,
 					hike.expectedTime,

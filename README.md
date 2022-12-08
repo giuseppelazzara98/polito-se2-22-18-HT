@@ -285,46 +285,47 @@ __Description:__ Create a new hike.
 __Request body:__ 
 ```
 {
-  title: "Test1",
-  province: 4,
-  length: 4,
-  expectedTimeString: "56m",
-  expectedTime: 0.93,
-  ascent: 1406,
-  difficulty: 1,
-  startPoint: {
-    type: "Hut/Parking lot",
-    id: 8,
-    name: "Alevè",
-    lon: 21.244,
-    lat: 3.325
+  "title": "Test1",
+  "province": 4,
+  "municipality": 7078,
+  "length": 4,
+  "expectedTimeString": "56m",
+  "expectedTime": 0.93,
+  "ascent": 1406,
+  "difficulty": 1,
+  "startPoint": {
+    "type": "Hut/Parking lot",
+    "id": 8,
+    "name": "Alevè",
+    "lon": 21.244,
+    "lat": 3.325
   },
-  endPoint: {
-    type: "Hut/Parking lot",
-    id: 12,
-    name: "Monte d'Oro",
-    lon: 8.474,
-    lat: 21.2475
+  "endPoint": {
+    "type": "Hut/Parking lot",
+    "id": 12,
+    "name": "Monte d'Oro",
+    "lon": 8.474,
+    "lat": 21.2475
   },
-  referencePoints: [
+  "referencePoints": [
     {
-      id: 15,
-      name: "Monte Talm",
-      description: "...",
-      lat: 18.364,
-      lon: 13.412,
-      type: "hut"
+      "id": 15,
+      "name": "Monte Talm",
+      "description": "...",
+      "lat": 18.364,
+      "lon": 13.412,
+      "type": "hut"
     },
     {
-      type: "Address/Name of location",
-      id: 298324244,
-      name: "Politecnico di Torino, Corso Francesco Ferrucci, Cenisia, Circoscrizione 3, Torino, Piemonte, 10138, Italia",
-      lat: 45.063697399999995,
-      lon: 7.657527285508495
+      "type": "Address/Name of location",
+      "id": 298324244,
+      "name": "Politecnico di Torino, Corso Francesco Ferrucci, Cenisia, Circoscrizione 3, Torino, Piemonte, 10138, Italia",
+      "lat": 45.063697399999995,
+      "lon": 7.657527285508495
     }
   ],
-  gpxData: '[...]',
-  description: "Test1"
+  "gpxData": '[...]',
+  "description": "Test1"
 }
 ```
 __Response:__ `201 Created`  

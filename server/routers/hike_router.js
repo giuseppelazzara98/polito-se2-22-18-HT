@@ -142,6 +142,7 @@ function toRad(Value) {
 	{	
 		"title":"Test1",
 		"province":1,
+		"municipality":7078,
 		"length":345,
 		"expectedTimeString":"12h",
 		"expectedTime":12,
@@ -170,6 +171,7 @@ router.post('/newHike',
 	isLoggedIn,
 	body('title').isString().isLength({ max: 300 }),
 	body('province').notEmpty().isInt({ min: 1 }),
+	body('municipality').notEmpty().isInt({ min: 1 }),
 	body('length').isFloat({ min: 0.0 }),
 	body('expectedTimeString').isString().isLength({ max: 20 }),
 	body('expectedTime').isFloat({ min: 0.0 }),
@@ -187,7 +189,7 @@ router.post('/newHike',
 			return res.status(422).json({ error: 'Empty body request' });
 		}
 
-		if (Object.keys(req.body).length !== 12) {
+		if (Object.keys(req.body).length !== 13) {
 			console.log('Data not formatted properly!');
 			return res.status(422).json({ error: 'Data not formatted properly' });
 		}
