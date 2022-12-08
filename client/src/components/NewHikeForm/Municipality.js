@@ -5,7 +5,7 @@ import API from '../../API/api';
 import styles from './index.module.scss';
 
 export default function Municipality(props) {
-    const { validated, province, municipality, setMunicipality } = props;
+    const { validated, province, municipality, setMunicipality, inputValueMunicipality, setInputValueMunicipality } = props;
     const [municipalitiesList, setMunicipalitiesList] = useState([]);
     const [oldProvince, setOldProvince] = useState('');
 
@@ -47,7 +47,9 @@ export default function Municipality(props) {
                 onChange={(event) => {
                     setMunicipality(event !== null ? event.value : '');
                 }}
-                defaultValue={municipality}
+                onInputChange={newString => setInputValueMunicipality(newString)}
+                inputValue={inputValueMunicipality}
+                value={municipalitiesList?.filter(municipalityList => municipalityList.value === municipality)?.[0] || ""}
             />
             {validated && municipality === '' && (
                 <div className={styles.feedbackContainer}>

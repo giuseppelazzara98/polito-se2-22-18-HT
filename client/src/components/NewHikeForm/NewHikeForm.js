@@ -1,6 +1,6 @@
 import { Form, Row, Col, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ReferencePoints from './ReferencePoints';
 import DifficultyLevel from './DifficultyLevel';
 import EndPoint from './EndPoint';
@@ -36,6 +36,7 @@ export default function NewHikeForm(props) {
 	const [gpxPoints, setGpxPoints] = useState({});
 	const [validated, setValidated] = useState(false);
 	const [isFormValid, setIsFormValid] = useState(false);
+	const [inputValueMunicipality, setInputValueMunicipality] = useState("");
 
 	const navigate = useNavigate();
 
@@ -155,6 +156,11 @@ export default function NewHikeForm(props) {
 		setReferencePoints(list);
 	};
 
+	useEffect(() => {
+		setMunicipality("");
+		setInputValueMunicipality("")
+	}, [JSON.stringify(gpxPoints)]);
+
 	return (
 		<Form
 			className="text-start"
@@ -181,6 +187,8 @@ export default function NewHikeForm(props) {
 							setMunicipality={setMunicipality}
 							province={province}
 							validated={validated}
+							setInputValueMunicipality={setInputValueMunicipality}
+							inputValueMunicipality={inputValueMunicipality}
 						/> : ""}
 				</Col>
 			</Row>
