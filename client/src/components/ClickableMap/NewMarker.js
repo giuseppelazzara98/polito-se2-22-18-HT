@@ -51,7 +51,7 @@ export default function NewMarker(props) {
 	return (
 		point?.coordinates?.length === 2 && (
 			<Marker position={point.coordinates}>
-				<Popup>{`[${point[0]}, ${point[1]}]`}</Popup>
+				<Popup>{`${point.province} [${point.coordinates[0]}, ${point.coordinates[1]}]`}</Popup>
 			</Marker>
 		)
 	);
