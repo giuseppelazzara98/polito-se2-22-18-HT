@@ -93,11 +93,11 @@ export default function NewHutForm(props) {
                 <Col>
                     <Row className="mb-3">
                         <Col>
-                            <Insert title={"Name"} type={"text"} param={name} setParam={setName} placeholder={"Name of the Hut"} minLength={4} maxLength={30} />
+                            <Insert title={"Name"} type={"text"} param={name} setParam={setName} placeholder={"Name of the Hut"} minLength={4} maxLength={30} invalid={"The name of the hut must be between 4 and 30 character long"}/>
                         </Col>
                         {isHut && (
                             <Col>
-                                <Insert title={"Altitude"} type={"number"} param={altitude} setParam={setAltitude} placeholder={"Altitude"} text={"Altitude in meters"} min={0} max={8000} />
+                                <Insert title={"Altitude"} type={"number"} param={altitude} setParam={setAltitude} placeholder={"Altitude"} text={"Altitude in meters"} min={0} max={8000} invalid={"The altitude must be an integer between 0 and 8000 meters"}/>
                             </Col>
                         )}
                     </Row>
@@ -105,18 +105,18 @@ export default function NewHutForm(props) {
                         <>
                             <Row className="mb-3">
                                 <Col>
-                                    <Insert title={"Number Of Beds"} type={"number"} param={nBeds} setParam={setNBeds} placeholder={"Number of beds"} min={1} />
+                                    <Insert title={"Number Of Beds"} type={"number"} param={nBeds} setParam={setNBeds} placeholder={"Number of beds"} min={1} invalid={"The number of beds must be grater than 0"}/>
                                 </Col>
                                 <Col>
-                                    <Insert title={"Web Site"} type={"text"} param={webSite} setParam={setWebSite} placeholder={"Link of the web site"} required={false} />
+                                    <Insert title={"Web Site"} type={"text"} param={webSite} setParam={setWebSite} placeholder={"Link of the web site"} required={false} text={"es. https://sitedomain.com"} pattern={"^https?://+([a-zA-Z0-9]){2,}.com"} invalid={"Invalid web site URL"}/>
                                 </Col>
                             </Row>
                             <Row className="mb-3">
                                 <Col>
-                                    <Insert title={"Email"} type={"email"} param={email} setParam={setEmail} placeholder={"Email"} />
+                                    <Insert title={"Email"} type={"email"} param={email} setParam={setEmail} placeholder={"Email"} invalid={"Invalid email"}/>
                                 </Col>
                                 <Col>
-                                    <Insert title={"Phone Number"} type={"text"} param={phoneNumber} setParam={setPhoneNumber} placeholder={"Phone Number"} minLength={10} maxLength={15} pattern={"\+([0-9]){9}(([0-9][0-9]){1,2})?([0-9])?"} text={"es. +391504896352"} />
+                                    <Insert title={"Phone Number"} type={"text"} param={phoneNumber} setParam={setPhoneNumber} placeholder={"Phone Number"} minLength={10} maxLength={15} pattern={"\+([0-9]){9}(([0-9][0-9]){1,2})?([0-9])?"} text={"es. +391504896352"} invalid={"Invalid phone number"}/>
                                 </Col>
                             </Row>
                         </>
@@ -164,7 +164,7 @@ export default function NewHutForm(props) {
                         <Row className="mb-3">
                             {/*Description field*/}
                             <Col>
-                                <Insert title={"Description"} type={"textarea"} param={description} setParam={setDescription} as={"textarea"} />
+                                <Insert title={"Description"} type={"textarea"} param={description} setParam={setDescription} as={"textarea"} required={false}/>
                             </Col>
                         </Row>
                     )}
