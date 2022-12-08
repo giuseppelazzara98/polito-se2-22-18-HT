@@ -75,6 +75,9 @@ export default function NewHikeForm(props) {
 		hike.difficulty = parseInt(difficulty, 10);
 		hike.ascent = parseInt(ascent, 10);
 		hike.length = parseInt(length, 10);
+
+		console.log(JSON.stringify(hike));
+
 		const addNewHike = async () => {
 			await API.createNewHike(hike)
 				.then(() => {
@@ -243,6 +246,7 @@ export default function NewHikeForm(props) {
 						setLength={setLength}
 						setAscent={setAscent}
 						setProvince={setProvince}
+						setMunicipality={setMunicipality}
 					/>
 					{gpxPoints?.length > 0 && <Map gpxPoints={gpxPoints} />}
 				</Col>

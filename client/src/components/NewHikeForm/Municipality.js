@@ -7,11 +7,15 @@ import styles from './index.module.scss';
 export default function Municipality(props) {
     const { validated, province, municipality } = props;
     const [municipalitiesList, setMunicipalitiesList] = useState([]);
+    const [oldProvince, setOldProvince] = useState('');
 
     useEffect(() => {
         const loadMunicipalities = () => {
             API.getMunicipalitiesFacets(province?.prov_istat_code_num)
                 .then((list) => {
+
+                    setOldProvince(province?.prov_istat_code_num);
+
                     return list.map((item) => {
                         return {
                             label: item.label,
@@ -23,10 +27,10 @@ export default function Municipality(props) {
                     setMunicipalitiesList(newList);
                 });
         };
-        if(Object.keys(province).length !== 0){
+        if (province.prov_istat_code_num !== oldProvince) {
             loadMunicipalities();
         }
-    }, []);
+    }, [province.prov_istat_code_num]);
 
     return (
         <Form.Group>
@@ -36,13 +40,14 @@ export default function Municipality(props) {
                 className={`${styles.customSelect} ${validated && municipality === '' && styles.invalid
                     } ${validated && municipality !== '' && styles.valid}`}
                 classNamePrefix="select"
-                defaultValue={municipality}
                 name="municipality"
                 isSearchable={true}
+                isClearable={true}
                 options={municipalitiesList}
                 onChange={(event) => {
-                    props.setMunicipality(event.value);
+                    props.setMunicipality(event !== null ? event.value : '');
                 }}
+                defaultValue={municipality}
             />
             {validated && municipality === '' && (
                 <div className={styles.feedbackContainer}>

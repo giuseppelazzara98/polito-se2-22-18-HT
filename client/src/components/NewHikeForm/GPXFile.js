@@ -19,6 +19,7 @@ export default function GPXFile(props) {
 			const startPoint = gpx.tracks[0].points[0];
 			const province = point.getProvince([startPoint.lat, startPoint.lon]);
 			props.setProvince(province);
+			props.setMunicipality('');
 		};
 		if (typeof event.target.files[0] !== 'undefined') {
 			reader.readAsText(event.target.files[0]);
