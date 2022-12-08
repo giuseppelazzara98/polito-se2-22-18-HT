@@ -6,6 +6,7 @@ import DifficultyLevel from './DifficultyLevel';
 import EndPoint from './EndPoint';
 import Title from './Title';
 import Province from './Province';
+import Municipality from './Municipality';
 import Length from './Length';
 import ExpectedTime from './ExpectedTime';
 import Ascent from './Ascent';
@@ -21,6 +22,7 @@ export default function NewHikeForm(props) {
 		props;
 	const [title, setTitle] = useState('');
 	const [province, setProvince] = useState({});
+	const [municipality, setMunicipality] = useState('');
 	const [length, setLength] = useState('');
 	const [expectedTime, setExpectedTime] = useState('');
 	const [ascent, setAscent] = useState('');
@@ -43,6 +45,7 @@ export default function NewHikeForm(props) {
 		const hike = {
 			title: title,
 			province: province?.prov_istat_code_num,
+			municipality: municipality,
 			length: length,
 			expectedTimeString: expectedTime,
 			expectedTime: 0,
@@ -89,6 +92,7 @@ export default function NewHikeForm(props) {
 
 		if (
 			province === '' ||
+			municipality === '' ||
 			startPoint.type === '' ||
 			(startPoint.type === 'Hut/Parking lot' &&
 				(startPoint.lat === '' || startPoint.lon === '')) ||
@@ -168,6 +172,14 @@ export default function NewHikeForm(props) {
 						setProvince={setProvince}
 						validated={validated}
 					/>
+					{/*Municipality field*/}
+					{Object.keys(province).length !== 0 ?
+						<Municipality
+							municipality={municipality}
+							setMunicipality={setMunicipality}
+							province={province}
+							validated={validated}
+						/> : ""}
 				</Col>
 			</Row>
 
