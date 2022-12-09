@@ -184,23 +184,26 @@ function logIn(username, password, ExpectedHTTPStatus) {
 }
 
 function getFilteredHikes(expectedHTTPStatus, body) {
-	it('Getting filtered hikes', async () => {
-		try {
-			const currentHikes = await hike_dao.getAllFilteredHikes(body);
+    it('Getting filtered hikes', async () => {
 
-			agent
-				.post('/api/hikes')
-				.send(body)
-				.then(function (r) {
-					r.should.have.status(expectedHTTPStatus);
-					Object.keys(r.body.hikes).length.should.equal(currentHikes.length);
-				});
-		} catch (err) {
-			if (r.status === 500) {
-				console.log('---- Error on getFilteredHikes ----');
-			}
-		}
-	});
+        try {
+            const currentHikes = await hike_dao.getAllFilteredHikes(body);
+
+            agent.post('/api/hikes')
+                .set('Content-Type', 'application/json')
+                .send(body)
+                .then(function (r) {
+                    r.should.have.status(expectedHTTPStatus);
+                    Object.keys(r.body.hikes).length.should.equal(currentHikes.length);
+                });
+
+        } catch (err) {
+            if (r.status === 500) {
+                console.log("---- Error on getFilteredHikes ----");
+            }
+        }
+
+    });
 }
 
 function newHike(expectedHTTPStatus, bodyNew) {

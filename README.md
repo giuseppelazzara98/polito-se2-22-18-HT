@@ -379,6 +379,31 @@ __Response body:__
 ```
 __Error responses:__ `401 Unauthorized`, `404 Not Found`, `422 Unprocessable Entity`, `500 Internal Server Error`
 
+### Create a new hut (only if the user is a local guide and is logged in):
+
+__URL:__ `/api/newHut`  
+__Method:__ POST  
+__Description:__ Create a new hut.   
+__Request body:__ 
+```
+{
+	"province": 1,
+	"name": "Hut 1",
+	"description": "Hut 1 description",
+	"latitude": 45.123456,
+	"longitude": 7.123456,
+	"type": "hut",
+	"altitude": 1000,
+	"nBeds": 10,
+	"phone": "+39 3331234567",
+	"email": "guide1@gmail.com",
+	"website": "www.hut1.com"
+}
+```
+__Response:__ `201 Created`  
+__Response body:__ _None_  
+__Error responses:__ `401 Unauthorized`, `422 Unprocessable Entity`, `503 Service Unavailable`
+
 ## DATABASE TABLES:
 
 - Table `HIKE`: contains the hikes informations, including name, description, province, difficulty, expected time, length, ascent, GPX file, local guide, start place and end place.

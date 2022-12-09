@@ -1,0 +1,141 @@
+@import "../../../styles/configs";
+
+  .toggle {
+    background-color: unset;
+    border: unset;
+    padding: 0;
+    @include font(500, 16px, 20px, 0);
+    color: $primary-green;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    &:hover {
+      color: $tertiary-green;
+    }
+    &.open {
+      .toggleIcon {
+        transform: rotate(180deg);
+      }
+    }
+    .toggleIcon {
+      transition: transform 0.3s ease;
+    }
+  }
+
+  .button{
+    background-color: $primary-green;
+    border-color: transparent;
+    &:hover{
+      background-color: $tertiary-green;
+      border-color: transparent;
+    }
+  }
+  .dataTitle {
+    @include font(700, 18px, 20px, 0);
+    color: $primary-green-light;
+  }
+  .dataName {
+    color: $primary-green;
+  }
+  
+  .title {
+    @include font(700, 18px, 20px, 0);
+    color: $primary-green;
+    .province,
+    .noProvince {
+      color: $primary-black;
+      font-size: 16px;
+    }
+    .noProvince {
+      font-weight: 400;
+      &.error {
+        color: $primary-error;
+        font-weight: 700;
+      }
+    }
+  }
+  .button{
+    background-color: $primary-green;
+    border-color: transparent;
+    &:hover{
+      background-color: $tertiary-green;
+      border-color: transparent;
+      
+    }
+  
+    
+      &:global(.btn){
+        &:active{
+          background-color: $tertiary-green;
+          border-color: transparent;
+          
+        }
+      }
+      
+  }
+
+
+.modalBackground {
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba($color: #000000, $alpha: 0.7);
+  display: flex;
+  align-items: flex-end;
+  .modal {
+    background-color: $primary-white;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding: 0 15px 10px;
+    width: 100%;
+    height: 80%;
+    .header {
+      padding: 20px 26px;
+      position: relative;
+      border-bottom: 1px solid $primary-green;
+      @include font(500, 20px, 22px, 0);
+      color: $primary-green;
+      margin-bottom: 20px;
+      .modalTitle {
+        @include font(500, 20px, 22px, 0);
+        margin-bottom: 0;
+      }
+      .closeButton {
+        border: none;
+        background-color: transparent;
+        position: absolute;
+        top: 50%;
+        right: 0;
+        transform: translateY(-50%);
+        color: $primary-green;
+      }
+    }
+    .modalBody {
+      max-height: calc(100% - 83px);
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+  }
+}
+
+.feedbackContainer {
+  width: 100%;
+  margin-top: 0.25rem;
+  font-size: 0.875em;
+  color: $primary-error;
+}
+
+.invalid {
+  :global(.select__control) {
+    @include invalidInput();
+  }
+}
+
+.valid {
+  :global(.select__control) {
+    @include validInput();
+  }
+}

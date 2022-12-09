@@ -1,40 +1,57 @@
-import { useState } from 'react';
 import { useMapEvents, Marker, Popup } from 'react-leaflet';
 import pointInPolygon from 'point-in-polygon';
 import geoData from './data/geoData.json';
 
-export default function NewMarker() {
-	const [point, setPoint] = useState([44.58665046840906, 7.382619129493833]); //Torino
+export default function NewMarker(props) {
+	const { point, setPoint } = props;
+	const turinCoordinates = [44.58665046840906, 7.382619129493833]
 	const map = useMapEvents({
 		click: (ev) => {
 			const latLng = map.mouseEventToLatLng(ev.originalEvent);
-			setPoint([latLng.lat, latLng.lng]);
-		}
-	});
-
-	geoData.provinces.forEach((province) => {
-		if (
-			province.type === 'Polygon' &&
-			pointInPolygon(point, province.coordinates)
-		) {
-			//The data is in the province object
-			console.log('The point is in: ' + province.properties.prov_name);
-		} else if (province.type === 'MultiPolygon') {
-			let found = false;
-			for (let i = 0; i < province.coordinates.length && !found; i++) {
-				if (pointInPolygon(point, province.coordinates[i])) {
-					found = true;
-					//The data is in the province object
-					console.log('The point is in: ' + province.properties.prov_name);
-				}
+			if (latLng?.lat && latLng?.lng) {
+				getProvince([latLng?.lat, latLng?.lng]).then(province => {
+					setPoint({
+						province,
+						coordinates: [latLng?.lat, latLng?.lng]
+					});
+				})
 			}
 		}
 	});
 
+	const getProvince = (point) => {
+		return new Promise((resolve, reject) => {
+			let provinceResult = "";
+			geoData.provinces.forEach( (province) => {
+				if (point?.length === 2) {
+					if (
+						province.type === 'Polygon' &&
+						pointInPolygon(point, province.coordinates)
+					) {
+						//The data is in the province object
+						// console.log('The point is in: ' + province.properties.prov_name);
+						provinceResult = province.properties.prov_name;
+					} else if (province.type === 'MultiPolygon') {
+						let found = false;
+						for (let i = 0; i < province.coordinates.length && !found; i++) {
+							if (pointInPolygon(point, province.coordinates[i])) {
+								found = true;
+								//The data is in the province object
+								// console.log('The point is in: ' + province.properties.prov_name);
+								provinceResult = province.properties.prov_name;
+							}
+						}
+					} 
+				}
+			});
+			resolve(provinceResult);
+		});
+	}
+
 	return (
-		point.length > 0 && (
-			<Marker position={point}>
-				<Popup>{`[${point[0]}, ${point[1]}]`}</Popup>
+		point?.coordinates?.length === 2 && (
+			<Marker position={point.coordinates}>
+				<Popup>{`${point.province} [${point.coordinates[0]}, ${point.coordinates[1]}]`}</Popup>
 			</Marker>
 		)
 	);
