@@ -16,8 +16,7 @@ const Test = ({ style, children }) => {
   useEffect(() => {
     if (arrayRange) {
       let count = 0;
-      for (let index = 0; index < arrayRange.length; index++) {
-        const element = arrayRange[index];
+      for(let element of arrayRange){
         if (element >= children && element <= children + range / pitNumber) {
           count++;
         }
@@ -61,7 +60,6 @@ export default function RangeFilter(props) {
     minValue,
     maxValue,
     isTime = false,
-    isPercentage = false,
     isLength = false,
   } = props;
 

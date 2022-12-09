@@ -1,8 +1,8 @@
 import dayjs from "dayjs";
 
-var duration = require('dayjs/plugin/duration');
+let duration = require('dayjs/plugin/duration');
 dayjs.extend(duration);
-var toObject = require('dayjs/plugin/toObject')
+let toObject = require('dayjs/plugin/toObject')
 dayjs.extend(toObject)
 
 export const formatDuration = (duration) => {

@@ -234,9 +234,8 @@ router.post('/newHike',
 			await hikeDao.insertHikePlace(result, idEnd);
 			//reference points
 			// insert in hike-place table, cycling on reference points
-			for (let i = 0; i < req.body.referencePoints.length; i++) {
+			for (let referencePoint of req.body.referencePoints) {
 
-				let referencePoint = req.body.referencePoints[i];
 				let idReferencePoint = null;
 
 				let place_ok = null;

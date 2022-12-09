@@ -33,17 +33,17 @@ function FilterModal(props) {
 }
 
 export default function FiltersContainer(props) {
-  const { filters, setFilters, facets, provincesFacets, municipalitiesFacets, setFetchMunicipalities, hikesPoints } = props;
-  const [modalOpen, setModalOpen] = useState(false);
-  const [currentMinMaxExpectedTime, setCurrentMinMaxExpectedTime] = useState([null, null])
-  const [currentMinMaxLength, setCurrentMinMaxLength] = useState([null, null])
-  const [currentMinMaxAscent, setCurrentMinMaxAscent] = useState([null, null])
-  const isMobile = useMediaQuery({ maxWidth: maxBreakpoints.tabletLandscape });
-  const [inputValueProvince, setInputValueProvince] = useState("");
-  const [inputValueMunicipalities, setInputValueMunicipalities] = useState("");
-  const [radiusCenter, setRadiusCenter] = useState({center:[44.58665046840906, 7.382619129493833],radius:1000});//Turin
-  const geograficAreaFacets = provincesFacets;
-  const munFacets = municipalitiesFacets;
+	const { filters, setFilters, facets, provincesFacets, municipalitiesFacets, setFetchMunicipalities, hikesPoints } = props;
+	const [modalOpen, setModalOpen] = useState(false);
+	const [currentMinMaxExpectedTime, setCurrentMinMaxExpectedTime] = useState([null, null])
+	const [currentMinMaxLength, setCurrentMinMaxLength] = useState([null, null])
+	const [currentMinMaxAscent, setCurrentMinMaxAscent] = useState([null, null])
+	const isMobile = useMediaQuery({ maxWidth: maxBreakpoints.tabletLandscape });
+	const [inputValueProvince, setInputValueProvince] = useState("");
+	const [inputValueMunicipalities, setInputValueMunicipalities] = useState("");
+	const [radiusCenter, setRadiusCenter] = useState({ center: [44.58665046840906, 7.382619129493833], radius: 1000 });//Turin
+	const geograficAreaFacets = provincesFacets;
+	const munFacets = municipalitiesFacets;
 
 	const difficultyFacets = [
 		{
@@ -124,9 +124,9 @@ export default function FiltersContainer(props) {
 					title="Municipality"
 					name="municipalities"
 					isDisabled={
-						!(
+						(
 							filters?.filter((filterEl) => filterEl.key === 'provinces')
-								?.length > 0
+								?.length == 0
 						)
 					}
 					facets={munFacets}
@@ -151,19 +151,19 @@ export default function FiltersContainer(props) {
 			/>
 		);
 	};
-  const radiusFilter = () => {
-    return (
-    <RadiusMapFilter
-    title = "Distance from"
-    name = "radius"
-    setRadiusCenter = {setRadiusCenter}
-    radiusCenter = {radiusCenter}
-    hikesPoints = {hikesPoints}
-    />
-    
-    )
-  }
-  
+	const radiusFilter = () => {
+		return (
+			<RadiusMapFilter
+				title="Distance from"
+				name="radius"
+				setRadiusCenter={setRadiusCenter}
+				radiusCenter={radiusCenter}
+				hikesPoints={hikesPoints}
+			/>
+
+		)
+	}
+
 
 	const expectedTimeFilter = () => {
 		return (

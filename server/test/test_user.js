@@ -66,7 +66,7 @@ describe('Test user apis', () => {
 function logIn(username, password, ExpectedHTTPStatus) {
 	it('User login', (done) => {
 		const credentials = { username, password };
-		reqBody = JSON.stringify(credentials);
+		let reqBody = JSON.stringify(credentials);
 		agent
 			.post('/api/sessions')
 			.set('Content-Type', 'application/json')
@@ -82,7 +82,7 @@ function newUser(email, name, surname, password, id_role, ExpectedHTTPStatus) {
 	it('User registration', (done) => {
 
 		const newUser = { email, name, surname, password, id_role };
-		reqBody = JSON.stringify(newUser);
+		let reqBody = JSON.stringify(newUser);
 
 		agent.post('/api/newUser')
 			.set('Content-Type', 'application/json')

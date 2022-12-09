@@ -1,9 +1,6 @@
 import React, { useMemo } from "react";
-import { ModalBody, ModalHeader } from "react-bootstrap";
 import Modal from 'react-bootstrap/Modal';
 import styles from "./index.module.scss";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import CloseButton from 'react-bootstrap/CloseButton';
 import Map from "../MapComponent/Map";
 
 
