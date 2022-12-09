@@ -6,9 +6,7 @@ import API from '../../API/api';
 import styles from './index.module.scss';
 
 export default function LoginForm(props) {
-	const {
-		setShowWelcomeModal,
-	} = props;
+	const { setShowWelcomeModal } = props;
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 	const [err, setErr] = useState(false);
@@ -23,7 +21,7 @@ export default function LoginForm(props) {
 			props.setUser(user);
 			setShowWelcomeModal(true);
 			setTimeout(() => {
-				setShowWelcomeModal(false)
+				setShowWelcomeModal(false);
 			}, 2500);
 			return true;
 		} catch (err) {
@@ -31,7 +29,7 @@ export default function LoginForm(props) {
 		}
 	};
 
-	const handleSubmit = (event) => {
+	function handleSubmit(event) {
 		const form = event.currentTarget;
 		const credentials = { username, password };
 		event.preventDefault();
@@ -50,7 +48,15 @@ export default function LoginForm(props) {
 				});
 		}
 		setValidated(true);
-	};
+	}
+
+	function handlePasswordChange(event) {
+		setPassword(event.target.value);
+	}
+
+	function handleUsernameChange(event) {
+		setUsername(event.target.value);
+	}
 
 	return (
 		<>
@@ -63,7 +69,7 @@ export default function LoginForm(props) {
 								type="email"
 								placeholder="email@example.com"
 								value={username}
-								onChange={(event) => setUsername(event.target.value)}
+								onChange={handleUsernameChange}
 								required={true}
 							/>
 							<Form.Control.Feedback type="invalid">
@@ -79,9 +85,7 @@ export default function LoginForm(props) {
 								className={styles.customInsert}
 								type="password"
 								value={password}
-								onChange={(event) => {
-									setPassword(event.target.value);
-								}}
+								onChange={handlePasswordChange}
 								placeholder="Password"
 								required={true}
 								minLength={8}
@@ -91,7 +95,10 @@ export default function LoginForm(props) {
 							</Form.Control.Feedback>
 						</FloatingLabel>
 						{err ? (
-							<p className="text-danger">Wrong Email or/and password. Also check that you have confirmed your email if you have just registered</p>
+							<p className="text-danger">
+								Wrong Email or/and password. Also check that you have confirmed
+								your email if you have just registered
+							</p>
 						) : null}
 						<Button className={styles.button} size="lg" type="submit">
 							Login
@@ -99,7 +106,9 @@ export default function LoginForm(props) {
 					</Form>
 					<div className={`${styles.goToRegistrationContainer} pb-5`}>
 						<span>Don't you have a account yet? </span>
-						<Link to="/signup" className={styles.link}>Register now</Link>
+						<Link to="/signup" className={styles.link}>
+							Register now
+						</Link>
 					</div>
 				</Col>
 			</Row>

@@ -19,6 +19,17 @@ export default function MapSearch(props) {
 		return options;
 	};
 
+	function handleAddressChange(event) {
+		if (event !== null) {
+			props.setPoint({
+				type: props.point.type,
+				id: event.value,
+				name: event.label,
+				lat: event.lat,
+				lon: event.lon
+			});
+		}
+	}
 	const promiseOptions = (inputValue) =>
 		new Promise((resolve) => {
 			setTimeout(() => {
@@ -50,17 +61,7 @@ export default function MapSearch(props) {
 				cacheOptions
 				defaultOptions
 				loadOptions={promiseOptions}
-				onChange={(event) => {
-					if (event !== null) {
-						props.setPoint({
-							type: props.point.type,
-							id: event.value,
-							name: event.label,
-							lat: event.lat,
-							lon: event.lon
-						});
-					}
-				}}
+				onChange={handleAddressChange}
 			/>
 			{props.validated &&
 				(props.point?.type === '' ||
