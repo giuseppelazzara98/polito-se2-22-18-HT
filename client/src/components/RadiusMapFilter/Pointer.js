@@ -3,13 +3,14 @@ import { useMapEvents, Circle } from 'react-leaflet';
 
 export default function Pointer(props)
 {
-    const { radiusCenter, setRadiusCenter } = props;
+    const { radiusCenter, setRadiusCenter, modifyRangeFilter } = props;
     const map = useMapEvents({
         click: (ev) => {
             const latLng = map.mouseEventToLatLng(ev.originalEvent);
             setRadiusCenter({ ...radiusCenter, center: [latLng.lat, latLng.lng] });
-            console.log(radiusCenter.radius);
+            modifyRangeFilter(radiusCenter);
             map.setView([latLng.lat, latLng.lng]);
+            
         }
 
 

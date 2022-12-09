@@ -24,6 +24,7 @@ export default function RadiusMapFilter (props){
         radiusCenter,
         hikesPoints,
         hikesForDistance,
+        modifyRangeFilter,
     } = props;
 
     function computeMaxDistance(center, points) {
@@ -38,7 +39,6 @@ export default function RadiusMapFilter (props){
             if (distance > maxDistance) {
                 maxDistance = distance;
             }
-            console.log(maxDistance);
         });
 
         return Math.trunc(maxDistance);
@@ -61,17 +61,17 @@ export default function RadiusMapFilter (props){
         <MapContainer
             className={styles.mapContainer}
             center = {
-            radiusCenter.center
+            [radiusCenter.center[0], radiusCenter.center[1]]
             }
-            zoom = {14}
+            zoom = {7}
             scrollWheelZoom={false}
         >
-        <Pointer radiusCenter={radiusCenter} setRadiusCenter={setRadiusCenter}/>
+        <Pointer radiusCenter={radiusCenter} setRadiusCenter={setRadiusCenter} modifyRangeFilter={modifyRangeFilter}/>
         <TileLayer
 				attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 				url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
 			/>
-            {hikesPoints.map((marker) => (
+            {hikesForDistance.map((marker) => (
                 <Marker key={marker.key} position={[marker.lat, marker.long]}>
                     
                 </Marker>
@@ -89,7 +89,10 @@ export default function RadiusMapFilter (props){
             )}
             theme={theme}
             scale={(x) => x * 1}
-            onChange={(e, value) => setRadiusCenter({ ...radiusCenter, radius: value })}
+            onChange={(e, value) => { setRadiusCenter({ ...radiusCenter, radius: value });
+            modifyRangeFilter(radiusCenter);
+        }
+        }
             
             />
             </>

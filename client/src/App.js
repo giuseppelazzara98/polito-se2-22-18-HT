@@ -86,7 +86,8 @@ function App2() {
 		const ascentFilter =
 			filters.filter((filterEle) => filterEle.key === 'ascent')?.[0]?.values ||
 			[];
-
+		const rangeFilter = filters.filter((filterEle) => filterEle.key === 'radius')?.[0]?.value || null;
+		console.log(rangeFilter);
 		const newObj = {
 			province: provinceFilter,
 			municipality: municipalitiesFilter,
@@ -103,7 +104,8 @@ function App2() {
 				ascentFilter?.length === 2
 					? { min: ascentFilter[0], max: ascentFilter[1] }
 					: null,
-			range: null
+			range: rangeFilter ? rangeFilter : null
+
 		};
 
 		return newObj;

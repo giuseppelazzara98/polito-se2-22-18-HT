@@ -41,7 +41,7 @@ export default function FiltersContainer(props) {
   const isMobile = useMediaQuery({ maxWidth: maxBreakpoints.tabletLandscape });
   const [inputValueProvince, setInputValueProvince] = useState("");
   const [inputValueMunicipalities, setInputValueMunicipalities] = useState("");
-  const [radiusCenter, setRadiusCenter] = useState({center:[44.58665046840906, 7.382619129493833],radius:1000});//Turin
+  const [radiusCenter, setRadiusCenter] = useState({center: [44.58665046840906 , 7.382619129493833],radius: 100000});//Turin
   const geograficAreaFacets = provincesFacets;
   const munFacets = municipalitiesFacets;
 
@@ -86,6 +86,14 @@ export default function FiltersContainer(props) {
 	const removeAndAddFilter = (key, min, max) => {
 		let newFilter = filters.filter((prevFilter) => prevFilter.key !== key);
 		newFilter.push({ key: key, values: [min, max] });
+		setFilters(newFilter);
+	};
+
+	const modifyRangeFilter = ( centerRadius) => {
+		const key = 'radius';
+		const value = { center: {lat : centerRadius.center[0], long: centerRadius.center[1]}, radius: centerRadius.radius };
+		let newFilter = filters.filter((prevFilter) => prevFilter.key !== key);
+		newFilter.push({ key: key, value: value });
 		setFilters(newFilter);
 	};
 
@@ -160,6 +168,7 @@ export default function FiltersContainer(props) {
     radiusCenter = {radiusCenter}
     hikesPoints = {hikesPoints}
 	hikesForDistance = {hikesForDistance}
+	modifyRangeFilter = {modifyRangeFilter}
 
     />
     
