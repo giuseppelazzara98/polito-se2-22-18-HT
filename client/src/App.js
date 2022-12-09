@@ -29,6 +29,7 @@ function App() {
 function App2() {
 	const [loggedIn, setLoggedIn] = useState(false);
 	const [hikes, setHikes] = useState([]);
+	const [hikesForDistance, setHikesForDistance] = useState([]);
 	const [filters, setFilters] = useState([]);
 	const [facets, setFacets] = useState({});
 	const [provincesFacets, setProvincesFacets] = useState([]);
@@ -49,6 +50,9 @@ function App2() {
 	const getHikes = async (dataOnRequest) => {
 		try {
 			const { hikes, ...others } = await API.getAllHikes(dataOnRequest);
+			if (hikesForDistance.length === 0) {
+				setHikesForDistance(hikes);
+			}
 			setHikes([...hikes].sort((a, b) => a.province.localeCompare(b.province)));//ORDER BY PROVINCE ASC BY DEFAULT
 			if (Object.keys(facets).length === 0) {
 				setFacets({
@@ -124,6 +128,7 @@ function App2() {
 		API.getProvincesFacets().then((response) => setProvincesFacets(response));
 	}, []);
 
+
 	useEffect(() => {
 		if (!showMapModal) {
 			setHikePointsInfo({});
@@ -154,6 +159,7 @@ function App2() {
 							<HomePage
 								hikes={hikes}
 								setHikes={setHikes}
+								hikesForDistance={hikesForDistance}
 								filters={filters}
 								setFilters={setFilters}
 								facets={facets}
