@@ -5,7 +5,7 @@ export default function NewParkingLot(props){
     const {provincesFacets} = props;
     return(
         <Container>
-            <h1 className="my-5 title">New Hut</h1>
+            <h1 className="my-5 title">New Parking Lot</h1>
             <NewHutParkingForm setShowAddNewSuccess={props.setShowAddNewParkingLotSuccess} setShowAddNewError={props.setShowAddNewParkingLotError} provincesFacets={provincesFacets}/>
         </Container>);
 }

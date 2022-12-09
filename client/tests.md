@@ -164,7 +164,7 @@ So that I can use its advanced services
 2. Press the submit button
 3. If something has gone wrong,it will apper the allert message under the wrong fiels
 4. If the mail had been already used,it will appear an error message and the user can login in the bottom part or in the upper right corner of the page,by pressing the login button
-5. If evrithing is correct, it will return to the main page, logged in
+5. If everything is correct, it will return to the main page, logged in
 6. It will appear a modal that confirm the right registration of the user(a error modal if the)
 
 #### Expected result
@@ -204,3 +204,44 @@ Point 4 is true
 #### Expected result
 
 Point 3 is true
+
+
+## Story 6 - Describe parking
+
+```
+As a local guide\
+I want to add a parking lot
+```
+
+### Test 1 - go to the parking lot page
+
+#### Procedure
+
+1. the user need to be logged in as a local guide
+2. move the cursor over the user name in the right upper corner
+3. it will appear a drop down menu with different options for the local guide
+4. select phe new parking lot and presss the mouse
+5. it will  redirect to a new page with the form for adding a new parking lot
+
+#### Expected result
+
+Point 5 is true
+
+
+### Test 2 - insert a new parking lot
+
+#### Procedure
+
+1. Fill all the fields in the form :
+   1. Insert name for the parking lot.It can't be empty
+   2. Insert the capacity of the parking lot. It can't be a negative number
+   3. Optionally, insert a description for the parking lot
+   4. In the map on the right, you can select a province by clicking on it
+2. Press the submit button
+3. If something has gone wrong,it will apper the allert message under the wrong fiels
+4. If everything is correct in the form, the user will be redirected to the hike table page
+5. It will appear a modal of success if the parking lot is correctly saved in the db, an error modal if something went wrong
+
+#### Expected result
+
+Point 5 is true
