@@ -24,8 +24,7 @@ function getAllPlacesByProvinceId(expectedHTTPStatus) {
         try {
             const currentProvinces = await province_dao.getAllProvinces();
 
-            for (let province of currentProvinces) {
-
+            for(let province of currentProvinces){
                 const id_province = province.id_province;
 
                 const currentNumberOfPlacesPerProvince = await place_dao.getAllPlacesByProvinceId(id_province);

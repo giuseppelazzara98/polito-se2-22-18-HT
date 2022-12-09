@@ -33,7 +33,7 @@ function FilterModal(props) {
 }
 
 export default function FiltersContainer(props) {
-  const { filters, setFilters, facets, provincesFacets, municipalitiesFacets, setFetchMunicipalities, hikesPoints } = props;
+  const { filters, setFilters, facets, provincesFacets, municipalitiesFacets, setFetchMunicipalities, hikesPoints, hikesForDistance } = props;
   const [modalOpen, setModalOpen] = useState(false);
   const [currentMinMaxExpectedTime, setCurrentMinMaxExpectedTime] = useState([null, null])
   const [currentMinMaxLength, setCurrentMinMaxLength] = useState([null, null])
@@ -124,9 +124,9 @@ export default function FiltersContainer(props) {
 					title="Municipality"
 					name="municipalities"
 					isDisabled={
-						!(
+						(
 							filters?.filter((filterEl) => filterEl.key === 'provinces')
-								?.length > 0
+								?.length == 0
 						)
 					}
 					facets={munFacets}
@@ -159,6 +159,8 @@ export default function FiltersContainer(props) {
     setRadiusCenter = {setRadiusCenter}
     radiusCenter = {radiusCenter}
     hikesPoints = {hikesPoints}
+	hikesForDistance = {hikesForDistance}
+
     />
     
     )

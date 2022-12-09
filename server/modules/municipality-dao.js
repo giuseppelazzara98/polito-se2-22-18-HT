@@ -49,8 +49,6 @@ class MunicipalityDAO {
     }
     */
 
-    //TODO: add the municipality to the database
-
     getMunicipalitiesByIdProvince = (provinceId) => {
         return new Promise((resolve, reject) => {
             const sql = "select id_municipality, name from municipality where id_province = ?;";

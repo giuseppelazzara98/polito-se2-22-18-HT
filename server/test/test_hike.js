@@ -67,20 +67,32 @@ describe('Test hikes apis', () => {
 	getFilteredHikes(200, bodyHike5);
 
 	const bodyNewHike1 = {
-		title: 'Hike 1',
-		province: 1,
+		title: "Test1",
+		province: 4,
 		municipality: 7474,
-		length: 345,
-		expectedTimeString: '12h',
-		expectedTime: 12,
-		ascent: 123,
-		difficulty: 2,
-		startPoint: 9,
-		endPoint: 5,
+		length: 4,
+		expectedTimeString: "56m",
+		expectedTime: 0.93,
+		ascent: 1406,
+		difficulty: 1,
+		startPoint: {
+			type: "Address/Name of location",
+			id: 298324244,
+			name: "Politecnico di Torino, Corso Francesco Ferrucci, Cenisia, Circoscrizione 3, Torino, Piemonte, 10138, Italia",
+			lat: 45.063697399999995,
+			lon: 7.657527285508495
+		  },
+		endPoint: {
+		  type: "Hut/Parking lot",
+		  id: 12,
+		  name: "Monte d'Oro",
+		  lon: 8.474,
+		  lat: 21.2475
+		},
 		referencePoints: [],
-		gpxData: '',
-		description: 'Hike 1 description'
-	};
+		gpxData: "",
+		description: "Test1"
+	  };
 
 	const bodyNewHike2 = {
 		title: 'Hike 2',
@@ -88,25 +100,9 @@ describe('Test hikes apis', () => {
 		municipality: 7474
 	};
 
-	const bodyNewHike3 = {
-		title: 'Hike 3',
-		province: 1,
-		municipality: 7474,
-		length: 345,
-		expectedTimeString: '12h',
-		expectedTime: 12,
-		ascent: 123,
-		difficulty: 2,
-		startPoint: 9,
-		endPoint: 5,
-		referencePoints: [5000],
-		gpxData: '',
-		description: 'Hike 3 description'
-	};
+	const bodyNewHike3 = {};
 
-	const bodyNewHike4 = {};
-
-	const bodyNewHike5 = {
+	const bodyNewHike4 = {
 		title: 'Hike 5',
 		province: 0,
 		municipality: 7474,
@@ -122,7 +118,7 @@ describe('Test hikes apis', () => {
 		description: 'Hike 5 description'
 	};
 
-	const bodyNewHike6 = {
+	const bodyNewHike5 = {
 		title: 'Hike 6',
 		province: 1,
 		municipality: 7474,
@@ -138,7 +134,7 @@ describe('Test hikes apis', () => {
 		description: 'Hike 6 description'
 	};
 
-	const bodyNewHike7 = {
+	const bodyNewHike6 = {
 		title: 'Hike 7',
 		province: 1,
 		length: 345,
@@ -159,11 +155,10 @@ describe('Test hikes apis', () => {
 	//Testing POST /api/newHike
 	newHike(201, bodyNewHike1);
 	newHike(422, bodyNewHike2);
-	newHike(404, bodyNewHike3);
+	newHike(422, bodyNewHike3);
 	newHike(422, bodyNewHike4);
 	newHike(422, bodyNewHike5);
 	newHike(422, bodyNewHike6);
-	newHike(422, bodyNewHike7);
 
 	//Testing GET /api/hike/:id
 	getHikePointsByHikeId(200, 1);

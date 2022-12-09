@@ -10,6 +10,7 @@ export default function HomePage(props) {
     facets,
     provincesFacets,
     hikes,
+    hikesForDistance,
     setHikes,
     setShowMapModal,
     setHikePointsInfo,
@@ -22,7 +23,9 @@ export default function HomePage(props) {
         <Col xs={12} md={4}>
           <FiltersContainer
             hikesPoints={hikes.map((hike) => {
-              console.log(hike);
+              return { key: hike.key, name: hike.name, lat: hike.position.latitude, long: hike.position.longitude };
+            })}
+            hikesForDistance={hikesForDistance.map((hike) => {
               return { key: hike.key, name: hike.name, lat: hike.position.latitude, long: hike.position.longitude };
             })}
             filters={filters}

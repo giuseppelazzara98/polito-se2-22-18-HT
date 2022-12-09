@@ -8,7 +8,7 @@ export default function GPXFile(props) {
 		const reader = new FileReader();
 		reader.onload = async () => {
 			const content = reader.result;
-			var gpx = new gpxParser();
+			let gpx = new gpxParser();
 			gpx.parse(content);
 			let gpxPoints = gpx?.tracks?.[0]?.points || [];
 			props.setGpxPoints(gpxPoints);

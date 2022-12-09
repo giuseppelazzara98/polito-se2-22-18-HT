@@ -1,5 +1,4 @@
-import { MapContainer, TileLayer,  Marker, Popup, useMapEvents } from 'react-leaflet'
-import React, { useState } from 'react';
+import { MapContainer, TileLayer,  Marker } from 'react-leaflet'
 import styles from './index.module.scss';
 import 'leaflet/dist/leaflet.css';
 import Slider from '@mui/material/Slider';
@@ -24,8 +23,8 @@ export default function RadiusMapFilter (props){
         setRadiusCenter,
         radiusCenter,
         hikesPoints,
+        hikesForDistance,
     } = props;
-    const [maxDistance, setMaxDistance] = useState(0);
 
     function computeMaxDistance(center, points) {
         let maxDistance = 0;
@@ -39,8 +38,10 @@ export default function RadiusMapFilter (props){
             if (distance > maxDistance) {
                 maxDistance = distance;
             }
+            console.log(maxDistance);
         });
-        return maxDistance;
+
+        return Math.trunc(maxDistance);
     }
     function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
         let distance = 6372795.477598 *
@@ -54,7 +55,6 @@ export default function RadiusMapFilter (props){
     function toRad(x) {
         return x * Math.PI / 180;
     }
-
     return(
         <>
         <h6 className={styles.filterTitle}>{title}</h6>
@@ -83,9 +83,12 @@ export default function RadiusMapFilter (props){
             aria-label="Small"
             valueLabelDisplay="auto"
             min={0}
-            max={100}
+            max={computeMaxDistance(
+                radiusCenter.center,
+                hikesForDistance
+            )}
             theme={theme}
-            scale={(x) => x * 10}
+            scale={(x) => x * 1}
             onChange={(e, value) => setRadiusCenter({ ...radiusCenter, radius: value })}
             
             />

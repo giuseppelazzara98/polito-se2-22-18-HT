@@ -82,7 +82,7 @@ function newUser(email, name, surname, password, id_role, ExpectedHTTPStatus) {
 	it('User registration', (done) => {
 
 		const newUser = { email, name, surname, password, id_role };
-		reqBody = JSON.stringify(newUser);
+		let reqBody = JSON.stringify(newUser);
 
 		agent.post('/api/newUser')
 			.set('Content-Type', 'application/json')

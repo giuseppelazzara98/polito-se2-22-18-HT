@@ -1,7 +1,7 @@
 import { Button, Navbar } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 import { CiMountain1 } from 'react-icons/ci';
-import { NavLink, useNavigate, useLocation  } from 'react-router-dom';
+import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import styles from './index.module.scss';
 import API from '../../API/api';
 import { useMediaQuery } from 'react-responsive';

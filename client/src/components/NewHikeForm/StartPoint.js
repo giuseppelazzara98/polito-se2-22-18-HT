@@ -1,4 +1,4 @@
-import { Form, Col, Row, FloatingLabel } from 'react-bootstrap';
+import { Form, Col, Row } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import Select from 'react-select';
 import API from '../../API/api';
@@ -65,17 +65,15 @@ export default function StartPoint(props) {
 							<Col>
 								<Form.Label className={styles.title}>Start point</Form.Label>
 								<Select
-									className={`${styles.customSelect} ${
-										validated &&
+									className={`${styles.customSelect} ${validated &&
 										(startPoint?.type === '' ||
 											Object.keys(startPoint).length === 0) &&
 										styles.invalid
-									} ${
-										validated &&
+										} ${validated &&
 										Object.keys(startPoint).length > 0 &&
 										startPoint.type !== '' &&
 										styles.valid
-									}`}
+										}`}
 									classNamePrefix="select"
 									defaultValue={props?.startPoint?.value}
 									placeholder="-- Select point type --"
@@ -111,20 +109,18 @@ export default function StartPoint(props) {
 						<Form.Group>
 							<Form.Label className={styles.title}>Select a point</Form.Label>
 							<Select
-								className={`${styles.customSelect} ${
-									validated &&
+								className={`${styles.customSelect} ${validated &&
 									(startPoint?.type === '' ||
 										Object.keys(startPoint).length === 0 ||
 										(startPoint.type === 'Hut/Parking lot' &&
 											(startPoint.lat === '' || startPoint.lon === ''))) &&
 									styles.invalid
-								} ${
-									validated &&
+									} ${validated &&
 									Object.keys(startPoint).length > 0 &&
 									startPoint.type === 'Hut/Parking lot' &&
 									(startPoint.lat !== '' || startPoint.lon !== '') &&
 									styles.valid
-								}`}
+									}`}
 								placeholder="Select a point"
 								classNamePrefix="select"
 								defaultValue={props.startPoint.id}
@@ -134,8 +130,9 @@ export default function StartPoint(props) {
 								options={points
 									.filter((item) => item.value !== endPoint.id)
 									.filter((item) => {
-										for (let i = 0; i < referencePoints.length; i++) {
-											if (item.value === referencePoints[i].id) {
+
+										for (let point of referencePoints) {
+											if (point.id === item.value) {
 												return false;
 											}
 										}

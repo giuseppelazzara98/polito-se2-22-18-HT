@@ -81,28 +81,92 @@ describe('TestHikeDao', () => {
     testInsertHikePlace(14, 2, 1);
 
     const bodyNewHike1 = {
-        "title": "Test3",
-        "province": 1,
-        "municipality": 7074,
-        "length": 345,
-        "expectedTime": 12,
-        "ascent": 123,
-        "difficulty": 2,
-        "gpxData": "",
-        "description": "Test1"
-    };
+        title: "Test1",
+        province: 4,
+        municipality: 7078,
+        length: 4,
+        expectedTimeString: "56m",
+        expectedTime: 0.93,
+        ascent: 1406,
+        difficulty: 1,
+        startPoint: {
+          type: "Hut/Parking lot",
+          id: 8,
+          name: "Alevè",
+          lon: 21.244,
+          lat: 3.325
+        },
+        endPoint: {
+          type: "Hut/Parking lot",
+          id: 12,
+          name: "Monte d'Oro",
+          lon: 8.474,
+          lat: 21.2475
+        },
+        referencePoints: [
+          {
+            id: 15,
+            name: "Monte Talm",
+            description: "...",
+            lat: 18.364,
+            lon: 13.412,
+            type: "hut"
+          },
+          {
+            type: "Address/Name of location",
+            id: 298324244,
+            name: "Politecnico di Torino, Corso Francesco Ferrucci, Cenisia, Circoscrizione 3, Torino, Piemonte, 10138, Italia",
+            lat: 45.063697399999995,
+            lon: 7.657527285508495
+          }
+        ],
+        gpxData: "...",
+        description: "Test1"
+      };
 
     const bodyNewHike2 = {
-        "title": "Test4",
-        "province": 2,
-        "municipality": 7074,
-        "length": 345,
-        "expectedTime": 12,
-        "ascent": 78,
-        "difficulty": 1,
-        "gpxData": "",
-        "description": "Test2"
-    };
+        title: "Test2",
+        province: 4,
+        municipality: 7078,
+        length: 4,
+        expectedTimeString: "56m",
+        expectedTime: 0.93,
+        ascent: 1406,
+        difficulty: 1,
+        startPoint: {
+          type: "Hut/Parking lot",
+          id: 8,
+          name: "Alevè",
+          lon: 21.244,
+          lat: 3.325
+        },
+        endPoint: {
+          type: "Hut/Parking lot",
+          id: 12,
+          name: "Monte d'Oro",
+          lon: 8.474,
+          lat: 21.2475
+        },
+        referencePoints: [
+          {
+            id: 15,
+            name: "Monte Talm",
+            description: "...",
+            lat: 18.364,
+            lon: 13.412,
+            type: "hut"
+          },
+          {
+            type: "Address/Name of location",
+            id: 298324244,
+            name: "Politecnico di Torino, Corso Francesco Ferrucci, Cenisia, Circoscrizione 3, Torino, Piemonte, 10138, Italia",
+            lat: 45.063697399999995,
+            lon: 7.657527285508495
+          }
+        ],
+        gpxData: "...",
+        description: "Test1"
+      };
 
     testInsertNewHike(bodyNewHike1, 9, 5);
     testInsertNewHike(bodyNewHike2, 9, 5);
