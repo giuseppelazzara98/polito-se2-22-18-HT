@@ -1,11 +1,10 @@
 import React from "react";
 import styles from "./index.module.scss";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faRightFromBracket, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faRightFromBracket, faUser, faSquarePlus,faBed,faParking } from '@fortawesome/free-solid-svg-icons';
 import { useMediaQuery }  from "react-responsive";
 import { maxBreakpoints } from "../../helpers/configs";
 import { useNavigate } from 'react-router-dom';
-import { faSquarePlus,faBed,faParking } from '@fortawesome/free-solid-svg-icons';
 
 export default function UserMenu(props) {
   const {

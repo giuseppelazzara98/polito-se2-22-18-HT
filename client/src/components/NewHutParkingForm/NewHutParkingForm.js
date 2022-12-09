@@ -21,7 +21,6 @@ export default function NewHutForm(props) {
     const [phoneNumber, setPhoneNumber] = useState("");
     const [email, setEmail] = useState("");
     const [webSite, setWebSite] = useState("");
-    const [capacity, setCapacity] = useState(0);
     const [formValidated, setFormValidated] = useState(false);
     const navigate = useNavigate();
     const isMobile = useMediaQuery({ maxWidth: maxBreakpoints.tabletLandscape });

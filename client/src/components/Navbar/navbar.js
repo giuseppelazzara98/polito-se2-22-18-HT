@@ -7,7 +7,7 @@ import API from '../../API/api';
 import { useMediaQuery } from 'react-responsive';
 import { maxBreakpoints } from '../../helpers/configs';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faRightToBracket, faUserPlus, faHouse } from '@fortawesome/free-solid-svg-icons';
+import { faRightToBracket, faUserPlus, faHouse } from '@fortawesome/free-solid-svg-icons';
 import UserMenu from './UserMenu';
 
 function NavbarHead(props) {
