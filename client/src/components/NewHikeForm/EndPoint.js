@@ -1,4 +1,4 @@
-import { Form, Col, Row, FloatingLabel } from 'react-bootstrap';
+import { Form, Col, Row } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import Select from 'react-select';
 import API from '../../API/api';
@@ -171,12 +171,11 @@ export default function EndPoint(props) {
 								options={points
 									.filter((item) => item.value !== startPoint.id)
 									.filter((item) => {
-										for (let i = 0; i < referencePoints.length; i++) {
-											if (item.value === referencePoints[i].id) {
+										for (let refPoint of referencePoints) {
+											if (item.value === refPoint.id) {
 												return false;
 											}
 										}
-
 										return true;
 									})}
 								onChange={handleHutParkingLotChange}

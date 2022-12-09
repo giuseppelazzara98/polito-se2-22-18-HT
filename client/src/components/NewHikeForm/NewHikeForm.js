@@ -134,21 +134,14 @@ export default function NewHikeForm(props) {
 					})
 					.then((list) => setReferencePoints(list));
 			}
-		} else if (refPoint.type === 'Address/Name of location') {
+		} else if (refPoint.type === 'Address/Name of location' || refPoint.type === 'GPS coordinates') {
 			if (
 				referencePoints.find((point) => point.id === refPoint.id) === undefined
 			) {
 				list = [...referencePoints, refPoint];
 				setReferencePoints(list);
 			}
-		} else if (refPoint.type === 'GPS coordinates') {
-			if (
-				referencePoints.find((point) => point.id === refPoint.id) === undefined
-			) {
-				list = [...referencePoints, refPoint];
-				setReferencePoints(list);
-			}
-		}
+		} 
 	};
 
 	const delRefPoint = (pointId) => {

@@ -1,7 +1,6 @@
 'use strict';
 
 const express = require('express');
-//const { check, body, validationResult } = require('express-validator');
 const router = express.Router();
 const provinceDao = require('../modules/DbManager').province_dao;
 

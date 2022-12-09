@@ -66,7 +66,7 @@ describe('Test user apis', () => {
 function logIn(username, password, ExpectedHTTPStatus) {
 	it('User login', (done) => {
 		const credentials = { username, password };
-		reqBody = JSON.stringify(credentials);
+		let reqBody = JSON.stringify(credentials);
 		agent
 			.post('/api/sessions')
 			.set('Content-Type', 'application/json')
