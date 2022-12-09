@@ -55,6 +55,51 @@ export default function EndPoint(props) {
 			setIsDisabled(true);
 		}
 	}, [props.province]);
+
+	function handleEndPointTypeChange(event) {
+		props.setEndPoint({
+			type: event.value,
+			lat: '',
+			lon: '',
+			name: ''
+		});
+	}
+
+	function handleHutParkingLotChange(event) {
+		props.setEndPoint({
+			type: props.endPoint.type,
+			id: event.value,
+			name: event.label,
+			lon: event.lon,
+			lat: event.lat
+		});
+	}
+
+	function handleGPSCoordinatesLonChange(event) {
+		props.setEndPoint({
+			type: props.endPoint.type,
+			id:
+				props.endPoint.id === undefined
+					? Math.floor(Math.random() * (max - min) + min)
+					: props.endPoint.id,
+			name: 'GPS coordinates',
+			lon: event.target.value,
+			lat: props.endPoint.lat
+		});
+	}
+
+	function handleGPSCoordinatesLatChange(event) {
+		props.setEndPoint({
+			type: props.endPoint.type,
+			id:
+				props.endPoint.id === undefined
+					? Math.floor(Math.random() * (max - min) + min)
+					: props.endPoint.id,
+			name: props.endPoint.name,
+			lat: event.target.value,
+			lon: props.endPoint.lon
+		});
+	}
 	return (
 		<>
 			<Row className="mb-3">
@@ -78,14 +123,7 @@ export default function EndPoint(props) {
 									classNamePrefix="select"
 									defaultValue={props?.endPoint?.value}
 									placeholder="-- Select point type --"
-									onChange={(event) => {
-										props.setEndPoint({
-											type: event.value,
-											lat: '',
-											lon: '',
-											name: ''
-										});
-									}}
+									onChange={handleEndPointTypeChange}
 									isDisabled={isDisabled}
 									options={optionEndPoint}
 									required
@@ -141,15 +179,7 @@ export default function EndPoint(props) {
 
 										return true;
 									})}
-								onChange={(event) => {
-									props.setEndPoint({
-										type: props.endPoint.type,
-										id: event.value,
-										name: event.label,
-										lon: event.lon,
-										lat: event.lat
-									});
-								}}
+								onChange={handleHutParkingLotChange}
 							/>
 							{validated &&
 								(endPoint?.type === '' ||
@@ -188,18 +218,7 @@ export default function EndPoint(props) {
 									type="number"
 									value={props.endPoint.lon}
 									placeholder="Longitude"
-									onChange={(event) => {
-										props.setEndPoint({
-											type: props.endPoint.type,
-											id:
-												props.endPoint.id === undefined
-													? Math.floor(Math.random() * (max - min) + min)
-													: props.endPoint.id,
-											name: 'GPS coordinates',
-											lon: event.target.value,
-											lat: props.endPoint.lat
-										});
-									}}
+									onChange={handleGPSCoordinatesLonChange}
 									required={props.endPoint.type === 'GPS coordinates'}
 									min={-180}
 									max={180}
@@ -217,18 +236,7 @@ export default function EndPoint(props) {
 									type="number"
 									value={props.endPoint.lat}
 									placeholder="Latitude"
-									onChange={(event) => {
-										props.setEndPoint({
-											type: props.endPoint.type,
-											id:
-												props.endPoint.id === undefined
-													? Math.floor(Math.random() * (max - min) + min)
-													: props.endPoint.id,
-											name: props.endPoint.name,
-											lat: event.target.value,
-											lon: props.endPoint.lon
-										});
-									}}
+									onChange={handleGPSCoordinatesLatChange}
 									required={props.endPoint.type === 'GPS coordinates'}
 									min={-90}
 									max={90}

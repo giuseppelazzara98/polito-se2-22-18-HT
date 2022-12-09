@@ -14,7 +14,7 @@ const dbData = geoData.provinces.map((province) => {
 	};
 });
 
-var stream = fs.createWriteStream('provincesData.json', { flags: 'a' });
+const stream = fs.createWriteStream('provincesData.json', { flags: 'a' });
 dbData.forEach((province) => {
 	stream.write(JSON.stringify(province) + ',\n');
 });

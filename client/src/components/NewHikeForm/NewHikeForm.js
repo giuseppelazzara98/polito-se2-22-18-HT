@@ -1,11 +1,12 @@
 import { Form, Row, Col, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ReferencePoints from './ReferencePoints';
 import DifficultyLevel from './DifficultyLevel';
 import EndPoint from './EndPoint';
 import Title from './Title';
 import Province from './Province';
+import Municipality from './Municipality';
 import Length from './Length';
 import ExpectedTime from './ExpectedTime';
 import Ascent from './Ascent';
@@ -21,6 +22,7 @@ export default function NewHikeForm(props) {
 		props;
 	const [title, setTitle] = useState('');
 	const [province, setProvince] = useState({});
+	const [municipality, setMunicipality] = useState('');
 	const [length, setLength] = useState('');
 	const [expectedTime, setExpectedTime] = useState('');
 	const [ascent, setAscent] = useState('');
@@ -31,10 +33,12 @@ export default function NewHikeForm(props) {
 	const [gpxFile, setGpxFile] = useState('');
 	const [description, setDescription] = useState('');
 	const [refPoint, setRefPoint] = useState({});
-	const navigate = useNavigate();
 	const [gpxPoints, setGpxPoints] = useState({});
 	const [validated, setValidated] = useState(false);
 	const [isFormValid, setIsFormValid] = useState(false);
+	const [inputValueMunicipality, setInputValueMunicipality] = useState("");
+
+	const navigate = useNavigate();
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
@@ -43,6 +47,7 @@ export default function NewHikeForm(props) {
 		const hike = {
 			title: title,
 			province: province?.prov_istat_code_num,
+			municipality: municipality,
 			length: length,
 			expectedTimeString: expectedTime,
 			expectedTime: 0,
@@ -72,6 +77,7 @@ export default function NewHikeForm(props) {
 		hike.difficulty = parseInt(difficulty, 10);
 		hike.ascent = parseInt(ascent, 10);
 		hike.length = parseInt(length, 10);
+
 		const addNewHike = async () => {
 			await API.createNewHike(hike)
 				.then(() => {
@@ -89,6 +95,7 @@ export default function NewHikeForm(props) {
 
 		if (
 			province === '' ||
+			municipality === '' ||
 			startPoint.type === '' ||
 			(startPoint.type === 'Hut/Parking lot' &&
 				(startPoint.lat === '' || startPoint.lon === '')) ||
@@ -149,6 +156,11 @@ export default function NewHikeForm(props) {
 		setReferencePoints(list);
 	};
 
+	useEffect(() => {
+		setMunicipality("");
+		setInputValueMunicipality("")
+	}, [JSON.stringify(gpxPoints)]);
+
 	return (
 		<Form
 			className="text-start"
@@ -168,6 +180,16 @@ export default function NewHikeForm(props) {
 						setProvince={setProvince}
 						validated={validated}
 					/>
+					{/*Municipality field*/}
+					{Object.keys(province).length !== 0 ?
+						<Municipality
+							municipality={municipality}
+							setMunicipality={setMunicipality}
+							province={province}
+							validated={validated}
+							setInputValueMunicipality={setInputValueMunicipality}
+							inputValueMunicipality={inputValueMunicipality}
+						/> : ""}
 				</Col>
 			</Row>
 
@@ -231,6 +253,7 @@ export default function NewHikeForm(props) {
 						setLength={setLength}
 						setAscent={setAscent}
 						setProvince={setProvince}
+						setMunicipality={setMunicipality}
 					/>
 					{gpxPoints?.length > 0 && <Map gpxPoints={gpxPoints} />}
 				</Col>

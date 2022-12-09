@@ -7,7 +7,11 @@
     background-color: $primary-green;
     border-color: transparent;
     margin-left: auto;
-    min-width: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
     &:hover{
       background-color: $tertiary-green;
       border-color: transparent;
@@ -21,8 +25,11 @@
     border-color: transparent;
     margin-right: 5px;
     margin-left: 5px;
-    min-width: 44px;
-    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
   }
   .flexcontainer {
     display: flex;

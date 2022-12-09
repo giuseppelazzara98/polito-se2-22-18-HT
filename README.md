@@ -287,6 +287,7 @@ __Request body:__
 {
   "title": "Test1",
   "province": 4,
+  "municipality": 7078,
   "length": 4,
   "expectedTimeString": "56m",
   "expectedTime": 0.93,

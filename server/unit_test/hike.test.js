@@ -83,6 +83,7 @@ describe('TestHikeDao', () => {
     const bodyNewHike1 = {
         "title": "Test3",
         "province": 1,
+        "municipality": 7074,
         "length": 345,
         "expectedTime": 12,
         "ascent": 123,
@@ -94,6 +95,7 @@ describe('TestHikeDao', () => {
     const bodyNewHike2 = {
         "title": "Test4",
         "province": 2,
+        "municipality": 7074,
         "length": 345,
         "expectedTime": 12,
         "ascent": 78,
