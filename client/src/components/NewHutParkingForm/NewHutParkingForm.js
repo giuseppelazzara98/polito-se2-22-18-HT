@@ -149,7 +149,7 @@ export default function NewHutForm(props) {
                             <Row className="mb-3">
                                 {/*Description field*/}
                                 <Col>
-                                    <Insert title={"Capacity"} type={"number"} param={capacity} setParam={setCapacity} min={0} invalid={"Capacity must be grater than 0"} />
+                                    <Insert title={"Capacity"} type={"number"} param={capacity} setParam={setCapacity} min={1} invalid={"Capacity must be grater than 0"} />
                                 </Col>
                             </Row>
                             <Row className="mb-3">
