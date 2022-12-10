@@ -379,6 +379,27 @@ __Response body:__
 ```
 __Error responses:__ `401 Unauthorized`, `404 Not Found`, `422 Unprocessable Entity`, `500 Internal Server Error`
 
+### Create a new parking lot (only if the user is a local guide and is logged in):
+
+__URL:__ `/api/newParkingLot`  
+__Method:__ POST  
+__Description:__ Create a new parking lot.   
+__Request body:__ 
+```
+{
+	"province": 1,
+	"name": "Parking lot 134",
+	"description": "Parking lot 134 description",
+	"latitude": 45.123456,
+	"longitude": 7.123456,
+	"type": "parking lot",
+	"capacity": 100
+}
+```
+__Response:__ `201 Created`  
+__Response body:__ _None_  
+__Error responses:__ `401 Unauthorized`, `422 Unprocessable Entity`, `503 Service Unavailable`
+
 ### Create a new hut (only if the user is a local guide and is logged in):
 
 __URL:__ `/api/newHut`  

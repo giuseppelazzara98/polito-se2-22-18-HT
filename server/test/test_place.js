@@ -15,6 +15,67 @@ describe('Test places apis', () => {
     getAllPlacesByProvinceId(200);
     getPlaceByWrongProvinceId(422, 0);
 
+    const newParkingLot1 = {
+        "province": 1,
+        "name": "Parking lot 24",
+        "description": "Parking lot 24 description",
+        "latitude": 45.123456,
+        "longitude": 7.123456,
+        "type": "parking lot",
+        "capacity": 345
+    };
+
+    const newParkingLot2 = {
+        "province": 1,
+        "name": "Parking lot 134",
+        "description": "Parking lot 134 description",
+        "latitude": 45.123456,
+        "longitude": 7.123456,
+        "type": "parking lot",
+        "capacity": 100
+    };
+
+    const newParkingLot3 = {
+        "province": 0,
+        "name": "Parking lot 12",
+        "description": "Parking lot 12 description",
+        "latitude": 45.123456,
+        "longitude": 7.123456,
+        "type": "parking lot",
+        "capacity": 100
+    };
+
+    const newParkingLot4 = {
+        "province": 1,
+        "name": "Parking lot 678",
+        "description": "Parking lot 678 description",
+        "latitude": 45.123456,
+        "longitude": 7.123456,
+        "type": "parkingot",
+        "capacity": 2
+    };
+
+    const newParkingLot5 = {
+        "province": 1,
+        "name": "Parking lot 24",
+        "description": "Parking lot 24 description",
+        "latitude": 45.123456,
+        "longitude": 7.123456,
+        "type": "parking lot"
+    };
+
+    //Testing POST /api/newParkingLot
+    newParkingLot(401, newParkingLot1);
+
+    //Authenticating the user
+    logIn("guide1@gmail.com", "password", 200);
+
+    newParkingLot(201, newParkingLot1);
+    newParkingLot(201, newParkingLot2);
+    newParkingLot(422, newParkingLot3);
+    newParkingLot(422, newParkingLot4);
+    newParkingLot(422, newParkingLot5);
+
     //Testing POST /api/newHut
     const newHut1 = {
         "province": 1,
@@ -153,6 +214,21 @@ function getPlaceByWrongProvinceId(expectedHTTPStatus, id_province) {
             }
         }
 
+    });
+}
+
+function newParkingLot(expectedHTTPStatus, newParkingLot) {
+    it('New parking lot', (done) => {
+
+        reqBody = JSON.stringify(newParkingLot);
+
+        agent.post('/api/newParkingLot')
+            .set('Content-Type', 'application/json')
+            .send(newParkingLot)
+            .then((res) => {
+                res.should.have.status(expectedHTTPStatus);
+                done();
+            });
     });
 }
 

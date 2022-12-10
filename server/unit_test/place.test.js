@@ -46,6 +46,36 @@ describe('TestPlaceDao', () => {
     testInsertPlace(referencePoint2, 2);
     testInsertPlace(referencePoint3, 3);
 
+    const newParkingLot1 = {
+        province: 1,
+        name: 'Parking lot 134',
+        description: 'Parking lot 134 description',
+        latitude: 45.123456,
+        longitude: 7.123456,
+        type: 'parking lot',
+        capacity: 100
+    };
+
+    const newParkingLot2 = {
+        province: 2,
+        name: 'Parking lot 123',
+        description: 'Parking lot 123 description',
+        latitude: 45.123456,
+        longitude: 7.123456,
+        type: 'parking lot',
+        capacity: 1500
+    };
+
+    const newParkingLot3 = {
+        province: 3,
+        name: 'Parking lot 456',
+        description: 'Parking lot 456 description',
+        latitude: 45.123456,
+        longitude: 7.123456,
+        type: 'parking lot',
+        capacity: 20
+    };
+
     const newHut1 = {
         province: 1,
         name: "test Hut 1",
@@ -77,12 +107,17 @@ describe('TestPlaceDao', () => {
     testHutData(newHut1, false);
     testHutData(newHut2, false);
 
-    // CLOSE CONNECTION TO TABLES
+    testNewParkingLot(newParkingLot1, false);
+    testNewParkingLot(newParkingLot2, false);
+    testNewParkingLot(newParkingLot3, false);
+
+    // CLOSE CONNECTION TO PLACE TABLE
 
     testCloseTables();
     testGetPlacesByProvinceId(1, true);
     testGetPlacesById(2, true);
     testInsertPlace(referencePoint1, 1);
+    testNewParkingLot(newParkingLot1, true);
     testHutData(newHut1, true);
 
 });
@@ -142,6 +177,36 @@ function testInsertPlace(referencePoint, idProvince) {
         }
         catch (err) {
             console.log("---- Error on testInsertPlace ----");
+            return;
+        }
+    });
+}
+
+function testNewParkingLot(newParkingLot, dbClosed) {
+    test('Test new parking lot', async () => {
+        try {
+
+            const newPlace = {
+                name: newParkingLot.name,
+                description: newParkingLot.description,
+                lat: newParkingLot.latitude,
+                lon: newParkingLot.longitude,
+                type: newParkingLot.type
+            }
+
+            let idPlace = null;
+
+            if (dbClosed !== true) {
+                idPlace = await testPlaceDao.insertPlace(newPlace, newParkingLot.province);
+            }
+
+            const result = await testPlaceDao.insertParkingLotData(idPlace, newParkingLot.capacity);
+
+            expect(result).not.toBeNull();
+            expect(result).toBe(true);
+        }
+        catch (err) {
+            console.log("---- Error on testNewParkingLot ----");
             return;
         }
     });

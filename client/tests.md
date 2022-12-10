@@ -19,6 +19,7 @@ So that I can get information on them
    1. if it is a checkbox it show if it is selected or not
    2. if it is a range filter, its extremities show the range choosen by the user
    3. if it is a select it show the selected value
+   4. in the map you can select a point and a radius from that point
 3. The list of the hikes is updated according to filters selected
 
 #### Expected result
@@ -35,6 +36,7 @@ Point 3 is true
    1. if it is a checkbox it show if it is selected or not
    2. if it is a range filter, its extremities show the range choosen by the user
    3. if it is a select it show the selected value
+   4. in the map you can select a point and a radius from that point
 4. Close the modal clicking on the `close button`
 5. The list of the hikes is updated according to filters selected
 
@@ -46,9 +48,9 @@ Point 5 is true
 
 #### Procedure
 
-1. On the hike line , press the ↓ button
+1. On the hike line , press the i button
 2. It will apper a table with the data about the hike
-3. To close the table, press ↑ button
+3. To close the table, press i button
 
 #### Expected result
 
@@ -164,12 +166,13 @@ So that I can use its advanced services
 2. Press the submit button
 3. If something has gone wrong,it will apper the allert message under the wrong fiels
 4. If the mail had been already used,it will appear an error message and the user can login in the bottom part or in the upper right corner of the page,by pressing the login button
-5. If evrithing is correct, it will return to the main page, logged in
-6. It will appear a modal that confirm the right registration of the user(a error modal if the)
+5. If everything is correct, it will return to the main page
+6. A modal will appear with the message that inform the user that an email was sent to confirm the registation(if the user try to login without the confirmation of the mail, it will appear an error message that remaind to check the email)
+7. When the user confirm the email, he can use the login button to access as a member
 
 #### Expected result
 
-Point 6 is true
+Point 7 is true
 
 ## Story 4 - See hikes' details
 
@@ -205,14 +208,12 @@ Point 4 is true
 
 Point 3 is true
 
-
 ## Story 5 - Describe hut
 
 ```
 As a local guide\
 I want to insert a hut description
 ```
-
 
 ### Test 1 - go to the new hut page
 
@@ -233,7 +234,7 @@ Point 5 is true
 #### Procedure
 
 1. Fill all the fields in the form :
-   1. Insert name of the hut.It can't be empty
+   1. Insert name of the hut. It can't be empty
    2. Insert the altitude. It can't be a negative number
    3. Insert the number of beds. It can't be a negative number
    4. Optionally, insert the URL of the website of the hut. It must be a http or an https site. An example of the site is under the insert field
@@ -245,6 +246,41 @@ Point 5 is true
 3. If something has gone wrong,it will apper the allert message under the wrong fiels
 4. If everything is correct in the form, the user will be redirected to the hike table page
 5. It will appear a modal of success if the new hut is correctly saved in the db, an error modal if something went wrong
+
+## Story 6 - Describe parking
+
+```
+As a local guide\
+I want to add a parking lot
+```
+
+### Test 1 - go to the parking lot page
+
+#### Procedure
+
+1. the user need to be logged in as a local guide
+2. move the cursor over the user name in the right upper corner
+3. it will appear a drop down menu with different options for the local guide
+4. select new parking lot and press the mouse
+5. it will  redirect to a new page with the form for adding a new parking lot
+
+#### Expected result
+
+Point 5 is true
+
+### Test 2 - insert a new parking lot
+
+#### Procedure
+
+1. Fill all the fields in the form :
+   1. Insert name for the parking lot.It can't be empty
+   2. Insert the capacity of the parking lot. It can't be a negative number
+   3. Optionally, insert a description for the parking lot
+   4. In the map on the right, you can select a province by clicking on it
+2. Press the submit button
+3. If something has gone wrong,it will apper the allert message under the wrong fiels
+4. If everything is correct in the form, the user will be redirected to the hike table page
+5. It will appear a modal of success if the parking lot is correctly saved in the db, an error modal if something went wrong
 
 #### Expected result
 

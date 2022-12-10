@@ -10,6 +10,7 @@ import {
 import HomePage from './pages/HomePage';
 import NewHike from './pages/NewHike';
 import NewHut from './pages/NewHut';
+import NewParkingLot from './pages/NewParkingLot';
 import WrongPath from './pages/WrongPath';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
@@ -44,6 +45,8 @@ function App2() {
 	const [showAddNewHikeError, setShowAddNewHikeError] = useState(false);
 	const [showAddNewHutSuccess, setShowAddNewHutSuccess] = useState(false);
 	const [showAddNewHutError, setShowAddNewHutError] = useState(false);
+	const [showAddNewParkingLotSuccess, setShowAddNewParkingLotSuccess] = useState(false);
+	const [showAddNewParkingLotError, setShowAddNewParkingLotError] = useState(false);
 	const [showRegistrationSuccess, setShowRegistrationSuccess] = useState(false);
 	const [showEmailVerificationSuccess, setShowEmailVerificationSuccess] = useState(false);
 	const [showEmailVerificationError, setShowEmailVerificationError] = useState(false);
@@ -198,6 +201,16 @@ function App2() {
 						}
 					/>
 					<Route
+						path="/newParkingLot"
+						element={
+							loggedIn && user.role === 'Local guide' ? (
+								<NewParkingLot  setShowAddNewParkingLotSuccess={setShowAddNewParkingLotSuccess} setShowAddNewParkingLotError={setShowAddNewParkingLotError} provincesFacets={provincesFacets}/>
+							) : (
+								<Navigate to="/login" replace />
+							)
+						}
+					/>
+					<Route
 						path="/login"
 						element={
 							loggedIn ? (
@@ -274,6 +287,19 @@ function App2() {
 				/>
 				<InfoModalComponent
 					show={showAddNewHutError}
+					title="Error"
+					subtitle={`Oh no... there was a problem, try later`}
+					icon={faXmarkCircle}
+					success={false}
+				/>
+				<InfoModalComponent
+					show={showAddNewParkingLotSuccess}
+					title="Success!"
+					subtitle={`New parking lot added successfully`}
+					icon={faCheckCircle}
+				/>
+				<InfoModalComponent
+					show={showAddNewParkingLotError}
 					title="Error"
 					subtitle={`Oh no... there was a problem, try later`}
 					icon={faXmarkCircle}

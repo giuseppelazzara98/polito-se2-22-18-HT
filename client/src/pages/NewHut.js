@@ -6,6 +6,6 @@ export default function NewHut(props){
     return(
         <Container>
             <h1 className="my-5 title">New Hut</h1>
-            <NewHutParkingForm setShowAddNewHutSuccess={props.setShowAddNewHutSuccess} setShowAddNewHutError={props.setShowAddNewHutError} isHut={true} provincesFacets={provincesFacets}/>
+            <NewHutParkingForm setShowAddNewSuccess={props.setShowAddNewHutSuccess} setShowAddNewError={props.setShowAddNewHutError} isHut={true} provincesFacets={provincesFacets}/>
         </Container>);
 }
