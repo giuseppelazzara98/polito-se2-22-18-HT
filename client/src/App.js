@@ -93,7 +93,6 @@ function App2() {
 			filters.filter((filterEle) => filterEle.key === 'ascent')?.[0]?.values ||
 			[];
 		const rangeFilter = filters.filter((filterEle) => filterEle.key === 'radius')?.[0]?.value || null;
-		console.log(rangeFilter);
 		const newObj = {
 			province: provinceFilter,
 			municipality: municipalitiesFilter,

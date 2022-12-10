@@ -80,8 +80,9 @@ export default function RadiusMapFilter (props){
             <Slider
             size="medium"
             defaultValue={70}
-            aria-label="Small"
             valueLabelDisplay="auto"
+            aria-labelledby="range-slider"
+            valueLabelFormat={(value) => `${value/1000} km`}
             min={0}
             max={computeMaxDistance(
                 radiusCenter.center,
@@ -89,8 +90,11 @@ export default function RadiusMapFilter (props){
             )}
             theme={theme}
             scale={(x) => x * 1}
-            onChange={(e, value) => { setRadiusCenter({ ...radiusCenter, radius: value });
+            onChangeCommitted={(e, value) => { setRadiusCenter({ ...radiusCenter, radius: value });
             modifyRangeFilter(radiusCenter);
+        }
+        }
+            onChange={(e, value) => { setRadiusCenter({ ...radiusCenter, radius: value });
         }
         }
             

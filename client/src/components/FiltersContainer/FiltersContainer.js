@@ -33,7 +33,7 @@ function FilterModal(props) {
 }
 
 export default function FiltersContainer(props) {
-  const { filters, setFilters, facets, provincesFacets, municipalitiesFacets, setFetchMunicipalities, hikesPoints, hikesForDistance } = props;
+  const { filters, setFilters, facets, provincesFacets, municipalitiesFacets, setFetchMunicipalities, hikesPoints, hikesForDistance,  } = props;
   const [modalOpen, setModalOpen] = useState(false);
   const [currentMinMaxExpectedTime, setCurrentMinMaxExpectedTime] = useState([null, null])
   const [currentMinMaxLength, setCurrentMinMaxLength] = useState([null, null])

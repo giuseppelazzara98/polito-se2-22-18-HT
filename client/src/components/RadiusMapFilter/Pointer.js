@@ -8,8 +8,8 @@ export default function Pointer(props)
         click: (ev) => {
             const latLng = map.mouseEventToLatLng(ev.originalEvent);
             setRadiusCenter({ ...radiusCenter, center: [latLng.lat, latLng.lng] });
-            modifyRangeFilter(radiusCenter);
             map.setView([latLng.lat, latLng.lng]);
+            modifyRangeFilter(radiusCenter);
             
         }
 
