@@ -19,6 +19,7 @@ So that I can get information on them
    1. if it is a checkbox it show if it is selected or not
    2. if it is a range filter, its extremities show the range choosen by the user
    3. if it is a select it show the selected value
+   4. in the map you can select a point and a radius from that point
 3. The list of the hikes is updated according to filters selected
 
 #### Expected result
@@ -35,6 +36,7 @@ Point 3 is true
    1. if it is a checkbox it show if it is selected or not
    2. if it is a range filter, its extremities show the range choosen by the user
    3. if it is a select it show the selected value
+   4. in the map you can select a point and a radius from that point
 4. Close the modal clicking on the `close button`
 5. The list of the hikes is updated according to filters selected
 
@@ -46,9 +48,9 @@ Point 5 is true
 
 #### Procedure
 
-1. On the hike line , press the ↓ button
+1. On the hike line , press the i button
 2. It will apper a table with the data about the hike
-3. To close the table, press ↑ button
+3. To close the table, press i button
 
 #### Expected result
 
@@ -164,12 +166,13 @@ So that I can use its advanced services
 2. Press the submit button
 3. If something has gone wrong,it will apper the allert message under the wrong fiels
 4. If the mail had been already used,it will appear an error message and the user can login in the bottom part or in the upper right corner of the page,by pressing the login button
-5. If everything is correct, it will return to the main page, logged in
-6. It will appear a modal that confirm the right registration of the user(a error modal if the)
+5. If everything is correct, it will return to the main page
+6. A modal will appear with the message that inform the user that an email was sent to confirm the registation(if the user try to login without the confirmation of the mail, it will appear an error message that remaind to check the email)
+7. When the user confirm the email, he can use the login button to access as a member
 
 #### Expected result
 
-Point 6 is true
+Point 7 is true
 
 ## Story 4 - See hikes' details
 
