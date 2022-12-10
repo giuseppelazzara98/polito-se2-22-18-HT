@@ -4,7 +4,6 @@ import geoData from './data/geoData.json';
 
 export default function NewMarker(props) {
 	const { point, setPoint } = props;
-	const turinCoordinates = [44.58665046840906, 7.382619129493833]
 	const map = useMapEvents({
 		click: (ev) => {
 			const latLng = map.mouseEventToLatLng(ev.originalEvent);

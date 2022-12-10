@@ -192,7 +192,7 @@ router.post('/newHut',
 			return res.status(422).json({ error: 'Empty body request' });
 		}
 
-		if (!(Object.keys(req.body).length === 11)) {
+		if ((Object.keys(req.body).length !== 11)) {
 			console.log('Data not formatted properly!');
 			return res.status(422).json({ error: 'Data not formatted properly' });
 		}

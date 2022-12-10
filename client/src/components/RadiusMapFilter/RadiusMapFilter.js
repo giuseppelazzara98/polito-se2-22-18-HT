@@ -18,11 +18,8 @@ L.Icon.Default.mergeOptions({
 export default function RadiusMapFilter (props){
     const {
         title = "",
-        name = "",
-        value = "",
         setRadiusCenter,
         radiusCenter,
-        hikesPoints,
         hikesForDistance,
         modifyRangeFilter,
     } = props;
