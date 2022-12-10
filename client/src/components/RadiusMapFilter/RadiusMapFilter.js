@@ -76,7 +76,7 @@ export default function RadiusMapFilter (props){
             </MapContainer>
             <Slider
             size="medium"
-            defaultValue={70}
+            defaultValue={100000}
             valueLabelDisplay="auto"
             aria-labelledby="range-slider"
             valueLabelFormat={(value) => `${value/1000} km`}
