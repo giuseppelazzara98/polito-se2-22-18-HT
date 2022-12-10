@@ -168,7 +168,7 @@ So that I can use its advanced services
 4. If the mail had been already used,it will appear an error message and the user can login in the bottom part or in the upper right corner of the page,by pressing the login button
 5. If everything is correct, it will return to the main page
 6. A modal will appear with the message that inform the user that an email was sent to confirm the registation(if the user try to login without the confirmation of the mail, it will appear an error message that remaind to check the email)
-7. When the user confirm the email, he can use the login button to access as a member
+7. In the email, if you confirm the data, it will redirect to the login page were you can enter as a member with the role chose
 
 #### Expected result
 

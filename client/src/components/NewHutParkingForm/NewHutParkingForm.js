@@ -26,6 +26,7 @@ export default function NewHutForm(props) {
     const isMobile = useMediaQuery({ maxWidth: maxBreakpoints.tabletLandscape });
     const [province, setProvince] = useState({});
     const [mapOpen, setMapOpen] = useState(false);
+    const [capacity,setCapacity]=useState(0);
 
 
     const handleSubmit = (event) => {
