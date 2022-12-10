@@ -205,14 +205,12 @@ Point 4 is true
 
 Point 3 is true
 
-
 ## Story 5 - Describe hut
 
 ```
 As a local guide\
 I want to insert a hut description
 ```
-
 
 ### Test 1 - go to the new hut page
 
@@ -233,7 +231,7 @@ Point 5 is true
 #### Procedure
 
 1. Fill all the fields in the form :
-   1. Insert name of the hut.It can't be empty
+   1. Insert name of the hut. It can't be empty
    2. Insert the altitude. It can't be a negative number
    3. Insert the number of beds. It can't be a negative number
    4. Optionally, insert the URL of the website of the hut. It must be a http or an https site. An example of the site is under the insert field
@@ -245,7 +243,6 @@ Point 5 is true
 3. If something has gone wrong,it will apper the allert message under the wrong fiels
 4. If everything is correct in the form, the user will be redirected to the hike table page
 5. It will appear a modal of success if the new hut is correctly saved in the db, an error modal if something went wrong
-
 
 ## Story 6 - Describe parking
 
@@ -261,7 +258,7 @@ I want to add a parking lot
 1. the user need to be logged in as a local guide
 2. move the cursor over the user name in the right upper corner
 3. it will appear a drop down menu with different options for the local guide
-4. select phe new parking lot and presss the mouse
+4. select new parking lot and press the mouse
 5. it will  redirect to a new page with the form for adding a new parking lot
 
 #### Expected result
