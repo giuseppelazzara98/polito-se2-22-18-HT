@@ -16,8 +16,8 @@ export default function Pointer(props)
     });
     useEffect(() => {
         modifyRangeFilter(radiusCenter);
-    }, [radiusCenter]);
-    
+    }, [radiusCenter.center]);
+
     return (
         <Circle
                 center = {
