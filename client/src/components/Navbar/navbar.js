@@ -9,6 +9,7 @@ import { maxBreakpoints } from '../../helpers/configs';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRightToBracket, faUserPlus, faHouse } from '@fortawesome/free-solid-svg-icons';
 import UserMenu from './UserMenu';
+import AddMenu from './AddMenu';
 
 function NavbarHead(props) {
 	const {
@@ -60,9 +61,13 @@ function NavbarHead(props) {
 							{isMobile && <FontAwesomeIcon icon={faRightToBracket} />}
 						</Button>
 					)}
+					{props.loggedIn && props.user.role === 'Local guide' && (
+						<AddMenu user={props.user} handleLogOut={handleLogOut}/>
+					)}
 					{props.loggedIn && (
 						<UserMenu user={props.user} handleLogOut={handleLogOut}/>
 					)}
+					
 				</div>
 			</Container>
 		</Navbar>
