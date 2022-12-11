@@ -21,7 +21,7 @@ export default function AddMenu(props) {
         <FontAwesomeIcon icon={faCirclePlus} className={styles.addIcon} />
       </div>
       <div className={styles.optionModal}>
-        {isMobile && <span className={styles.userName}>{user.name} {user.surname}</span>}
+        {isMobile && <span className={styles.userName}></span>}
         {user.role === 'Local guide' && (
           <>
             {location.pathname !== "/newHike" && (
