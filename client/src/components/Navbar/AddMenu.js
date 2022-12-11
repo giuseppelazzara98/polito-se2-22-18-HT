@@ -17,11 +17,9 @@ export default function AddMenu(props) {
   return (
     <div className={styles.userContainer}>
       <div className={`btn ${styles.userInfoContainer}`}>
-        {!isMobile && <span className={styles.userName}></span>}
         <FontAwesomeIcon icon={faCirclePlus} className={styles.addIcon} />
       </div>
       <div className={styles.optionModal}>
-        {isMobile && <span className={styles.userName}></span>}
         {user.role === 'Local guide' && (
           <>
             {location.pathname !== "/newHike" && (
