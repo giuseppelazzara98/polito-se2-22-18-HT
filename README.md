@@ -40,6 +40,9 @@ Developers: Gerardo Braia, Elisa Calì, Francesco Carpegna, Ahmed Khater, Giusep
 - Route `/login`: the route contains the login form, where the user can authenticate himself inserting username and password.
 - Route `/signup`: the route contains the register form, where the user can register himself inserting name, surname, email, password and the role for which he / she wants to register for.
 - Route `/newHike`: the route contains the form to create a new hike, where the local guide can insert all the useful informations related to the hike, including the GPX file.
+- Route `/newHut`: the route contains the form to create a new hut, where the local guide can insert all the useful informations related to the hut, including the provinces selection from the map.
+- Route `/newParkingLot`: the route contains the form to create a new parking lot, where the local guide can insert all the useful informations related to the Parking Lot, including the provinces selection from the map.
+- Route `/verify/:token`: the route contains the page related to the confirmation of the email. The link of this page is sended on the email of the new user.
 - Route `*`:  the route displays an error message if a known route is not found or the current route is wrong. 
 
 ## API SERVER:
