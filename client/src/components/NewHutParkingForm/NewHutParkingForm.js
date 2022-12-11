@@ -131,7 +131,7 @@ export default function NewHutForm(props) {
                                     <Insert title={"Number Of Beds"} type={"number"} param={nBeds} setParam={setNBeds} placeholder={"Number of beds"} min={1} invalid={"The number of beds must be grater than 0"}/>
                                 </Col>
                                 <Col>
-                                    <Insert title={"Web Site"} type={"text"} param={webSite} setParam={setWebSite} placeholder={"Link of the web site"} required={false} text={"es. https://sitedomain.com"} pattern={"^https?://+([a-zA-Z0-9]){2,}.com"} invalid={"Invalid web site URL"}/>
+                                    <Insert title={"Web Site"} type={"text"} param={webSite} setParam={setWebSite} placeholder={"Link of the web site"} required={false} text={"es. https://sitedomain.com"} pattern={"(http(s)?://)?(www.)?([a-zA-Z][a-zA-Z0-9]*)(.[a-z]+)+"} invalid={"Invalid web site URL"}/>
                                 </Col>
                             </Row>
                             <Row className="mb-3">
@@ -139,7 +139,7 @@ export default function NewHutForm(props) {
                                     <Insert title={"Email"} type={"email"} param={email} setParam={setEmail} placeholder={"Email"} invalid={"Invalid email"}/>
                                 </Col>
                                 <Col>
-                                    <Insert title={"Phone Number"} type={"text"} param={phoneNumber} setParam={setPhoneNumber} placeholder={"Phone Number"} minLength={10} maxLength={15} pattern={"\+([0-9]){9}(([0-9][0-9]){1,2})?([0-9])?"} text={"es. +391504896352"} invalid={"Invalid phone number"}/>
+                                    <Insert title={"Phone Number"} type={"text"} param={phoneNumber} setParam={setPhoneNumber} placeholder={"Phone Number"} minLength={10} maxLength={15} pattern={"(+[0-9]+(' ')?)?[0-9]{10}"} text={"es. +391504896352"} invalid={"Invalid phone number"}/>
                                 </Col>
                             </Row>
                         </>
