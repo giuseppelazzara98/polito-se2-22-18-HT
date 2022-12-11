@@ -139,7 +139,7 @@ export default function NewHutForm(props) {
                                     <Insert title={"Email"} type={"email"} param={email} setParam={setEmail} placeholder={"Email"} invalid={"Invalid email"}/>
                                 </Col>
                                 <Col>
-                                    <Insert title={"Phone Number"} type={"text"} param={phoneNumber} setParam={setPhoneNumber} placeholder={"Phone Number"} minLength={10} maxLength={15} pattern={"(+[0-9]+(' ')?)?[0-9]{10}"} text={"es. +391504896352"} invalid={"Invalid phone number"}/>
+                                    <Insert title={"Phone Number"} type={"text"} param={phoneNumber} setParam={setPhoneNumber} placeholder={"Phone Number"} minLength={10} maxLength={15} pattern={"\\+[0-9]{10,15}"} text={"es. +391504896352"} invalid={"Invalid phone number"}/>
                                 </Col>
                             </Row>
                         </>
