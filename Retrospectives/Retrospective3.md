@@ -66,10 +66,10 @@ sections:
 > place technical tasks corresponding to story `#0` and leave out story points (not applicable in this case)
 
 - Hours per task (average, standard deviation):
-  - estimate hours per task average: 2
-  - estimate standard deviation:
-  - actual hours per task average: 2
-  - actual standard deviation:
+  - estimate hours per task average: 2,002
+  - estimate standard deviation: 2,326
+  - actual hours per task average: 2,002
+  - actual standard deviation: 2,256
 - Total task estimation error ratio: sum of total hours estimation / sum of total hours spent -1: 0
 
 ## QUALITY MEASURES
