@@ -14,25 +14,30 @@ L.Icon.Default.mergeOptions({
 });
 
 export default function Map(props) {
-	const {point, setPoint} = props;
+	const { point, setPoint } = props;
 	return (
 		<MapContainer
 			className={styles.map}
 			center={[45.0703, 7.6869]}
-			zoom={9}
+			zoom={7}
 			scrollWheelZoom={false}
 		>
 			<TileLayer
 				attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 				url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 			/>
-			<NewMarker point={point} setPoint={setPoint}/> {/* This is the marker component */}
+			<NewMarker point={point} setPoint={setPoint} />{' '}
+			{/* This is the marker component */}
 			{/* This is used to draw the provinces */}
 			{geoData.provinces.map((province) => {
 				return (
 					<Polygon
 						key={province.properties.prov_istat_code_num}
-						pathOptions={{ color: 'red', fillColor: 'red' }}
+						pathOptions={{
+							color: '#dc3545',
+							fillColor: 'trasparent',
+							fillOpacity: 0
+						}}
 						positions={province.coordinates}
 					/>
 				);
