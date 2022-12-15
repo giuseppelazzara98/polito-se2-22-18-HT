@@ -38,9 +38,9 @@ sections:
 | _#0_  | Modification to the Register API           |   -    | 15m        | 15m          |
 | _#0_  | Fix GPS name                               |   -    | 30m        | 30m          |
 | _#0_  | Git Issue icon of the hike table           |   -    | 15m        | 15m          |
-| _#0_  | Front-End fix on SonarCloud                |   -    | 3h30m      | 3h30m        |
-| _#0_  | Back-End fix on SonarCloud                 |   -    | 2h30m      | 2h30m        |
-| _#0_  | Check code with SonarCloud                 |   -    | 30m        | 30m          |
+| _#0_  | Front-End fix on SonarQube                |   -    | 3h30m      | 3h30m        |
+| _#0_  | Back-End fix on SonarQube                 |   -    | 2h30m      | 2h30m        |
+| _#0_  | Check code with SonarQube                 |   -    | 30m        | 30m          |
 | _#0_  | Range Filter with Map                      |   -    | 4h45m      | 4h45m        |
 | _#0_  | Range Filter Back-End                      |   -    | 4h         | 4h           |
 | _#0_  | Fix Range Filter                           |   -    | 45m        | 45m          |
@@ -110,22 +110,19 @@ The team has decided to use the following strategy:
 ## ASSESSMENT
 
 - What caused your errors in estimation (if any)?
-
   - /
 
 - What lessons did you learn (both positive and negative) in this sprint?
-
-  - As a team, we have learned how to use SonarCloud in order to check the quality of our code, how to fix the issues that it reports, and the best practices that we should follow. We don't have any negative lessons to report.
+  - As a team, we have learned how to use SonarQube in order to check the quality of our code, how to fix the issues that it reports, and the best practices that we should follow. We don't have any negative lessons to report.
 
 - Which improvement goals set in the previous retrospective were you able to achieve?
-  - We were able to achieve all the planned goals, set in the previous retrospective. As a matter of fact, by completing the tasks two days before the deadline, we were able to focus on the quality of our code, by fixing bugs and issues reported by SonarCloud and not.
-- Which ones you were not able to achieve? Why?
+  - We were able to achieve all the planned goals, set in the previous retrospective. As a matter of fact, by completing the tasks two days before the deadline, we were able to focus on the quality of our code, by fixing bugs and issues reported by SonarQube and not.
 
+- Which ones you were not able to achieve? Why?
   - /
 
 - Improvement goals for the next sprint and how to achieve them (technical tasks, team coordination, etc.)
-
-  - Having reached the fourth sprint, we believe we have improved a lot in the management of the assigned time and in the knowledge of the technologies used on the project. For this reason we want to try to improve our productivity by trying to commit one more story than in the previous sprint.
+  - **Increase productivity**: Having reached the fourth sprint, we believe we have improved a lot in the management of the assigned time and in the knowledge of the technologies used on the project. For this reason we want to try to improve our productivity by trying to commit one more story than in the previous sprint or trying to complete the same number of stories but with more points.
 
 - One thing you are proud of as a Team!!
-  - As a team, we are proud of the fact that we have been able to complete all the tasks assigned to us, and that we have been able to fix all the issues reported by SonarCloud. We are also proud of the fact that we have been able to complete the project two days before the deadline, and that we have been able to focus on the quality of our code.
+  - As a team, we are proud of the fact that we have been able to complete all the tasks assigned to us, and that we have been able to fix all the important issues reported by SonarQube. We are also proud of the fact that we have been able to complete the tasks two days before the deadline, and that we have been able to focus on the quality of our code.
