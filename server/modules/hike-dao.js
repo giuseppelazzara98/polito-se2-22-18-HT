@@ -89,7 +89,7 @@ class HikeDAO {
 		if (filters.province !== null) {
 			sql = sql.where('HIKE.id_province', filters.province);
 		}
-		if(filters.province !== null && filters.municipality !== null) {
+		if (filters.province !== null && filters.municipality !== null) {
 			sql = sql.where('HIKE.id_municipality', filters.municipality);
 		}
 		if (filters.difficulty.length !== 0) {
@@ -160,7 +160,7 @@ class HikeDAO {
 							expected_time: el.expected_time,
 							ascent: el.ascent,
 							difficulty: el.difficulty,
-							position: {lat: el.latitude, long: el.longitude}
+							position: { lat: el.latitude, long: el.longitude }
 						};
 					});
 					resolve(hikes);
@@ -178,7 +178,7 @@ class HikeDAO {
 					console.log(err);
 					reject(err);
 				} else {
-					if(row !== undefined) {
+					if (row !== undefined) {
 						const latLong = {
 							latitude: row.latitude,
 							longitude: row.longitude
@@ -360,6 +360,74 @@ class HikeDAO {
 			});
 		});
 	};
+
+	/*
+		These are the following hardcoded states:
+		0 -> "Not started"
+		1 -> "Ongoing"
+		2 -> "Completed"
+	*/
+
+	/* --------------------------------------------- TABLE USER_HIKE --------------------------------------------- */
+
+	getHikeStats = (id_user) => {
+		return new Promise((resolve, reject) => {
+			const sql = "SELECT UH.id_hike, H.name AS HIKE_NAME, UH.start_time, UH.state, UH.registered FROM USER_HIKE UH, HIKE H WHERE UH.id_hike = H.id_hike AND UH.id_user = ?;";
+			this.db.all(sql, [id_user], function (err, rows) {
+				if (err) {
+					console.log('Error running sql: ' + sql);
+					console.log(err);
+					reject(err);
+				} else {
+					const hikesStats = rows.map((el) => {
+						return {
+							id_hike: el.id_hike,
+							hike_name: el.HIKE_NAME,
+							start_time: el.start_time,
+							end_time: el.end_time,
+							state: el.state,
+							registered: el.registered
+						};
+					});
+
+					resolve(hikesStats);
+				}
+			});
+		});
+	}
+
+	insertHikeRegistration = (id_hike, id_user) => {
+		return new Promise((resolve, reject) => {
+			const sql =
+				'INSERT INTO USER_HIKE (id_hike, id_user, start_time, end_time, state, registered) VALUES (?, ?, "", "", 0, 1)';
+
+			this.db.run(sql, [id_hike, id_user], function (err) {
+				if (err) {
+					console.log('Error running sql: ' + sql);
+					console.log(err);
+					reject(err);
+				} else {
+					resolve(this.lastID);
+				}
+			});
+		});
+	}
+
+	updateStartTime = (id_hike, id_user, start_time) => {
+		return new Promise((resolve, reject) => {
+			const sql = 'UPDATE USER_HIKE SET start_time = ? WHERE id_user = ? AND id_hike = ?';
+			this.db.run(sql, [start_time, id_user, id_hike], function (err) {
+				if (err) {
+					console.log('Error running sql: ' + sql);
+					console.log(err);
+					reject(err);
+				} else {
+					resolve(true);
+				}
+			});
+		});
+	}
+
 }
 
 module.exports = HikeDAO;

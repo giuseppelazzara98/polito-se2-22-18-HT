@@ -428,10 +428,73 @@ __Response:__ `201 Created`
 __Response body:__ _None_  
 __Error responses:__ `401 Unauthorized`, `422 Unprocessable Entity`, `503 Service Unavailable`
 
+### Register an hiker for a specific hike (only if the user is an hiker and is logged in):
+
+__URL:__ `/api/hikeRegistration`  
+__Method:__ POST  
+__Description:__ Register a specific hiker to a specific hike.   
+__Request body:__ 
+```
+{
+	"id_hike": 3
+}
+```
+__Response:__ `201 Created`  
+__Response body:__ _None_  
+__Error responses:__ `401 Unauthorized`, `422 Unprocessable Entity`, `503 Service Unavailable`
+
+### Hiker starts a specific hike (only if the user is an hiker and is logged in):
+
+__URL:__ `/api/startHike`  
+__Method:__ PUT  
+__Description:__ Update the the hike for which the user is registered with the start time     
+__Request body:__ 
+```
+{
+	"id_hike": 1,
+	"start_time": "2022/12/20 08:52"
+}
+``` 
+__Response:__ `200 Ok`  
+__Response body:__ _None_  
+__Error responses:__ `401 Unauthorized`, `422 Unprocessable Entity`, `503 Service Unavailable`
+
+### Get statistics and information about user's hikes (only if the user is an hiker and is logged in):
+
+__URL:__ `/api/hikesStats`  
+__Method:__ GET  
+__Description:__ Retrieves the informations of the current user.  
+__Request body:__ _None_  
+__Response:__ `200 OK`  
+__Response body:__ 
+```
+[
+    {
+        "id_hike": 10,
+		"hike_name": "Afframont Lake",
+		"start_time": "2022/12/20 08:52",
+		"end_time": "2022/12/20 12:52",
+		"state": 2,
+		"registered": 1
+    },
+    {
+        "id_hike": 11,
+	    "hike_name": "Rifugio Barfè",
+		"start_time": "2022/12/20 09:45",
+		"end_time": "",
+		"state": 1,
+		"registered": 1
+    }, ...
+]
+```
+__Error responses:__ `401 Unauthorized`, `500 Internal Server Error`
+
 ## DATABASE TABLES:
 
 - Table `HIKE`: contains the hikes informations, including name, description, province, difficulty, expected time, length, ascent, GPX file, local guide, start place and end place.
 - Table `HIKE_PLACE`: contains informations related to the association between an hike and one or more places. (A place associated to an hike can be the start point, the end point or a reference point for that hike).
+- Table `HUT_DATA`: contains the huts informations, including phone, email and an optional website.
+- Table `PARKING DATA`: contains the parking lots informations, including the capacity in terms of cars that can park there.
 - Table `PLACE`: contains the places informations, including name, description, province, latitude, longitude and type.
 - Table `PREFERENCE`: contains the informations related to the association between an user and his / her preferences.
 - Table `PROVINCE`: contains the provinces informations, including name and abbreviation.

@@ -242,7 +242,7 @@ router.post('/newHike',
 			}
 			else {
 				//lo inserisco a db
-				const start_place = {...req.body.startPoint, description: null}
+				const start_place = { ...req.body.startPoint, description: null }
 				idStart = await placeDao.insertPlace(start_place, req.body.province);
 			}
 			console.log("idstart: " + idStart);
@@ -254,7 +254,7 @@ router.post('/newHike',
 			}
 			else {
 				//lo inserisco a db
-				const end_place = {...req.body.endPoint, description: null}
+				const end_place = { ...req.body.endPoint, description: null }
 				idEnd = await placeDao.insertPlace(end_place, req.body.province);
 			}
 
@@ -282,7 +282,7 @@ router.post('/newHike',
 				}
 				else {
 					//lo inserisco a db
-					const ref_point = {...referencePoint, description: null}
+					const ref_point = { ...referencePoint, description: null }
 					idReferencePoint = await placeDao.insertPlace(ref_point, req.body.province);
 					place_ok = idReferencePoint;
 				}
@@ -354,4 +354,105 @@ router.get('/hikePoints/:id',
 		}
 	}
 );
+
+//GET /api/hikesStats
+router.get('/hikesStats',
+	isLoggedIn,
+    async (req, res) => {
+
+        try {
+
+            const result = await hikeDao.getHikeStats(req.user.id);
+           
+            res.status(200).json(result);
+        } catch (err) {
+            res.status(500).json({ error: "Internal Server Error" });
+        }
+    }
+);
+
+/*
+	Example of body:
+	{
+		"id_hike": 1,
+	}
+*/
+
+//POST /api/hikeRegistration
+router.post('/hikeRegistration',
+	isLoggedIn,
+	body('id_hike').notEmpty().isInt({ min: 1 }),
+	async (req, res) => {
+
+		if (Object.keys(req.body).length === 0) {
+			console.log('Empty body!');
+			return res.status(422).json({ error: 'Empty body request' });
+		}
+
+		if (Object.keys(req.body).length !== 1) {
+			console.log('Data not formatted properly!');
+			return res.status(422).json({ error: 'Data not formatted properly' });
+		}
+
+		const errors = validationResult(req);
+
+		if (!errors.isEmpty()) {
+			console.log("Error in body!");
+			return res.status(422).json({ errors: errors.array() });
+		}
+
+		try {
+
+			const result = await hikeDao.insertHikeRegistration(req.body.id_hike, req.user.id);
+
+			return res.status(201).json(result);
+		} catch (err) {
+			console.log(err);
+			return res.status(503).json({ error: 'Service Unavailable' });
+		}
+	});
+
+/*
+	Example of body: 
+	{
+		"id_hike": 1,
+		"start_time": "2022/12/20 08:52"
+	}
+*/
+
+//PUT /api/startHike
+router.put('/startHike',
+	isLoggedIn,
+	body('id_hike').notEmpty().isInt({ min: 1 }),
+	body('start_time').notEmpty().isString(),
+	async (req, res) => {
+
+		if (Object.keys(req.body).length === 0) {
+			console.log('Empty body!');
+			return res.status(422).json({ error: 'Empty body request' });
+		}
+
+		if (Object.keys(req.body).length !== 2) {
+			console.log('Data not formatted properly!');
+			return res.status(422).json({ error: 'Data not formatted properly' });
+		}
+
+		const errors = validationResult(req);
+
+		if (!errors.isEmpty()) {
+			console.log("Error in body!");
+			return res.status(422).json({ errors: errors.array() });
+		}
+
+		try {
+
+			const result = await hikeDao.updateStartTime(req.body.id_hike, req.user.id, req.body.start_time);
+
+			res.status(200).json(result);
+		} catch (err) {
+			res.status(503).json({ error: 'Service Unavailable' });
+		}
+	}
+);
+
 module.exports = router;
