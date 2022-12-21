@@ -370,9 +370,45 @@ class HikeDAO {
 
 	/* --------------------------------------------- TABLE USER_HIKE --------------------------------------------- */
 
+	/*
+
+	// create the user_hike table
+	newHikeUserHikeTable = () => {
+		return new Promise((resolve, reject) => {
+
+		const sql = "CREATE TABLE IF NOT EXISTS USER_HIKE USER_HIKE (id_user_hike INTEGER NOT NULL, id_hike INTEGER NOT NULL, id_user INTEGER NOT NULL, start_time TEXT, end_time TEXT, state INTEGER NOT NULL DEFAULT 0, registered INTEGER NOT NULL DEFAULT 1, FOREIGN KEY(id_user) REFERENCES USER(id_user), FOREIGN KEY(id_hike) REFERENCES HIKE(id_hike), PRIMARY KEY(id_user_hike AUTOINCREMENT)";
+			this.db.run(sql, (err) => {
+				if (err) {
+					console.log('Error running sql: ' + sql);
+					console.log(err);
+					reject(err);
+				}
+				resolve(this.lastID);
+			});
+		});
+	}
+
+	// drop the hike_place table
+	dropUserHikeTable = () => {
+		return new Promise((resolve, reject) => {
+			const sql = "DROP TABLE IF EXISTS USER_HIKE;";
+			this.db.run(sql, function (err) {
+				if (err) {
+					console.log('Error running sql: ' + sql);
+					console.log(err);
+					reject(err);
+				}
+				resolve(this.lastID);
+			})
+
+		});
+	}
+
+	*/
+
 	getHikeStats = (id_user) => {
 		return new Promise((resolve, reject) => {
-			const sql = "SELECT UH.id_hike, H.name AS HIKE_NAME, UH.start_time, UH.state, UH.registered FROM USER_HIKE UH, HIKE H WHERE UH.id_hike = H.id_hike AND UH.id_user = ?;";
+			const sql = "SELECT UH.id_hike, H.name AS HIKE_NAME, UH.start_time, UH.end_time, UH.state, UH.registered FROM USER_HIKE UH, HIKE H WHERE UH.id_hike = H.id_hike AND UH.id_user = ?;";
 			this.db.all(sql, [id_user], function (err, rows) {
 				if (err) {
 					console.log('Error running sql: ' + sql);
