@@ -149,7 +149,7 @@ describe('Test hikes apis', () => {
 		description: 'Hike 7 description'
 	};
 
-	//Authenticating the user
+	//Authenticating the local guide
 	logIn('guide1@gmail.com', 'password', 200);
 
 	//Testing POST /api/newHike
@@ -161,11 +161,26 @@ describe('Test hikes apis', () => {
 	newHike(422, bodyNewHike6);
 
 	//Testing GET /api/hike/:id
-	getHikePointsByHikeId(200, 1);
-	getHikePointsByHikeId(200, 2);
-	getHikePointsByHikeId(200, 3);
+	getHikePointsByHikeId(200, 15);
+	getHikePointsByHikeId(200, 20);
+	getHikePointsByHikeId(200, 12);
 	getHikePointsByHikeId(404, 12234567);
 	getHikePointsByHikeId(422, 0);
+
+	//Authenticating the hiker
+	logIn('hiker1@gmail.com', 'password', 200);
+
+	//Testing POST /api/hikeRegistration
+	hikeRegistration(15, 201);
+	hikeRegistration(16, 201);
+	hikeRegistration(0, 422);
+
+	//Testing PUT /api/startHike
+	startHike(15, "2022/12/21 12:45", 200);
+	startHike(11, "2022/12/21 08:45", 200);
+	startHike(0, "2022/12/21 12:45", 422);
+	startHike(13, 543, 422);				
+
 });
 
 function logIn(username, password, ExpectedHTTPStatus) {
@@ -224,7 +239,7 @@ function newHike(expectedHTTPStatus, bodyNew) {
 	});
 }
 
-function getHikePointsByHikeId(id_hike, expectedHTTPStatus) {
+function getHikePointsByHikeId(expectedHTTPStatus, id_hike) {
 	it('Getting hike points by id', async () => {
 		try {
 			agent.get('/api/hikePoints/' + id_hike).then(function (r) {
@@ -237,6 +252,52 @@ function getHikePointsByHikeId(id_hike, expectedHTTPStatus) {
 		} catch (err) {
 			if (r.status === 500) {
 				console.log('---- Error on getHikePointsByHikeId ----');
+			}
+		}
+	});
+}
+
+function hikeRegistration(id_hike, expectedHTTPStatus) {
+	it('Hike registration', async () => {
+
+		const body = {
+			id_hike: id_hike
+		};
+
+		try {
+			agent
+				.post('/api/hikeRegistration')
+				.set('Content-Type', 'application/json')
+				.send(body)
+				.then(function (r) {
+					r.should.have.status(expectedHTTPStatus);
+				});
+		} catch (err) {
+			if (r.status === 503) {
+				console.log('---- Error on hikeRegistration ----');
+			}
+		}
+	});
+}
+
+function startHike(id_hike, start_time, expectedHTTPStatus) {
+	it('Starting a hike', async () => {
+
+		const body = {
+			id_hike: id_hike,
+			start_time: start_time
+		};
+
+		try {
+			agent.put('/api/startHike')
+			.set('Content-Type', 'application/json')
+			.send(body)
+			.then(function (r) {
+				r.should.have.status(expectedHTTPStatus);
+			});
+		} catch (err) {
+			if (r.status === 503) {
+				console.log('---- Error on startHike ----');
 			}
 		}
 	});
