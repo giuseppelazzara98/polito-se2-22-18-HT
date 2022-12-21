@@ -149,7 +149,7 @@ describe('Test hikes apis', () => {
 		description: 'Hike 7 description'
 	};
 
-	//Authenticating the user
+	//Authenticating the local guide
 	logIn('guide1@gmail.com', 'password', 200);
 
 	//Testing POST /api/newHike
@@ -161,11 +161,18 @@ describe('Test hikes apis', () => {
 	newHike(422, bodyNewHike6);
 
 	//Testing GET /api/hike/:id
-	getHikePointsByHikeId(200, 1);
-	getHikePointsByHikeId(200, 2);
-	getHikePointsByHikeId(200, 3);
+	getHikePointsByHikeId(200, 13);
+	getHikePointsByHikeId(200, 21);
+	getHikePointsByHikeId(200, 13);
 	getHikePointsByHikeId(404, 12234567);
 	getHikePointsByHikeId(422, 0);
+
+	//Authenticating the local guide
+	logIn('hiker1@gmail.com', 'password', 200);
+
+	//Testing GET /api/hikesStats
+	hikesStats(true, 200);
+
 });
 
 function logIn(username, password, ExpectedHTTPStatus) {
@@ -224,7 +231,7 @@ function newHike(expectedHTTPStatus, bodyNew) {
 	});
 }
 
-function getHikePointsByHikeId(id_hike, expectedHTTPStatus) {
+function getHikePointsByHikeId(expectedHTTPStatus, id_hike) {
 	it('Getting hike points by id', async () => {
 		try {
 			agent.get('/api/hikePoints/' + id_hike).then(function (r) {
@@ -237,6 +244,28 @@ function getHikePointsByHikeId(id_hike, expectedHTTPStatus) {
 		} catch (err) {
 			if (r.status === 500) {
 				console.log('---- Error on getHikePointsByHikeId ----');
+			}
+		}
+	});
+}
+
+function hikesStats(state, expectedHTTPStatus) {
+	it('Getting hikes stats', async () => {
+		try {
+			agent.get('/api/hikesStats').then(function (r) {
+				r.should.have.status(expectedHTTPStatus);
+
+				if(state === true){
+					Object.keys(r.body).length.should.gt(0);
+				}
+				else{
+					Object.keys(r.body).length.should.equal(0);
+				}
+
+			});
+		} catch (err) {
+			if (r.status === 500) {
+				console.log('---- Error on hikesStats ----');
 			}
 		}
 	});

@@ -90,39 +90,39 @@ describe('TestHikeDao', () => {
         ascent: 1406,
         difficulty: 1,
         startPoint: {
-          type: "Hut/Parking lot",
-          id: 8,
-          name: "Alevè",
-          lon: 21.244,
-          lat: 3.325
+            type: "Hut/Parking lot",
+            id: 8,
+            name: "Alevè",
+            lon: 21.244,
+            lat: 3.325
         },
         endPoint: {
-          type: "Hut/Parking lot",
-          id: 12,
-          name: "Monte d'Oro",
-          lon: 8.474,
-          lat: 21.2475
+            type: "Hut/Parking lot",
+            id: 12,
+            name: "Monte d'Oro",
+            lon: 8.474,
+            lat: 21.2475
         },
         referencePoints: [
-          {
-            id: 15,
-            name: "Monte Talm",
-            description: "...",
-            lat: 18.364,
-            lon: 13.412,
-            type: "hut"
-          },
-          {
-            type: "Address/Name of location",
-            id: 298324244,
-            name: "Politecnico di Torino, Corso Francesco Ferrucci, Cenisia, Circoscrizione 3, Torino, Piemonte, 10138, Italia",
-            lat: 45.063697399999995,
-            lon: 7.657527285508495
-          }
+            {
+                id: 15,
+                name: "Monte Talm",
+                description: "...",
+                lat: 18.364,
+                lon: 13.412,
+                type: "hut"
+            },
+            {
+                type: "Address/Name of location",
+                id: 298324244,
+                name: "Politecnico di Torino, Corso Francesco Ferrucci, Cenisia, Circoscrizione 3, Torino, Piemonte, 10138, Italia",
+                lat: 45.063697399999995,
+                lon: 7.657527285508495
+            }
         ],
         gpxData: "...",
         description: "Test1"
-      };
+    };
 
     const bodyNewHike2 = {
         title: "Test2",
@@ -134,39 +134,39 @@ describe('TestHikeDao', () => {
         ascent: 1406,
         difficulty: 1,
         startPoint: {
-          type: "Hut/Parking lot",
-          id: 8,
-          name: "Alevè",
-          lon: 21.244,
-          lat: 3.325
+            type: "Hut/Parking lot",
+            id: 8,
+            name: "Alevè",
+            lon: 21.244,
+            lat: 3.325
         },
         endPoint: {
-          type: "Hut/Parking lot",
-          id: 12,
-          name: "Monte d'Oro",
-          lon: 8.474,
-          lat: 21.2475
+            type: "Hut/Parking lot",
+            id: 12,
+            name: "Monte d'Oro",
+            lon: 8.474,
+            lat: 21.2475
         },
         referencePoints: [
-          {
-            id: 15,
-            name: "Monte Talm",
-            description: "...",
-            lat: 18.364,
-            lon: 13.412,
-            type: "hut"
-          },
-          {
-            type: "Address/Name of location",
-            id: 298324244,
-            name: "Politecnico di Torino, Corso Francesco Ferrucci, Cenisia, Circoscrizione 3, Torino, Piemonte, 10138, Italia",
-            lat: 45.063697399999995,
-            lon: 7.657527285508495
-          }
+            {
+                id: 15,
+                name: "Monte Talm",
+                description: "...",
+                lat: 18.364,
+                lon: 13.412,
+                type: "hut"
+            },
+            {
+                type: "Address/Name of location",
+                id: 298324244,
+                name: "Politecnico di Torino, Corso Francesco Ferrucci, Cenisia, Circoscrizione 3, Torino, Piemonte, 10138, Italia",
+                lat: 45.063697399999995,
+                lon: 7.657527285508495
+            }
         ],
         gpxData: "...",
         description: "Test1"
-      };
+    };
 
     testInsertNewHike(bodyNewHike1, 9, 5);
     testInsertNewHike(bodyNewHike2, 9, 5);
@@ -183,6 +183,9 @@ describe('TestHikeDao', () => {
     testGetReferencePointsByHikeId(22, true);
     testGetReferencePointsByHikeId(31234253, false);
 
+    testGetHikesStats(2);
+    testGetHikesStats(4);
+
     // CLOSE CONNECTION TO HIKE TABLE
 
     testCloseTables();
@@ -193,6 +196,7 @@ describe('TestHikeDao', () => {
     testGetHikeById(1, true);
     testGetStartEndPointsByHikeId(1, true);
     testGetReferencePointsByHikeId(1, true);
+    testGetHikesStats(2);
 
 });
 
@@ -322,6 +326,23 @@ function testInsertHikePlace(id_hike, id_reference_point, sort) {
         }
         catch (err) {
             console.log("---- Error on testInsertHikePlace ----");
+            return;
+        }
+    });
+}
+
+function testGetHikesStats(id_user) {
+    test('Test get hikes stats', async () => {
+        try {
+            const result = await testHikeDao.getHikeStats(id_user);
+
+            expect(result).not.toBeNull();
+
+            expect(result.length).toBeGreaterThan(0);
+
+        }
+        catch (err) {
+            console.log("---- Error on testGetHikesStats ----");
             return;
         }
     });
