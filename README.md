@@ -443,6 +443,6 @@ __Error responses:__ `401 Unauthorized`, `422 Unprocessable Entity`, `503 Servic
 | Name | Surname | Username | Password | Role |
 | :--: | :-----: | :------: | :------: | :---------: |
 | Paolo | Bitta | `guide1@gmail.com` | `password` | Local guide |
-| Giuseppe | Peppini | `guide2@gmail.com` | `password` | Local guide |
+| Goofy | The Goof | `guide2@gmail.com` | `password` | Local guide |
 | Luca | Nervi | `hiker1@gmail.com` | `password` | Hiker |
-| Francesco | Verdi | `hiker2@gmail.com` | `password` | Hiker |
+| Mickey | Mouse | `hiker2@gmail.com` | `password` | Hiker |
