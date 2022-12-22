@@ -15,6 +15,7 @@ import WrongPath from './pages/WrongPath';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import EmailVerified from './pages/EmailVerified';
+import OwnHikes from './pages/OwnHikes';
 import API from './API/api';
 import InfoModalComponent from './components/InfoModalComponent/InfoModalComponent';
 import MapModalComponent from './components/MapModalComponent/MapModalComponent';
@@ -210,6 +211,14 @@ function App2() {
 						}
 					/>
 					<Route
+						path = "/HikesOwned" 
+						element={
+							loggedIn && user.role === 'Hiker' ? (<OwnHikes/>)
+							:(<Navigate to="/" replace />)
+							
+						} 
+						/>
+					<Route
 						path="/login"
 						element={
 							loggedIn ? (
@@ -234,6 +243,7 @@ function App2() {
 							<EmailVerified setShowEmailVerificationSuccess={setShowEmailVerificationSuccess} setShowEmailVerificationError={setShowEmailVerificationError} />
 						)
 					} />
+
 				</Routes>
 				<InfoModalComponent
 					show={showWelcomeModal}

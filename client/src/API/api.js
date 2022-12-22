@@ -184,6 +184,28 @@ async function getAllHikes(data) {
 	}
 }
 
+const getOwnedHikes = async () => {
+	const response = await fetch(new URL('hikesStats', APIURL), {
+		method: 'GET',
+		credentials: 'include'
+	});
+	if (response.ok) {
+		const hikesOwnedJson = await response.json();
+		const hikesOwned = hikesOwnedJson?.map((hike) => ({
+			id_hike: hike.id_hike,
+			hike_name: hike.hike_name,
+			start_time: hike.start_time,
+			end_time: hike.end_time,
+			state: hike.state,
+			registered: hike.registered,
+		}));
+		return hikesOwned;
+	} else {
+		const errDetails = await response.text();
+		throw errDetails;
+	}
+};
+
 const getProvincesFacets = async () => {
 	let err = new Error();
 	const response = await fetch(new URL('provinces', APIURL));
@@ -298,6 +320,7 @@ const API = {
 	verifyEmail,
 	insertHut,
 	insertParkingLot,
+	getOwnedHikes,
 };
 
 export default API;
