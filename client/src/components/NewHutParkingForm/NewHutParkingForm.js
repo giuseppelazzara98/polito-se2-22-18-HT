@@ -187,7 +187,7 @@ export default function NewHutForm(props) {
                         <Row className="mb-3">
                             {/*Description field*/}
                             <Col>
-                                <Insert title={"Description"} type={"textarea"} param={description} setParam={setDescription} as={"textarea"} required={false}/>
+                                <Insert title={"Description"} type={"textarea"} param={description} setParam={setDescription} as={"textarea"} invalid={"A description is required for the hut"}/>
                             </Col>
                         </Row>
                     )}
