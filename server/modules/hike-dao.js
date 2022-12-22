@@ -77,7 +77,8 @@ class HikeDAO {
 				'HIKE.ascent',
 				'HIKE.difficulty',
 				'P1.latitude as latitude',
-				'P1.longitude as longitude'
+				'P1.longitude as longitude',
+				'HIKE.image'
 			)
 			.from('HIKE')
 			.join('PLACE as P1', { 'P1.id_place': 'HIKE.id_start_place' })
@@ -161,7 +162,8 @@ class HikeDAO {
 							expected_time: el.expected_time,
 							ascent: el.ascent,
 							difficulty: el.difficulty,
-							position: { lat: el.latitude, long: el.longitude }
+							position: { lat: el.latitude, long: el.longitude },
+							image: el.image
 						};
 					});
 					resolve(hikes);
