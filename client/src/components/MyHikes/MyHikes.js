@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import styles from "./index.module.scss";
 import API from "../../API/api";
 import { CDropdown, CDropdownToggle, CDropdownItem, CDropdownMenu } from '@coreui/react'
 export default function MyHikes(props){
@@ -55,6 +56,32 @@ export default function MyHikes(props){
                     )
                 })
             }
+            <div className={`table table-sm table-hover ${styles.wrap}`}>
+
+                <div className={styles.dataName}>
+                    <span>Name</span>
+                    <span>Start Time</span>
+                    <span>End Time</span>
+                    <span>State</span>
+                    <span>Registered</span>
+                </div>
+                <div className={styles.bodyHinner}>
+                    {hikesOwnded.map((hike) => (
+                        <div key={hike.id_hike}>
+                         <span>{hike.hike_name}</span>
+                         <span>{hike.start_time}</span>
+                         <span>{hike.end_time}</span>
+                         <span>{hike.state}</span>
+                         <span>{hike.registered}</span>
+                         </div>
+                    ))}
+                    {props.hikes?.length === 0 && (
+                        <div className={styles.hikeRow}>
+                            <span>There is no result</span>
+                        </div>
+                    )}
+                </div>
+            </div>
         </>
     )
 
