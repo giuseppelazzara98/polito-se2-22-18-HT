@@ -18,6 +18,7 @@ import EmailVerified from './pages/EmailVerified';
 import API from './API/api';
 import InfoModalComponent from './components/InfoModalComponent/InfoModalComponent';
 import MapModalComponent from './components/MapModalComponent/MapModalComponent';
+import StartHikeModalComponent from "./components/StartHikeModalComponent/StartHikeModalComponent"
 import { faCheckCircle, faXmarkCircle } from '@fortawesome/free-solid-svg-icons';
 
 function App() {
@@ -39,6 +40,9 @@ function App2() {
 	const [municipalitiesFacets, setMunicipalitiesFacets] = useState([]);
 	const [user, setUser] = useState({});
 	const [updateHikes, setUpdateHikes] = useState(0);
+	const [showStartHikeError, setShowStartHikeError] = useState(false);
+	const [showStartHikeSuccess, setStartHikeSuccess] = useState(false);
+	const [showStartHikeModal,setShowStartHikeModal] = useState(false);
 	const [showWelcomeModal, setShowWelcomeModal] = useState(false);
 	const [showLogoutModal, setShowLogoutModal] = useState(false);
 	const [showAddNewHikeSuccess, setShowAddNewHikeSuccess] = useState(false);
@@ -173,6 +177,7 @@ function App2() {
 								provincesFacets={provincesFacets}
 								setShowMapModal={setShowMapModal}
 								setHikePointsInfo={setHikePointsInfo}
+								setShowStartHikeModal={setShowStartHikeModal}
 								isHiker={user.role==="Hiker"}
 								municipalitiesFacets={municipalitiesFacets}
 								setFetchMunicipalities={setFetchMunicipalities}
@@ -304,11 +309,28 @@ function App2() {
 					icon={faXmarkCircle}
 					success={false}
 				/>
-
+				<InfoModalComponent
+					show={showStartHikeSuccess}
+					title="Success!"
+					subtitle={`Hike added to your personal hikes`}
+					icon={faCheckCircle}
+				/>
+				<InfoModalComponent
+					show={showStartHikeError}
+					title="Error"
+					subtitle={`Oh no... there was a problem, try later`}
+					icon={faXmarkCircle}
+					success={false}
+				/>
 				<MapModalComponent
 					show={showMapModal}
 					setShowMapModal={setShowMapModal}
 					hikePointsInfo={hikePointsInfo}
+				/>
+				<StartHikeModalComponent
+					show={showStartHikeModal}
+					setShowStartHikeModal={setShowStartHikeModal}
+					
 				/>
 
 				<div id="modal-root" />

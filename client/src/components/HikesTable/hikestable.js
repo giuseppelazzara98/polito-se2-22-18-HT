@@ -8,7 +8,7 @@ import styles from "./index.module.scss";
 import { formatDuration } from "../../helpers/utility";
 import { CDropdown, CDropdownToggle, CDropdownItem, CDropdownMenu } from '@coreui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleInfo, faMap } from '@fortawesome/free-solid-svg-icons';
+import { faCircleInfo, faMap,faPlus} from '@fortawesome/free-solid-svg-icons';
 import API from "../../API/api";
 
 function HikesTable(props) {
@@ -42,6 +42,7 @@ function HikesTable(props) {
               hike={hike}
               key={hike.key}
               setShowMapModal={props.setShowMapModal}
+              setShowStartHikeModal={props.setShowStartHikeModal}
               setHikePointsInfo={props.setHikePointsInfo}
               isHiker={props.isHiker}
             />
@@ -75,7 +76,16 @@ function HikeRow(props) {
         <span>{getDifficulty(props.hike.difficulty)}</span>
         <div className={styles.flexcontainer}>
         {props.isHiker ? (
+          <>
         <Button
+            className={styles.addHikeButton}
+            onClick={() => {
+              props.setShowStartHikeModal(true);
+            }}
+          >
+            <FontAwesomeIcon icon={faPlus}/>
+          </Button>
+          <Button
             className={styles.mapButton}
             onClick={() => {
               props.setShowMapModal(true);
@@ -84,6 +94,7 @@ function HikeRow(props) {
           >
             <FontAwesomeIcon icon={faMap}/>
           </Button>
+          </>
         ): (
           ""
         )}
