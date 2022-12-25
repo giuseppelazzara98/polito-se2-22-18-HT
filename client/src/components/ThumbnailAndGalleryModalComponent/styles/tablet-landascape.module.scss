@@ -1,0 +1,7 @@
+@import "../../../styles/configs";
+
+@media (min-width: $tablet-landscape) {
+  .thumbnailWrap {
+    width: 200px;
+  }
+}

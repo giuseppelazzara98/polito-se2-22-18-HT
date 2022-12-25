@@ -101,4 +101,10 @@
   }
 }
 
-
+.bottomWrap {
+  display: flex;
+  .descriptionContainer {
+    min-width: calc(100% - 90px);
+    width: 100%;
+  }
+}

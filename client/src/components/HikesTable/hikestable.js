@@ -10,6 +10,7 @@ import { CDropdown, CDropdownToggle, CDropdownItem, CDropdownMenu } from '@coreu
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleInfo, faMap } from '@fortawesome/free-solid-svg-icons';
 import API from "../../API/api";
+import ThumbnailAndGalleryModalComponent from "../ThumbnailAndGalleryModalComponent/ThumbnailAndGalleryModalComponent";
 
 function HikesTable(props) {
   const [order, setOrder] = useState("Province (Ascending)");
@@ -117,12 +118,16 @@ function HikeRow(props) {
                 <span>{(props.hike.ascent)} m </span>
               </div>
             </div>
-            <Card.Header>Description</Card.Header>{" "}
-            <ListGroup variant="flush">
-              {" "}
-              <ListGroup.Item>{props.hike.description}</ListGroup.Item>
-
-            </ListGroup>
+            <div className={styles.bottomWrap}>
+              {props.hike.image && <ThumbnailAndGalleryModalComponent image={props.hike.image}/>}
+              <div className={styles.descriptionContainer}>
+                <Card.Header>Description</Card.Header>{" "}
+                <ListGroup variant="flush">
+                  {" "}
+                  <ListGroup.Item>{props.hike.description}</ListGroup.Item>
+                </ListGroup>
+              </div>
+            </div>
           </Card>
         </div>
       ) : (
