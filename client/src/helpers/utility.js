@@ -17,3 +17,12 @@ export const formatDuration = (duration) => {
 export const formatAscent = (ascent) => {
   return `${ascent/100} %`;
 }
+
+export const getBase64 = (file) => {
+  return new Promise((onSuccess, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => onSuccess(reader.result);
+    reader.onerror = (error) => reject(error);
+  })
+}
