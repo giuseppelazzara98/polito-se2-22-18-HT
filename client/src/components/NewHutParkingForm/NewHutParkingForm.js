@@ -9,6 +9,8 @@ import { maxBreakpoints } from "../../helpers/configs";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import Map from '../ClickableMap/ClickableMap';
+import FileInput from '../FileInput/FileInput';
+import { getBase64 } from '../../helpers/utility';
 
 
 export default function NewHutForm(props) {
@@ -27,6 +29,17 @@ export default function NewHutForm(props) {
     const [province, setProvince] = useState({});
     const [mapOpen, setMapOpen] = useState(false);
     const [capacity,setCapacity]=useState(0);
+    const [hutImage, setHutImage] = useState(null);
+    const [hutImageBase64, setHutImageBase64] = useState(null);
+
+    useEffect(() => {
+		const loadFile = () => {
+			getBase64(hutImage).then(result => setHutImageBase64(result));
+		}
+		if (hutImage) {
+			loadFile();
+		}
+	}, [hutImage]);
 
 
     const handleSubmit = (event) => {
@@ -34,7 +47,7 @@ export default function NewHutForm(props) {
         let valid = true;
         const form = event.currentTarget;
         
-        if (form.checkValidity() === false || province.coordinates?.length !== 2) {
+        if (form.checkValidity() === false || province.coordinates?.length !== 2 || (isHut && hutImageBase64 === null)) {
             valid = false;
         } else {
             const provinceId = provincesFacets.filter(provinceFacet => provinceFacet.value?.trim() === province?.province?.trim())?.[0]?.id;
@@ -59,6 +72,7 @@ export default function NewHutForm(props) {
                         longitude: province.coordinates[1],
                         type: "hut",
                         province: provinceId,
+                        image: hutImageBase64,
                     };
                     API.insertHut(hut).then((response) => {
                         setShowAddNewSuccess(true);
@@ -184,12 +198,27 @@ export default function NewHutForm(props) {
                         </>
                     )}
                     {isHut && (
-                        <Row className="mb-3">
-                            {/*Description field*/}
-                            <Col>
-                                <Insert title={"Description"} type={"textarea"} param={description} setParam={setDescription} as={"textarea"} invalid={"A description is required for the hut"}/>
-                            </Col>
-                        </Row>
+                        <>
+                            <Row className="mb-3">
+                                {/*Image field*/}
+                                <Col>
+                                    <FileInput
+                                        title={"Insert a image of the hut"}
+                                        required={true}
+                                        accept={".png, .jpeg"}
+                                        onChange={setHutImage}
+                                        description={"File type accepted: .png, .jpeg"}
+                                        errorText={"Please insert a valid file for the image"}
+                                    />
+                                </Col>
+                            </Row>
+                            <Row className="mb-3">
+                                {/*Description field*/}
+                                <Col>
+                                    <Insert title={"Description"} type={"textarea"} param={description} setParam={setDescription} as={"textarea"} invalid={"A description is required for the hut"}/>
+                                </Col>
+                            </Row>
+                        </>
                     )}
                     <Button className={`${styles.button} mb-4`} type="submit">
                         Submit
