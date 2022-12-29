@@ -81,8 +81,6 @@ function HikeRow(props) {
         <Button
             className={styles.addHikeButton}
             onClick={() => {
-              console.log(props.hike);
-              console.log("Qui");
               props.setShowRegisterHikeModal(true);
               props.setMyHikeId(props.hike.id_hike);
               

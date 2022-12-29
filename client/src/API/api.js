@@ -184,6 +184,28 @@ async function getAllHikes(data) {
 	}
 }
 
+const getOwnedHikes = async () => {
+	const response = await fetch(new URL('hikesStats', APIURL), {
+		method: 'GET',
+		credentials: 'include'
+	});
+	if (response.ok) {
+		const hikesOwnedJson = await response.json();
+		const hikesOwned = hikesOwnedJson?.map((hike) => ({
+			id_hike: hike.id_hike,
+			hike_name: hike.hike_name,
+			start_time: hike.start_time,
+			end_time: hike.end_time,
+			state: hike.state,
+			registered: hike.registered,
+		}));
+		return hikesOwned;
+	} else {
+		const errDetails = await response.text();
+		throw errDetails;
+	}
+};
+
 const getProvincesFacets = async () => {
 	let err = new Error();
 	const response = await fetch(new URL('provinces', APIURL));
@@ -282,7 +304,6 @@ const insertParkingLot = async (data) => {
 }
 
 const registerHike = async (data) => {
-	console.log(data);
 	let err = new Error();
 	const response = await fetch(new URL(`/hikeRegistration`, APIURL), {
 		credentials: 'include',
@@ -305,6 +326,30 @@ const registerHike = async (data) => {
 	}
 }
 
+const startHike = async (data) => {
+	let err = new Error();
+	const response = await fetch(new URL(`/hikeRegistration`, APIURL), {
+		credentials: 'include',
+		method: 'PUT',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(data) 
+	})
+	if (response.ok) {
+		const okAdd = await response.json();
+		return okAdd;
+	} else {
+		if (response.status === 500) {
+			err.message = '500 INTERNAL SERVER ERROR';
+			throw err;
+		} else {
+			throw err;
+		}
+	}
+}
+
+
 const API = {
 	logIn,
 	logOut,
@@ -322,7 +367,9 @@ const API = {
 	verifyEmail,
 	insertHut,
 	insertParkingLot,
+	getOwnedHikes,
 	registerHike,
+	startHike,
 };
 
 export default API;

@@ -6,7 +6,7 @@ export default function MyHikes(props){
     const [hikesOwnded, setHikesOwned] = useState([]);
     const [hikesState, setHikesState] = useState('Completed');
 
-    /*useEffect(() => {
+    useEffect(() => {
         API.getOwnedHikes().then((res) => {
             setHikesOwned(res.filter((hike) => hike.state === 2));
         })
@@ -30,7 +30,8 @@ export default function MyHikes(props){
                 setHikesOwned(res.filter((hike) => hike.state === 0));
             })
         }
-    }, [hikesState])*/
+    }, [hikesState])
+
     return(
         <>
             <CDropdown >
@@ -45,14 +46,33 @@ export default function MyHikes(props){
             <h1>My Hikes</h1>
             {
                 hikesOwnded.map((hike) => {
-                    return(
-                        <div key={hike.id_hike}>
-                            <h2>Name: {hike.hike_name}</h2>
-                            <p>Start time: {hike.start_time}</p>
-                            <p>End time: {hike.end_time}</p>
-                            <p>State: {hike.state}</p>
-                            <p>Registered: {hike.registered}</p>
+                    return(<>
+                        <div className={`table table-sm table-hover ${styles.wrap}`}>
+                            <div className={styles.dataName}>
+                                <span>Name</span>
+                                <span>Start Time</span>
+                                <span>End Time</span>
+                                <span>State</span>
+                                <span>Registered</span>
+                            </div>
+                            <div className={styles.bodyWrap}>
+                            <div className={styles.hikeRow}>
+                                <div className={styles.hikeFirstRow}>
+                                    <span>{hike.hike_name}</span>
+                                    <span>{hike.start_time}</span>
+                                    <span>{hike.end_time}</span>
+                                    <span>{hike.state}</span>
+                                    <span>{hike.registered}</span>
+                                </div>
+                            </div>
+                            </div>
+                            <div className={styles.flexcontainer}>
+                                
+                            </div>
+                           
                         </div>
+
+                    </>
                     )
                 })
             }
