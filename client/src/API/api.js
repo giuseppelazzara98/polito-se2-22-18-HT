@@ -281,6 +281,30 @@ const insertParkingLot = async (data) => {
 	}
 }
 
+const registerHike = async (data) => {
+	console.log(data);
+	let err = new Error();
+	const response = await fetch(new URL(`/hikeRegistration`, APIURL), {
+		credentials: 'include',
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(data) 
+	})
+	if (response.ok) {
+		const okAdd = await response.json();
+		return okAdd;
+	} else {
+		if (response.status === 500) {
+			err.message = '500 INTERNAL SERVER ERROR';
+			throw err;
+		} else {
+			throw err;
+		}
+	}
+}
+
 const API = {
 	logIn,
 	logOut,
@@ -298,6 +322,7 @@ const API = {
 	verifyEmail,
 	insertHut,
 	insertParkingLot,
+	registerHike,
 };
 
 export default API;

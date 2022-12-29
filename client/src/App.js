@@ -43,11 +43,13 @@ function App2() {
 	const [updateHikes, setUpdateHikes] = useState(0);
 	const [showStartHikeError, setShowStartHikeError] = useState(false);
 	const [showStartHikeSuccess, setStartHikeSuccess] = useState(false);
-	const [showStartHikeModal,setShowStartHikeModal] = useState(false);
+	const [showRegisterHikeModal,setShowRegisterHikeModal] = useState(false);
 	const [showWelcomeModal, setShowWelcomeModal] = useState(false);
 	const [showLogoutModal, setShowLogoutModal] = useState(false);
 	const [showAddNewHikeSuccess, setShowAddNewHikeSuccess] = useState(false);
 	const [showAddNewHikeError, setShowAddNewHikeError] = useState(false);
+	const [showRegisterHikeSuccess, setShowRegisterHikeSuccess] = useState(false);
+	const [showRegisterHikeError, setShowRegisterHikeError] = useState(false);
 	const [showAddNewHutSuccess, setShowAddNewHutSuccess] = useState(false);
 	const [showAddNewHutError, setShowAddNewHutError] = useState(false);
 	const [showAddNewParkingLotSuccess, setShowAddNewParkingLotSuccess] = useState(false);
@@ -57,6 +59,7 @@ function App2() {
 	const [showEmailVerificationError, setShowEmailVerificationError] = useState(false);
 	const [showMapModal,setShowMapModal]=useState(false);
 	const [hikePointsInfo, setHikePointsInfo] = useState({});
+	const [myHikeId,setMyHikeId]= useState(0);
 
 	const getHikes = async (dataOnRequest) => {
 		try {
@@ -178,10 +181,11 @@ function App2() {
 								provincesFacets={provincesFacets}
 								setShowMapModal={setShowMapModal}
 								setHikePointsInfo={setHikePointsInfo}
-								setShowStartHikeModal={setShowStartHikeModal}
+								setShowRegisterHikeModal={setShowRegisterHikeModal}
 								isHiker={user.role==="Hiker"}
 								municipalitiesFacets={municipalitiesFacets}
 								setFetchMunicipalities={setFetchMunicipalities}
+								setMyHikeId={setMyHikeId}
 							/>
 						}
 					/>
@@ -306,6 +310,19 @@ function App2() {
 					success={false}
 				/>
 				<InfoModalComponent
+					show={showRegisterHikeSuccess}
+					title="Success!"
+					subtitle={`The hike is now added to your personal hikes`}
+					icon={faCheckCircle}
+				/>
+				<InfoModalComponent
+					show={showRegisterHikeError}
+					title="Error"
+					subtitle={`Oh no... there was a problem, try later`}
+					icon={faXmarkCircle}
+					success={false}
+				/>
+				<InfoModalComponent
 					show={showAddNewParkingLotSuccess}
 					title="Success!"
 					subtitle={`New parking lot added successfully`}
@@ -337,9 +354,11 @@ function App2() {
 					hikePointsInfo={hikePointsInfo}
 				/>
 				<StartHikeModalComponent
-					show={showStartHikeModal}
-					setShowStartHikeModal={setShowStartHikeModal}
-					
+					show={showRegisterHikeModal}
+					setShowRegisterHikeModal={setShowRegisterHikeModal}
+					myHikeId={myHikeId}
+					setShowRegisterHikeSuccess={setShowRegisterHikeSuccess}
+					setShowRegisterHikeError={setShowRegisterHikeError}
 				/>
 
 				<div id="modal-root" />

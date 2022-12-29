@@ -42,9 +42,10 @@ function HikesTable(props) {
               hike={hike}
               key={hike.key}
               setShowMapModal={props.setShowMapModal}
-              setShowStartHikeModal={props.setShowStartHikeModal}
+              setShowRegisterHikeModal={props.setShowRegisterHikeModal}
               setHikePointsInfo={props.setHikePointsInfo}
               isHiker={props.isHiker}
+              setMyHikeId={props.setMyHikeId}
             />
           ))}
           {props.hikes?.length === 0 && (
@@ -80,7 +81,11 @@ function HikeRow(props) {
         <Button
             className={styles.addHikeButton}
             onClick={() => {
-              props.setShowStartHikeModal(true);
+              console.log(props.hike);
+              console.log("Qui");
+              props.setShowRegisterHikeModal(true);
+              props.setMyHikeId(props.hike.id_hike);
+              
             }}
           >
             <FontAwesomeIcon icon={faPlus}/>

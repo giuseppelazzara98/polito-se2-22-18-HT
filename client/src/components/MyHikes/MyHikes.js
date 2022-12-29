@@ -6,7 +6,7 @@ export default function MyHikes(props){
     const [hikesOwnded, setHikesOwned] = useState([]);
     const [hikesState, setHikesState] = useState('Completed');
 
-    useEffect(() => {
+    /*useEffect(() => {
         API.getOwnedHikes().then((res) => {
             setHikesOwned(res.filter((hike) => hike.state === 2));
         })
@@ -30,7 +30,7 @@ export default function MyHikes(props){
                 setHikesOwned(res.filter((hike) => hike.state === 0));
             })
         }
-    }, [hikesState])
+    }, [hikesState])*/
     return(
         <>
             <CDropdown >
