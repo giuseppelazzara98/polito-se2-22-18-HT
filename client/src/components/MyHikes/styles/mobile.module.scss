@@ -1,0 +1,104 @@
+@import "../../../styles/configs";
+
+.containerWrap {
+  margin-top: 40px;
+  overflow: auto;
+  .button{
+    background-color: $primary-green;
+    border-color: transparent;
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    &:hover{
+      background-color: $tertiary-green;
+      border-color: transparent;
+    }
+    .iconInfo {
+      font-size: 18px;
+    }
+  }
+  .mapButton{
+    background-color: $primary-blue;
+    border-color: transparent;
+    margin-right: 5px;
+    margin-left: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+  }
+  .flexcontainer {
+    display: flex;
+    
+  }
+}
+.wrap {
+  min-width: 450px;
+  font-size: 12px;
+  &:global(.table-sm) {
+    & > :global(:not(caption)) {
+      &  > * > * {
+        padding: 0;
+      }
+    }
+  }
+
+  .dataTitle {
+    @include font(700, 18px, 20px, 0);
+    color: $primary-green-light;
+  }
+  .dataName {
+    color: $primary-green;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+    @include font(700, 14px, 16px, 0);
+    padding: 10px;
+  }
+  .bodyWrap {
+    .hikeRow {
+      display: flex;
+      flex-direction: column;
+      .hikeFirstRow {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+        padding: 5px;
+        border-bottom: 1px solid $secondary-blue;
+      }
+      .innerTable {
+        display: flex;
+        flex-direction: column;
+        .headerHinner,
+        .bodyHinner {
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+          padding: 5px;
+        }
+        .headerHinner {
+          @include font(700, 14px, 16px, 0);
+        }
+      }
+    }
+  } 
+}
+
+
+.dropdown{
+  width: 300px;
+  .orderBy{
+    width: 300px;
+    cursor: pointer;
+    &:active{
+      background-color: $secondary-green;
+      color: $primary-black;
+    }
+    &:hover{
+      background-color: $secondary-brown;
+    }
+  }
+}
+
+

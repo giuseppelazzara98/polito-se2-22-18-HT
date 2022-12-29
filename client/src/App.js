@@ -16,6 +16,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import EmailVerified from './pages/EmailVerified';
 import API from './API/api';
+import OwnHikes from './components/MyHikes/MyHikes'
 import InfoModalComponent from './components/InfoModalComponent/InfoModalComponent';
 import MapModalComponent from './components/MapModalComponent/MapModalComponent';
 import StartHikeModalComponent from "./components/StartHikeModalComponent/StartHikeModalComponent"
@@ -214,6 +215,14 @@ function App2() {
 							)
 						}
 					/>
+					<Route
+						path = "/HikesOwned" 
+						element={
+							loggedIn && user.role === 'Hiker' ? (<OwnHikes/>)
+							:(<Navigate to="/" replace />)
+							
+						} 
+						/>
 					<Route
 						path="/login"
 						element={
