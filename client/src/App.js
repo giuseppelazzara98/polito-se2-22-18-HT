@@ -156,12 +156,14 @@ function App2() {
 			API.getMunicipalitiesFacets(fetchMunicipalities).then((response) => { setMunicipalitiesFacets(response); });
 		}
 	}, [fetchMunicipalities]);
-
+	
 	 useEffect(() => {
-        API.getOwnedHikes().then((res) => {
-            setHikesOwned(res);
-        })
-    }, []);
+		if(loggedIn){
+			API.getOwnedHikes().then((res) => {
+				setHikesOwned(res);
+			})
+		}
+    }, [loggedIn]);
 
 	return (
 		<div className="App">
