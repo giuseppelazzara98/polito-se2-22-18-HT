@@ -19,7 +19,7 @@ import API from './API/api';
 import OwnHikes from './components/MyHikes/MyHikes'
 import InfoModalComponent from './components/InfoModalComponent/InfoModalComponent';
 import MapModalComponent from './components/MapModalComponent/MapModalComponent';
-import StartHikeModalComponent from "./components/StartHikeModalComponent/StartHikeModalComponent"
+import RegisterHikeModalComponent from "./components/RegisterHikeModalComponent/RegisterHikeModalComponent"
 import { faCheckCircle, faXmarkCircle } from '@fortawesome/free-solid-svg-icons';
 
 function App() {
@@ -194,6 +194,7 @@ function App2() {
 								setFetchMunicipalities={setFetchMunicipalities}
 								setMyHikeId={setMyHikeId}
 								hikesOwned={hikesOwned}
+								loggedIn={loggedIn}
 							/>
 						}
 					/>
@@ -361,7 +362,7 @@ function App2() {
 					setShowMapModal={setShowMapModal}
 					hikePointsInfo={hikePointsInfo}
 				/>
-				<StartHikeModalComponent
+				<RegisterHikeModalComponent
 					show={showRegisterHikeModal}
 					setShowRegisterHikeModal={setShowRegisterHikeModal}
 					myHikeId={myHikeId}

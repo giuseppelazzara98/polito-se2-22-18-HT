@@ -17,9 +17,8 @@ function HikesTable(props) {
   const [hikesOwnedId,setHikesOwnedId]=useState([]);
    useEffect(() => {
     setHikesOwnedId( props.hikesOwned.map(h=>{return h.id_hike}));
-    }, [props.hikesOwned,props.isHiker]);
-  
-  console.log(hikesOwnedId);
+    }, [props.hikesOwned]);
+
   return (
     <div className={` ${styles.containerWrap}`}>
       <div className="d-flex justify-content-end">

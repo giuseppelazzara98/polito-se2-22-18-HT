@@ -19,6 +19,7 @@ export default function HomePage(props) {
     setShowRegisterHikeModal,
     setMyHikeId,
     hikesOwned,
+    loggedIn,
   } = props;
   return (
     <Container>
@@ -49,6 +50,7 @@ export default function HomePage(props) {
             isHiker={props.isHiker}
             setMyHikeId={setMyHikeId}
             hikesOwned={hikesOwned}
+            loggedIn={loggedIn}
           ></HikesTable>
         </Col>
       </Row>

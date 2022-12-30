@@ -5,7 +5,7 @@ import styles from "./index.module.scss";
 import API from "../../API/api";
 
 
-export default function StartHikeModalComponent (props) {
+export default function RegisterHikeModalComponent (props) {
   const {
     setShowRegisterHikeError,
     setShowRegisterHikeSuccess,
@@ -14,7 +14,6 @@ export default function StartHikeModalComponent (props) {
   }=props;
 
   const handleSubmit = (event) => {
-    console.log(myHikeId);
     setShowRegisterHikeModal(false);
     API.registerHike({id_hike:myHikeId}).then((response) => {
       API.getOwnedHikes().then((res) => {
