@@ -89,7 +89,8 @@ router.get(
 */
 
 //POST /api/newParkingLot
-router.post('/newParkingLot',
+router.post(
+	'/newParkingLot',
 	isLoggedIn,
 	body('province').notEmpty().isInt({ min: 1 }),
 	body('name').isString().isLength({ max: 500 }),
@@ -99,7 +100,6 @@ router.post('/newParkingLot',
 	body('type').equals('parking lot'),
 	body('capacity').notEmpty().isInt({ min: 0 }),
 	async (req, res) => {
-
 		if (Object.keys(req.body).length === 0) {
 			console.log('Empty body!');
 			return res.status(422).json({ error: 'Empty body request' });
@@ -113,30 +113,33 @@ router.post('/newParkingLot',
 		const errors = validationResult(req);
 
 		if (!errors.isEmpty()) {
-			console.log("Error in body!");
+			console.log('Error in body!');
 			return res.status(422).json({ errors: errors.array() });
 		}
 
 		try {
-
 			const newPlace = {
 				name: req.body.name,
 				description: req.body.description,
 				lat: req.body.latitude,
 				lon: req.body.longitude,
 				type: req.body.type
-			}
+			};
 
 			const idPlace = await placeDao.insertPlace(newPlace, req.body.province);
 
-			const result = await placeDao.insertParkingLotData(idPlace, req.body.capacity);
+			const result = await placeDao.insertParkingLotData(
+				idPlace,
+				req.body.capacity
+			);
 
 			return res.status(201).json(result);
 		} catch (err) {
 			console.log(err);
 			return res.status(503).json({ error: 'Service Unavailable' });
 		}
-	});
+	}
+);
 
 /*** Huts APIs ***/
 
@@ -172,7 +175,8 @@ router.post('/newParkingLot',
 */
 
 //POST /api/newHut
-router.post('/newHut',
+router.post(
+	'/newHut',
 	isLoggedIn,
 	body('province').notEmpty().isInt({ min: 1 }),
 	body('name').isString().isLength({ max: 300 }),
@@ -185,14 +189,14 @@ router.post('/newHut',
 	body('phone').isString(),
 	body('email').isEmail(),
 	body('website').isString(),
+	body('image').notEmpty(),
 	async (req, res) => {
-
 		if (Object.keys(req.body).length === 0) {
 			console.log('Empty body!');
 			return res.status(422).json({ error: 'Empty body request' });
 		}
 
-		if ((Object.keys(req.body).length !== 11)) {
+		if (Object.keys(req.body).length !== 12) {
 			console.log('Data not formatted properly!');
 			return res.status(422).json({ error: 'Data not formatted properly' });
 		}
@@ -200,30 +204,29 @@ router.post('/newHut',
 		const errors = validationResult(req);
 
 		if (!errors.isEmpty()) {
-			console.log("Error in body!");
+			console.log('Error in body!');
 			return res.status(422).json({ errors: errors.array() });
 		}
 
 		try {
-
 			const newPlace = {
 				name: req.body.name,
 				description: req.body.description,
 				lat: req.body.latitude,
 				lon: req.body.longitude,
 				type: req.body.type
-			}
+			};
 
 			const idPlace = await placeDao.insertPlace(newPlace, req.body.province);
 
 			const result = await placeDao.insertHutData(idPlace, req.body);
 
 			return res.status(201).json(result);
-
 		} catch (err) {
 			console.log(err);
 			return res.status(503).json({ error: 'Service Unavailable' });
 		}
-	});
+	}
+);
 
 module.exports = router;

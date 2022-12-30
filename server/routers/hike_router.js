@@ -40,102 +40,101 @@ const isLoggedIn = (req, res, next) => {
 */
 
 //POST /api/hikes
-router.post('/hikes',
-	body('difficulty').isArray(),
-	async (req, res) => {
+router.post('/hikes', body('difficulty').isArray(), async (req, res) => {
+	if (Object.keys(req.body).length === 0) {
+		console.log('Empty body!');
+		return res.status(422).json({ error: 'Empty body request' });
+	}
 
-		if (Object.keys(req.body).length === 0) {
-			console.log('Empty body!');
-			return res.status(422).json({ error: 'Empty body request' });
-		}
+	if (Object.keys(req.body).length !== 7) {
+		console.log('Data not formatted properly!');
+		return res.status(422).json({ error: 'Data not formatted properly' });
+	}
 
-		if (Object.keys(req.body).length !== 7) {
-			console.log('Data not formatted properly!');
-			return res.status(422).json({ error: 'Data not formatted properly' });
-		}
+	const errors = validationResult(req);
 
-		const errors = validationResult(req);
+	if (!errors.isEmpty()) {
+		console.log('Error in body!');
+		return res.status(422).json({ errors: errors.array() });
+	}
 
-		if (!errors.isEmpty()) {
-			console.log("Error in body!");
-			return res.status(422).json({ errors: errors.array() });
-		}
+	try {
+		const unique = (value, index, self) => {
+			return self.indexOf(value) === index;
+		};
 
-		try {
+		let hikes = await hikeDao.getAllFilteredHikes(req.body);
 
-			const unique = (value, index, self) => {
-				return self.indexOf(value) === index;
-			};
+		let hikes_ranged = [];
+		let distinct_ascents = [];
+		let distinct_times = [];
+		let distinct_lengths = [];
+		let result = {};
 
-			let hikes = await hikeDao.getAllFilteredHikes(req.body);
+		if (req.body.range !== null) {
+			for (let hike of hikes) {
+				const start_place = await hikeDao.getLatLongStartPlaceByHikeId(
+					hike.key
+				);
 
-			let hikes_ranged = [];
-			let distinct_ascents = [];
-			let distinct_times = [];
-			let distinct_lengths = [];
-			let result = {};
-
-			if (req.body.range !== null) {
-
-				for (let hike of hikes) {
-
-					const start_place = await hikeDao.getLatLongStartPlaceByHikeId(hike.key);
-
-					/*
+				/*
 						Haversine formula
 						lat1, lon1 = latitude and longitude of the center point
 						lat2, lon2 = latitude and longitude of the hike's start point
 					*/
 
-					const lat1 = req.body.range.center.lat;
-					const lon1 = req.body.range.center.long;
-					const lat2 = start_place.latitude;
-					const lon2 = start_place.longitude;
+				const lat1 = req.body.range.center.lat;
+				const lon1 = req.body.range.center.long;
+				const lat2 = start_place.latitude;
+				const lon2 = start_place.longitude;
 
-					let distance = 6372795.477598 *
-						Math.acos(Math.sin(toRad(lat2)) *
-							Math.sin(toRad(lat1)) +
+				let distance =
+					6372795.477598 *
+					Math.acos(
+						Math.sin(toRad(lat2)) * Math.sin(toRad(lat1)) +
 							Math.cos(toRad(lat2)) *
-							Math.cos(toRad(lat1)) *
-							Math.cos(toRad(lon2 - lon1)));
+								Math.cos(toRad(lat1)) *
+								Math.cos(toRad(lon2 - lon1))
+					);
 
-					if (distance <= req.body.range.radius) {
-						hikes_ranged.push(hike);
-					}
+				if (distance <= req.body.range.radius) {
+					hikes_ranged.push(hike);
 				}
-
-				distinct_times = hikes_ranged.map((el) => el.expected_time).filter(unique);
-				distinct_lengths = hikes_ranged.map((el) => el.length).filter(unique);
-				distinct_ascents = hikes_ranged.map((el) => el.ascent).filter(unique);
-
-				result = {
-					hikes: hikes_ranged,
-					distinct_times: distinct_times,
-					distinct_lengths: distinct_lengths,
-					distinct_ascents: distinct_ascents
-				};
-			} else {
-
-				distinct_times = hikes.map((el) => el.expected_time).filter(unique);
-				distinct_lengths = hikes.map((el) => el.length).filter(unique);
-				distinct_ascents = hikes.map((el) => el.ascent).filter(unique);
-
-				result = {
-					hikes: hikes,
-					distinct_times: distinct_times,
-					distinct_lengths: distinct_lengths,
-					distinct_ascents: distinct_ascents
-				};
 			}
 
-			return res.status(200).json(result);
-		} catch (err) {
-			return res.status(500).json({ error: 'Internal Server Error' });
+			distinct_times = hikes_ranged
+				.map((el) => el.expected_time)
+				.filter(unique);
+			distinct_lengths = hikes_ranged.map((el) => el.length).filter(unique);
+			distinct_ascents = hikes_ranged.map((el) => el.ascent).filter(unique);
+
+			result = {
+				hikes: hikes_ranged,
+				distinct_times: distinct_times,
+				distinct_lengths: distinct_lengths,
+				distinct_ascents: distinct_ascents
+			};
+		} else {
+			distinct_times = hikes.map((el) => el.expected_time).filter(unique);
+			distinct_lengths = hikes.map((el) => el.length).filter(unique);
+			distinct_ascents = hikes.map((el) => el.ascent).filter(unique);
+
+			result = {
+				hikes: hikes,
+				distinct_times: distinct_times,
+				distinct_lengths: distinct_lengths,
+				distinct_ascents: distinct_ascents
+			};
 		}
-	});
+
+		return res.status(200).json(result);
+	} catch (err) {
+		return res.status(500).json({ error: 'Internal Server Error' });
+	}
+});
 
 function toRad(Value) {
-	return ((Value * Math.PI) / 180);
+	return (Value * Math.PI) / 180;
 }
 
 /*			HIKE
@@ -195,7 +194,8 @@ function toRad(Value) {
 */
 
 //POST /api/newHike
-router.post('/newHike',
+router.post(
+	'/newHike',
 	isLoggedIn,
 	body('title').isString().isLength({ max: 300 }),
 	body('province').notEmpty().isInt({ min: 1 }),
@@ -210,14 +210,14 @@ router.post('/newHike',
 	body('referencePoints').isArray(),
 	body('gpxData').isString(),
 	body('description').isString().isLength({ max: 1000 }),
+	body('image').notEmpty(),
 	async (req, res) => {
-
 		if (Object.keys(req.body).length === 0) {
 			console.log('Empty body!');
 			return res.status(422).json({ error: 'Empty body request' });
 		}
 
-		if (Object.keys(req.body).length !== 13) {
+		if (Object.keys(req.body).length !== 14) {
 			console.log('Data not formatted properly!');
 			return res.status(422).json({ error: 'Data not formatted properly' });
 		}
@@ -225,40 +225,37 @@ router.post('/newHike',
 		const errors = validationResult(req);
 
 		if (!errors.isEmpty()) {
-			console.log("Error in body!");
+			console.log('Error in body!');
 			return res.status(422).json({ errors: errors.array() });
 		}
 
 		try {
-
 			let idStart = null;
 			let idEnd = null;
 
 			//start point
-			console.log("start type: " + req.body.startPoint.type);
+			console.log('start type: ' + req.body.startPoint.type);
 
-			if (req.body.startPoint.type == "Hut/Parking lot") {
+			if (req.body.startPoint.type == 'Hut/Parking lot') {
 				idStart = req.body.startPoint.id;
-			}
-			else {
+			} else {
 				//lo inserisco a db
-				const start_place = { ...req.body.startPoint, description: null }
+				const start_place = { ...req.body.startPoint, description: null };
 				idStart = await placeDao.insertPlace(start_place, req.body.province);
 			}
-			console.log("idstart: " + idStart);
+			console.log('idstart: ' + idStart);
 
 			//end point
-			console.log("end type: " + req.body.endPoint.type);
-			if (req.body.endPoint.type == "Hut/Parking lot") {
+			console.log('end type: ' + req.body.endPoint.type);
+			if (req.body.endPoint.type == 'Hut/Parking lot') {
 				idEnd = req.body.endPoint.id;
-			}
-			else {
+			} else {
 				//lo inserisco a db
-				const end_place = { ...req.body.endPoint, description: null }
+				const end_place = { ...req.body.endPoint, description: null };
 				idEnd = await placeDao.insertPlace(end_place, req.body.province);
 			}
 
-			console.log("idend: " + idEnd);
+			console.log('idend: ' + idEnd);
 
 			//result = idhike inserted.
 			//now i can enter the data in hike-place table
@@ -271,28 +268,28 @@ router.post('/newHike',
 			//reference points
 			// insert in hike-place table, cycling on reference points
 			for (let referencePoint of req.body.referencePoints) {
-
 				let idReferencePoint = null;
 
 				let place_ok = null;
-				console.log("ref type: " + referencePoint.type);
-				if (referencePoint.type == "parking lot" || referencePoint.type == "hut") {
+				console.log('ref type: ' + referencePoint.type);
+				if (
+					referencePoint.type == 'parking lot' ||
+					referencePoint.type == 'hut'
+				) {
 					place_ok = await placeDao.getPlaceById(referencePoint.id);
 					idReferencePoint = referencePoint.id;
-				}
-				else {
+				} else {
 					//lo inserisco a db
-					const ref_point = { ...referencePoint, description: null }
+					const ref_point = { ...referencePoint, description: null };
 					idReferencePoint = await placeDao.insertPlace(ref_point, req.body.province);
 					place_ok = idReferencePoint;
 				}
-				console.log("idreferencepoint: " + idReferencePoint);
+				console.log('idreferencepoint: ' + idReferencePoint);
 
 				if (place_ok !== null) {
 					await hikeDao.insertHikePlace(result, idReferencePoint);
-				}
-				else {
-					console.log("Place not found!");
+				} else {
+					console.log('Place not found!');
 					return res.status(404).json({ error: 'Not Found' });
 				}
 			}
@@ -302,10 +299,12 @@ router.post('/newHike',
 			console.log(err);
 			return res.status(503).json({ error: 'Service Unavailable' });
 		}
-	});
+	}
+);
 
 //GET /api/hikePoints/:id
-router.get('/hikePoints/:id',
+router.get(
+	'/hikePoints/:id',
 	isLoggedIn,
 	[check('id').notEmpty().isNumeric().isInt({ min: 1 })],
 	async (req, res) => {
@@ -344,7 +343,7 @@ router.get('/hikePoints/:id',
 					longitude: el.longitude,
 					startPoint: el.id_place === startPointId,
 					endPoint: el.id_place === endPointId,
-					type: el.type,
+					type: el.type
 				};
 			});
 
