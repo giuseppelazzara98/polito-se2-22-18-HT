@@ -60,6 +60,7 @@ function App2() {
 	const [showMapModal,setShowMapModal]=useState(false);
 	const [hikePointsInfo, setHikePointsInfo] = useState({});
 	const [myHikeId,setMyHikeId]= useState(0);
+	const [hikesOwned, setHikesOwned] = useState([]);
 
 	const getHikes = async (dataOnRequest) => {
 		try {
@@ -142,7 +143,7 @@ function App2() {
 	useEffect(() => {
 		API.getProvincesFacets().then((response) => setProvincesFacets(response));
 	}, []);
-
+  
 
 	useEffect(() => {
 		if (!showMapModal) {
@@ -155,6 +156,12 @@ function App2() {
 			API.getMunicipalitiesFacets(fetchMunicipalities).then((response) => { setMunicipalitiesFacets(response); });
 		}
 	}, [fetchMunicipalities]);
+
+	 useEffect(() => {
+        API.getOwnedHikes().then((res) => {
+            setHikesOwned(res);
+        })
+    }, []);
 
 	return (
 		<div className="App">
@@ -186,6 +193,7 @@ function App2() {
 								municipalitiesFacets={municipalitiesFacets}
 								setFetchMunicipalities={setFetchMunicipalities}
 								setMyHikeId={setMyHikeId}
+								hikesOwned={hikesOwned}
 							/>
 						}
 					/>
@@ -359,6 +367,7 @@ function App2() {
 					myHikeId={myHikeId}
 					setShowRegisterHikeSuccess={setShowRegisterHikeSuccess}
 					setShowRegisterHikeError={setShowRegisterHikeError}
+					setHikesOwned={setHikesOwned}
 				/>
 
 				<div id="modal-root" />

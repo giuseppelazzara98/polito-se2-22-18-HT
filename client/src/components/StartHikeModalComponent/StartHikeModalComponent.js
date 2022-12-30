@@ -14,8 +14,12 @@ export default function StartHikeModalComponent (props) {
   }=props;
 
   const handleSubmit = (event) => {
+    console.log(myHikeId);
     setShowRegisterHikeModal(false);
     API.registerHike({id_hike:myHikeId}).then((response) => {
+      API.getOwnedHikes().then((res) => {
+        props.setHikesOwned(res);
+    })
       setShowRegisterHikeSuccess(true);
       setTimeout(() => {
         setShowRegisterHikeSuccess(false)

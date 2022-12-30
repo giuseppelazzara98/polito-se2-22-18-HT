@@ -306,7 +306,7 @@ const insertParkingLot = async (data) => {
 
 const registerHike = async (data) => {
 	let err = new Error();
-	const response = await fetch(new URL(`/hikeRegistration`, APIURL), {
+	const response = await fetch(new URL(`hikeRegistration/`, APIURL), {
 		credentials: 'include',
 		method: 'POST',
 		headers: {
@@ -329,7 +329,7 @@ const registerHike = async (data) => {
 
 const startHike = async (data) => {
 	let err = new Error();
-	const response = await fetch(new URL(`/hikeRegistration`, APIURL), {
+	const response = await fetch(new URL(`stratHike/`, APIURL), {
 		credentials: 'include',
 		method: 'PUT',
 		headers: {

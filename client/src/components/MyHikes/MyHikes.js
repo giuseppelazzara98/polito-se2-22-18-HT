@@ -2,9 +2,13 @@ import { useEffect, useState } from "react";
 import styles from "./index.module.scss";
 import API from "../../API/api";
 import { CDropdown, CDropdownToggle, CDropdownItem, CDropdownMenu } from '@coreui/react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlay} from '@fortawesome/free-solid-svg-icons';
+import {Button,} from "react-bootstrap";
+
 export default function MyHikes(props){
-    const [hikesOwnded, setHikesOwned] = useState([]);
-    const [hikesState, setHikesState] = useState('Completed');
+    const [hikesOwned, setHikesOwned] = useState([]);
+    const [hikesState, setHikesState] = useState('All');
 
     useEffect(() => {
         API.getOwnedHikes().then((res) => {
@@ -45,7 +49,7 @@ export default function MyHikes(props){
             </CDropdown>
             <h1>My Hikes</h1>
             {
-                hikesOwnded.map((hike) => {
+                hikesOwned.map((hike) => {
                     return(<>
                         <div className={`table table-sm table-hover ${styles.wrap}`}>
                             <div className={styles.dataName}>
@@ -67,7 +71,9 @@ export default function MyHikes(props){
                             </div>
                             </div>
                             <div className={styles.flexcontainer}>
-                                
+                                <Button>
+                                    <FontAwesomeIcon icon={faPlay}/>
+                                </Button>
                             </div>
                            
                         </div>

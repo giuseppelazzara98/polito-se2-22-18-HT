@@ -3,7 +3,7 @@ import {
   Card,
   ListGroup,
 } from "react-bootstrap";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import styles from "./index.module.scss";
 import { formatDuration } from "../../helpers/utility";
 import { CDropdown, CDropdownToggle, CDropdownItem, CDropdownMenu } from '@coreui/react'
@@ -14,6 +14,12 @@ import ThumbnailAndGalleryModalComponent from "../ThumbnailAndGalleryModalCompon
 
 function HikesTable(props) {
   const [order, setOrder] = useState("Province (Ascending)");
+  const [hikesOwnedId,setHikesOwnedId]=useState([]);
+   useEffect(() => {
+    setHikesOwnedId( props.hikesOwned.map(h=>{return h.id_hike}));
+    }, [props.hikesOwned,props.isHiker]);
+  
+  console.log(hikesOwnedId);
   return (
     <div className={` ${styles.containerWrap}`}>
       <div className="d-flex justify-content-end">
@@ -42,6 +48,7 @@ function HikesTable(props) {
             <HikeRow
               hike={hike}
               key={hike.key}
+              owned={hikesOwnedId.includes(hike.key)}
               setShowMapModal={props.setShowMapModal}
               setShowRegisterHikeModal={props.setShowRegisterHikeModal}
               setHikePointsInfo={props.setHikePointsInfo}
@@ -79,16 +86,21 @@ function HikeRow(props) {
         <div className={styles.flexcontainer}>
         {props.isHiker ? (
           <>
-        <Button
-            className={styles.addHikeButton}
-            onClick={() => {
-              props.setShowRegisterHikeModal(true);
-              props.setMyHikeId(props.hike.id_hike);
-              
-            }}
-          >
-            <FontAwesomeIcon icon={faPlus}/>
-          </Button>
+              {!props.owned ? (
+                <>
+                  <Button
+                    className={styles.addHikeButton}
+                    onClick={() => {
+                      props.setMyHikeId(props.hike.key);
+                      props.setShowRegisterHikeModal(true);
+
+
+                    }}
+                  >
+                    <FontAwesomeIcon icon={faPlus} />
+                  </Button>
+                </>
+              ) : ("")}
           <Button
             className={styles.mapButton}
             onClick={() => {
