@@ -4,12 +4,14 @@ import API from "../../API/api";
 import { CDropdown, CDropdownToggle, CDropdownItem, CDropdownMenu } from '@coreui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay} from '@fortawesome/free-solid-svg-icons';
-import {Button,} from "react-bootstrap";
+import {Button,Form} from "react-bootstrap";
+import dayjs from 'dayjs';
+
 
 export default function MyHikes(props){
     const [hikesOwned, setHikesOwned] = useState([]);
     const [hikesState, setHikesState] = useState('All');
-
+    let state;
     useEffect(() => {
         API.getOwnedHikes().then((res) => {
             setHikesOwned(res.filter((hike) => hike.state === 2));
@@ -50,35 +52,36 @@ export default function MyHikes(props){
             <h1>My Hikes</h1>
             {
                 hikesOwned.map((hike) => {
+                    
+                    switch(hike.state){
+                        case 0:
+                            state="Not Started";
+                            break;
+                        case 1:
+                            state="Ongoing";
+                            break;
+                        case 2:
+                            state="Completed";
+                            break;
+                        default:
+                            state="";
+                    }
                     return(<>
+                    
                         <div className={`table table-sm table-hover ${styles.wrap}`}>
                             <div className={styles.dataName}>
                                 <span>Name</span>
                                 <span>Start Time</span>
                                 <span>End Time</span>
                                 <span>State</span>
-                                <span>Registered</span>
                             </div>
                             <div className={styles.bodyWrap}>
-                            <div className={styles.hikeRow}>
-                                <div className={styles.hikeFirstRow}>
-                                    <span>{hike.hike_name}</span>
-                                    <span>{hike.start_time}</span>
-                                    <span>{hike.end_time}</span>
-                                    <span>{hike.state}</span>
-                                    <span>{hike.registered}</span>
-                                </div>
+                                <MyHikeRow hike={hike} state={state} key={hike.id_hike}/>
                             </div>
-                            </div>
-                            <div className={styles.flexcontainer}>
-                                <Button>
-                                    <FontAwesomeIcon icon={faPlay}/>
-                                </Button>
-                            </div>
-                           
                         </div>
 
                     </>
+                    
                     )
                 })
             }
@@ -88,3 +91,44 @@ export default function MyHikes(props){
 
 
 }
+
+function MyHikeRow(props){
+    const {hike,state}=props;
+    const [tab,setTab]=useState(false);
+    const [time,setTime]=useState();
+    const [date,setDate]=useState();
+    
+    const handelSubmit=(event)=>{
+        let startTime=date+" "+time;
+        console.log(startTime);
+        API.startHike({id_hike:hike.id_hike,start_time:startTime});
+    }
+
+    return (
+        <div className={styles.hikeRow}>
+            <div className={styles.hikeFirstRow}>
+                <span>{hike.hike_name}</span>
+                <span>{hike.start_time}</span>
+                <span>{hike.end_time}</span>
+                <span>{state}</span>
+                <div className={styles.flexcontainer}>
+                    <Button onClick={() => { setTab(true) }}>
+                        <FontAwesomeIcon icon={faPlay} />
+                    </Button>
+                </div>
+            </div>
+            {tab ? (
+                <Form  onSubmit={handelSubmit}>
+                <div className={styles.innerTable}>
+                    <Form.Control type='date' value={date ? dayjs(date).format('YYYY-MM-DD') : ''} onChange={ev => setDate(ev.target.value)} />
+                    <Form.Control type="time" value={date ? dayjs(time).format('LT') : ''} onChange={ev => setTime(ev.target.value)}/>
+                    <Button type="submit">Start</Button>
+                </div>
+                </Form>
+            ) : ("")}
+        </div>
+    );
+}
+
+
+

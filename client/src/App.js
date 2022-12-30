@@ -196,7 +196,6 @@ function App2() {
 								setFetchMunicipalities={setFetchMunicipalities}
 								setMyHikeId={setMyHikeId}
 								hikesOwned={hikesOwned}
-								loggedIn={loggedIn}
 							/>
 						}
 					/>
