@@ -169,6 +169,7 @@ async function getAllHikes(data) {
 			province : r.province,
 			municipality: r.municipality,
 			position: {latitude: r.position.lat, longitude: r.position.long},
+			image: r.image,
 		}));
 		return {
 			hikes: hikes,
@@ -303,6 +304,53 @@ const insertParkingLot = async (data) => {
 	}
 }
 
+const registerHike = async (data) => {
+	let err = new Error();
+	const response = await fetch(new URL(`hikeRegistration/`, APIURL), {
+		credentials: 'include',
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(data) 
+	})
+	if (response.ok) {
+		const okAdd = await response.json();
+		return okAdd;
+	} else {
+		if (response.status === 500) {
+			err.message = '500 INTERNAL SERVER ERROR';
+			throw err;
+		} else {
+			throw err;
+		}
+	}
+}
+
+const startHike = async (data) => {
+	let err = new Error();
+	const response = await fetch(new URL(`startHike/`, APIURL), {
+		credentials: 'include',
+		method: 'PUT',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(data) 
+	})
+	if (response.ok) {
+		const okAdd = await response.json();
+		return okAdd;
+	} else {
+		if (response.status === 500) {
+			err.message = '500 INTERNAL SERVER ERROR';
+			throw err;
+		} else {
+			throw err;
+		}
+	}
+}
+
+
 const API = {
 	logIn,
 	logOut,
@@ -321,6 +369,8 @@ const API = {
 	insertHut,
 	insertParkingLot,
 	getOwnedHikes,
+	registerHike,
+	startHike,
 };
 
 export default API;

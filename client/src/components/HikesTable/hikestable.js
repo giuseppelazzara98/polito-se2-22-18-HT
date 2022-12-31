@@ -3,16 +3,22 @@ import {
   Card,
   ListGroup,
 } from "react-bootstrap";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import styles from "./index.module.scss";
 import { formatDuration } from "../../helpers/utility";
 import { CDropdown, CDropdownToggle, CDropdownItem, CDropdownMenu } from '@coreui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleInfo, faMap } from '@fortawesome/free-solid-svg-icons';
+import { faCircleInfo, faMap,faPlus} from '@fortawesome/free-solid-svg-icons';
 import API from "../../API/api";
+import ThumbnailAndGalleryModalComponent from "../ThumbnailAndGalleryModalComponent/ThumbnailAndGalleryModalComponent";
 
 function HikesTable(props) {
   const [order, setOrder] = useState("Province (Ascending)");
+  const [hikesOwnedId,setHikesOwnedId]=useState([]);
+   useEffect(() => {
+    setHikesOwnedId( props.hikesOwned.map(h=>{return h.id_hike}));
+    }, [props.hikesOwned]);
+
   return (
     <div className={` ${styles.containerWrap}`}>
       <div className="d-flex justify-content-end">
@@ -41,9 +47,12 @@ function HikesTable(props) {
             <HikeRow
               hike={hike}
               key={hike.key}
+              owned={hikesOwnedId.includes(hike.key)}
               setShowMapModal={props.setShowMapModal}
+              setShowRegisterHikeModal={props.setShowRegisterHikeModal}
               setHikePointsInfo={props.setHikePointsInfo}
               isHiker={props.isHiker}
+              setMyHikeId={props.setMyHikeId}
             />
           ))}
           {props.hikes?.length === 0 && (
@@ -75,7 +84,23 @@ function HikeRow(props) {
         <span>{getDifficulty(props.hike.difficulty)}</span>
         <div className={styles.flexcontainer}>
         {props.isHiker ? (
-        <Button
+          <>
+              {!props.owned ? (
+                <>
+                  <Button
+                    className={styles.addHikeButton}
+                    onClick={() => {
+                      props.setMyHikeId(props.hike.key);
+                      props.setShowRegisterHikeModal(true);
+
+
+                    }}
+                  >
+                    <FontAwesomeIcon icon={faPlus} />
+                  </Button>
+                </>
+              ) : ("")}
+          <Button
             className={styles.mapButton}
             onClick={() => {
               props.setShowMapModal(true);
@@ -84,6 +109,7 @@ function HikeRow(props) {
           >
             <FontAwesomeIcon icon={faMap}/>
           </Button>
+          </>
         ): (
           ""
         )}
@@ -117,12 +143,16 @@ function HikeRow(props) {
                 <span>{(props.hike.ascent)} m </span>
               </div>
             </div>
-            <Card.Header>Description</Card.Header>{" "}
-            <ListGroup variant="flush">
-              {" "}
-              <ListGroup.Item>{props.hike.description}</ListGroup.Item>
-
-            </ListGroup>
+            <div className={styles.bottomWrap}>
+              {props.hike.image && <ThumbnailAndGalleryModalComponent image={props.hike.image}/>}
+              <div className={styles.descriptionContainer}>
+                <Card.Header>Description</Card.Header>{" "}
+                <ListGroup variant="flush">
+                  {" "}
+                  <ListGroup.Item>{props.hike.description}</ListGroup.Item>
+                </ListGroup>
+              </div>
+            </div>
           </Card>
         </div>
       ) : (

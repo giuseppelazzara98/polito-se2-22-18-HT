@@ -16,6 +16,9 @@ export default function HomePage(props) {
     setHikePointsInfo,
     municipalitiesFacets,
     setFetchMunicipalities,
+    setShowRegisterHikeModal,
+    setMyHikeId,
+    hikesOwned,
   } = props;
   return (
     <Container>
@@ -42,7 +45,10 @@ export default function HomePage(props) {
             setHikes={setHikes}
             setShowMapModal={setShowMapModal}
             setHikePointsInfo={setHikePointsInfo}
+            setShowRegisterHikeModal={setShowRegisterHikeModal}
             isHiker={props.isHiker}
+            setMyHikeId={setMyHikeId}
+            hikesOwned={hikesOwned}
           ></HikesTable>
         </Col>
       </Row>

@@ -1,41 +1,5 @@
 @import "../../../styles/configs";
 
-.containerWrap {
-  margin-top: 40px;
-  overflow: auto;
-  .button{
-    background-color: $primary-green;
-    border-color: transparent;
-    margin-left: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    &:hover{
-      background-color: $tertiary-green;
-      border-color: transparent;
-    }
-    .iconInfo {
-      font-size: 18px;
-    }
-  }
-  .mapButton{
-    background-color: $primary-blue;
-    border-color: transparent;
-    margin-right: 5px;
-    margin-left: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-  }
-  .flexcontainer {
-    display: flex;
-    
-  }
-}
 .wrap {
   min-width: 450px;
   font-size: 12px;
@@ -47,10 +11,6 @@
     }
   }
 
-  .dataTitle {
-    @include font(700, 18px, 20px, 0);
-    color: $primary-green-light;
-  }
   .dataName {
     color: $primary-green;
     display: grid;
@@ -67,38 +27,73 @@
         grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
         padding: 5px;
         border-bottom: 1px solid $secondary-blue;
+
+        .button{
+          background-color: $primary-green;
+          border-color: transparent;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 40px;
+          height: 40px;
+          margin: auto;
+          &:hover{
+            background-color: $tertiary-green;
+            border-color: transparent;
+          }
+          .optionIcon {
+            font-size: 18px;
+          }
+        }
       }
       .innerTable {
         display: flex;
         flex-direction: column;
-        .headerHinner,
-        .bodyHinner {
-          display: grid;
-          grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-          padding: 5px;
+      }
+    }
+    .bottomWrap {
+      padding: 10px;
+      text-align: left;
+      .disclaimer {
+        font-weight: 700;
+      }
+      .optionWrap {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        margin-top: 10px;
+        .formGroup {
+          display: flex;
+          align-items: center;
+          :global(.form-control) {
+            margin-right: 10px;
+          }
+          .inputError {
+            border-color: $primary-error;
+          }
+          .button {
+            background-color: $primary-green;
+            border-color: transparent;
+            &:hover{
+              background-color: $tertiary-green;
+              border-color: transparent;
+              
+            }
+            &:global(.btn){
+              &:active{
+                background-color: $tertiary-green;
+                border-color: transparent;
+                
+              }
+            }
+          }
         }
-        .headerHinner {
-          @include font(700, 14px, 16px, 0);
+        .formError {
+          margin-top: 0.25rem;
+          font-size: 0.875em;
+          color: $primary-error;
         }
       }
     }
   } 
 }
-
-
-.dropdown{
-  width: 300px;
-  .orderBy{
-    width: 300px;
-    cursor: pointer;
-    &:active{
-      background-color: $secondary-green;
-      color: $primary-black;
-    }
-    &:hover{
-      background-color: $secondary-brown;
-    }
-  }
-}
-
-

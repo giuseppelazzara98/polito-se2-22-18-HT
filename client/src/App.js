@@ -17,8 +17,10 @@ import Signup from './pages/Signup';
 import EmailVerified from './pages/EmailVerified';
 import OwnHikes from './pages/OwnHikes';
 import API from './API/api';
+import OwnHikes from './pages/OwnHikes';
 import InfoModalComponent from './components/InfoModalComponent/InfoModalComponent';
 import MapModalComponent from './components/MapModalComponent/MapModalComponent';
+import RegisterHikeModalComponent from "./components/RegisterHikeModalComponent/RegisterHikeModalComponent"
 import { faCheckCircle, faXmarkCircle } from '@fortawesome/free-solid-svg-icons';
 
 function App() {
@@ -40,10 +42,15 @@ function App2() {
 	const [municipalitiesFacets, setMunicipalitiesFacets] = useState([]);
 	const [user, setUser] = useState({});
 	const [updateHikes, setUpdateHikes] = useState(0);
+	const [showStartHikeError, setShowStartHikeError] = useState(false);
+	const [showStartHikeSuccess, setStartHikeSuccess] = useState(false);
+	const [showRegisterHikeModal,setShowRegisterHikeModal] = useState(false);
 	const [showWelcomeModal, setShowWelcomeModal] = useState(false);
 	const [showLogoutModal, setShowLogoutModal] = useState(false);
 	const [showAddNewHikeSuccess, setShowAddNewHikeSuccess] = useState(false);
 	const [showAddNewHikeError, setShowAddNewHikeError] = useState(false);
+	const [showRegisterHikeSuccess, setShowRegisterHikeSuccess] = useState(false);
+	const [showRegisterHikeError, setShowRegisterHikeError] = useState(false);
 	const [showAddNewHutSuccess, setShowAddNewHutSuccess] = useState(false);
 	const [showAddNewHutError, setShowAddNewHutError] = useState(false);
 	const [showAddNewParkingLotSuccess, setShowAddNewParkingLotSuccess] = useState(false);
@@ -53,6 +60,8 @@ function App2() {
 	const [showEmailVerificationError, setShowEmailVerificationError] = useState(false);
 	const [showMapModal,setShowMapModal]=useState(false);
 	const [hikePointsInfo, setHikePointsInfo] = useState({});
+	const [myHikeId,setMyHikeId]= useState(0);
+	const [hikesOwned, setHikesOwned] = useState([]);
 
 	const getHikes = async (dataOnRequest) => {
 		try {
@@ -135,7 +144,7 @@ function App2() {
 	useEffect(() => {
 		API.getProvincesFacets().then((response) => setProvincesFacets(response));
 	}, []);
-
+  
 
 	useEffect(() => {
 		if (!showMapModal) {
@@ -148,6 +157,14 @@ function App2() {
 			API.getMunicipalitiesFacets(fetchMunicipalities).then((response) => { setMunicipalitiesFacets(response); });
 		}
 	}, [fetchMunicipalities]);
+	
+	 useEffect(() => {
+		if(loggedIn){
+			API.getOwnedHikes().then((res) => {
+				setHikesOwned(res);
+			})
+		}
+    }, [loggedIn]);
 
 	return (
 		<div className="App">
@@ -174,9 +191,12 @@ function App2() {
 								provincesFacets={provincesFacets}
 								setShowMapModal={setShowMapModal}
 								setHikePointsInfo={setHikePointsInfo}
+								setShowRegisterHikeModal={setShowRegisterHikeModal}
 								isHiker={user.role==="Hiker"}
 								municipalitiesFacets={municipalitiesFacets}
 								setFetchMunicipalities={setFetchMunicipalities}
+								setMyHikeId={setMyHikeId}
+								hikesOwned={hikesOwned}
 							/>
 						}
 					/>
@@ -213,7 +233,7 @@ function App2() {
 					<Route
 						path = "/HikesOwned" 
 						element={
-							loggedIn && user.role === 'Hiker' ? (<OwnHikes/>)
+							loggedIn && user.role === 'Hiker' ? (<OwnHikes hikesOwned={hikesOwned} setHikesOwned={setHikesOwned}/>)
 							:(<Navigate to="/" replace />)
 							
 						} 
@@ -302,6 +322,19 @@ function App2() {
 					success={false}
 				/>
 				<InfoModalComponent
+					show={showRegisterHikeSuccess}
+					title="Success!"
+					subtitle={`The hike is now added to your personal hikes`}
+					icon={faCheckCircle}
+				/>
+				<InfoModalComponent
+					show={showRegisterHikeError}
+					title="Error"
+					subtitle={`Oh no... there was a problem, try later`}
+					icon={faXmarkCircle}
+					success={false}
+				/>
+				<InfoModalComponent
 					show={showAddNewParkingLotSuccess}
 					title="Success!"
 					subtitle={`New parking lot added successfully`}
@@ -314,11 +347,31 @@ function App2() {
 					icon={faXmarkCircle}
 					success={false}
 				/>
-
+				<InfoModalComponent
+					show={showStartHikeSuccess}
+					title="Success!"
+					subtitle={`Hike added to your personal hikes`}
+					icon={faCheckCircle}
+				/>
+				<InfoModalComponent
+					show={showStartHikeError}
+					title="Error"
+					subtitle={`Oh no... there was a problem, try later`}
+					icon={faXmarkCircle}
+					success={false}
+				/>
 				<MapModalComponent
 					show={showMapModal}
 					setShowMapModal={setShowMapModal}
 					hikePointsInfo={hikePointsInfo}
+				/>
+				<RegisterHikeModalComponent
+					show={showRegisterHikeModal}
+					setShowRegisterHikeModal={setShowRegisterHikeModal}
+					myHikeId={myHikeId}
+					setShowRegisterHikeSuccess={setShowRegisterHikeSuccess}
+					setShowRegisterHikeError={setShowRegisterHikeError}
+					setHikesOwned={setHikesOwned}
 				/>
 
 				<div id="modal-root" />

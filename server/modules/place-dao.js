@@ -53,7 +53,8 @@ class PlaceDAO {
 
 	// get all places by province id
 	getAllPlacesByProvinceId = (province_id) => {
-		const sql = 'SELECT * FROM PLACE WHERE id_province = ? AND type = "hut" OR type = "parking lot";';
+		const sql =
+			'SELECT * FROM PLACE WHERE id_province = ? AND type = "hut" OR type = "parking lot";';
 
 		return new Promise((resolve, reject) => {
 			this.db.all(sql, [province_id], (err, rows) => {
@@ -107,17 +108,29 @@ class PlaceDAO {
 
 	insertPlace = (referencePoint, idProvince) => {
 		return new Promise((resolve, reject) => {
-			const sql = 'INSERT INTO PLACE (id_province, name, description, latitude, longitude, type) VALUES (?, ?, ?, ?, ?, ?);';
+			const sql =
+				'INSERT INTO PLACE (id_province, name, description, latitude, longitude, type) VALUES (?, ?, ?, ?, ?, ?);';
 
-			this.db.run(sql, [idProvince, referencePoint.name, referencePoint.description, referencePoint.lat, referencePoint.lon, referencePoint.type], function (err) {
-				if (err) {
-					console.log('Error running sql: ' + sql);
-					console.log(err);
-					reject(err);
-				} else {
-					resolve(this.lastID); //returns the entered ID
+			this.db.run(
+				sql,
+				[
+					idProvince,
+					referencePoint.name,
+					referencePoint.description,
+					referencePoint.lat,
+					referencePoint.lon,
+					referencePoint.type
+				],
+				function (err) {
+					if (err) {
+						console.log('Error running sql: ' + sql);
+						console.log(err);
+						reject(err);
+					} else {
+						resolve(this.lastID); //returns the entered ID
+					}
 				}
-			});
+			);
 		});
 	};
 
@@ -159,7 +172,8 @@ class PlaceDAO {
 
 	insertParkingLotData = (idPlace, capacity) => {
 		return new Promise((resolve, reject) => {
-			const sql = 'INSERT INTO PARKING_DATA (id_place, capacity) VALUES ( ?, ?)';
+			const sql =
+				'INSERT INTO PARKING_DATA (id_place, capacity) VALUES ( ?, ?)';
 
 			this.db.run(sql, [idPlace, capacity], function (err) {
 				if (err) {
@@ -173,7 +187,7 @@ class PlaceDAO {
 		});
 	};
 
-		/* ---------------------- HUT DATA ---------------------- */
+	/* ---------------------- HUT DATA ---------------------- */
 
 	/*
 
@@ -214,20 +228,32 @@ class PlaceDAO {
 
 	insertHutData = (idPlace, hut) => {
 		return new Promise((resolve, reject) => {
-			const sql = 'INSERT INTO HUT_DATA (id_place, altitude, n_beds, phone, email, website) VALUES (?, ?, ?, ?, ?, ?)';
+			const sql =
+				'INSERT INTO HUT_DATA (id_place, altitude, n_beds, phone, email, website, image) VALUES (?, ?, ?, ?, ?, ?, ?)';
 
-			this.db.run(sql, [idPlace, hut.altitude, hut.nBeds, hut.phone, hut.email, hut.website], function (err) {
-				if (err) {
-					console.log('Error running sql: ' + sql);
-					console.log(err);
-					reject(err);
-				} else {
-					resolve(true);
+			this.db.run(
+				sql,
+				[
+					idPlace,
+					hut.altitude,
+					hut.nBeds,
+					hut.phone,
+					hut.email,
+					hut.website,
+					hut.image
+				],
+				function (err) {
+					if (err) {
+						console.log('Error running sql: ' + sql);
+						console.log(err);
+						reject(err);
+					} else {
+						resolve(true);
+					}
 				}
-			});
+			);
 		});
 	};
-
 }
 
 module.exports = PlaceDAO;

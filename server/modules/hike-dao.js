@@ -1,5 +1,4 @@
 class HikeDAO {
-
 	sqlite = require('sqlite3');
 
 	constructor(db, knex) {
@@ -13,7 +12,7 @@ class HikeDAO {
 			this.db.close();
 			resolve(true);
 		});
-	}
+	};
 
 	/* --------------------------------------------- TABLE HIKE --------------------------------------------- */
 
@@ -78,13 +77,16 @@ class HikeDAO {
 				'HIKE.ascent',
 				'HIKE.difficulty',
 				'P1.latitude as latitude',
-				'P1.longitude as longitude'
+				'P1.longitude as longitude',
+				'HIKE.image'
 			)
 			.from('HIKE')
 			.join('PLACE as P1', { 'P1.id_place': 'HIKE.id_start_place' })
 			.join('PLACE as P2', { 'P2.id_place': 'HIKE.id_end_place' })
 			.join('PROVINCE as PR', { 'PR.id_province': 'HIKE.id_province' })
-			.join('MUNICIPALITY as M', { 'M.id_municipality': 'HIKE.id_municipality' });
+			.join('MUNICIPALITY as M', {
+				'M.id_municipality': 'HIKE.id_municipality'
+			});
 
 		if (filters.province !== null) {
 			sql = sql.where('HIKE.id_province', filters.province);
@@ -160,7 +162,8 @@ class HikeDAO {
 							expected_time: el.expected_time,
 							ascent: el.ascent,
 							difficulty: el.difficulty,
-							position: { lat: el.latitude, long: el.longitude }
+							position: { lat: el.latitude, long: el.longitude },
+							image: el.image
 						};
 					});
 					resolve(hikes);
@@ -170,7 +173,8 @@ class HikeDAO {
 	};
 
 	getLatLongStartPlaceByHikeId = (hike_id) => {
-		let sql = "SELECT P.latitude, P.longitude FROM PLACE P, HIKE H WHERE H.id_start_place = P.id_place AND H.id_hike = ?";
+		let sql =
+			'SELECT P.latitude, P.longitude FROM PLACE P, HIKE H WHERE H.id_start_place = P.id_place AND H.id_hike = ?';
 		return new Promise((resolve, reject) => {
 			this.db.get(sql, [hike_id], (err, row) => {
 				if (err) {
@@ -195,7 +199,7 @@ class HikeDAO {
 	insertHike = (hike, idStart, idEnd) => {
 		return new Promise((resolve, reject) => {
 			const sql =
-				'INSERT INTO HIKE (name, id_start_place, id_end_place, id_province, id_municipality, description, length, expected_time, ascent, difficulty, gpx) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+				'INSERT INTO HIKE (name, id_start_place, id_end_place, id_province, id_municipality, description, length, expected_time, ascent, difficulty, gpx, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
 
 			this.db.run(
 				sql,
@@ -210,7 +214,8 @@ class HikeDAO {
 					hike.expectedTime,
 					hike.ascent,
 					hike.difficulty,
-					hike.gpxData
+					hike.gpxData,
+					hike.image
 				],
 				function (err) {
 					if (err) {
@@ -227,7 +232,7 @@ class HikeDAO {
 
 	getHikeById = (id_hike) => {
 		return new Promise((resolve, reject) => {
-			const sql = "SELECT * FROM HIKE WHERE id_hike = ?;";
+			const sql = 'SELECT * FROM HIKE WHERE id_hike = ?;';
 			this.db.get(sql, [id_hike], function (err, row) {
 				if (err) {
 					console.log('Error running sql: ' + sql);
@@ -247,7 +252,7 @@ class HikeDAO {
 							ascent: row.ascent,
 							difficulty: row.difficulty,
 							gpx: row.gpx
-						}
+						};
 						resolve(hike);
 					} else {
 						resolve(null);
@@ -297,8 +302,7 @@ class HikeDAO {
 
 	insertHikePlace = (id_hike, id_reference_point) => {
 		return new Promise((resolve, reject) => {
-			const sql =
-				'INSERT INTO HIKE_PLACE (id_hike, id_place) VALUES (?, ?)';
+			const sql = 'INSERT INTO HIKE_PLACE (id_hike, id_place) VALUES (?, ?)';
 
 			this.db.run(sql, [id_hike, id_reference_point], function (err) {
 				if (err) {
@@ -314,7 +318,8 @@ class HikeDAO {
 
 	getStartEndPoints = (id_hike) => {
 		return new Promise((resolve, reject) => {
-			const sql = "SELECT id_start_place, id_end_place, gpx FROM HIKE H WHERE id_hike = ?";
+			const sql =
+				'SELECT id_start_place, id_end_place, gpx FROM HIKE H WHERE id_hike = ?';
 			this.db.get(sql, [id_hike], function (err, row) {
 				if (err) {
 					console.log('Error running sql: ' + sql);
@@ -338,7 +343,8 @@ class HikeDAO {
 
 	getReferencePoints = (id_hike) => {
 		return new Promise((resolve, reject) => {
-			const sql = "SELECT P.id_place, P.name, P.description, P.latitude, P.longitude, P.type  FROM HIKE H,  HIKE_PLACE HP, PLACE P WHERE H.id_hike = ? AND H.id_hike = HP.id_hike AND P.id_place = HP.id_place ";
+			const sql =
+				'SELECT P.id_place, P.name, P.description, P.latitude, P.longitude, P.type  FROM HIKE H,  HIKE_PLACE HP, PLACE P WHERE H.id_hike = ? AND H.id_hike = HP.id_hike AND P.id_place = HP.id_place ';
 			this.db.all(sql, [id_hike], function (err, rows) {
 				if (err) {
 					console.log('Error running sql: ' + sql);
@@ -370,9 +376,45 @@ class HikeDAO {
 
 	/* --------------------------------------------- TABLE USER_HIKE --------------------------------------------- */
 
+	/*
+
+	// create the user_hike table
+	newHikeUserHikeTable = () => {
+		return new Promise((resolve, reject) => {
+
+		const sql = "CREATE TABLE IF NOT EXISTS USER_HIKE USER_HIKE (id_user_hike INTEGER NOT NULL, id_hike INTEGER NOT NULL, id_user INTEGER NOT NULL, start_time TEXT, end_time TEXT, state INTEGER NOT NULL DEFAULT 0, registered INTEGER NOT NULL DEFAULT 1, FOREIGN KEY(id_user) REFERENCES USER(id_user), FOREIGN KEY(id_hike) REFERENCES HIKE(id_hike), PRIMARY KEY(id_user_hike AUTOINCREMENT)";
+			this.db.run(sql, (err) => {
+				if (err) {
+					console.log('Error running sql: ' + sql);
+					console.log(err);
+					reject(err);
+				}
+				resolve(this.lastID);
+			});
+		});
+	}
+
+	// drop the hike_place table
+	dropUserHikeTable = () => {
+		return new Promise((resolve, reject) => {
+			const sql = "DROP TABLE IF EXISTS USER_HIKE;";
+			this.db.run(sql, function (err) {
+				if (err) {
+					console.log('Error running sql: ' + sql);
+					console.log(err);
+					reject(err);
+				}
+				resolve(this.lastID);
+			})
+
+		});
+	}
+
+	*/
+
 	getHikeStats = (id_user) => {
 		return new Promise((resolve, reject) => {
-			const sql = "SELECT UH.id_hike, H.name AS HIKE_NAME, UH.start_time, UH.state, UH.registered FROM USER_HIKE UH, HIKE H WHERE UH.id_hike = H.id_hike AND UH.id_user = ?;";
+			const sql = "SELECT UH.id_hike, H.name AS HIKE_NAME, UH.start_time, UH.end_time, UH.state, UH.registered FROM USER_HIKE UH, HIKE H WHERE UH.id_hike = H.id_hike AND UH.id_user = ?;";
 			this.db.all(sql, [id_user], function (err, rows) {
 				if (err) {
 					console.log('Error running sql: ' + sql);

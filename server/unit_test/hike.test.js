@@ -186,6 +186,16 @@ describe('TestHikeDao', () => {
     testGetHikesStats(2);
     testGetHikesStats(4);
 
+    testInsertHikeRegistration(20,1);
+    testInsertHikeRegistration(21,1);
+    testInsertHikeRegistration(22,2);
+    testInsertHikeRegistration(23,3);
+
+    testUpdateStartTime(20, 1, "2022/12/21 13:08");
+    testUpdateStartTime(21, 2, "2022/12/21 11:54");
+    testUpdateStartTime(22, 2, "2022/12/21 13:23");
+    testUpdateStartTime(23, 3, "2022/12/21 13:12");
+
     // CLOSE CONNECTION TO HIKE TABLE
 
     testCloseTables();
@@ -197,6 +207,8 @@ describe('TestHikeDao', () => {
     testGetStartEndPointsByHikeId(1, true);
     testGetReferencePointsByHikeId(1, true);
     testGetHikesStats(2);
+    testInsertHikeRegistration(21,1);
+    testUpdateStartTime(21, 2, "2022/12/21 11:54");
 
 });
 
@@ -343,6 +355,36 @@ function testGetHikesStats(id_user) {
         }
         catch (err) {
             console.log("---- Error on testGetHikesStats ----");
+            return;
+        }
+    });
+}
+
+function testInsertHikeRegistration(id_hike, id_user) {
+    test('Test insert new hike registration', async () => {
+        try {
+            const result = await testHikeDao.insertHikeRegistration(id_hike, id_user);
+
+            expect(result).not.toBeNull();
+        }
+        catch (err) {
+            console.log("---- Error on testInsertHikeRegistration ----");
+            return;
+        }
+    });
+}
+
+function testUpdateStartTime(id_hike, id_user, start_time) {
+    test('Test update start time', async () => {
+        try {
+            const result = await testHikeDao.updateStartTime(id_hike, id_user, start_time);
+
+            expect(result).not.toBeNull();
+
+            expect(result).toBe(true);
+        }
+        catch (err) {
+            console.log("---- Error on testUpdateStartTime ----");
             return;
         }
     });

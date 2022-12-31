@@ -16,6 +16,8 @@ import API from '../../API/api';
 import styles from './index.module.scss';
 import GPXFile from './GPXFile';
 import Map from '../MapComponent/Map';
+import FileInput from '../FileInput/FileInput';
+import { getBase64 } from '../../helpers/utility';
 
 export default function NewHikeForm(props) {
 	const { setUpdateHikes, setShowAddNewHikeSuccess, setShowAddNewHikeError } =
@@ -37,8 +39,19 @@ export default function NewHikeForm(props) {
 	const [validated, setValidated] = useState(false);
 	const [isFormValid, setIsFormValid] = useState(false);
 	const [inputValueMunicipality, setInputValueMunicipality] = useState("");
+	const [hikeImage, setHikeImage] = useState(null);
+	const [hikeImage64, setHikeImage64] = useState(null);
 
 	const navigate = useNavigate();
+
+	useEffect(() => {
+		const loadFile = () => {
+			getBase64(hikeImage).then(result => setHikeImage64(result));
+		}
+		if (hikeImage) {
+			loadFile();
+		}
+	}, [hikeImage]);
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
@@ -57,7 +70,8 @@ export default function NewHikeForm(props) {
 			endPoint: endPoint,
 			referencePoints: referencePoints,
 			gpxData: JSON.stringify(gpxPoints),
-			description: description
+			description: description,
+			image: hikeImage64,
 		};
 
 		const time = hike.expectedTimeString.split(' ');
@@ -105,7 +119,8 @@ export default function NewHikeForm(props) {
 			(startPoint.type === 'Address/Name of location' &&
 				(startPoint.lat === '' || startPoint.lon === '')) ||
 			(endPoint.type === 'Address/Name of location' &&
-				(endPoint.lat === '' || endPoint.lon === ''))
+				(endPoint.lat === '' || endPoint.lon === '')) ||
+				hikeImage64 === null
 		) {
 			valid = false;
 		}
@@ -265,6 +280,21 @@ export default function NewHikeForm(props) {
 						province={province}
 						startPoint={startPoint}
 						endPoint={endPoint}
+					/>
+				</Col>
+			</Row>
+
+			<Row className="mb-3">
+				{/*Image field*/}
+				<Col>
+					<FileInput
+						title={"Upload a image of the track"}
+						required={true}
+						accept={".png, .jpeg"}
+						onChange={setHikeImage}
+						value={hikeImage}
+						description={"File type accepted: .png, .jpeg"}
+						errorText={"Please insert a valid file for the image"}
 					/>
 				</Col>
 			</Row>
