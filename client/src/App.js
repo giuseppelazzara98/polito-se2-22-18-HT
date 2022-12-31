@@ -232,7 +232,7 @@ function App2() {
 					<Route
 						path = "/HikesOwned" 
 						element={
-							loggedIn && user.role === 'Hiker' ? (<OwnHikes hikesOwned={hikesOwned}/>)
+							loggedIn && user.role === 'Hiker' ? (<OwnHikes hikesOwned={hikesOwned} setHikesOwned={setHikesOwned}/>)
 							:(<Navigate to="/" replace />)
 							
 						} 

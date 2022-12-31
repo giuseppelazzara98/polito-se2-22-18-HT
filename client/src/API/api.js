@@ -329,7 +329,7 @@ const registerHike = async (data) => {
 
 const startHike = async (data) => {
 	let err = new Error();
-	const response = await fetch(new URL(`stratHike/`, APIURL), {
+	const response = await fetch(new URL(`startHike/`, APIURL), {
 		credentials: 'include',
 		method: 'PUT',
 		headers: {

@@ -3,13 +3,12 @@ import styles from "./index.module.scss";
 import API from "../../API/api";
 import { CDropdown, CDropdownToggle, CDropdownItem, CDropdownMenu } from '@coreui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlay } from '@fortawesome/free-solid-svg-icons';
+import { faGear } from '@fortawesome/free-solid-svg-icons';
 import { Button, Form } from "react-bootstrap";
-import dayjs from 'dayjs';
 
 
 export default function MyHikes(props) {
-    const {hikesOwned} = props;
+    const {hikesOwned, setHikesOwned} = props;
     // const [hikesOwned, setHikesOwned] = useState([]);
     // const [hikesState, setHikesState] = useState('All');
     // useEffect(() => {
@@ -58,7 +57,7 @@ export default function MyHikes(props) {
                     <span>State</span>
                 </div>
                 <div className={styles.bodyWrap}>
-                    {hikesOwned.map((hike) => <MyHikeRow hike={hike} key={hike.id_hike} />)}
+                    {hikesOwned.map((hike) => <MyHikeRow hike={hike} key={hike.id_hike} setHikesOwned={setHikesOwned}/>)}
                     {hikesOwned.length === 0 && (
                         <div className={styles.hikeRow}>
                             <span>You're registered to any hikes yet. Let's register on the homepage</span>
@@ -72,16 +71,51 @@ export default function MyHikes(props) {
 
 }
 
+const InputForm = (props) => {
+    const {
+        handelSubmit,
+        date,
+        time,
+        setDate,
+        setTime,
+        labelButton,
+        formValid = true,
+        formError,
+    } = props;
+
+    return (
+        <div className={styles.inputForm}>
+            <Form onSubmit={handelSubmit} className={styles.formGroup}>
+                <Form.Control type='date' value={date} onChange={ev => setDate(ev.target.value)} className={`${!formValid && !date && styles.inputError}`}/>
+                <Form.Control type="time" value={time} onChange={ev => setTime(ev.target.value)} className={`${!formValid && !time && styles.inputError}`}/>
+                <Button type="submit" className={styles.button}>{labelButton}</Button>
+            </Form>
+            {!formValid && <span className={styles.formError}>{formError}</span>}
+        </div>
+    )
+}
+
 function MyHikeRow(props) {
-    const { hike } = props;
+    const { hike, setHikesOwned } = props;
     const [tab, setTab] = useState(false);
     const [time, setTime] = useState();
     const [date, setDate] = useState();
+    const [validForm, setValidForm] = useState(true);
     let state = "";
 
     const handelSubmit = (event) => {
-        let startTime = date + " " + time;
-        API.startHike({ id_hike: hike.id_hike, start_time: startTime });
+        event.preventDefault();
+        if (date && time) {
+            setValidForm(true);
+            let startTime = date + " " + time;
+            API.startHike({ id_hike: hike.id_hike, start_time: startTime }).then(() => {
+                API.getOwnedHikes().then((res) => {
+                    setHikesOwned(res);
+                })
+            });
+        } else {
+            setValidForm(false);
+        }
     }
 
     const getLabelState = () => {
@@ -108,20 +142,30 @@ function MyHikeRow(props) {
                 <span>{hike.start_time}</span>
                 <span>{hike.end_time}</span>
                 <span>{getLabelState()}</span>
-                <div className={styles.flexcontainer}>
-                    <Button onClick={() => { setTab(true) }}>
-                        <FontAwesomeIcon icon={faPlay} />
-                    </Button>
-                </div>
+                <Button onClick={() => { setTab(!tab) }} className={styles.button}>
+                    <FontAwesomeIcon icon={faGear} className={styles.optionIcon}/>
+                </Button>
             </div>
             {tab ? (
-                <Form onSubmit={handelSubmit}>
-                    <div className={styles.innerTable}>
-                        <Form.Control type='date' value={date ? dayjs(date).format('YYYY-MM-DD') : ''} onChange={ev => setDate(ev.target.value)} />
-                        <Form.Control type="time" value={date ? dayjs(time).format('LT') : ''} onChange={ev => setTime(ev.target.value)} />
-                        <Button type="submit">Start</Button>
-                    </div>
-                </Form>
+                <div className={styles.bottomWrap}>
+                    {hike.state === 0 && (
+                        <>
+                            <span className={styles.disclaimer}>Your hike is not started yet. Insert date and time!</span>
+                            <div className={styles.optionWrap}>
+                                <InputForm
+                                    handelSubmit={handelSubmit}
+                                    date={date}
+                                    time={time}
+                                    setDate={setDate}
+                                    setTime={setTime}
+                                    labelButton={"Start"}
+                                    formValid={validForm}
+                                    formError={"Please, insert a valid date and time"}
+                                />
+                            </div>
+                        </>
+                    )}
+                </div>
             ) : ("")}
         </div>
     );
