@@ -5,6 +5,7 @@ import { CDropdown, CDropdownToggle, CDropdownItem, CDropdownMenu } from '@coreu
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGear } from '@fortawesome/free-solid-svg-icons';
 import { Button, Form } from "react-bootstrap";
+import dayjs from "dayjs";
 
 
 export default function MyHikes(props) {
@@ -57,7 +58,7 @@ export default function MyHikes(props) {
                     <span>State</span>
                 </div>
                 <div className={styles.bodyWrap}>
-                    {hikesOwned.map((hike) => <MyHikeRow hike={hike} key={hike.id_hike} setHikesOwned={setHikesOwned}/>)}
+                    {hikesOwned.map((hike) => <MyHikeRow hike={hike} key={`${hike.id_hike}_${hike.state}`} setHikesOwned={setHikesOwned}/>)}
                     {hikesOwned.length === 0 && (
                         <div className={styles.hikeRow}>
                             <span>You're registered to any hikes yet. Let's register on the homepage</span>
@@ -98,8 +99,8 @@ const InputForm = (props) => {
 function MyHikeRow(props) {
     const { hike, setHikesOwned } = props;
     const [tab, setTab] = useState(false);
-    const [time, setTime] = useState();
-    const [date, setDate] = useState();
+    const [time, setTime] = useState(dayjs().format("HH:mm"));
+    const [date, setDate] = useState(dayjs().format("YYYY-MM-DD"));
     const [validForm, setValidForm] = useState(true);
     let state = "";
 
