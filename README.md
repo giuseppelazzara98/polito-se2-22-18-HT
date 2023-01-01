@@ -459,6 +459,22 @@ __Response:__ `200 Ok`
 __Response body:__ _None_  
 __Error responses:__ `401 Unauthorized`, `422 Unprocessable Entity`, `503 Service Unavailable`
 
+### Hiker ends a specific hike (only if the user is an hiker and is logged in):
+
+__URL:__ `/api/endHike`  
+__Method:__ PUT  
+__Description:__ Update the the started hike for which the user is registered with the end time     
+__Request body:__ 
+```
+{
+	"id_hike": 1,
+	"end_time": "2022/12/20 10:43"
+}
+``` 
+__Response:__ `200 Ok`  
+__Response body:__ _None_  
+__Error responses:__ `401 Unauthorized`, `422 Unprocessable Entity`, `503 Service Unavailable`
+
 ### Get statistics and information about user's hikes (only if the user is an hiker and is logged in):
 
 __URL:__ `/api/hikesStats`  
