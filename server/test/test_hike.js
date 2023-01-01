@@ -179,7 +179,13 @@ describe('Test hikes apis', () => {
 	startHike(15, "2022/12/21 12:45", 200);
 	startHike(11, "2022/12/21 08:45", 200);
 	startHike(0, "2022/12/21 12:45", 422);
-	startHike(13, 543, 422);				
+	startHike(13, 543, 422);	
+	
+	//Testing PUT /api/endHike
+	endHike(15, "2022/12/21 15:32", 200);
+	endHike(11, "2022/12/21 11:24", 200);
+	endHike(0, "2022/12/21 12:45", 422);
+	endHike(13, 543, 422);
 
 });
 
@@ -298,6 +304,29 @@ function startHike(id_hike, start_time, expectedHTTPStatus) {
 		} catch (err) {
 			if (r.status === 503) {
 				console.log('---- Error on startHike ----');
+			}
+		}
+	});
+}
+
+function endHike(id_hike, end_time, expectedHTTPStatus) {
+	it('Ending a hike', async () => {
+
+		const body = {
+			id_hike: id_hike,
+			end_time: end_time
+		};
+
+		try {
+			agent.put('/api/endHike')
+			.set('Content-Type', 'application/json')
+			.send(body)
+			.then(function (r) {
+				r.should.have.status(expectedHTTPStatus);
+			});
+		} catch (err) {
+			if (r.status === 503) {
+				console.log('---- Error on endHike ----');
 			}
 		}
 	});

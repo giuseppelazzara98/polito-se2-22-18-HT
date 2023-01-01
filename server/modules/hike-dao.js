@@ -463,7 +463,7 @@ class HikeDAO {
 
 	updateEndTime = (id_hike, id_user, end_time) => {
 		return new Promise((resolve, reject) => {
-			const sql = 'UPDATE USER_HIKE SET end_time = ? WHERE id_user = ? AND id_hike = ?';
+			const sql = 'UPDATE USER_HIKE SET end_time = ?, state = 2 WHERE id_user = ? AND id_hike = ?';
 			this.db.run(sql, [end_time, id_user, id_hike], function (err) {
 				if (err) {
 					console.log('Error running sql: ' + sql);

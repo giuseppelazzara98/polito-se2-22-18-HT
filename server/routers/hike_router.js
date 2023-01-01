@@ -443,7 +443,7 @@ router.put(
 	}
 );
 
-//PUT /api/endtHike
+//PUT /api/endHike
 router.put(
 	'/endHike',
 	isLoggedIn,
