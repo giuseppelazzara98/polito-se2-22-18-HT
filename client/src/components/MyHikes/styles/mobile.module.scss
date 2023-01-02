@@ -59,9 +59,15 @@
       }
       .optionWrap {
         display: flex;
-        align-items: center;
-        justify-content: flex-start;
+        align-items: flex-start;
+        justify-content: center;
+        flex-direction: column;
         margin-top: 10px;
+        .inputForm {
+          &:not(&:first-child) {
+            margin-top: 10px;
+          }
+        }
         .formGroup {
           display: flex;
           align-items: center;
@@ -74,6 +80,7 @@
           .button {
             background-color: $primary-green;
             border-color: transparent;
+            white-space: nowrap;
             &:hover{
               background-color: $tertiary-green;
               border-color: transparent;

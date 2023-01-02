@@ -7,6 +7,8 @@ import { faGear } from '@fortawesome/free-solid-svg-icons';
 import { Button, Form } from "react-bootstrap";
 import dayjs from "dayjs";
 
+var isSameOrBefore = require('dayjs/plugin/isSameOrBefore')
+dayjs.extend(isSameOrBefore)
 
 export default function MyHikes(props) {
     const {hikesOwned, setHikesOwned} = props;
@@ -106,14 +108,42 @@ function MyHikeRow(props) {
 
     const handelSubmit = (event) => {
         event.preventDefault();
-        if (date && time) {
+        let valid = true;
+        if (date && time && (hike.state === 0 || hike.state === 1)) {
+            if (hike.state === 1) {
+                let startDate = hike.start_time.split(" ")[0]
+                if (dayjs(date, "YYYY-MM-DD").isBefore(dayjs(startDate, "YYYY-MM-DD"), "day")) {
+                    valid = false;
+                } else if (dayjs(date, "YYYY-MM-DD").isSame(dayjs(startDate, "YYYY-MM-DD"), "day")) {
+                    let startTime = dayjs(hike.start_time, "YYYY-MM-DD HH:mm").format("HH:mm");
+                    let newStartTime = dayjs().hour(startTime.split(":")[0]).minute(startTime.split(":")[1])
+                    let newEndTime = dayjs().hour(time.split(":")[0]).minute(time.split(":")[1]);
+                    if (dayjs(newEndTime).isSameOrBefore(dayjs(newStartTime), "minute")) {
+                        valid = false;
+                    }
+                }
+            }
+            if (valid) {
+                let dateTime = date + " " + time;
+                if (hike.state === 0) {
+                    API.startHike({ id_hike: hike.id_hike, start_time: dateTime }).then(() => {
+                        API.getOwnedHikes().then((res) => {
+                            setHikesOwned(res);
+                        })
+                    });
+                } else if (hike.state === 1) {
+                    API.endHike({id_hike: hike.id_hike, end_time: dateTime}).then(() => {
+                        API.getOwnedHikes().then((res) => {
+                            setHikesOwned(res);
+                        })
+                    });
+                }
+            }
+        } else {
+            valid = false;
+        }
+        if (valid) {
             setValidForm(true);
-            let startTime = date + " " + time;
-            API.startHike({ id_hike: hike.id_hike, start_time: startTime }).then(() => {
-                API.getOwnedHikes().then((res) => {
-                    setHikesOwned(res);
-                })
-            });
         } else {
             setValidForm(false);
         }
@@ -140,8 +170,8 @@ function MyHikeRow(props) {
         <div className={styles.hikeRow}>
             <div className={styles.hikeFirstRow}>
                 <span>{hike.hike_name}</span>
-                <span>{hike.start_time}</span>
-                <span>{hike.end_time}</span>
+                <span>{hike.start_time ? dayjs(hike.start_time, "YYYY-MM-DD HH:mm").format("DD/MM/YYYY HH:mm") : ""}</span>
+                <span>{hike.end_time ? dayjs(hike.end_time, "YYYY-MM-DD HH:mm").format("DD/MM/YYYY HH:mm") : ""}</span>
                 <span>{getLabelState()}</span>
                 <Button onClick={() => { setTab(!tab) }} className={styles.button}>
                     <FontAwesomeIcon icon={faGear} className={styles.optionIcon}/>
@@ -162,6 +192,24 @@ function MyHikeRow(props) {
                                     labelButton={"Start"}
                                     formValid={validForm}
                                     formError={"Please, insert a valid date and time"}
+                                />
+                            </div>
+                        </>
+                    )}
+                    {hike.state === 1 && (
+                        <>
+                            <span className={styles.disclaimer}>Hike already started. Insert an end time to terminate it!</span>
+                            <div className={styles.optionWrap}>
+                                <span className={styles.hikeInfo}>Hike start date-time: {dayjs(hike.start_time, "YYYY-MM-DD HH:mm").format("DD/MM/YYYY HH:mm")}</span>
+                                <InputForm
+                                    handelSubmit={handelSubmit}
+                                    date={date}
+                                    time={time}
+                                    setDate={setDate}
+                                    setTime={setTime}
+                                    labelButton={"End hike"}
+                                    formValid={validForm}
+                                    formError={"Please, insert a valid date and time. It must be after the start time"}
                                 />
                             </div>
                         </>
