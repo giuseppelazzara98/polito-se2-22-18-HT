@@ -214,6 +214,11 @@ function MyHikeRow(props) {
                             </div>
                         </>
                     )}
+                    {hike.state === 2 && (
+                        <>
+                            <span className={styles.disclaimer}>Hike terminated. Good job!</span>
+                        </>
+                    )}
                 </div>
             ) : ("")}
         </div>
