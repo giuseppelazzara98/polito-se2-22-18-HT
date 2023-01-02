@@ -11,7 +11,7 @@ var isSameOrBefore = require('dayjs/plugin/isSameOrBefore')
 dayjs.extend(isSameOrBefore)
 
 export default function MyHikes(props) {
-    const {hikesOwned, setHikesOwned} = props;
+    const {hikesOwned, setHikesOwned, setEndHikeSuccess, setShowEndHikeError} = props;
     // const [hikesOwned, setHikesOwned] = useState([]);
     // const [hikesState, setHikesState] = useState('All');
     // useEffect(() => {
@@ -60,7 +60,7 @@ export default function MyHikes(props) {
                         <span>State</span>
                     </div>
                     <div className={styles.bodyWrap}>
-                        {hikesOwned.map((hike) => <MyHikeRow hike={hike} key={`${hike.id_hike}_${hike.state}`} setHikesOwned={setHikesOwned}/>)}
+                        {hikesOwned.map((hike) => <MyHikeRow hike={hike} key={`${hike.id_hike}_${hike.state}`} setHikesOwned={setHikesOwned} setEndHikeSuccess={setEndHikeSuccess} setShowEndHikeError={setShowEndHikeError}/>)}
                         {hikesOwned.length === 0 && (
                             <div className={styles.hikeRow}>
                                 <span>You're not registered to any hikes yet. Let's register on the homepage</span>
@@ -100,7 +100,7 @@ const InputForm = (props) => {
 }
 
 function MyHikeRow(props) {
-    const { hike, setHikesOwned } = props;
+    const { hike, setHikesOwned, setEndHikeSuccess, setShowEndHikeError } = props;
     const [tab, setTab] = useState(false);
     const [time, setTime] = useState(dayjs().format("HH:mm"));
     const [date, setDate] = useState(dayjs().format("YYYY-MM-DD"));
@@ -134,9 +134,17 @@ function MyHikeRow(props) {
                     });
                 } else if (hike.state === 1) {
                     API.endHike({id_hike: hike.id_hike, end_time: dateTime}).then(() => {
+                        setEndHikeSuccess(true);
                         API.getOwnedHikes().then((res) => {
                             setHikesOwned(res);
                         })
+                    }).catch(() => {
+                        setShowEndHikeError(true);
+                    }).finally(() => {
+                        setTimeout(() => {
+                            setShowEndHikeError(false);
+                            setEndHikeSuccess(false);
+                        }, 2500)
                     });
                 }
             }

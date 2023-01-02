@@ -43,6 +43,8 @@ function App2() {
 	const [updateHikes, setUpdateHikes] = useState(0);
 	const [showStartHikeError, setShowStartHikeError] = useState(false);
 	const [showStartHikeSuccess, setStartHikeSuccess] = useState(false);
+	const [showEndHikeError, setShowEndHikeError] = useState(false);
+	const [showEndHikeSuccess, setEndHikeSuccess] = useState(false);
 	const [showRegisterHikeModal,setShowRegisterHikeModal] = useState(false);
 	const [showWelcomeModal, setShowWelcomeModal] = useState(false);
 	const [showLogoutModal, setShowLogoutModal] = useState(false);
@@ -232,7 +234,7 @@ function App2() {
 					<Route
 						path = "/HikesOwned" 
 						element={
-							loggedIn && user.role === 'Hiker' ? (<OwnHikes hikesOwned={hikesOwned} setHikesOwned={setHikesOwned}/>)
+							loggedIn && user.role === 'Hiker' ? (<OwnHikes hikesOwned={hikesOwned} setHikesOwned={setHikesOwned} setEndHikeSuccess={setEndHikeSuccess} setShowEndHikeError={setShowEndHikeError}/>)
 							:(<Navigate to="/" replace />)
 							
 						} 
@@ -353,6 +355,19 @@ function App2() {
 				/>
 				<InfoModalComponent
 					show={showStartHikeError}
+					title="Error"
+					subtitle={`Oh no... there was a problem, try later`}
+					icon={faXmarkCircle}
+					success={false}
+				/>
+				<InfoModalComponent
+					show={showEndHikeSuccess}
+					title="Success!"
+					subtitle={`Hike terminated successfully`}
+					icon={faCheckCircle}
+				/>
+				<InfoModalComponent
+					show={showEndHikeError}
 					title="Error"
 					subtitle={`Oh no... there was a problem, try later`}
 					icon={faXmarkCircle}

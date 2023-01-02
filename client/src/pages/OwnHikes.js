@@ -3,7 +3,7 @@ import MyHikes from "../components/MyHikes/MyHikes";
 import { CiMountain1 } from 'react-icons/ci';
 
 export default function OwnHikes(props) {
-    const { hikesOwned, setHikesOwned } = props;
+    const { hikesOwned, setHikesOwned, setEndHikeSuccess, setShowEndHikeError } = props;
     return (
         <>
             <Container>
@@ -11,7 +11,7 @@ export default function OwnHikes(props) {
                     {' '}
                     <CiMountain1 color="black" size={50} /> My Hikes
                 </h1>
-                <MyHikes hikesOwned={hikesOwned} setHikesOwned={setHikesOwned}/>
+                <MyHikes hikesOwned={hikesOwned} setHikesOwned={setHikesOwned} setEndHikeSuccess={setEndHikeSuccess} setShowEndHikeError={setShowEndHikeError}/>
             </Container>
 
         </>
