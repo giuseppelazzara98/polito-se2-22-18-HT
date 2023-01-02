@@ -9,7 +9,7 @@ import dayjs from "dayjs";
 
 
 export default function MyHikes(props) {
-    const {hikesOwned, setHikesOwned} = props;
+    const {hikesOwned, setHikesOwned,setShowStartHikeSuccess,setShowStartHikeError} = props;
     // const [hikesOwned, setHikesOwned] = useState([]);
     // const [hikesState, setHikesState] = useState('All');
     // useEffect(() => {
@@ -58,7 +58,7 @@ export default function MyHikes(props) {
                         <span>State</span>
                     </div>
                     <div className={styles.bodyWrap}>
-                        {hikesOwned.map((hike) => <MyHikeRow hike={hike} key={`${hike.id_hike}_${hike.state}`} setHikesOwned={setHikesOwned}/>)}
+                        {hikesOwned.map((hike) => <MyHikeRow hike={hike} key={`${hike.id_hike}_${hike.state}`} setHikesOwned={setHikesOwned} setShowStartHikeSuccess={setShowStartHikeSuccess} setShowStartHikeError={setShowStartHikeError}/>)}
                         {hikesOwned.length === 0 && (
                             <div className={styles.hikeRow}>
                                 <span>You're not registered to any hikes yet. Let's register on the homepage</span>
@@ -98,7 +98,7 @@ const InputForm = (props) => {
 }
 
 function MyHikeRow(props) {
-    const { hike, setHikesOwned } = props;
+    const { hike, setHikesOwned,setShowStartHikeSuccess,setShowStartHikeError } = props;
     const [tab, setTab] = useState(false);
     const [time, setTime] = useState(dayjs().format("HH:mm"));
     const [date, setDate] = useState(dayjs().format("YYYY-MM-DD"));
@@ -114,6 +114,16 @@ function MyHikeRow(props) {
                 API.getOwnedHikes().then((res) => {
                     setHikesOwned(res);
                 })
+                setShowStartHikeSuccess(true);
+                setTimeout(() => {
+                    setShowStartHikeSuccess(false)
+                }, 2500);
+                console.log("FUnziona");
+            }).catch(() => {
+                setShowStartHikeError(true);
+                setTimeout(() => {
+                    setShowStartHikeError(false)
+                }, 2500);
             });
         } else {
             setValidForm(false);

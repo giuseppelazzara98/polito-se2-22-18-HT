@@ -42,7 +42,7 @@ function App2() {
 	const [user, setUser] = useState({});
 	const [updateHikes, setUpdateHikes] = useState(0);
 	const [showStartHikeError, setShowStartHikeError] = useState(false);
-	const [showStartHikeSuccess, setStartHikeSuccess] = useState(false);
+	const [showStartHikeSuccess, setShowStartHikeSuccess] = useState(false);
 	const [showRegisterHikeModal,setShowRegisterHikeModal] = useState(false);
 	const [showWelcomeModal, setShowWelcomeModal] = useState(false);
 	const [showLogoutModal, setShowLogoutModal] = useState(false);
@@ -232,7 +232,7 @@ function App2() {
 					<Route
 						path = "/HikesOwned" 
 						element={
-							loggedIn && user.role === 'Hiker' ? (<OwnHikes hikesOwned={hikesOwned} setHikesOwned={setHikesOwned}/>)
+							loggedIn && user.role === 'Hiker' ? (<OwnHikes hikesOwned={hikesOwned} setHikesOwned={setHikesOwned}  setShowStartHikeSuccess={setShowStartHikeSuccess} setShowStartHikeError={setShowStartHikeError}/>)
 							:(<Navigate to="/" replace />)
 							
 						} 
