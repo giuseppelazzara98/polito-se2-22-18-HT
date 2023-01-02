@@ -7,6 +7,8 @@ import { faGear } from '@fortawesome/free-solid-svg-icons';
 import { Button, Form } from "react-bootstrap";
 import dayjs from "dayjs";
 
+var isSameOrBefore = require('dayjs/plugin/isSameOrBefore')
+dayjs.extend(isSameOrBefore)
 
 export default function MyHikes(props) {
     const {hikesOwned, setHikesOwned} = props;
@@ -36,31 +38,38 @@ export default function MyHikes(props) {
 
     return (
         <>
- 
-            <h1>My Hikes</h1>
-            <div className={`table table-sm table-hover ${styles.wrap}`}>
-            { <CDropdown className={styles.dropdown} >
-                <CDropdownToggle className={styles.buttonDrop}>{hikesState}</CDropdownToggle>
-                <CDropdownMenu>
-                    <CDropdownItem className={styles.orderBy} onClick={() => { setHikesState('Completed') }}>Completed</CDropdownItem>
-                    <CDropdownItem className={styles.orderBy} onClick={() => { setHikesState('Ongoing') }}>Ongoing</CDropdownItem>
-                    <CDropdownItem className={styles.orderBy} onClick={() => { setHikesState('All') }}>All</CDropdownItem>
-                    <CDropdownItem className={styles.orderBy} onClick={() => { setHikesState('Not Started') }}>Not Started</CDropdownItem>
-                </CDropdownMenu>
-    </CDropdown> }
-                <div className={styles.dataName}>
-                    <span>Name</span>
-                    <span>Start Time</span>
-                    <span>End Time</span>
-                    <span>State</span>
-                </div>
-                <div className={styles.bodyWrap}>
-                    {hikesFilteredList.map((hike) => <MyHikeRow hike={hike} key={`${hike.id_hike}_${hike.state}`} setHikesOwned={setHikesOwned}/>)}
-                    {hikesOwned.length === 0 && (
-                        <div className={styles.hikeRow}>
-                            <span>You're registered to any hikes yet. Let's register on the homepage</span>
-                        </div>
-                    )}
+            <div className={styles.dropdownContainer}>
+                <CDropdown className={styles.dropdown} >
+                    <CDropdownToggle className={styles.buttonDrop}>{hikesState}</CDropdownToggle>
+                    <CDropdownMenu>
+                        <CDropdownItem className={styles.orderBy} onClick={() => { setHikesState('Completed') }}>Completed</CDropdownItem>
+                        <CDropdownItem className={styles.orderBy} onClick={() => { setHikesState('Ongoing') }}>Ongoing</CDropdownItem>
+                        <CDropdownItem className={styles.orderBy} onClick={() => { setHikesState('All') }}>All</CDropdownItem>
+                        <CDropdownItem className={styles.orderBy} onClick={() => { setHikesState('Not Started') }}>Not Started</CDropdownItem>
+                    </CDropdownMenu>
+                </CDropdown>
+            </div>
+            <div className={` ${styles.containerWrap}`}>
+                <div className={`table table-sm table-hover ${styles.wrap}`}>
+                    <div className={styles.dataName}>
+                        <span>Name</span>
+                        <span>Start Time</span>
+                        <span>End Time</span>
+                        <span>State</span>
+                    </div>
+                    <div className={styles.bodyWrap}>
+                        {hikesFilteredList.map((hike) => <MyHikeRow hike={hike} key={`${hike.id_hike}_${hike.state}`} setHikesOwned={setHikesOwned}/>)}
+                        {hikesOwned.length === 0 && (
+                            <div className={styles.hikeRow}>
+                                <span>You're not registered to any hikes yet. Let's register on the homepage</span>
+                            </div>
+                        )}
+                        {hikesOwned.length !== 0 && hikesFilteredList.length === 0 && (
+                            <div className={styles.hikeRow}>
+                                <span>0 hike found</span>
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
         </>
@@ -103,14 +112,42 @@ function MyHikeRow(props) {
 
     const handelSubmit = (event) => {
         event.preventDefault();
-        if (date && time) {
+        let valid = true;
+        if (date && time && (hike.state === 0 || hike.state === 1)) {
+            if (hike.state === 1) {
+                let startDate = hike.start_time.split(" ")[0]
+                if (dayjs(date, "YYYY-MM-DD").isBefore(dayjs(startDate, "YYYY-MM-DD"), "day")) {
+                    valid = false;
+                } else if (dayjs(date, "YYYY-MM-DD").isSame(dayjs(startDate, "YYYY-MM-DD"), "day")) {
+                    let startTime = dayjs(hike.start_time, "YYYY-MM-DD HH:mm").format("HH:mm");
+                    let newStartTime = dayjs().hour(startTime.split(":")[0]).minute(startTime.split(":")[1])
+                    let newEndTime = dayjs().hour(time.split(":")[0]).minute(time.split(":")[1]);
+                    if (dayjs(newEndTime).isSameOrBefore(dayjs(newStartTime), "minute")) {
+                        valid = false;
+                    }
+                }
+            }
+            if (valid) {
+                let dateTime = date + " " + time;
+                if (hike.state === 0) {
+                    API.startHike({ id_hike: hike.id_hike, start_time: dateTime }).then(() => {
+                        API.getOwnedHikes().then((res) => {
+                            setHikesOwned(res);
+                        })
+                    });
+                } else if (hike.state === 1) {
+                    API.endHike({id_hike: hike.id_hike, end_time: dateTime}).then(() => {
+                        API.getOwnedHikes().then((res) => {
+                            setHikesOwned(res);
+                        })
+                    });
+                }
+            }
+        } else {
+            valid = false;
+        }
+        if (valid) {
             setValidForm(true);
-            let startTime = date + " " + time;
-            API.startHike({ id_hike: hike.id_hike, start_time: startTime }).then(() => {
-                API.getOwnedHikes().then((res) => {
-                    setHikesOwned(res);
-                })
-            });
         } else {
             setValidForm(false);
         }
@@ -137,8 +174,8 @@ function MyHikeRow(props) {
         <div className={styles.hikeRow}>
             <div className={styles.hikeFirstRow}>
                 <span>{hike.hike_name}</span>
-                <span>{hike.start_time}</span>
-                <span>{hike.end_time}</span>
+                <span>{hike.start_time ? dayjs(hike.start_time, "YYYY-MM-DD HH:mm").format("DD/MM/YYYY HH:mm") : ""}</span>
+                <span>{hike.end_time ? dayjs(hike.end_time, "YYYY-MM-DD HH:mm").format("DD/MM/YYYY HH:mm") : ""}</span>
                 <span>{getLabelState()}</span>
                 <Button onClick={() => { setTab(!tab) }} className={styles.button}>
                     <FontAwesomeIcon icon={faGear} className={styles.optionIcon}/>
@@ -161,6 +198,29 @@ function MyHikeRow(props) {
                                     formError={"Please, insert a valid date and time"}
                                 />
                             </div>
+                        </>
+                    )}
+                    {hike.state === 1 && (
+                        <>
+                            <span className={styles.disclaimer}>Hike already started. Insert an end time to terminate it!</span>
+                            <div className={styles.optionWrap}>
+                                <span className={styles.hikeInfo}>Hike start date-time: {dayjs(hike.start_time, "YYYY-MM-DD HH:mm").format("DD/MM/YYYY HH:mm")}</span>
+                                <InputForm
+                                    handelSubmit={handelSubmit}
+                                    date={date}
+                                    time={time}
+                                    setDate={setDate}
+                                    setTime={setTime}
+                                    labelButton={"End hike"}
+                                    formValid={validForm}
+                                    formError={"Please, insert a valid date and time. It must be after the start time"}
+                                />
+                            </div>
+                        </>
+                    )}
+                    {hike.state === 2 && (
+                        <>
+                            <span className={styles.disclaimer}>Hike terminated. Good job!</span>
                         </>
                     )}
                 </div>

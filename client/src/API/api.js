@@ -85,49 +85,50 @@ const register = async (credentials) => {
 		headers: {
 			'Content-Type': 'application/json'
 		},
-		body : JSON.stringify(credentials)
+		body: JSON.stringify(credentials)
 	});
 	if (response.ok) {
 		const user = await response.json();
-		return user;}
-	else {
+		return user;
+	} else {
 		const errDetails = await response.text();
 		throw errDetails;
-	};}
+	}
+};
 
-	const verifyEmail = async (token) => {
-		const response = await fetch(new URL(`verify/${token}`, APIURL), {
-			method: 'PUT',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-		});
-		if (response.ok) {
-			const id_user = await response.json();
-			return id_user;
-		} else {
-			const errDetails = await response.text();
-			throw errDetails;
+const verifyEmail = async (token) => {
+	const response = await fetch(new URL(`verify/${token}`, APIURL), {
+		method: 'PUT',
+		headers: {
+			'Content-Type': 'application/json'
 		}
-	};
+	});
+	if (response.ok) {
+		const id_user = await response.json();
+		return id_user;
+	} else {
+		const errDetails = await response.text();
+		throw errDetails;
+	}
+};
 
-	const getRoles = async () => {
-		let err = new Error();
-		const response = await fetch(new URL('roles', APIURL));
-		if (response.ok) {
-			const rolesJson = await response.json();
-			const roles = rolesJson?.map((role) => ({
-				id: role.id,
-				description: role.description,
-			}));
-			return roles;
-		} else {
-			if (response.status === 500) {
-				err.message = '500 INTERNAL SERVER ERROR';
-				throw err;
-			}
+const getRoles = async () => {
+	let err = new Error();
+	const response = await fetch(new URL('roles', APIURL));
+	if (response.ok) {
+		const rolesJson = await response.json();
+		const roles = rolesJson?.map((role) => ({
+			id: role.id,
+			description: role.description
+		}));
+		return roles;
+	} else {
+		if (response.status === 500) {
+			err.message = '500 INTERNAL SERVER ERROR';
+			throw err;
 		}
-	};
+	}
+};
 
 const createNewHike = async (hike) => {
 	const response = await fetch(new URL('newHike', APIURL), {
@@ -147,12 +148,12 @@ const createNewHike = async (hike) => {
 async function getAllHikes(data) {
 	// call: POST /api/hikes
 	let err = new Error();
-	const response = await fetch(new URL("hikes", APIURL), {
+	const response = await fetch(new URL('hikes', APIURL), {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'
 		},
-		body: JSON.stringify(data) 
+		body: JSON.stringify(data)
 	});
 	if (response.ok) {
 		const hikesJson = await response.json();
@@ -166,20 +167,20 @@ async function getAllHikes(data) {
 			key: r.key,
 			name: r.name,
 			description: r.description,
-			province : r.province,
+			province: r.province,
 			municipality: r.municipality,
-			position: {latitude: r.position.lat, longitude: r.position.long},
-			image: r.image,
+			position: { latitude: r.position.lat, longitude: r.position.long },
+			image: r.image
 		}));
 		return {
 			hikes: hikes,
 			distinctTimes: hikesJson?.distinct_times || [],
 			distinctLengths: hikesJson?.distinct_lengths || [],
-			distinctAscents: hikesJson?.distinct_ascents || [],
-		}
+			distinctAscents: hikesJson?.distinct_ascents || []
+		};
 	} else {
 		if (response.status === 500) {
-			err.message = "500 INTERNAL SERVER ERROR";
+			err.message = '500 INTERNAL SERVER ERROR';
 			throw err;
 		}
 	}
@@ -198,7 +199,7 @@ const getOwnedHikes = async () => {
 			start_time: hike.start_time,
 			end_time: hike.end_time,
 			state: hike.state,
-			registered: hike.registered,
+			registered: hike.registered
 		}));
 		return hikesOwned;
 	} else {
@@ -229,7 +230,7 @@ const getProvincesFacets = async () => {
 
 const getHikePointsInfo = async (id) => {
 	const response = await fetch(new URL(`hikePoints/${id}`, APIURL), {
-		credentials: 'include',
+		credentials: 'include'
 	});
 	if (response.ok) {
 		const points = await response.json();
@@ -238,7 +239,7 @@ const getHikePointsInfo = async (id) => {
 		const errorPoints = await response.text();
 		throw errorPoints;
 	}
-}
+};
 const getMunicipalitiesFacets = async (provinceId) => {
 	let err = new Error();
 	const response = await fetch(new URL(`municipalities/${provinceId}`, APIURL));
@@ -266,8 +267,8 @@ const insertHut = async (data) => {
 		headers: {
 			'Content-Type': 'application/json'
 		},
-		body: JSON.stringify(data) 
-	})
+		body: JSON.stringify(data)
+	});
 	if (response.ok) {
 		const okAdd = await response.json();
 		return okAdd;
@@ -279,7 +280,7 @@ const insertHut = async (data) => {
 			throw err;
 		}
 	}
-}
+};
 
 const insertParkingLot = async (data) => {
 	let err = new Error();
@@ -289,8 +290,8 @@ const insertParkingLot = async (data) => {
 		headers: {
 			'Content-Type': 'application/json'
 		},
-		body: JSON.stringify(data) 
-	})
+		body: JSON.stringify(data)
+	});
 	if (response.ok) {
 		const okAdd = await response.json();
 		return okAdd;
@@ -302,7 +303,7 @@ const insertParkingLot = async (data) => {
 			throw err;
 		}
 	}
-}
+};
 
 const registerHike = async (data) => {
 	let err = new Error();
@@ -312,8 +313,8 @@ const registerHike = async (data) => {
 		headers: {
 			'Content-Type': 'application/json'
 		},
-		body: JSON.stringify(data) 
-	})
+		body: JSON.stringify(data)
+	});
 	if (response.ok) {
 		const okAdd = await response.json();
 		return okAdd;
@@ -325,7 +326,7 @@ const registerHike = async (data) => {
 			throw err;
 		}
 	}
-}
+};
 
 const startHike = async (data) => {
 	let err = new Error();
@@ -335,8 +336,8 @@ const startHike = async (data) => {
 		headers: {
 			'Content-Type': 'application/json'
 		},
-		body: JSON.stringify(data) 
-	})
+		body: JSON.stringify(data)
+	});
 	if (response.ok) {
 		const okAdd = await response.json();
 		return okAdd;
@@ -348,8 +349,30 @@ const startHike = async (data) => {
 			throw err;
 		}
 	}
-}
+};
 
+const endHike = async (data) => {
+	let err = new Error();
+	const response = await fetch(new URL(`endHike/`, APIURL), {
+		credentials: 'include',
+		method: 'PUT',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(data)
+	});
+	if (response.ok) {
+		const okEnd = await response.json();
+		return okEnd;
+	} else {
+		if (response.status === 500) {
+			err.message = '500 INTERNAL SERVER ERROR';
+			throw err;
+		} else {
+			throw err;
+		}
+	}
+};
 
 const API = {
 	logIn,
@@ -371,6 +394,7 @@ const API = {
 	getOwnedHikes,
 	registerHike,
 	startHike,
+	endHike
 };
 
 export default API;

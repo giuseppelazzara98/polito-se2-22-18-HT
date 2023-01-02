@@ -22,13 +22,13 @@ export default function UserMenu(props) {
         <FontAwesomeIcon icon={faUser} />
       </div>
       <div className={styles.optionModal}>
-      {location.pathname !== "/HikesOwned" && user.role === "Hiker" && (
-              <div className={styles.option} onClick={() => navigate("/HikesOwned")}>
-                <span className={styles.label}>My Hike</span>
-                <FontAwesomeIcon icon={faPersonHiking} className={styles.iconOption} />
-              </div>
-            )}
         {isMobile && <span className={styles.userName}>{user.name} {user.surname}</span>}
+        {location.pathname !== "/HikesOwned" && user.role === "Hiker" && (
+            <div className={styles.option} onClick={() => navigate("/HikesOwned")}>
+              <span className={styles.label}>My Hike</span>
+              <FontAwesomeIcon icon={faPersonHiking} className={styles.iconOption} />
+            </div>
+          )}
         <div className={styles.option} onClick={() => handleLogOut()}>
           <span className={styles.label}>Logout</span>
           <FontAwesomeIcon icon={faRightFromBracket} className={styles.iconOption} />

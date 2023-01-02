@@ -73,9 +73,7 @@ router.post('/hikes', body('difficulty').isArray(), async (req, res) => {
 
 		if (req.body.range !== null) {
 			for (let hike of hikes) {
-				const start_place = await hikeDao.getLatLongStartPlaceByHikeId(
-					hike.key
-				);
+				const start_place = await hikeDao.getLatLongStartPlaceByHikeId(hike.key);
 
 				/*
 						Haversine formula
@@ -92,9 +90,7 @@ router.post('/hikes', body('difficulty').isArray(), async (req, res) => {
 					6372795.477598 *
 					Math.acos(
 						Math.sin(toRad(lat2)) * Math.sin(toRad(lat1)) +
-							Math.cos(toRad(lat2)) *
-								Math.cos(toRad(lat1)) *
-								Math.cos(toRad(lon2 - lon1))
+							Math.cos(toRad(lat2)) * Math.cos(toRad(lat1)) * Math.cos(toRad(lon2 - lon1))
 					);
 
 				if (distance <= req.body.range.radius) {
@@ -102,9 +98,7 @@ router.post('/hikes', body('difficulty').isArray(), async (req, res) => {
 				}
 			}
 
-			distinct_times = hikes_ranged
-				.map((el) => el.expected_time)
-				.filter(unique);
+			distinct_times = hikes_ranged.map((el) => el.expected_time).filter(unique);
 			distinct_lengths = hikes_ranged.map((el) => el.length).filter(unique);
 			distinct_ascents = hikes_ranged.map((el) => el.ascent).filter(unique);
 
@@ -272,10 +266,7 @@ router.post(
 
 				let place_ok = null;
 				console.log('ref type: ' + referencePoint.type);
-				if (
-					referencePoint.type == 'parking lot' ||
-					referencePoint.type == 'hut'
-				) {
+				if (referencePoint.type == 'parking lot' || referencePoint.type == 'hut') {
 					place_ok = await placeDao.getPlaceById(referencePoint.id);
 					idReferencePoint = referencePoint.id;
 				} else {
@@ -355,20 +346,15 @@ router.get(
 );
 
 //GET /api/hikesStats
-router.get('/hikesStats',
-	isLoggedIn,
-    async (req, res) => {
+router.get('/hikesStats', isLoggedIn, async (req, res) => {
+	try {
+		const result = await hikeDao.getHikeStats(req.user.id);
 
-        try {
-
-            const result = await hikeDao.getHikeStats(req.user.id);
-           
-            res.status(200).json(result);
-        } catch (err) {
-            res.status(500).json({ error: "Internal Server Error" });
-        }
-    }
-);
+		res.status(200).json(result);
+	} catch (err) {
+		res.status(500).json({ error: 'Internal Server Error' });
+	}
+});
 
 /*
 	Example of body:
@@ -378,11 +364,11 @@ router.get('/hikesStats',
 */
 
 //POST /api/hikeRegistration
-router.post('/hikeRegistration',
+router.post(
+	'/hikeRegistration',
 	isLoggedIn,
 	body('id_hike').notEmpty().isInt({ min: 1 }),
 	async (req, res) => {
-
 		if (Object.keys(req.body).length === 0) {
 			console.log('Empty body!');
 			return res.status(422).json({ error: 'Empty body request' });
@@ -396,12 +382,11 @@ router.post('/hikeRegistration',
 		const errors = validationResult(req);
 
 		if (!errors.isEmpty()) {
-			console.log("Error in body!");
+			console.log('Error in body!');
 			return res.status(422).json({ errors: errors.array() });
 		}
 
 		try {
-
 			const result = await hikeDao.insertHikeRegistration(req.body.id_hike, req.user.id);
 
 			return res.status(201).json(result);
@@ -409,7 +394,8 @@ router.post('/hikeRegistration',
 			console.log(err);
 			return res.status(503).json({ error: 'Service Unavailable' });
 		}
-	});
+	}
+);
 
 /*
 	Example of body: 
@@ -420,12 +406,12 @@ router.post('/hikeRegistration',
 */
 
 //PUT /api/startHike
-router.put('/startHike',
+router.put(
+	'/startHike',
 	isLoggedIn,
 	body('id_hike').notEmpty().isInt({ min: 1 }),
 	body('start_time').notEmpty().isString(),
 	async (req, res) => {
-
 		if (Object.keys(req.body).length === 0) {
 			console.log('Empty body!');
 			return res.status(422).json({ error: 'Empty body request' });
@@ -439,14 +425,50 @@ router.put('/startHike',
 		const errors = validationResult(req);
 
 		if (!errors.isEmpty()) {
-			console.log("Error in body!");
+			console.log('Error in body!');
 			return res.status(422).json({ errors: errors.array() });
 		}
 
 		try {
+			const result = await hikeDao.updateStartTime(
+				req.body.id_hike,
+				req.user.id,
+				req.body.start_time
+			);
 
-			const result = await hikeDao.updateStartTime(req.body.id_hike, req.user.id, req.body.start_time);
+			res.status(200).json(result);
+		} catch (err) {
+			res.status(503).json({ error: 'Service Unavailable' });
+		}
+	}
+);
 
+//PUT /api/endHike
+router.put(
+	'/endHike',
+	isLoggedIn,
+	body('id_hike').notEmpty().isInt({ min: 1 }),
+	body('end_time').notEmpty().isString(),
+	async (req, res) => {
+		if (Object.keys(req.body).length === 0) {
+			console.log('Empty body!');
+			return res.status(422).json({ error: 'Empty body request' });
+		}
+
+		if (Object.keys(req.body).length !== 2) {
+			console.log('Data not formatted properly!');
+			return res.status(422).json({ error: 'Data not formatted properly' });
+		}
+
+		const errors = validationResult(req);
+
+		if (!errors.isEmpty()) {
+			console.log('Error in body!');
+			return res.status(422).json({ errors: errors.array() });
+		}
+
+		try {
+			const result = await hikeDao.updateEndTime(req.body.id_hike, req.user.id, req.body.end_time);
 			res.status(200).json(result);
 		} catch (err) {
 			res.status(503).json({ error: 'Service Unavailable' });

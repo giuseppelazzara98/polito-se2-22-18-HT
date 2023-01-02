@@ -196,6 +196,11 @@ describe('TestHikeDao', () => {
     testUpdateStartTime(22, 2, "2022/12/21 13:23");
     testUpdateStartTime(23, 3, "2022/12/21 13:12");
 
+    testUpdateEndTime(20, 1, "2022/12/21 13:50");
+    testUpdateEndTime(21, 2, "2022/12/21 12:54");
+    testUpdateEndTime(22, 2, "2022/12/21 15:40");
+    testUpdateEndTime(23, 3, "2022/12/21 17:34");
+
     // CLOSE CONNECTION TO HIKE TABLE
 
     testCloseTables();
@@ -209,6 +214,7 @@ describe('TestHikeDao', () => {
     testGetHikesStats(2);
     testInsertHikeRegistration(21,1);
     testUpdateStartTime(21, 2, "2022/12/21 11:54");
+    testUpdateEndTime(21, 2, "2022/12/21 12:54");
 
 });
 
@@ -385,6 +391,22 @@ function testUpdateStartTime(id_hike, id_user, start_time) {
         }
         catch (err) {
             console.log("---- Error on testUpdateStartTime ----");
+            return;
+        }
+    });
+}
+
+function testUpdateEndTime(id_hike, id_user, end_time) {
+    test('Test update end time', async () => {
+        try {
+            const result = await testHikeDao.updateEndTime(id_hike, id_user, end_time);
+
+            expect(result).not.toBeNull();
+
+            expect(result).toBe(true);
+        }
+        catch (err) {
+            console.log("---- Error on testUpdateEndTime ----");
             return;
         }
     });

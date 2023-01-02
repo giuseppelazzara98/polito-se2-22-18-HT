@@ -98,22 +98,13 @@ class HikeDAO {
 			sql = sql.whereIn('HIKE.difficulty', filters.difficulty);
 		}
 		if (filters.exp_time !== null) {
-			sql = sql.whereBetween('HIKE.expected_time', [
-				filters.exp_time.min,
-				filters.exp_time.max
-			]);
+			sql = sql.whereBetween('HIKE.expected_time', [filters.exp_time.min, filters.exp_time.max]);
 		}
 		if (filters.length !== null) {
-			sql = sql.whereBetween('HIKE.length', [
-				filters.length.min,
-				filters.length.max
-			]);
+			sql = sql.whereBetween('HIKE.length', [filters.length.min, filters.length.max]);
 		}
 		if (filters.ascent !== null) {
-			sql = sql.whereBetween('HIKE.ascent', [
-				filters.ascent.min,
-				filters.ascent.max
-			]);
+			sql = sql.whereBetween('HIKE.ascent', [filters.ascent.min, filters.ascent.max]);
 		}
 
 		//We can decide to do the query with knex or with sqlite
@@ -318,8 +309,7 @@ class HikeDAO {
 
 	getStartEndPoints = (id_hike) => {
 		return new Promise((resolve, reject) => {
-			const sql =
-				'SELECT id_start_place, id_end_place, gpx FROM HIKE H WHERE id_hike = ?';
+			const sql = 'SELECT id_start_place, id_end_place, gpx FROM HIKE H WHERE id_hike = ?';
 			this.db.get(sql, [id_hike], function (err, row) {
 				if (err) {
 					console.log('Error running sql: ' + sql);
@@ -414,7 +404,8 @@ class HikeDAO {
 
 	getHikeStats = (id_user) => {
 		return new Promise((resolve, reject) => {
-			const sql = "SELECT UH.id_hike, H.name AS HIKE_NAME, UH.start_time, UH.end_time, UH.state, UH.registered FROM USER_HIKE UH, HIKE H WHERE UH.id_hike = H.id_hike AND UH.id_user = ?;";
+			const sql =
+				'SELECT UH.id_hike, H.name AS HIKE_NAME, UH.start_time, UH.end_time, UH.state, UH.registered FROM USER_HIKE UH, HIKE H WHERE UH.id_hike = H.id_hike AND UH.id_user = ?;';
 			this.db.all(sql, [id_user], function (err, rows) {
 				if (err) {
 					console.log('Error running sql: ' + sql);
@@ -436,7 +427,7 @@ class HikeDAO {
 				}
 			});
 		});
-	}
+	};
 
 	insertHikeRegistration = (id_hike, id_user) => {
 		return new Promise((resolve, reject) => {
@@ -453,7 +444,7 @@ class HikeDAO {
 				}
 			});
 		});
-	}
+	};
 
 	updateStartTime = (id_hike, id_user, start_time) => {
 		return new Promise((resolve, reject) => {
@@ -468,8 +459,22 @@ class HikeDAO {
 				}
 			});
 		});
-	}
+	};
 
+	updateEndTime = (id_hike, id_user, end_time) => {
+		return new Promise((resolve, reject) => {
+			const sql = 'UPDATE USER_HIKE SET end_time = ?, state = 2 WHERE id_user = ? AND id_hike = ?';
+			this.db.run(sql, [end_time, id_user, id_hike], function (err) {
+				if (err) {
+					console.log('Error running sql: ' + sql);
+					console.log(err);
+					reject(err);
+				} else {
+					resolve(true);
+				}
+			});
+		});
+	};
 }
 
 module.exports = HikeDAO;
