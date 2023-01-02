@@ -51,21 +51,22 @@ export default function MyHikes(props) {
                     <CDropdownItem onClick={() => { setHikesState('Not Started') }}>Not Started</CDropdownItem>
                 </CDropdownMenu>
             </CDropdown> */}
-            <h1>My Hikes</h1>
-            <div className={`table table-sm table-hover ${styles.wrap}`}>
-                <div className={styles.dataName}>
-                    <span>Name</span>
-                    <span>Start Time</span>
-                    <span>End Time</span>
-                    <span>State</span>
-                </div>
-                <div className={styles.bodyWrap}>
-                    {hikesOwned.map((hike) => <MyHikeRow hike={hike} key={`${hike.id_hike}_${hike.state}`} setHikesOwned={setHikesOwned}/>)}
-                    {hikesOwned.length === 0 && (
-                        <div className={styles.hikeRow}>
-                            <span>You're not registered to any hikes yet. Let's register on the homepage</span>
-                        </div>
-                    )}
+            <div className={` ${styles.containerWrap}`}>
+                <div className={`table table-sm table-hover ${styles.wrap}`}>
+                    <div className={styles.dataName}>
+                        <span>Name</span>
+                        <span>Start Time</span>
+                        <span>End Time</span>
+                        <span>State</span>
+                    </div>
+                    <div className={styles.bodyWrap}>
+                        {hikesOwned.map((hike) => <MyHikeRow hike={hike} key={`${hike.id_hike}_${hike.state}`} setHikesOwned={setHikesOwned}/>)}
+                        {hikesOwned.length === 0 && (
+                            <div className={styles.hikeRow}>
+                                <span>You're not registered to any hikes yet. Let's register on the homepage</span>
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
         </>

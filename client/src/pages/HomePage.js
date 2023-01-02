@@ -21,7 +21,7 @@ export default function HomePage(props) {
     hikesOwned,
   } = props;
   return (
-    <Container>
+    <Container fluid={"lg"}>
       <Row>
         <Col xs={12} md={4}>
           <FiltersContainer
