@@ -10,47 +10,44 @@ import dayjs from "dayjs";
 
 export default function MyHikes(props) {
     const {hikesOwned, setHikesOwned} = props;
-    // const [hikesOwned, setHikesOwned] = useState([]);
-    // const [hikesState, setHikesState] = useState('Completed');
-    // useEffect(() => {
-    //     API.getOwnedHikes().then((res) => {
-    //         setHikesOwned(res.filter((hike) => hike.state === 2));
-    //     })
-    // }, [])
-
-    // useEffect(() => {
-    //     if (hikesState === 'Completed') {
-    //         API.getOwnedHikes().then((res) => {
-    //             setHikesOwned(res.filter((hike) => hike.state === 2));
-    //         })
-    //     } else if (hikesState === 'Ongoing') {
-    //         API.getOwnedHikes().then((res) => {
-    //             setHikesOwned(res.filter((hike) => hike.state === 1));
-    //         })
-    //     } else if (hikesState === 'All') {
-    //         API.getOwnedHikes().then((res) => {
-    //             setHikesOwned(res);
-    //         })
-    //     } else if (hikesState === 'Not Started') {
-    //         API.getOwnedHikes().then((res) => {
-    //             setHikesOwned(res.filter((hike) => hike.state === 0));
-    //         })
-    //     }
-    // }, [hikesState])
+    const [hikesFilteredList, setHikesFilteredList] = useState([]);
+    const [hikesState, setHikesState] = useState('All');
+    useEffect(() => {
+        setHikesFilteredList(hikesOwned);
+        switch (hikesState) {
+            case 'Completed':
+              setHikesFilteredList(hikesOwned.filter((hike) => hike.state === 2));
+              break;
+            case 'Ongoing':
+              setHikesFilteredList(hikesOwned.filter((hike) => hike.state === 1));
+              break;
+            case 'Not Started':
+              setHikesFilteredList(hikesOwned.filter((hike) => hike.state === 0));
+              break;
+            case 'All':
+              setHikesFilteredList(hikesOwned);
+              break;
+            default:
+                setHikesFilteredList(hikesOwned);
+              break;
+          }
+          
+    }, [hikesOwned, hikesState]);
 
     return (
         <>
-            {/* <CDropdown >
-                <CDropdownToggle >{hikesState}</CDropdownToggle>
-                <CDropdownMenu>
-                    <CDropdownItem onClick={() => { setHikesState('Completed') }}>Completed</CDropdownItem>
-                    <CDropdownItem onClick={() => { setHikesState('Ongoing') }}>Ongoing</CDropdownItem>
-                    <CDropdownItem onClick={() => { setHikesState('All') }}>All</CDropdownItem>
-                    <CDropdownItem onClick={() => { setHikesState('Not Started') }}>Not Started</CDropdownItem>
-                </CDropdownMenu>
-            </CDropdown> */}
+ 
             <h1>My Hikes</h1>
             <div className={`table table-sm table-hover ${styles.wrap}`}>
+            { <CDropdown className={styles.dropdown} >
+                <CDropdownToggle className={styles.buttonDrop}>{hikesState}</CDropdownToggle>
+                <CDropdownMenu>
+                    <CDropdownItem className={styles.orderBy} onClick={() => { setHikesState('Completed') }}>Completed</CDropdownItem>
+                    <CDropdownItem className={styles.orderBy} onClick={() => { setHikesState('Ongoing') }}>Ongoing</CDropdownItem>
+                    <CDropdownItem className={styles.orderBy} onClick={() => { setHikesState('All') }}>All</CDropdownItem>
+                    <CDropdownItem className={styles.orderBy} onClick={() => { setHikesState('Not Started') }}>Not Started</CDropdownItem>
+                </CDropdownMenu>
+    </CDropdown> }
                 <div className={styles.dataName}>
                     <span>Name</span>
                     <span>Start Time</span>
@@ -58,7 +55,7 @@ export default function MyHikes(props) {
                     <span>State</span>
                 </div>
                 <div className={styles.bodyWrap}>
-                    {hikesOwned.map((hike) => <MyHikeRow hike={hike} key={`${hike.id_hike}_${hike.state}`} setHikesOwned={setHikesOwned}/>)}
+                    {hikesFilteredList.map((hike) => <MyHikeRow hike={hike} key={`${hike.id_hike}_${hike.state}`} setHikesOwned={setHikesOwned}/>)}
                     {hikesOwned.length === 0 && (
                         <div className={styles.hikeRow}>
                             <span>You're registered to any hikes yet. Let's register on the homepage</span>

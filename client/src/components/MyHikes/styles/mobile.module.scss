@@ -1,5 +1,38 @@
 @import "../../../styles/configs";
 
+.dropdown{
+  width: 160px;
+  margin-left: 70%;
+  .orderBy{
+   
+    cursor: pointer;
+    &:active{
+      background-color: $secondary-green;
+      color: $primary-black;
+    }
+    &:hover{
+      background-color: $secondary-brown;
+    }
+  }
+}
+.buttonDrop{
+  background-color: $primary-green;
+  border-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &:hover{
+    background-color: $tertiary-green;
+    border-color: transparent;
+  }
+  &:global(.btn){
+    &:active{
+      background-color: $tertiary-green;
+      border-color: transparent;
+    }
+  }
+
+}
 .wrap {
   min-width: 450px;
   font-size: 12px;

@@ -17,7 +17,6 @@ import Signup from './pages/Signup';
 import EmailVerified from './pages/EmailVerified';
 import OwnHikes from './pages/OwnHikes';
 import API from './API/api';
-import OwnHikes from './pages/OwnHikes';
 import InfoModalComponent from './components/InfoModalComponent/InfoModalComponent';
 import MapModalComponent from './components/MapModalComponent/MapModalComponent';
 import RegisterHikeModalComponent from "./components/RegisterHikeModalComponent/RegisterHikeModalComponent"
