@@ -61,7 +61,7 @@ export default function MyHikes(props) {
                     {hikesOwned.map((hike) => <MyHikeRow hike={hike} key={`${hike.id_hike}_${hike.state}`} setHikesOwned={setHikesOwned}/>)}
                     {hikesOwned.length === 0 && (
                         <div className={styles.hikeRow}>
-                            <span>You're registered to any hikes yet. Let's register on the homepage</span>
+                            <span>You're not registered to any hikes yet. Let's register on the homepage</span>
                         </div>
                     )}
                 </div>
