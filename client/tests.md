@@ -242,7 +242,7 @@ Point 5 is true
    4. Optionally, insert the URL of the website of the hut. It must be a http or an https site. An example of the site is under the insert field
    5. Insert an email
    6. Insert a phone number with the prefix before it. An example is unsder the insert
-   7.  insert a description of the hut
+   7. insert a description of the hut
    8. In the map on the right, you can select a province by clicking on it
 2. Press the submit button
 3. If something has gone wrong,it will apper the allert message under the wrong fiels
@@ -288,7 +288,6 @@ Point 5 is true
 
 Point 5 is true
 
-
 ## Story 17 - Start hike
 
 ```
@@ -313,7 +312,6 @@ So that i can record an ongoing hike
 
 Point 6 is true
 
-
 ### Test 2 - go to personal hikes
 
 #### Procedure
@@ -324,7 +322,6 @@ Point 6 is true
 4. it will redirect to the personal page of the hiker, were the hiker can see his registered hikes with their status(not started,ongoing, caompleted),start and end time
 
 Point 4 is true
-
 
 ### Test 3 - start an hike
 
@@ -340,3 +337,24 @@ Point 4 is true
 #### Expected result
 
 Point 6 is true
+
+
+## Story 34 - Completed hikes
+
+```
+As a hiker\
+I want to access the list of hikes i completed
+```
+
+### Test 1 - Filter the hikes
+
+#### Procedure
+
+1. the user need to be logged in as a hiker
+2. on the personal hikes' page will be a green button on the right
+3. by clicking on it,it open a drop down menu
+4. the user can select the filter completed to see the past hikes he finished
+
+#### Expected result
+
+Point 4 is true
