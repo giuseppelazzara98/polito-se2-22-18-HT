@@ -50,7 +50,8 @@ Point 5 is true
 
 1. On the hike line , press the i button
 2. It will apper a table with the data about the hike
-3. To close the table, press i button
+3. if the user want to see a bigger version of the foto for the hike,he can click on the photo with the mouse, and the photo will zoom
+4. To close the table, press i button
 
 #### Expected result
 
@@ -111,18 +112,19 @@ Point 3 and 4 are true
 4. Select a difficulty by click the round button near the level of difficulty,it will change colour
 5. Upload a gpx file of the hike you want to add
 6. It will apper the lenght of the hike, his ascent and the map with the track.
-7. Select a starting point in the drop down menu
-8. (optional)Select a tipe of the reference point, it will appear a dop down menu with the select points. If the guide has selected
-9. (optional)Insert a description for the hike in the description form the gpx coordinates, he need to add the longitude and latitude of the point.
-10. Press the button Add reference point
-11. The new reference point will appear in the form
-12. (optional) add a description in the text form
-13. Press submit to insert the hike in the database.If there are some errors in the forms, the error message will appear under the wrong field
-14. The hike is showed in the hike tables(depending on the activated filters)
+7. Select a starting point and a end point  in the drop down menu
+8. select a photo for the hike,It will appear in the description
+9. (optional)Select a tipe of the reference point, it will appear a dop down menu with the select points. If the guide has selected
+10. (optional)Insert a description for the hike in the description form the gpx coordinates, he need to add the longitude and latitude of the point.
+11. Press the button Add reference point
+12. The new reference point will appear in the form
+13. (optional) add a description in the text form
+14. Press submit to insert the hike in the database.If there are some errors in the forms, the error message will appear under the wrong field
+15. The hike is showed in the hike tables(depending on the activated filters)
 
 #### Expected result
 
-Point 10 is true
+Point 15 is true
 
 ### Test 4 - logout
 
@@ -240,7 +242,7 @@ Point 5 is true
    4. Optionally, insert the URL of the website of the hut. It must be a http or an https site. An example of the site is under the insert field
    5. Insert an email
    6. Insert a phone number with the prefix before it. An example is unsder the insert
-   7. Optionally, insert a description of the hut
+   7.  insert a description of the hut
    8. In the map on the right, you can select a province by clicking on it
 2. Press the submit button
 3. If something has gone wrong,it will apper the allert message under the wrong fiels
@@ -285,3 +287,56 @@ Point 5 is true
 #### Expected result
 
 Point 5 is true
+
+
+## Story 17 - Start hike
+
+```
+As a hiker\
+I want to start a registered hike\
+So that i can record an ongoing hike
+```
+
+### Test 1 - register an hike
+
+#### Procedure
+
+1. the user need to be logged in as a hiker
+2. on the main page of the hiker will appear a button with a plus simbol
+3. by pressing the button, it will appear a modal that ask to confirm if the hiker want to register this specific hike to his personal hikes
+4. by pressing cancel the modal disappear
+5. by pressing register the specific hike will be added to hiker's personal hikes
+6. a modal with the success message , or error message, will appear
+7. the plus button disappear in the hikes already registered for the hiker
+
+#### Expected result
+
+Point 6 is true
+
+
+### Test 2 - go to personal hikes
+
+#### Procedure
+
+1. the user need to be logged in as a hiker
+2. on the navbar,by passing over the user name, will appear a drop down menu
+3. select the my hike option
+4. it will redirect to the personal page of the hiker, were the hiker can see his registered hikes with their status(not started,ongoing, caompleted),start and end time
+
+Point 4 is true
+
+
+### Test 3 - start an hike
+
+#### Procedure
+
+1. the user need to be logged in as a hiker
+2. the hiker must had registerd the hike that he wants to start
+3. by pressing the gear button, it will appear unther the hike a form with date and time to select
+4. the values are the ones of the moment the user refreshed the page
+5. the user can change this values if he wants
+6. by pressing the start button on a not started hike, the form will disappear, the start time for the  in the table will be the one in the form,the state of the hike change in ongoing
+
+#### Expected result
+
+Point 6 is true

@@ -2,4 +2,20 @@
 
 .title {
   color: $primary-green;
+  margin: auto;
 }
+
+
+.parent{
+  text-align: center;
+  .button{
+  background-color: $primary-green;
+  border-color: transparent;
+  display:inline-block;
+  margin-left: 30px;
+  margin-right: 30px;
+  &:hover{
+    background-color: $tertiary-green;
+    border-color: transparent;
+  }
+}}
