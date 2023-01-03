@@ -10,7 +10,8 @@ export default function RegisterHikeModalComponent (props) {
     setShowRegisterHikeError,
     setShowRegisterHikeSuccess,
     setShowRegisterHikeModal,
-    myHikeId
+    myHikeId,
+    show,
   }=props;
 
   const handleSubmit = (event) => {
@@ -32,7 +33,8 @@ export default function RegisterHikeModalComponent (props) {
   }
 
   return (
-    <Modal         
+    <Modal     
+      show={show}    
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
