@@ -11,7 +11,7 @@ var isSameOrBefore = require('dayjs/plugin/isSameOrBefore')
 dayjs.extend(isSameOrBefore)
 
 export default function MyHikes(props) {
-    const {hikesOwned, setHikesOwned} = props;
+    const {hikesOwned, setHikesOwned, setEndHikeSuccess, setShowEndHikeError, setShowStartHikeSuccess,setShowStartHikeError} = props;
     const [hikesFilteredList, setHikesFilteredList] = useState([]);
     const [hikesState, setHikesState] = useState('All');
     useEffect(() => {
@@ -58,7 +58,7 @@ export default function MyHikes(props) {
                         <span>State</span>
                     </div>
                     <div className={styles.bodyWrap}>
-                        {hikesFilteredList.map((hike) => <MyHikeRow hike={hike} key={`${hike.id_hike}_${hike.state}`} setHikesOwned={setHikesOwned}/>)}
+                        {hikesFilteredList.map((hike) => <MyHikeRow hike={hike} key={`${hike.id_hike}_${hike.state}`} setHikesOwned={setHikesOwned} setEndHikeSuccess={setEndHikeSuccess} setShowEndHikeError={setShowEndHikeError} setShowStartHikeSuccess={setShowStartHikeSuccess} setShowStartHikeError={setShowStartHikeError}/>)}
                         {hikesOwned.length === 0 && (
                             <div className={styles.hikeRow}>
                                 <span>You're not registered to any hikes yet. Let's register on the homepage</span>
@@ -103,7 +103,7 @@ const InputForm = (props) => {
 }
 
 function MyHikeRow(props) {
-    const { hike, setHikesOwned } = props;
+    const { hike, setHikesOwned, setEndHikeSuccess, setShowEndHikeError, setShowStartHikeSuccess,setShowStartHikeError } = props;
     const [tab, setTab] = useState(false);
     const [time, setTime] = useState(dayjs().format("HH:mm"));
     const [date, setDate] = useState(dayjs().format("YYYY-MM-DD"));
@@ -134,12 +134,29 @@ function MyHikeRow(props) {
                         API.getOwnedHikes().then((res) => {
                             setHikesOwned(res);
                         })
+                        setShowStartHikeSuccess(true);
+                        setTimeout(() => {
+                            setShowStartHikeSuccess(false)
+                        }, 2500);
+                    }).catch(() => {
+                        setShowStartHikeError(true);
+                        setTimeout(() => {
+                            setShowStartHikeError(false)
+                        }, 2500);
                     });
                 } else if (hike.state === 1) {
                     API.endHike({id_hike: hike.id_hike, end_time: dateTime}).then(() => {
+                        setEndHikeSuccess(true);
                         API.getOwnedHikes().then((res) => {
                             setHikesOwned(res);
                         })
+                    }).catch(() => {
+                        setShowEndHikeError(true);
+                    }).finally(() => {
+                        setTimeout(() => {
+                            setShowEndHikeError(false);
+                            setEndHikeSuccess(false);
+                        }, 2500)
                     });
                 }
             }
