@@ -347,7 +347,6 @@ I want to terminate a hike\
 So that the hike is added to my completed hikes
 ```
 
-
 ### Test 1 - terminate a hike
 
 #### Procedure
@@ -357,7 +356,7 @@ So that the hike is added to my completed hikes
 3. the hike must be already started
 4. by pressing the gear button, it will appear under the hike a form with date and time to select
 5. the values are the ones of the moment the user refreshed the page
-6. the user can change this values if he wants
+6. the user can change this values if he wants. The moment when the hike ends must be after the moment  the hike was started. If the user does an error, it will  appear an error message under the form
 7. by pressing the start button on a not started hike, the form will disappear, the start time for the  in the table will be the one in the form,the state of the hike change in ongoing
 
 #### Expected result
