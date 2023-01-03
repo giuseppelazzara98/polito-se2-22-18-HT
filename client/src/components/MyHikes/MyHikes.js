@@ -15,7 +15,6 @@ export default function MyHikes(props) {
     const [hikesFilteredList, setHikesFilteredList] = useState([]);
     const [hikesState, setHikesState] = useState('All');
     useEffect(() => {
-        setHikesFilteredList(hikesOwned);
         switch (hikesState) {
             case 'Completed':
               setHikesFilteredList(hikesOwned.filter((hike) => hike.state === 2));

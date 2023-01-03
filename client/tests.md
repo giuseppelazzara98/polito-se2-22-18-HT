@@ -329,10 +329,36 @@ Point 4 is true
 
 1. the user need to be logged in as a hiker
 2. the hiker must had registerd the hike that he wants to start
-3. by pressing the gear button, it will appear unther the hike a form with date and time to select
+3. by pressing the gear button, it will appear under the hike a form with date and time to select
 4. the values are the ones of the moment the user refreshed the page
 5. the user can change this values if he wants
-6. by pressing the start button on a not started hike, the form will disappear, the start time for the  in the table will be the one in the form,the state of the hike change in ongoing
+6. by pressing the  end hike button on an ongoing hike, the form will disappear, the end time for the  hike in the table will be the one in the form,the state of the hike change to completed
+7. if the user press again the button vith the gear, it will appear a nessage of congratulations
+
+#### Expected result
+
+Point 6 is true
+
+## Story 18 - Terminate hike
+
+```
+As a hiker\
+I want to terminate a hike\
+So that the hike is added to my completed hikes
+```
+
+
+### Test 1 - terminate a hike
+
+#### Procedure
+
+1. the user need to be logged in as a hiker
+2. the hiker must had registerd the hike that he wants to end
+3. the hike must be already started
+4. by pressing the gear button, it will appear under the hike a form with date and time to select
+5. the values are the ones of the moment the user refreshed the page
+6. the user can change this values if he wants
+7. by pressing the start button on a not started hike, the form will disappear, the start time for the  in the table will be the one in the form,the state of the hike change in ongoing
 
 #### Expected result
 
