@@ -348,7 +348,7 @@ function App2() {
 				<InfoModalComponent
 					show={showStartHikeSuccess}
 					title="Success!"
-					subtitle={`Hike added to your personal hikes`}
+					subtitle={`Hike started successfully`}
 					icon={faCheckCircle}
 				/>
 				<InfoModalComponent
