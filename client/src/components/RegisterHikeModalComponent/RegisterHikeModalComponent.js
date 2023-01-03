@@ -32,12 +32,10 @@ export default function RegisterHikeModalComponent (props) {
   }
 
   return (
-    <Modal
-      {...props}                
+    <Modal         
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
-      
     >
       <Modal.Header closeButton onClick={()=>setShowRegisterHikeModal(false)}>
         
