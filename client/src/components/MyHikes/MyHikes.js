@@ -7,7 +7,7 @@ import { faGear } from '@fortawesome/free-solid-svg-icons';
 import { Button, Form } from "react-bootstrap";
 import dayjs from "dayjs";
 
-var isSameOrBefore = require('dayjs/plugin/isSameOrBefore')
+let isSameOrBefore = require('dayjs/plugin/isSameOrBefore')
 dayjs.extend(isSameOrBefore)
 
 export default function MyHikes(props) {

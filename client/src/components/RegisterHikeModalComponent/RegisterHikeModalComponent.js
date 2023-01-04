@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { Button } from "react-bootstrap";
 import Modal from 'react-bootstrap/Modal';
 import styles from "./index.module.scss";
