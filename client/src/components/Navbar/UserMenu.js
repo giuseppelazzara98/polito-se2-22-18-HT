@@ -25,7 +25,7 @@ export default function UserMenu(props) {
         {isMobile && <span className={styles.userName}>{user.name} {user.surname}</span>}
         {location.pathname !== "/HikesOwned" && user.role === "Hiker" && (
             <div className={styles.option} onClick={() => navigate("/HikesOwned")}>
-              <span className={styles.label}>My Hike</span>
+              <span className={styles.label}>My Hikes</span>
               <FontAwesomeIcon icon={faPersonHiking} className={styles.iconOption} />
             </div>
           )}
