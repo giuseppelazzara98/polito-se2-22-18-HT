@@ -42,6 +42,7 @@ Developers: Gerardo Braia, Elisa Calì, Francesco Carpegna, Ahmed Khater, Giusep
 - Route `/newHike`: the route contains the form to create a new hike, where the local guide can insert all the useful informations related to the hike, including the GPX file.
 - Route `/newHut`: the route contains the form to create a new hut, where the local guide can insert all the useful informations related to the hut, including the provinces selection from the map.
 - Route `/newParkingLot`: the route contains the form to create a new parking lot, where the local guide can insert all the useful informations related to the Parking Lot, including the provinces selection from the map.
+- Route `/HikesOwned`: the route contains the list of all the hikes for which an hiker is registered for.
 - Route `/verify/:token`: the route contains the page related to the confirmation of the email. The link of this page is sended on the email of the new user.
 - Route `*`:  the route displays an error message if a known route is not found or the current route is wrong. 
 
@@ -516,6 +517,7 @@ __Error responses:__ `401 Unauthorized`, `500 Internal Server Error`
 - Table `PROVINCE`: contains the provinces informations, including name and abbreviation.
 - Table `ROLE`: contains the roles informations, including the description.
 - Table `USER`: contains the users informations, including name, surname, role, email and password.
+- Table `USER_HIKE`: contains the informations related to the association between an hiker and the hikes he / she is registered to.
 
 ## USER CREDENTIALS:
 
