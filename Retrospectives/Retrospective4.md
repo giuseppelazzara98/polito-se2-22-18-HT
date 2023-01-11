@@ -31,7 +31,6 @@ sections:
 | _#0_  | Daily Scrum 2 |   -   | 1h30m | 1h30m |
 | _#0_  | Daily Scrum 3 |   -   | 1h30m | 1h30m |
 | _#0_  | Daily Scrum 4 |   -   | 1h30m | 1h30m |
-| _#0_  | Daily Scrum 4 |   -   | 1h30m | 1h30m |
 | _#0_  | Git issue 1 - Map boarder fix |   -   | 30m | 30m |
 | _#0_  | Git issue 2 - Make hut description required |   -   | 30m | 15m |
 | _#0_  | Fix Sonar Cloud problems - be |   -   | 2h45m | 2h45m |
@@ -67,8 +66,8 @@ sections:
 > place technical tasks corresponding to story `#0` and leave out story points (not applicable in this case)
 
 - Hours per task (average, standard deviation):
-  - estimate hours per task average: 1,94
-  - estimate standard deviation: 
+  - estimate hours per task average: 2
+  - estimate standard deviation: 2,1
   - actual hours per task average: 1,95
   - actual standard deviation: 
 - Total task estimation error ratio: sum of total hours estimation / sum of total hours spent -1: -0,003
